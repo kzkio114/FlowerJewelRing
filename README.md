@@ -97,3 +97,6 @@ RUNTEQ内で、自分は、病気があることをなどや比較的に色々�
 - **PostgreSQL**
 - **Heroku**
 - **Docker**
+
+# ■画面遷移図
+https://www.figma.com/design/6xguagGcBxp3feCZgnRH9W/%E7%84%A1%E9%A1%8C?node-id=40-689&t=R3z0dDSYASbRVjcE-0
