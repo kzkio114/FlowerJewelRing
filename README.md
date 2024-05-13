@@ -102,4 +102,4 @@ RUNTEQ内で、自分は、病気があることをなどや比較的に色々�
 https://www.figma.com/design/6xguagGcBxp3feCZgnRH9W/%E7%84%A1%E9%A1%8C?node-id=40-689&t=R3z0dDSYASbRVjcE-0
 
 # ■ER図作成
-https://dbdiagram.io/d/%E5%8D%92%E5%88%B6-65d757b25cd041277493bfc2
+[https://dbdiagram.io/d/%E5%8D%92%E5%88%B6-65d757b25cd041277493bfc2](https://dbdiagram.io/d/卒制ER図-65d757b25cd041277493bfc2)
