@@ -1,17 +1,16 @@
 class CreateUsers < ActiveRecord::Migration[7.1]
   def change
     create_table :users do |t|
-      t.integer :id
       t.string :name
-      t.integer :organization_id
-      t.string :email
+      t.references :organization, foreign_key: true, null: true
+      t.string :email, null: false
       t.string :password_digest
       t.string :social_id
       t.string :display_name
-      t.datetime :created_at
-      t.datetime :updated_at
 
       t.timestamps
     end
+
+    add_index :users, :email, unique: true
   end
 end
