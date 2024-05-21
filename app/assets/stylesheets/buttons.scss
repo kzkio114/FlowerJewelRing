@@ -1,0 +1,11 @@
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .button {
+    flex-grow: 1;
+    text-align: center;
+    width: 130px; // あなたが望む幅に調整してください
+  }
+}

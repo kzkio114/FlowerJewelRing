@@ -1,0 +1,13 @@
+// layout.scss
+.container {
+  justify-content: space-between;
+}
+
+.content {
+  margin-bottom: 7em; // あなたが望む間隔に調整してください
+}
+
+.footer {
+  background-color: hsl(174, 80%, 92%); // 例: primary color
+  margin-top: auto;
+}
