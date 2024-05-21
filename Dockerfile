@@ -28,10 +28,8 @@ RUN /usr/local/bundle/bin/rails --version
 ENV PATH="/usr/local/bundle/bin:${PATH}"
 
 # Bunのインストール
-RUN curl -fsSL https://bun.sh/install > bun-install.sh
-RUN bash bun-install.sh
-RUN mv /root/.bun/bin/bun /usr/local/bin/bun
-RUN bun --version
+RUN curl -fsSL https://bun.sh/install | bash
+RUN /root/.bun/bin/bun --version
 
 # Bunがインストールされている場所をパスに追加
 ENV PATH /root/.bun/bin:$PATH
