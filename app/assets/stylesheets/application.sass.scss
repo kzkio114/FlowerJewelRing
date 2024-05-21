@@ -1,1 +1,6 @@
-// Entry point for your Sass build
+// application.sass.scss
+@import "bulma/bulma";
+@import "base";
+@import "theme";
+@import "layout";
+@import "buttons";
