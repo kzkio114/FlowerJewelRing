@@ -1,9 +1,16 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+# 組織を作成または取得
+org = Organization.find_or_create_by(name: "Test Organization")
+
+# テストユーザーを作成または取得
+user = User.find_or_create_by(email: "test@example.com") do |user|
+  user.name = "Test User"
+  user.password_digest = Digest::SHA256.hexdigest("password")
+  user.display_name = "TestUser"
+end
+
+# ユーザーと組織の関係を作成
+UserOrganization.create!(
+  user: user,
+  organization: org,
+  joined_at: DateTime.now
+)
