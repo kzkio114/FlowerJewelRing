@@ -1,12 +1,9 @@
 class CreateAdminUsers < ActiveRecord::Migration[7.1]
   def change
     create_table :admin_users do |t|
-      t.integer :id
-      t.integer :user_id
-      t.integer :organization_id
+      t.references :user, null: false, foreign_key: true
+      t.references :organization, null: false, foreign_key: true
       t.integer :admin_role
-      t.datetime :created_at
-      t.datetime :updated_at
 
       t.timestamps
     end
