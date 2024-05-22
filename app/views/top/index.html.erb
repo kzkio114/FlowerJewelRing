@@ -4,15 +4,13 @@
       <div class="columns is-centered mt-6">
         <div class="column is-8 has-text-centered">
           <%= render 'top/header' %>
+          <turbo-frame id="response_area">
+            <!-- ここにレスポンスが表示されます -->
+          </turbo-frame>
         </div>
       </div>
     </div>
 
-    <turbo-frame id="response_area">
-    <!-- ここにレスポンスが表示されます -->
-    </turbo-frame>
-
-    <div class="footer">
       <div class="columns is-centered mt-6">
         <%= render 'top/buttons' %>
       </div>
