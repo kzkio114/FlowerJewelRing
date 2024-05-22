@@ -1,4 +1,14 @@
-<div class="notification is-success">
-  <strong>Logged In!</strong> You have logged in successfully.
-  <%= button_to '入る', root_path, class: 'button is-primary is-small mt-2' %>
+<div class="notification is-success fixed-height has-background-white is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
+  <strong>ログイン</strong> どのサービスからログインしますか？
+  <div class="columns is-centered is-mobile mt-3">
+      <div class="column is-narrow">
+        <%= button_to 'Google', root_path, class: 'button is-primary is-small' %>
+      </div>
+      <div class="column is-narrow">
+        <%= button_to 'Discord', root_path, class: 'button is-primary is-small' %>
+      </div>
+      <div class="column is-narrow">
+        <%= button_to 'GitHub', root_path, class: 'button is-primary is-small' %>
+      </div>
+  </div>
 </div>
