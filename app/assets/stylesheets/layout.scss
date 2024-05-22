@@ -1,13 +1,18 @@
 // layout.scss
+.fixed-height {
+  height: 350px;  //枠の高さを400pxに固定
+  overflow-y: auto;
+}
+
 .container {
   justify-content: space-between;
 }
 
 .content {
-  margin-bottom: 7em; // あなたが望む間隔に調整してください
+  margin-bottom: 2em;
 }
 
 .footer {
-  background-color: hsl(174, 80%, 92%); // 例: primary color
+  background-color: hsl(174, 80%, 92%);
   margin-top: auto;
 }
