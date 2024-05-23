@@ -1,8 +1,4 @@
 <div class="buttons is-centered">
-  <div id="enter_app_button">
-    <%= button_to 'アプリに入る', buttons_enter_app_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-primary is-small' %>
-  </div>
-  <div id="login_button">
-    <%= button_to 'ログイン', buttons_login_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-primary is-small' %>
-  </div>
+  <%= render 'buttons/enter_app_button' %>
+  <%= render 'buttons/login_button' %>
 </div>

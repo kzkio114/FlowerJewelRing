@@ -1,1 +1,3 @@
-<%= button_to 'ログイン', root_path, class: 'button is-primary is-small', id: 'login_button' %>
+ <div id="login_button">
+    <%= button_to 'ログイン', buttons_login_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-primary is-small' %>
+</div>
