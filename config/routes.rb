@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # ボタンを押した時のルーティング
 
   post 'menu', to: 'buttons#menu', as: 'menu' # メニューボタンを押した時のルーティング
+  post 'close_menu', to: 'buttons#close_menu', as: 'close_menu' # メニューを閉じるボタンを押した時のルーティング
 
   post 'buttons/worries', to: 'buttons#worries', as: 'buttons_worries'  # 悩み相談ボタンを押した時のルーティング
   post 'buttons/gift_list', to: 'buttons#gift_list', as: 'buttons_gift_list'  # ギフト一覧ボタンを押した時のルーティング

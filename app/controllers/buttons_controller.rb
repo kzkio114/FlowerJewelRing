@@ -32,4 +32,12 @@ class ButtonsController < ApplicationController
       end
     end
   end
+
+  def close_menu
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("menu", partial: "buttons/menu/closed_menu")
+      end
+    end
+  end
 end
