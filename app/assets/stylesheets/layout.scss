@@ -4,6 +4,12 @@
   overflow-y: auto;
 }
 
+.frame-fixed-height {
+  background-color: hsl(180, 6%, 6%);
+  height: 500px;  //枠の高さを400pxに固定
+  overflow-y: auto;
+}
+
 .container {
   justify-content: space-between;
 }

@@ -26,9 +26,7 @@ class ButtonsController < ApplicationController
   def menu
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons"),
-        ]
+        render turbo_stream: turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons")
       end
     end
   end
@@ -37,6 +35,14 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace("menu", partial: "buttons/menu/closed_menu")
+      end
+    end
+  end
+
+  def worries
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.append("worrie", partial: "buttons/menu/worries_content")
       end
     end
   end
