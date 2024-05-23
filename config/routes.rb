@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   root 'top#index' # トップページを表示するためのルーティング
+  get 'trial', to: 'top#trial', as: 'trial' # お試しページを表示するためのルーティング
 
   # ボタンを押した時のルーティング
   post 'buttons/enter_app', to: 'buttons#enter_app'  # 説明を見るボタンを押した時のルーティング
