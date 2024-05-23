@@ -22,4 +22,14 @@ class ButtonsController < ApplicationController
       end
     end
   end
+
+  def menu
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("response_area", partial: "buttons/menu/menu_buttons"),
+        ]
+      end
+    end
+  end
 end
