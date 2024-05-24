@@ -43,7 +43,7 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("container", partial: "buttons/menu/worries_response")
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response")
         ]
       end
     end
@@ -53,7 +53,37 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("container", partial: "buttons/menu/gift_list_response")
+          turbo_stream.replace("content", partial: "buttons/menu/gift_list_response")
+        ]
+      end
+    end
+  end
+
+  def chat
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/chat_response")
+        ]
+      end
+    end
+  end
+
+  def send_gift
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/send_gift_response")
+        ]
+      end
+    end
+  end
+
+  def user
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/user_response")
         ]
       end
     end
