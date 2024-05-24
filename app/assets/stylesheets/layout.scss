@@ -13,6 +13,16 @@
   position: fixed; /* 位置を固定 */
 }
 
+.test-fixed-height {
+  background-color: hsl(180, 41%, 38%); //枠の背景色を設定
+  height: 400px;  //枠の高さを400pxに固定
+  width: 600px;   /* 枠の幅を400pxに固定 */
+  overflow-y: auto; //枠の高さを超えた場合、スクロールバーを表示
+  overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
+  position: fixed; /* 位置を固定 */
+}
+
+
 .container {
   justify-content: space-between;
 }
