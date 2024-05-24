@@ -5,9 +5,11 @@
 }
 
 .frame-fixed-height {
-  background-color: hsl(180, 6%, 6%);
-  height: 500px;  //枠の高さを400pxに固定
-  overflow-y: auto;
+  background-color: hsl(180, 6%, 6%); //枠の背景色を設定
+  height: 600px;  //枠の高さを400pxに固定
+  width: 600px;   /* 枠の幅を400pxに固定 */
+  overflow-y: auto; //枠の高さを超えた場合、スクロールバーを表示
+  overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
 }
 
 .container {
