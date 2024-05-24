@@ -1,5 +1,5 @@
 <div class="columns is-centered is-mobile">
-  <div class="column is-3">
+  <div class="column is-2 mr-6">
     <div id="menu">
       <%= render "buttons/menu/change_button" %>
     </div>
@@ -8,6 +8,7 @@
     <section class="section is-fullheight">
       <div class="container is-flex is-flex-direction-column">
         <turbo-frame id="worrie">
+          <%= render "buttons/menu/worries_content" %>
         </turbo-frame>
       </div>
     </section>

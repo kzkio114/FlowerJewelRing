@@ -40,9 +40,19 @@ class ButtonsController < ApplicationController
   end
 
   def worries
+     # @worrie_open = true
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.append("worrie", partial: "buttons/menu/worries_content")
+        render turbo_stream: turbo_stream.replace("worrie", partial: "buttons/menu/worries_response")
+      end
+    end
+  end
+
+  def hide_worries
+    # @worrie_open = false
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("worrie", partial: "buttons/menu/worries_content")
       end
     end
   end
