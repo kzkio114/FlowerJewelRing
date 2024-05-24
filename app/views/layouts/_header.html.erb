@@ -1,0 +1,15 @@
+<% if show_header? %>
+    <header>
+      <nav>
+        <ul>
+          <li>
+            <%= link_to root_path, title: 'トップに戻る' do %>
+              <%= render 'title' %>
+            <% end %>
+          </li>
+          <li><%= link_to 'ログイン', trial_path %></li>
+          <!-- 他のリンクを追加 -->
+        </ul>
+      </nav>
+    </header>
+<% end %>

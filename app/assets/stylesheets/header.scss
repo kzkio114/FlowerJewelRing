@@ -1,0 +1,26 @@
+header {
+  background-color: hsl(176, 70%, 71%);  // ヘッダーの背景色を設定
+  padding: 20px 0;  // ヘッダーの上下にパディングを設定
+
+  nav {
+    ul {
+      display: flex;  // ul要素をフレックスボックスに設定
+      justify-content: space-between;  // アイテムを左端と右端に配置
+      list-style: none;  // リストスタイルを無効に設定
+      padding: 0;  // ul要素のパディングを無効に設定
+
+      li {
+        margin: 0 15px;  // 各アイテムの左右に10pxのマージンを設定
+
+        &:first-child {
+          margin-right: auto;  // 最初のアイテムを左端に配置
+        }
+
+        &:last-child {
+          margin-left: auto;  // 最後のアイテムを右端に配置
+          margin-top: 15px;  // 最後のアイテムの上部に15pxのマージンを追加
+        }
+      }
+    }
+  }
+}

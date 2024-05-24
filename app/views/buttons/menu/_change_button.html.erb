@@ -1,0 +1,10 @@
+<%= turbo_frame_tag 'menu' do %>
+<div class="buttons-left columns is-multiline ml-4 mt-3">
+  <% if @menu_open %>
+      <%= render "buttons/menu/closed_button" %>
+    </div>
+  <% else %>
+      <%= render "buttons/menu/menu_response" %>
+  <% end %>
+  </div>
+<% end %>
