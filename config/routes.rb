@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   post 'buttons/user', to: 'buttons#user', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
 
   post 'buttons/enter_app', to: 'buttons#enter_app'  # 説明を見るボタンを押した時のルーティング
-  post 'buttons/login', to: 'buttons#login' # ログインボタンを押した時のルーティング
+  post 'buttons/login', to: 'buttons#login', as: 'buttons_login' # ログインボタンを押した時のルーティング
   post 'buttons/without_login', to: 'buttons#without_login' # ログインせずに使うボタンを押した時のルーティング
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

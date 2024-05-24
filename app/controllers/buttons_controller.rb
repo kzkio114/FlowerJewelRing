@@ -17,7 +17,8 @@ class ButtonsController < ApplicationController
         render turbo_stream: [
           turbo_stream.replace("response_area", partial: "buttons/login_response"),
           turbo_stream.append("response_area", partial: "buttons/login_response"),
-          turbo_stream.replace("login_button", partial: "buttons/without_login_button")
+          turbo_stream.replace("login_button", partial: "buttons/without_login_button"),
+          turbo_stream.replace("content", partial: "buttons/menu/trial_login_response")
         ]
       end
     end
