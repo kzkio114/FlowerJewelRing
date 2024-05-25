@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  # Deviseのルーティング
   devise_for :users
 
   root 'top#index' # トップページを表示するためのルーティング
 
-  get 'trial', to: 'top#trial', as: 'trial' # お試しページを表示するためのルーティング
+  get 'trial', to: 'trials#index', as: 'trial' # お試しページを表示するためのルーティング
 
   # ボタンを押した時のルーティング
 
