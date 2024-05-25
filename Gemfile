@@ -68,3 +68,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# ログイン機能を追加するためのgem
+gem 'devise'
