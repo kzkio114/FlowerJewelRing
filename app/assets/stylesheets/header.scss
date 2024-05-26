@@ -19,6 +19,10 @@ header {
         &:last-child {
           margin-left: auto;  // 最後のアイテムを右端に配置
           margin-top: 15px;  // 最後のアイテムの上部に15pxのマージンを追加
+
+          form {
+            display: inline;  // フォームをインライン要素として表示
+          }
         }
       }
     }

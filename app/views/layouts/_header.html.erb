@@ -7,8 +7,17 @@
               <%= render 'top/title' %>
             <% end %>
           </li>
-          <li><%= link_to 'ログイン', trial_path %></li>
-          <!-- 他のリンクを追加 -->
+          <% if user_signed_in? %>
+            <li>
+              <%= link_to 'プロフィール', edit_user_registration_path %> |
+              <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { "data-turbo" => "false" } %>
+            </li>
+          <% else %>
+            <li>
+              <%= link_to 'ログイン', new_user_session_path %> |
+              <%= link_to 'サインアップ', new_user_registration_path %>
+            </li>
+          <% end %>
         </ul>
       </nav>
     </header>

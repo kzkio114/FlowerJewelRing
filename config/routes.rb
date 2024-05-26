@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'gifts/index'
+  get 'gifts/show'
+  get 'gifts/new'
+  get 'gifts/edit'
 
   # Deviseのルーティング
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
