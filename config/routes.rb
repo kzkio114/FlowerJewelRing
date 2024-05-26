@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
+  get 'gifts/index'
+  get 'gifts/show'
+  get 'gifts/new'
+  get 'gifts/edit'
+
   # Deviseのルーティング
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-
+  # ログインしている場合のみアクセスできるページ
+  authenticate :user do
+    get 'dashboard', to: 'dashboard#index'
+  end
   root 'top#index' # トップページを表示するためのルーティング
 
   get 'trial', to: 'trials#index', as: 'trial' # お試しページを表示するためのルーティング
