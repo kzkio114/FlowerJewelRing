@@ -78,6 +78,18 @@ gem 'dotenv-rails', groups: [:development, :test]
 # Googleログイン機能を追加するためのgem
 gem 'omniauth-google-oauth2'
 
+# discordログイン機能を追加するためのgem
+gem 'omniauth-discord'
+
+# Twitterログイン機能を追加するためのgem
+gem 'omniauth-twitter'
+
+# GitHubログイン機能を追加するためのgem
+gem 'omniauth-github'
+
+# LINEログイン機能を追加するためのgem
+gem 'omniauth-line'
+
 # CSRF対策を追加するためのgem
 gem 'omniauth-rails_csrf_protection'
 

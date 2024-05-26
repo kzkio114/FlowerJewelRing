@@ -9,6 +9,11 @@
           </turbo-frame>
         </div>
       </div>
+      <%= button_to "Discordでログインする", user_discord_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
+      <%= button_to 'Googleでログインする', user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
+      <%= button_to 'Twitterでログインする', user_twitter_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
+      <%= button_to 'GitHubでログインする', user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
+      <%= button_to 'LINEでログインする', user_line_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
     </div>
       <div class="columns is-centered mt-6">
         <%= render 'top/buttons' %>

@@ -312,8 +312,22 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
 
   # Omniauthの設定
+
+  # Googleログイン
   config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {
     scope: 'userinfo.email, userinfo.profile',
     prompt: 'select_account'
   }
+
+  # Twitterログイン
+  config.omniauth :twitter, ENV['TWITTER_API_KEY'], ENV['TWITTER_API_SECRET']
+
+  # discordログイン
+  config.omniauth :discord, ENV['DISCORD_CLIENT_ID'], ENV['DISCORD_CLIENT_SECRET'], scope: 'email identify'
+
+  # GitHubログイン
+  config.omniauth :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET'], scope: 'user:email'
+
+  # LINEログイン
+  config.omniauth :line, ENV['LINE_CLIENT_ID'], ENV['LINE_CLIENT_SECRET'], scope: 'profile openid email'
 end
