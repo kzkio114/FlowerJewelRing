@@ -80,3 +80,6 @@ gem 'omniauth-google-oauth2'
 
 # CSRF対策を追加するためのgem
 gem 'omniauth-rails_csrf_protection'
+
+# ログイン機能を日本語化するためのgem
+gem 'devise-i18n'
