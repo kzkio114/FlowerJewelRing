@@ -322,12 +322,13 @@ Devise.setup do |config|
   # Twitterログイン
   config.omniauth :twitter, ENV['TWITTER_API_KEY'], ENV['TWITTER_API_SECRET']
 
-  # discordログイン
-  config.omniauth :discord, ENV['DISCORD_CLIENT_ID'], ENV['DISCORD_CLIENT_SECRET'], scope: 'email identify'
-
   # GitHubログイン
   config.omniauth :github, ENV['GITHUB_CLIENT_ID'], ENV['GITHUB_CLIENT_SECRET'], scope: 'user:email'
 
   # LINEログイン
   config.omniauth :line, ENV['LINE_CLIENT_ID'], ENV['LINE_CLIENT_SECRET'], scope: 'profile openid email'
+
+  # discordログイン
+  config.omniauth :discord, ENV['DISCORD_CLIENT_ID'], ENV['DISCORD_CLIENT_SECRET'], scope: 'email identify'
+
 end

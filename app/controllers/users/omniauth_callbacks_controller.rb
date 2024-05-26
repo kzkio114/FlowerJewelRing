@@ -3,10 +3,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     handle_auth "Google"
   end
 
-  def discord
-    handle_auth "Discord"
-  end
-
   def twitter
     handle_auth "Twitter"
   end
@@ -17,6 +13,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def line
     handle_auth "LINE"
+  end
+
+  def discord
+    handle_auth "Discord"
   end
 
   def handle_auth(kind)
