@@ -71,3 +71,12 @@ end
 
 # ログイン機能を追加するためのgem
 gem 'devise'
+
+# 環境変数を設定するためのgem
+gem 'dotenv-rails', groups: [:development, :test]
+
+# Googleログイン機能を追加するためのgem
+gem 'omniauth-google-oauth2'
+
+# CSRF対策を追加するためのgem
+gem 'omniauth-rails_csrf_protection'

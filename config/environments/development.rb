@@ -74,7 +74,7 @@ Rails.application.configure do
   #  アクションメーラーの設定
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-
+  config.hosts << "localhost:3000"
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 end

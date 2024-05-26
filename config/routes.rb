@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # Deviseのルーティング
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+
 
   root 'top#index' # トップページを表示するためのルーティング
 
