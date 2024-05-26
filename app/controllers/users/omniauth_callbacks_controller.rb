@@ -3,8 +3,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     handle_auth "Google"
   end
 
-  def facebook
-    handle_auth "Facebook"
+  def discord
+    handle_auth "Discord"
   end
 
   def twitter
@@ -13,10 +13,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def github
     handle_auth "GitHub"
-  end
-
-  def instagram
-    handle_auth "Instagram"
   end
 
   def line
