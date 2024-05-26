@@ -1,14 +1,20 @@
 <div class="notification is-success fixed-height has-background-white is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
-  <strong>ログイン</strong> どのサービスからログインしますか？
+  <strong class="is-size-3">ログイン</strong> どのサービスからログインしますか？
   <div class="columns is-centered is-mobile mt-3">
       <div class="column is-narrow">
-        <%= button_to 'Google', root_path, class: 'button is-primary is-small' %>
+        <%= button_to 'Google', user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
       </div>
       <div class="column is-narrow">
-        <%= button_to 'Discord', root_path, class: 'button is-primary is-small' %>
+        <%= button_to 'Twitter', user_twitter_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
       </div>
       <div class="column is-narrow">
-        <%= button_to 'GitHub', root_path, class: 'button is-primary is-small' %>
+        <%= button_to 'GitHub', user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
+      </div>
+      <div class="column is-narrow">
+        <%= button_to 'LINE', user_line_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
+      </div>
+      <div class="column is-narrow">
+        <%= button_to "Discord", user_discord_omniauth_authorize_path, method: :post, data: { turbo: false }, class: 'button is-primary' %>
       </div>
   </div>
 </div>
