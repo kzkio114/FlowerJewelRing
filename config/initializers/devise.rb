@@ -312,6 +312,8 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
 
   # Omniauthの設定
+  # OmniAuth.config.allowed_request_methods = [:post, :get]
+  # OmniAuth.config.silence_get_warning = true
 
   # Googleログイン
   config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {

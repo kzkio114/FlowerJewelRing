@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
-  get 'gifts/index'
-  get 'gifts/show'
-  get 'gifts/new'
-  get 'gifts/edit'
+  # メニューのルーティング
+  get 'gift_list', to: 'buttons#gift_list'
+  # ギフトのルーティング
+  resources :gifts
+  # ボタン内のメニュールーティング（ギフトリスト）
+  resources :menus1 do
+    collection do
+      get :gift_list
+    end
+  end
 
   # Deviseのルーティング
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
