@@ -51,14 +51,19 @@ class ButtonsController < ApplicationController
   end
 
   def gift_list
+    @total_gifts = Gift.count  # ギフトの総数を取得
+
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/gift_list_response")
-        ]
+        render turbo_stream: turbo_stream.replace(
+          "content",
+          partial: "buttons/menu/gift_list_response",
+          locals: { total_gifts: @total_gifts }
+        )
       end
     end
   end
+
 
   def chat
     respond_to do |format|

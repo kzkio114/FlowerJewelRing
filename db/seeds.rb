@@ -14,3 +14,10 @@ UserOrganization.create!(
   organization: org,
   joined_at: DateTime.now
 )
+
+10.times do |i|
+  giver = User.find(i+1) # giverを適切に設定します
+  receiver = User.find(i+2) # receiverを適切に設定します
+  category = GiftCategory.find(i+1) # gift_categoryを適切に設定します
+  Gift.create(giver: giver, receiver: receiver, gift_category: category, message: "ギフトのメッセージ#{i+1}")
+end
