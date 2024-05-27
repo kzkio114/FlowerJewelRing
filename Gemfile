@@ -91,7 +91,10 @@ gem 'omniauth-github'
 gem 'omniauth-line'
 
 # CSRF対策を追加するためのgem
-gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-rails_csrf_protection', '1.0.2'
 
 # ログイン機能を日本語化するためのgem
 gem 'devise-i18n'
+
+# omniauthのバージョンを指定するためのgem
+gem 'omniauth', '2.1.2'

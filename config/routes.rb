@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   # Deviseのルーティング
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
 
   # ログインしている場合のみアクセスできるページ
   authenticate :user do
