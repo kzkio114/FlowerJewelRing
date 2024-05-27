@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # メニューのルーティング
+  get 'gift_list', to: 'buttons#gift_list'
   # ギフトのルーティング
   resources :gifts
   # ボタン内のメニュールーティング（ギフトリスト）
