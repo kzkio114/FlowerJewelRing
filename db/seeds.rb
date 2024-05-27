@@ -48,6 +48,13 @@
 #   GiftCategory.create!(name: "Sample Category")
 # end
 
+# Userレコードを作成
+User.create!(name: 'Giver', email: 'giver@example.com', password: 'password')
+User.create!(name: 'Receiver', email: 'receiver@example.com', password: 'password')
+
+# GiftCategoryレコードを作成
+GiftCategory.create!(name: 'Category 1')
+
 # 既存のユーザーとギフトカテゴリを使用してギフトを作成
 giver = User.first
 receiver = User.last # 別のユーザーがいる場合、それを利用
