@@ -16,11 +16,12 @@ class User < ApplicationRecord
   has_many :group_chat_messages
   has_one :profile
   has_many :replies
+  has_many :user_organizations, dependent: :destroy
 
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(email: data['email']).first_or_initialize
-a
+    
     user.name = data['name']
     user.password = Devise.friendly_token[0, 20] if user.new_record?
     user.save!
