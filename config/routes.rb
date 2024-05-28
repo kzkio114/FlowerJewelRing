@@ -10,6 +10,32 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :buttons do
+    collection do
+      post :worries_response
+    end
+  end
+  # ボタン内のメニュールーティング（悩み相談）
+  post 'consultations_response', to: 'buttons#consultations_response', as: 'consultations_response'
+  post 'consultations_detail', to: 'buttons#consultations_detail', as: 'consultations_detail'
+  # ボタン内のメニュールーティング（悩み相談）
+  resources :buttons do
+    collection do
+      post :consultations_reply
+    end
+  end
+
+  resources :consultations do
+    resources :replies, only: [:create]
+  end
+
+
+  resources :buttons do
+    post 'send_gift', on: :collection
+  end
+
+  resources :consultations
+
   # Deviseのルーティング
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'

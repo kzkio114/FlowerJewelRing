@@ -48,24 +48,43 @@
 #   GiftCategory.create!(name: "Sample Category")
 # end
 
-# Userレコードを作成
-User.create!(name: 'Giver', email: 'giver@example.com', password: 'password')
-User.create!(name: 'Receiver', email: 'receiver@example.com', password: 'password')
+# # Userレコードを作成
+# User.create!(name: 'Giver', email: 'giver@example.com', password: 'password')
+# User.create!(name: 'Receiver', email: 'receiver@example.com', password: 'password')
 
-# GiftCategoryレコードを作成
-GiftCategory.create!(name: 'Category 1')
+# # GiftCategoryレコードを作成
+# GiftCategory.create!(name: 'Category 1')
 
-# 既存のユーザーとギフトカテゴリを使用してギフトを作成
-giver = User.first
-receiver = User.last # 別のユーザーがいる場合、それを利用
-category = GiftCategory.first
+# # 既存のユーザーとギフトカテゴリを使用してギフトを作成
+# giver = User.first
+# receiver = User.last # 別のユーザーがいる場合、それを利用
+# category = GiftCategory.first
 
-# 新しいギフトを追加
-48.times do |i|
-  Gift.create!(
-    giver: giver,
-    receiver: receiver,
-    gift_category: category,
-    message: "Extra Gift #{i+1}"
-  )
+# # 新しいギフトを追加
+# 48.times do |i|
+#   Gift.create!(
+#     giver: giver,
+#     receiver: receiver,
+#     gift_category: category,
+#     message: "Extra Gift #{i+1}"
+#   )
+# end
+
+# カテゴリを作成
+categories = ['家庭', '仕事', '健康', '金銭', '人間関係'].map do |name|
+  Category.find_or_create_by!(name: name)
 end
+
+# 各カテゴリに対してコンサルテーションを追加
+categories.each_with_index do |category, index|
+  5.times do |i|
+    Consultation.create!(
+      user_id: User.first.id, # 適宜ユーザーIDを設定
+      category_id: category.id,
+      title: "#{category.name}に関する悩み #{i+1}",
+      content: "#{category.name}に関する詳細な内容 #{i+1}。解決策を求めています。"
+    )
+  end
+end
+
+puts 'カテゴリとコンサルテーションのデータが生成されました。'

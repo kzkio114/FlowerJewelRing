@@ -1,0 +1,23 @@
+<!-- app/views/buttons/menu/_consultations_reply.html.erb -->
+<div class="columns is-multiline">
+  <% consultations.each do |consultation| %>
+    <div class="column is-one-third">
+      <div class="card">
+        <div class="card-content">
+          <div class="content">
+            <p><%= consultation.content %></p>
+            <%= form_with(model: [consultation, consultation.replies.build], local: true) do |form| %>
+              <div class="field">
+                <%= form.label :message, "返信内容" %>
+                <%= form.text_area :message, class: 'textarea' %>
+              </div>
+              <div class="field">
+                <%= form.submit "返信送信", class: "button is-link" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
