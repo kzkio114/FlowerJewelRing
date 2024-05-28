@@ -1,6 +1,19 @@
 <div id="content" class="container is-small frame-fixed-height has-background-primary">
+ みんなの悩み！
   <div class="has-text-white">
-    <!-- ここに悩みのボードの内容を書く -->
-    みんなの悩み
+    <% if @consultations.empty? %>
+      <p>現在、コンサルテーションはありません。</p>
+    <% else %>
+      <div class="columns is-multiline">
+        <% @consultations.each do |consultation| %>
+        <div class="column is-one-third">
+            <div id="<%= dom_id(consultation) %>">
+              <%= button_to consultation.title, consultations_response_path, method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" %>
+              <!-- ここに詳細が非同期で表示されます -->
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

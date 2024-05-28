@@ -1,0 +1,6 @@
+<!-- show.html.erb -->
+<p><%= @consultation.content %></p>
+<p>Category: <%= @consultation.category.name %></p>
+<%= link_to 'Reply', reply_consultation_path(@consultation), class: 'btn btn-primary' %>
+<%= link_to 'Next', next_consultation_path(@consultation), class: 'btn btn-secondary' %>
+

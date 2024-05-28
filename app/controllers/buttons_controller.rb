@@ -41,6 +41,8 @@ class ButtonsController < ApplicationController
   end
 
   def worries
+    @consultations = Consultation.includes(:category).all
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -49,6 +51,19 @@ class ButtonsController < ApplicationController
       end
     end
   end
+
+  def consultations_response
+    @consultations = Consultation.includes(:category).all
+    
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/consultations_response", locals: { consultations: @consultations })
+        ]
+      end
+    end
+  end
+  
 
   def gift_list
     @total_gifts = Gift.count  # ギフトの総数を取得
@@ -106,3 +121,6 @@ class ButtonsController < ApplicationController
   #   end
   # end
 end
+
+
+

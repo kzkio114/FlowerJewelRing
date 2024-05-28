@@ -1,0 +1,16 @@
+<div id="content" class="container is-small frame-fixed-height has-background-primary">
+ みんなの悩み！詳細
+  <div class="columns is-multiline">
+    <% consultations.each do |consultation| %>
+      <div class="column is-one-third">
+        <div id="<%= dom_id(consultation) %>" class="card">
+          <div class="card-content">
+            <div class="content">
+              <p><%= consultation.content %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
