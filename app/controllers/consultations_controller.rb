@@ -9,9 +9,10 @@ class ConsultationsController < ApplicationController
   # GET /consultations/1
   def show
     @consultation = Consultation.find(params[:id])
+    @consultations = Consultation.all
     respond_to do |format|
-      format.turbo_stream
       format.html
+      format.turbo_stream
     end
   end
 

@@ -1,4 +1,3 @@
-<!-- app/views/consultations/ -->
-<%= turbo_stream.replace dom_id(@consultation) do %>
-  <%= render partial: "consultations/detail", locals: { consultation: @consultation } %>
+<%= turbo_stream.replace @consultation do %>
+  <%= render partial: "buttons/menu/consultations_detail", locals: { consultation: @consultation } %>
 <% end %>

@@ -1,6 +1,3 @@
-<!-- show.html.erb -->
+<!-- app/views/consultations/show.html.erb -->
+<h1><%= @consultation.title %></h1>
 <p><%= @consultation.content %></p>
-<p>Category: <%= @consultation.category.name %></p>
-<%= link_to 'Reply', reply_consultation_path(@consultation), class: 'btn btn-primary' %>
-<%= link_to 'Next', next_consultation_path(@consultation), class: 'btn btn-secondary' %>
-
