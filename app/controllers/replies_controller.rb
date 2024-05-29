@@ -12,9 +12,11 @@ class RepliesController < ApplicationController
   respond_to do |format|
     if @reply.save
       @consultations = Consultation.all # ここで@consultationsを設定
-      format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail', locals: { consultations: @consultations }) }
-      format.html { redirect_to @reply, notice: 'Reply was successfully created.' }
+      # app/controllers/replies_controller.rb
+format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail', locals: { consultation: @reply.consultation }) }
+      format.html { redirect_to @reply.consultation, notice: 'Reply was successfully created.' }
     else
+      @consultation = Consultation.find(params[:consultation_id]) # ここで@consultationを設定
       format.html { render :new }
       format.json { render json: @reply.errors, status: :unprocessable_entity }
     end

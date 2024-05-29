@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     post 'send_gift', on: :collection
   end
 
-
+  
   # Deviseのルーティング
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'

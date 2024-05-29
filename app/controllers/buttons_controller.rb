@@ -65,8 +65,8 @@ class ButtonsController < ApplicationController
   end
 
   def consultations_detail
-    @consultations = Consultation.includes(:category, :replies).all
-    
+    @consultations = Consultation.includes(:category).all
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -75,11 +75,11 @@ class ButtonsController < ApplicationController
       end
     end
   end
-  
+
 
   def consultations_reply
     @consultations = Consultation.includes(:category).all
-    
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
