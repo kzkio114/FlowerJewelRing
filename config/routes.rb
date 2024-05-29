@@ -19,22 +19,17 @@ Rails.application.routes.draw do
   post 'consultations_response', to: 'buttons#consultations_response', as: 'consultations_response'
   post 'consultations_detail', to: 'buttons#consultations_detail', as: 'consultations_detail'
   # ボタン内のメニュールーティング（悩み相談）
-  resources :buttons do
-    collection do
-      post :consultations_reply
-    end
-  end
 
   resources :consultations do
-    resources :replies, only: [:create]
+    resources :replies, only: [:new, :create]
   end
+
 
 
   resources :buttons do
     post 'send_gift', on: :collection
   end
 
-  resources :consultations
 
   # Deviseのルーティング
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }

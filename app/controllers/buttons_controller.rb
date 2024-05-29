@@ -65,7 +65,7 @@ class ButtonsController < ApplicationController
   end
 
   def consultations_detail
-    @consultations = Consultation.includes(:category).all
+    @consultations = Consultation.includes(:category, :replies).all
     
     respond_to do |format|
       format.turbo_stream do
@@ -88,10 +88,6 @@ class ButtonsController < ApplicationController
       end
     end
   end
-
-
-
-
 
 
   def gift_list

@@ -1,3 +1,13 @@
-<div id="<%= dom_id(reply) %>">
+<% consultation.replies.each do |reply| %>
   <p><%= reply.content %></p>
-</div>
+<% end %>
+<p><%= consultation.content %></p>
+<%= form_with(model: [consultation, consultation.replies.build], local: true, data: { turbo_frame: dom_id(consultation, :replies) }) do |form| %>
+  <div class="field">
+    <%= form.label :content, "返信内容" %>
+    <%= form.text_area :content, class: 'textarea' %>
+  </div>
+  <div class="field">
+    <%= form.submit "返信送信", class: "button is-link" %>
+  </div>
+<% end %>
