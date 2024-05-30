@@ -1,6 +1,32 @@
 <div id="content" class="container is-small frame-fixed-height has-background-info">
-  <div class="has-text-white">
-    <!-- ここにギフト送信の内容を書く -->
-    ギフト送信の内容
-  </div>
+  <div class="columns is-multiline">
+  <% gifts.each do |gift| %>
+    <div id="gift_card_<%= gift.id %>" class="column is-one-third">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">
+            カテゴリ: <%= gift.gift_category.name %>
+          </p>
+        </header>
+        <div class="card-content">
+          <div class="content">
+            植物名: <%= gift.item_name %><br>
+            <img src="<%= gift.image_url %>" alt="ギフトの画像" style="width: 200px;"><br>
+            花言葉: <%= gift.message %>
+            <br>
+            <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
+              <div class="field">
+                <%= form.label :message, "感謝のメッセージ" %>
+                <%= form.text_area :message, class: 'textarea', placeholder: "ここにメッセージを入力してください" %>
+              </div>
+              <div class="field">
+                <%= form.submit "このギフトを送る", class: "button is-primary is-small" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
+

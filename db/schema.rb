@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_25_045450) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_30_122105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_25_045450) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image_url"
+    t.string "color"
   end
 
   create_table "gifts", force: :cascade do |t|
@@ -68,6 +70,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_25_045450) do
     t.datetime "sent_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "item_name"
+    t.string "image_url"
+    t.string "color"
     t.index ["gift_category_id"], name: "index_gifts_on_gift_category_id"
     t.index ["giver_id"], name: "index_gifts_on_giver_id"
     t.index ["receiver_id"], name: "index_gifts_on_receiver_id"

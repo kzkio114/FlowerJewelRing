@@ -1,5 +1,5 @@
 class GiftsController < ApplicationController
-  before_action :set_gift, only: [:show, :edit, :update, :destroy]
+  before_action :set_gift, only: [:show, :edit, :update, :destroy, :send_gift]
 
   def index
     @gifts = Gift.includes(:gift_category).where(sent_at: nil) # 未送付のギフトのみ表示
@@ -37,15 +37,40 @@ class GiftsController < ApplicationController
     redirect_to gifts_url, notice: 'Gift was successfully destroyed.'
   end
 
+  # app/controllers/gifts_controller.rb
+  # app/controllers/gifts_controller.rb
+def send_gift
+  @gift = Gift.find(params[:id])
+  # 更新時に gift_params で sent_at とメッセージも更新する
+  if @gift.update(gift_params.merge(sent_at: Time.current))
+    respond_to do |format|
+      format.turbo_stream do
+        # ギフトが正常に送信された後、そのギフトのカードを削除
+        render turbo_stream: turbo_stream.remove("gift_card_#{params[:id]}")
+      end
+      format.html { redirect_to gifts_path, notice: 'ギフトとメッセージを送信しました。' }
+    end
+  else
+    respond_to do |dormat|
+      format.turbo_stream do
+        # エラーがある場合はエラーメッセージを表示
+        render turbo_stream: turbo_stream.replace("send_gift_frame_#{params[:id]}", partial: "gifts/send_gift_error", locals: { gift: @gift })
+      end
+      format.html { render :show, alert: 'ギフトの送信に失敗しました。' }
+    end
+  end
+end
+
+
   private
 
-  def send_gift
+  def set_gift
     @gift = Gift.find(params[:id])
-    @gift.update(sent_at: Time.current) # 現在の時刻を送付時刻として記録
-    redirect_to @gift, notice: 'Gift was successfully sent.'
+  rescue ActiveRecord::RecordNotFound
+    redirect_to gifts_path, alert: "指定されたギフトが見つかりません。"
   end
 
-    def gift_params
-      params.require(:gift).permit(:giver_id, :receiver_id, :gift_category_id, :message, :sent_at)
-    end
+  def gift_params
+    params.require(:gift).permit(:giver_id, :receiver_id, :gift_category_id, :message, :sent_at)
+  end
 end
