@@ -39,26 +39,27 @@ class GiftsController < ApplicationController
 
   # app/controllers/gifts_controller.rb
   # app/controllers/gifts_controller.rb
-  def send_gift
-    @gift = Gift.find(params[:id])
-    if @gift.update(gift_params.merge(sent_at: Time.current))
-      respond_to do |format|
-        format.turbo_stream do
-          # 成功時にギフトカードの場所に成功メッセージを表示
-          render turbo_stream: turbo_stream.replace("gift_card_#{params[:id]}", partial: "gifts/send_gift_success", locals: { gift: @gift })
-        end
-        format.html { redirect_to gifts_path, notice: 'ギフトとメッセージを送信しました。' }
+def send_gift
+  @gift = Gift.find(params[:id])
+  # 更新時に gift_params で sent_at とメッセージも更新する
+  if @gift.update(gift_params.merge(sent_at: Time.current))
+    respond_to do |format|
+      format.turbo_stream do
+        # ギフトが正常に送信された後、そのギフトのカードを削除
+        render turbo_stream: turbo_stream.remove("gift_card_#{params[:id]}")
       end
-    else
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("send_gift_frame_#{params[:id]}", partial: "gifts/send_kudo_error", locals: { gift: @gift })
-        end
-        format.html { render :show, alert: 'ギフトの送信に失敗しました。' }
+      format.html { redirect_to gifts_path, notice: 'ギフトとメッセージを送信しました。' }
+    end
+  else
+    respond_to do |dormat|
+      format.turbo_stream do
+        # エラーがある場合はエラーメッセージを表示
+        render turbo_stream: turbo_stream.replace("send_gift_frame_#{params[:id]}", partial: "gifts/send_gift_error", locals: { gift: @gift })
       end
+      format.html { render :show, alert: 'ギフトの送信に失敗しました。' }
     end
   end
-  
+end
 
 
   private
