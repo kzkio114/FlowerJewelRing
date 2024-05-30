@@ -8,11 +8,16 @@ class ConsultationsController < ApplicationController
 
   # GET /consultations/1
   def show
-    @consultation = Consultation.find(params[:id])
-    @consultations = Consultation.all
+    @consultation = Consultation.includes(replies: :user).find(params[:id])
+    @consultations = Consultation.includes(:category).all
     respond_to do |format|
-      format.html
-      format.turbo_stream
+      format.html # show.html.erb で @consultation を使用
+      format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultation: @consultation }) }
+    end
+  rescue ActiveRecord::RecordNotFound
+    respond_to do |format|
+      format.html { redirect_to root_path, alert: "指定された相談が見つかりません。" }
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("content", partial: "shared/not_found") }
     end
   end
 

@@ -1,22 +1,32 @@
 class RepliesController < ApplicationController
-  def create
-  @consultation = Consultation.find(params[:consultation_id])
-  @reply = @consultation.replies.build(reply_params)
-  if @reply.save
-    respond_to do |format|
-      format.html { redirect_to @consultation, notice: '返信が成功しました。' }
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.append("replies", partial: "replies/reply", locals: { reply: @reply })
-      end
+    def new
+        @consultations = Consultation.find(params[:consultation_id])
+        @reply = @consultations.replies.build
     end
-  else
-    redirect_to @consultation, alert: '返信の保存に失敗しました。'
+
+   def create
+  @reply = Reply.new(reply_params)
+  @reply.user_id = current_user.id
+  @reply.consultation_id = params[:consultation_id]
+
+  respond_to do |format|
+    if @reply.save
+      @consultations = Consultation.all # ここで@consultationsを設定
+      # app/controllers/replies_controller.rb
+format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail', locals: { consultation: @reply.consultation }) }
+      format.html { redirect_to @reply.consultation, notice: 'Reply was successfully created.' }
+    else
+      @consultation = Consultation.find(params[:consultation_id]) # ここで@consultationを設定
+      format.html { render :new }
+      format.json { render json: @reply.errors, status: :unprocessable_entity }
+    end
   end
 end
 
-  private
+private
 
-  def reply_params
-    params.require(:reply).permit(:content)
-  end
+def reply_params
+  params.require(:reply).permit(:content)
 end
+end
+

@@ -1,23 +1,35 @@
-<!-- app/views/buttons/menu/_consultations_reply.html.erb -->
-<div class="columns is-multiline">
-  <% consultations.each do |consultation| %>
-    <div class="column is-one-third">
+<div id="content" class="container is-small frame-fixed-height has-background-primary">
+  <div class="columns is-multiline">
+    <!-- 左側のカラム（返信表示） -->
+    <div class="column is-half">
+      <div class="card">
+        <div class="card-content">
+          <div class="content">
+            <% consultation.replies.each do |reply| %>
+              <p><%= reply.content %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 右側のカラム（返信フォーム） -->
+    <div class="column is-half">
       <div class="card">
         <div class="card-content">
           <div class="content">
             <p><%= consultation.content %></p>
-            <%= form_with(model: [consultation, consultation.replies.build], local: true) do |form| %>
+            <%= form_with(model: [consultation, consultation.replies.build], local: true, data: { turbo_frame: dom_id(consultation, :replies) }) do |form| %>
               <div class="field">
-                <%= form.label :message, "返信内容" %>
-                <%= form.text_area :message, class: 'textarea' %>
+                <%= form.label :content, "返信内容" %>
+                <%= form.text_area :content, class: 'textarea' %>
               </div>
               <div class="field">
-                <%= form.submit "返信送信", class: "button is-link" %>
+                <%= form.submit "返信送信", class: "button is-link is-pulled-right" %>
               </div>
             <% end %>
           </div>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
 </div>

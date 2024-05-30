@@ -53,20 +53,23 @@ class ButtonsController < ApplicationController
   end
 
   def consultations_response
-    @consultations = Consultation.includes(:category).all
-    
+    @consultation = Consultation.find(params[:id])  # idはルーティングで設定された :member から取得
     respond_to do |format|
+      format.html { redirect_to @consultation }  # HTML応答が必要な場合
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/consultations_response", locals: { consultations: @consultations })
-        ]
+        render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/consultations_response', locals: { consultation: @consultation })
       end
     end
+  rescue ActiveRecord::RecordNotFound
+    # コンサルテーションが見つからない場合のエラーハンドリング
+    redirect_to consultations_path, alert: "指定された相談が見つかりません。"
   end
+
+
 
   def consultations_detail
     @consultations = Consultation.includes(:category).all
-    
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -75,23 +78,21 @@ class ButtonsController < ApplicationController
       end
     end
   end
-  
 
-  def consultations_reply
+
+  def consultations_post
     @consultations = Consultation.includes(:category).all
-    
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/consultations_reply", locals: { consultations: @consultations })
+          turbo_stream.replace("content", partial: "buttons/menu/consultations_post", locals: { consultations: @consultations })
         ]
       end
     end
   end
 
-
-
-
+  
 
 
   def gift_list
