@@ -1,7 +1,7 @@
-<div id="content" class="container is-small frame-fixed-height has-background-info">
+<div id="content">
   <div class="columns is-multiline">
   <% gifts.each do |gift| %>
-    <div class="column is-one-third">
+    <div id="gift_card_<%= gift.id %>" class="column is-one-third">
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">
@@ -14,12 +14,19 @@
             <img src="<%= gift.image_url %>" alt="ギフトの画像"><br>
             花言葉: <%= gift.message %>
             <br>
-            <turbo-frame id="send_gift_frame_<%= gift.id %>">
-              <%= button_to 'このギフトを送る', send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame" }, class: "button is-primary is-small" %>
-            </turbo-frame>
+            <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
+              <div class="field">
+                <%= form.label :message, "感謝のメッセージ" %>
+                <%= form.text_area :message, class: 'textarea', placeholder: "ここにメッセージを入力してください" %>
+              </div>
+              <div class="field">
+                <%= form.submit "このギフトを送る", class: "button is-primary is-small" %>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
     </div>
   <% end %>
 </div>
+

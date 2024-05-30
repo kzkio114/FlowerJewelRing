@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :gifts do
     member do
-      post :send_gift
+      post 'send_gift', to: 'gifts#send_gift'
     end
   end
 
