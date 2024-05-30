@@ -10,6 +10,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'gift_all', to: 'buttons#gift_all'
+
   resources :gifts do
     member do
       post 'send_gift', to: 'gifts#send_gift'

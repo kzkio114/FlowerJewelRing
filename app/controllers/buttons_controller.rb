@@ -124,6 +124,20 @@ class ButtonsController < ApplicationController
   end
 
 
+  def gift_all
+    @gifts = Gift.includes(:gift_category).all
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "content", 
+          partial: "buttons/menu/gift_all_response", 
+          locals: { gifts: @gifts }
+        )
+      end
+    end
+  end
+
+
 
 
   def send_gift

@@ -1,14 +1,14 @@
 # ユーザーを作成
-User.create!(name: 'Giver1', email: 'giv@example.com', password: 'password')
-User.create!(name: 'Receiver1', email: 'receiv@example.com', password: 'password')
+User.create!(name: 'Giver1', email: 'gi@example.com', password: 'password')
+User.create!(name: 'Receiver1', email: 'recei@example.com', password: 'password')
 
 # ギフトカテゴリを作成
 plant_category = GiftCategory.create!(name: '植物', description: '美しい植物のギフト')
 gem_category = GiftCategory.create!(name: '宝石', description: '価値ある宝石のギフト')
 
 # 既存のユーザーとギフトカテゴリを使用してギフトを作成
-giver = User.find_by(email: 'giv@example.com')
-receiver = User.find_by(email: 'receiv@example.com')
+giver = User.find_by(email: 'gi@example.com')
+receiver = User.find_by(email: 'recei@example.com')
 
 # # 植物ギフトを追加
 # 5.times do |i|

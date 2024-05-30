@@ -1,0 +1,32 @@
+<div id="content" class="container is-small frame-fixed-height has-background-info">
+  <div class="columns is-multiline">
+    <div class="column is-full">
+      <div class="level">
+        <div class="level-left">
+          <h1 class="title">ギフト一覧</h1>
+        </div>
+        <div class="level-right">
+          <%= button_to '感謝の気持ちを伝える', buttons_send_gift_path, method: :post, class: 'button is-primary is-large mt-5' , data: { turbo_frame: 'content' } %>
+        </div>
+      </div>
+    </div>
+    <% @gifts.each do |gift| %>
+      <div id="gift_card_<%= gift.id %>" class="column is-one-third">
+        <div class="card">
+          <header class="card-header">
+            <p class="card-header-title">
+              カテゴリ: <%= gift.gift_category.name %>
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              植物名: <%= gift.item_name %><br>
+              <img src="<%= gift.image_url %>" alt="ギフトの画像" style="width: 200px;"><br>
+              花言葉: <%= gift.message %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

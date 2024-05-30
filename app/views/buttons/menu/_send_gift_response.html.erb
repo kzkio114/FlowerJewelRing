@@ -11,7 +11,7 @@
         <div class="card-content">
           <div class="content">
             植物名: <%= gift.item_name %><br>
-            <img src="<%= gift.image_url %>" alt="ギフトの画像"><br>
+            <img src="<%= gift.image_url %>" alt="ギフトの画像" style="width: 200px;"><br>
             花言葉: <%= gift.message %>
             <br>
             <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
