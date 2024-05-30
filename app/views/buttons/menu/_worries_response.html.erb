@@ -1,19 +1,41 @@
 <div id="content" class="container is-small frame-fixed-height has-background-primary">
  みんなの悩み！
   <div class="has-text-white">
-    <% if @consultations.empty? %>
+    <% if @consultations.nil? %>
       <p>現在、コンサルテーションはありません。</p>
     <% else %>
       <div class="columns is-multiline">
         <% @consultations.each do |consultation| %>
         <div class="column is-one-third">
             <div id="<%= dom_id(consultation) %>">
-              <%= button_to consultation.title, consultations_response_path, method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" %>
+              <%= button_to consultation.title, consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" %>
               <!-- ここに詳細が非同期で表示されます -->
             </div>
           </div>
         <% end %>
       </div>
     <% end %>
+
+    <!-- 新しいコンサルテーションを作成するためのフォームを追加 -->
+<%= form_with(model: Consultation.new, url: consultations_path, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
   </div>
-</div>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content %>
+  </div>
+
+  <!-- ユーザーがカテゴリーを選択できるようにします -->
+  <div class="field">
+    <%= form.label :category_id %>
+    <%= form.collection_select :category_id, Category.all, :id, :name %>
+  </div>
+
+  <!-- 現在ログインしているユーザーのIDを自動的に設定します -->
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
+  <%= form.submit "投稿" %>
+  <% end %>
