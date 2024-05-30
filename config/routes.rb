@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # メニューのルーティング
   get 'gift_list', to: 'buttons#gift_list'
   # ギフトのルーティング
-  resources :gifts
+  
   # ボタン内のメニュールーティング（ギフトリスト）
   resources :menus1 do
     collection do
@@ -10,11 +10,16 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :gifts do
+    member do
+      post :send_gift
+    end
+  end
+
   # config/routes.rb
   resources :consultations do
     post 'response', on: :member, to: 'buttons#consultations_response', as: :consultations_response
   end
-
 
   resources :buttons do
     collection do
@@ -32,10 +37,6 @@ Rails.application.routes.draw do
 
   # ボタン内のメニュールーティング（悩み相談）
   post 'consultations_post', to: 'buttons#consultations_post', as: 'consultations_post'
-
-  resources :buttons do
-    post 'send_gift', on: :collection
-  end
 
   
   # Deviseのルーティング

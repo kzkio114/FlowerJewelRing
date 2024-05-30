@@ -1,4 +1,5 @@
 class ButtonsController < ApplicationController
+  
   def enter_app
     respond_to do |format|
       format.turbo_stream do
@@ -96,7 +97,7 @@ class ButtonsController < ApplicationController
 
 
   def gift_list
-    @total_gifts = Gift.count  # ギフトの総数を取得
+    @total_sent_gifts = Gift.where.not(sent_at: nil).count
 
     respond_to do |format|
       format.turbo_stream do
@@ -126,11 +127,14 @@ class ButtonsController < ApplicationController
 
 
   def send_gift
+    @gifts = Gift.includes(:gift_category).where(sent_at: nil)  # 未送付のギフトのみを取得
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/send_gift_response")
-        ]
+        render turbo_stream: turbo_stream.replace(
+          "content", 
+          partial: "buttons/menu/send_gift_response", 
+          locals: { gifts: @gifts }
+        )
       end
     end
   end
