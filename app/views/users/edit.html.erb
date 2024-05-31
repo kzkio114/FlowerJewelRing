@@ -1,0 +1,7 @@
+<%= form_with(model: @user, url: user_path(@user), local: true) do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+  <%= form.label :email %>
+  <%= form.email_field :email %>
+  <%= form.submit "Update" %>
+<% end %>

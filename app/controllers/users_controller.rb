@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def show
-    @user = User.find(params[:id])
   end
 
   def edit
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'User was successfully updated.'
+        redirect_to dashboard_path, notice: 'User was successfully updated.'
     else
       render :edit
     end

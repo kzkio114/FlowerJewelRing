@@ -9,6 +9,15 @@ Rails.application.routes.draw do
       get :gift_list
     end
   end
+  
+  #ユーザーのルーティング
+  # config/routes.rb
+  resources :users, only: [:update] do
+    member do
+      get 'edit', to: 'users#edit', as: 'edit_user_profile'
+    end
+  end
+
 
   post 'gift_all', to: 'buttons#gift_all'
 
