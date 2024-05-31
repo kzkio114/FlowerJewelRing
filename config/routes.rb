@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'buttons/user_show', to: 'buttons#user_show', as: 'buttons_user_show'  # ユーザーボタンを押した時のルーティング
+
   # config/routes.rb
   resources :consultations do
     post 'response', on: :member, to: 'buttons#consultations_response', as: :consultations_response

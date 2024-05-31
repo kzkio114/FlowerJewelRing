@@ -1,6 +1,12 @@
 <div id="content" class="container is-small frame-fixed-height has-background-warning">
-  <div class="has-text-white">
-    <!-- ここにユーザー情報の内容を書く -->
-    ユーザー情報の内容
-  </div>
+  <% @users.each do |user| %>
+    <div class="card">
+      <div class="card-content has-text-white">
+        <p class="title">ユーザー名: <%= user.name %></p>
+      </div>
+      <footer class="card-footer">
+        <%= button_to '詳細を見る', buttons_user_show_path(id: user.id), method: :post, class: 'button is-primary is-small column is-full mt-5' %>
+      </footer>
+    </div>
+  <% end %>
 </div>
