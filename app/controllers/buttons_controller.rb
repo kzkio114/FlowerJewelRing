@@ -1,5 +1,5 @@
 class ButtonsController < ApplicationController
-  
+
   def enter_app
     respond_to do |format|
       format.turbo_stream do
@@ -93,9 +93,6 @@ class ButtonsController < ApplicationController
     end
   end
 
-  
-
-
   def gift_list
     @total_sent_gifts = Gift.where.not(sent_at: nil).count
 
@@ -154,6 +151,7 @@ class ButtonsController < ApplicationController
   end
 
   def user
+    @users = User.all
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -162,7 +160,21 @@ class ButtonsController < ApplicationController
       end
     end
   end
+
+  def user_show
+    @user = User.find(params[:id])
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/user_show_response")
+        ]
+      end
+    end
+  end
+
 end
+
+
 
 
 
