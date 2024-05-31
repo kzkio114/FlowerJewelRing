@@ -6,7 +6,7 @@
         <div class="card-content">
           <div class="content">
             <p><%= consultation.content %></p>
-              <%= button_to '相談返信に向かう', consultation_path(consultation.id), method: :get, data: { turbo_frame: "content" }, class: "card button is-fullwidth" %>
+              <%= button_to '相談返信に向かう', consultations_detail_path(id: consultation.id), method: :post, data: { turbo_frame: "content" }, class: "card button is-fullwidth" %>
             </div>
           </div>
         </div>

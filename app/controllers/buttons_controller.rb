@@ -69,12 +69,13 @@ class ButtonsController < ApplicationController
 
 
   def consultations_detail
+    @consultation = Consultation.includes(replies: :user).find(params[:id])
     @consultations = Consultation.includes(:category).all
 
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/consultations_detail", locals: { consultations: @consultations })
+          turbo_stream.replace("content", partial: "buttons/menu/consultations_detail", locals: { consultation: @consultation })
         ]
       end
     end

@@ -1,6 +1,7 @@
 # ユーザーを作成
 User.create!(name: 'Giver1', email: 'gi@example.com', password: 'password')
 User.create!(name: 'Receiver1', email: 'recei@example.com', password: 'password')
+User.create!(name: 'test', email: 'gi@example.com', password: 'password')
 
 # ギフトカテゴリを作成
 plant_category = GiftCategory.create!(name: '植物', description: '美しい植物のギフト')
