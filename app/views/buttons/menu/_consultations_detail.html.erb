@@ -6,7 +6,7 @@
         <div class="card-content">
           <div class="content">
             <% consultation.replies.each do |reply| %>
-              <p><%= reply.content %></p>
+              <p><strong><%= reply.user.name %>:</strong> <%= reply.content %></p>
             <% end %>
           </div>
         </div>
@@ -18,6 +18,7 @@
         <div class="card-content">
           <div class="content">
             <p><%= consultation.content %></p>
+            <p>投稿者: <%= consultation.user.name %></p>
             <%= form_with(model: [consultation, consultation.replies.build], local: true, data: { turbo_frame: dom_id(consultation, :replies) }) do |form| %>
               <div class="field">
                 <%= form.label :content, "返信内容" %>
@@ -30,6 +31,7 @@
           </div>
         </div>
       </div>
+        <%= button_to "詳細ページに戻る", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" %>
     </div>
   </div>
 </div>
