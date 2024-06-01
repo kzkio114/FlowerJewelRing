@@ -9,13 +9,12 @@
           </li>
           <% if user_signed_in? %>
             <li>
-              <%= link_to 'プロフィール', edit_user_registration_path %> |
+              <%= link_to 'プロフィール', user_path(current_user) %>
               <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { "data-turbo" => "false" } %>
             </li>
           <% else %>
             <li>
-              <%= link_to 'ログイン', new_user_session_path %> |
-              <%= link_to 'サインアップ', new_user_registration_path %>
+              <%= button_to 'ログイン', buttons_login_path, method: :post %>
             </li>
           <% end %>
         </ul>

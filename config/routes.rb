@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   
   #ユーザーのルーティング
   # config/routes.rb
-  resources :users, only: [:update] do
+  resources :users, only: [:show, :update] do
     member do
       get 'edit', to: 'users#edit', as: 'edit_user_profile'
     end

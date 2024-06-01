@@ -13,9 +13,13 @@ class User < ApplicationRecord
   has_many :received_gifts, class_name: 'Gift', foreign_key: 'receiver_id'
   has_many :group_chat_members
   has_many :group_chat_messages
-  has_one :profile
+  belongs_to :organization, optional: true
+  has_one :profile, dependent: :destroy
+  accepts_nested_attributes_for :profile
   has_many :replies
   has_many :user_organizations, dependent: :destroy
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
 
   def self.from_omniauth(access_token)
     data = access_token.info

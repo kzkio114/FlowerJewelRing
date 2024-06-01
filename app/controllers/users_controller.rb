@@ -6,13 +6,16 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = User.find(params[:id])
+    @user.build_profile unless @user.profile
   end
 
   def update
     if @user.update(user_params)
-        redirect_to dashboard_path, notice: 'User was successfully updated.'
+      redirect_to dashboard_path, notice: 'User was successfully updated.'
     else
-      render :edit
+      Rails.logger.debug @user.errors.full_messages
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -24,10 +27,13 @@ class UsersController < ApplicationController
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
+    unless @user && (@user == current_user || current_user.admin?)
+      redirect_to root_url, alert: "Access denied."
+    end
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :display_name)
+    params.require(:user).permit(:name, :email, :display_name, profile_attributes: [:introduction, :interests])
   end
 end
