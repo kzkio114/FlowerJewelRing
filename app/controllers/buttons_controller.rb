@@ -173,6 +173,17 @@ class ButtonsController < ApplicationController
     end
   end
 
+  # def user_profile
+  #   @users = User.all
+  #   respond_to do |format|
+  #     format.turbo_stream do
+  #       render turbo_stream: [
+  #         turbo_stream.replace("content", partial: "buttons/menu/user_profile")
+  #       ]
+  #     end
+  #   end
+  # end
+
 end
 
 

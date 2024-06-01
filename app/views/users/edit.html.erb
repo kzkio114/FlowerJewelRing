@@ -1,7 +1,27 @@
-<%= form_with(model: @user, url: user_path(@user), local: true) do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name %>
-  <%= form.label :email %>
-  <%= form.email_field :email %>
-  <%= form.submit "更新" %>
+<%= form_for(@user) do |f| %>
+  <div class="field">
+    <%= f.label :name, "名前", class: 'label' %>
+    <%= f.text_field :name, class: 'input', placeholder: '名前を入力してください' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email, "メールアドレス", class: 'label' %>
+    <%= f.email_field :email, class: 'input', placeholder: 'メールアドレスを入力してください' %>
+  </div>
+
+  <%= f.fields_for :profile do |p| %>
+    <div class="field">
+      <%= p.label :introduction, "自己紹介", class: 'label' %>
+      <%= p.text_area :introduction, class: 'textarea', placeholder: '自己紹介を入力してください' %>
+    </div>
+
+    <div class="field">
+      <%= p.label :interests, "興味・関心", class: 'label' %>
+      <%= p.text_area :interests, class: 'textarea', placeholder: '興味・関心を入力してください' %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.submit "プロフィールを更新", class: 'button is-primary' %>
+  </div>
 <% end %>

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        ユーザープロフィール
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <p><strong>名前：</strong> <%= @user.name %></p>
+        <p><strong>メール：</strong> <%= @user.email %></p>
+        <p><strong>組織：</strong> <%= @user.organization&.name || '未登録' %></p>
+        <p><strong>自己紹介：</strong> <%= @user.profile&.introduction || '未登録' %></p>
+        <p><strong>興味・関心：</strong> <%= @user.profile&.interests || '未登録' %></p>
+        <%= link_to 'プロフィール編集', edit_user_profile_user_path(current_user), class: 'button is-link' %>
+      </div>
+    </div>
+  </div>
+</div>

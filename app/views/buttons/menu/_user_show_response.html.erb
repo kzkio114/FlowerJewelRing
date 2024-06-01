@@ -1,8 +1,11 @@
 <div id="content" class="container is-small frame-fixed-height has-background-warning">
   <div class="card">
-  <div class="card-content">
-    <p class="title">名前: <%= @user.name %></p>
-    <!-- 他のユーザー情報もここに追加 -->
+    <div class="card-content">
+      <p class="title">名前: <%= @user.name %></p>
+      <p class="subtitle">組織: <%= @user.organization&.name || '未登録' %></p>
+      <p class="subtitle">自己紹介: <%= @user.profile&.introduction || '未登録' %></p>
+      <p class="subtitle">興味・関心: <%= @user.profile&.interests || '未登録' %></p>
+      <!-- 必要に応じて他の情報もここに追加 -->
+    </div>
   </div>
-</div>
 </div>
