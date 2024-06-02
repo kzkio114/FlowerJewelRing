@@ -42,16 +42,39 @@ class ButtonsController < ApplicationController
   end
 
   def worries
-    @consultations = Consultation.includes(:category).all
+    if params[:category_id]
+      @consultations = Consultation.includes(:category).where(category_id: params[:category_id])
+    else
+      @consultations = Consultation.includes(:category).all
+    end
 
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/worries_response")
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations })
         ]
       end
     end
   end
+
+  def consultations_category
+    if params[:category_id]
+      @consultations = Consultation.includes(:category).where(category_id: params[:category_id], completed: true)
+    else
+      @consultations = Consultation.includes(:category).all
+    end
+  
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/consultations_category", locals: { consultations: @consultations })
+        ]
+      end
+    end
+  end
+
+
+
 
   def consultations_response
     @consultation = Consultation.find(params[:id])  # idはルーティングで設定された :member から取得
@@ -66,6 +89,20 @@ class ButtonsController < ApplicationController
     redirect_to consultations_path, alert: "指定された相談が見つかりません。"
   end
 
+  def consultations_destroy
+    @consultation = Consultation.find(params[:id])
+    @consultation.destroy
+  
+    @consultations = Consultation.includes(:category).all
+  
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations })
+        ]
+      end
+    end
+  end
 
 
   def consultations_detail
