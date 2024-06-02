@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   # ボタン内のメニュールーティング（悩み相談）
 
   resources :consultations do
+    post 'destroy_reply', to: 'buttons#consultations_destroy_reply', as: :destroy_reply
     resources :replies, only: [:new, :create]
   end
 

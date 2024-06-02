@@ -6,8 +6,11 @@
         <div class="card-content">
           <div class="content">
             <% consultation.replies.each do |reply| %>
+            <div id="reply_<%= reply.id %>">
               <p><strong><%= reply.user.name %>:</strong> <%= reply.content %></p>
-            <% end %>
+              <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger' %>
+            </div>
+          <% end %>
           </div>
         </div>
       </div>

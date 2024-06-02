@@ -105,6 +105,8 @@ class ButtonsController < ApplicationController
   end
 
 
+
+
   def consultations_detail
     @consultation = Consultation.includes(replies: :user).find(params[:id])
     @consultations = Consultation.includes(:category).all
@@ -119,17 +121,32 @@ class ButtonsController < ApplicationController
   end
 
 
-  def consultations_post
-    @consultations = Consultation.includes(:category).all
-
+  def consultations_destroy_reply
+    @consultation = Consultation.includes(replies: :user).find(params[:consultation_id])
+    @reply = @consultation.replies.find(params[:reply_id])
+    @reply.destroy
+  
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/consultations_post", locals: { consultations: @consultations })
-        ]
+        render turbo_stream: turbo_stream.remove("reply_#{@reply.id}")
       end
     end
   end
+
+
+  # def consultations_post
+  #   @consultations = Consultation.includes(:category).all
+
+  #   respond_to do |format|
+  #     format.turbo_stream do
+  #       render turbo_stream: [
+  #         turbo_stream.replace("content", partial: "buttons/menu/consultations_post", locals: { consultations: @consultations })
+  #       ]
+  #     end
+  #   end
+  # end
+
+
 
   def gift_list
     @total_sent_gifts = Gift.where.not(sent_at: nil).count
