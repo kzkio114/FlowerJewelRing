@@ -26,6 +26,11 @@ Rails.application.routes.draw do
       post 'send_gift', to: 'gifts#send_gift'
     end
   end
+  # カテゴリー
+  post 'consultations_category/:category_id', to: 'buttons#consultations_category', as: 'consultations_category'
+
+  #悩みの削除（詳細）
+  delete 'consultations/:id', to: 'buttons#consultations_destroy', as: 'consultations_destroy'
 
   post 'buttons/user_show', to: 'buttons#user_show', as: 'buttons_user_show'  # ユーザーボタンを押した時のルーティング
 

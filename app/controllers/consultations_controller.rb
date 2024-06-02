@@ -53,8 +53,6 @@ class ConsultationsController < ApplicationController
 
   # DELETE /consultations/1
   def destroy
-    @consultation.destroy
-    redirect_to consultations_url, notice: 'Consultation was successfully destroyed.'
   end
 
   private
