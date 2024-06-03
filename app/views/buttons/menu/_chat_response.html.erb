@@ -1,6 +1,20 @@
 <div id="content" class="container is-small frame-fixed-height has-background-success">
   <div class="has-text-white">
-    <!-- ここにチャットの内容を書く -->
-    チャットの内容
+    <div id="messages">
+      <% chats.each do |chat| %>
+        <p><strong><%= chat.sender.name %>:</strong> <%= chat.decrypted_message %></p>
+      <% end %>
+    </div>
+    <%= form_with model: @chat, url: chats_path, method: :post, data: { turbo: true } do |form| %>
+      <%= form.hidden_field :receiver_id, value: receiver_id %>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <%= form.text_field :message, placeholder: "Type your message here...", class: "input", id: "chat_message_input" %>
+        </div>
+        <div class="control">
+          <%= form.submit "Send", class: "button is-primary" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

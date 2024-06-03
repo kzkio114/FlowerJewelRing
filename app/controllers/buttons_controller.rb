@@ -166,15 +166,8 @@ class ButtonsController < ApplicationController
 
 
 
-  def chat
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/chat_response")
-        ]
-      end
-    end
-  end
+  
+
 
 
   def gift_all
@@ -260,6 +253,35 @@ class ButtonsController < ApplicationController
   #   end
   # end
 
+  # def chat
+  #   @chats = Chat.all
+  #   @chat = Chat.new
+  #   respond_to do |format|
+  #     format.turbo_stream do
+  #       render turbo_stream: [
+  #         turbo_stream.replace("content", partial: "buttons/menu/chat_response", locals: { chats: @chats })
+  #       ]
+  #     end
+  #   end
+  # end
+
+#   def create_chat
+#     @chat = Chat.new(chat_params)
+#     @chat.sender_id = current_user.id
+
+#     if @chat.save
+#       ActionCable.server.broadcast "chat_channel", message: @chat.decrypted_message, sender_id: @chat.sender_id, receiver_id: @chat.receiver_id
+#       head :ok
+#     else
+#       head :unprocessable_entity
+#     end
+#   end
+
+#   private
+
+#   def chat_params
+#     params.require(:chat).permit(:receiver_id, :message)
+#   end
 end
 
 

@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  # チャットのルーティング
+  resources :chats, only: [:create]
+  post 'chat', to: 'chats#chat', as: 'chat'
+  # その他のルート
+
+ 
+  # ActionCableのサーバー接続エンドポイント
+  mount ActionCable.server => '/cable'
+  
   # メニューのルーティング
   get 'gift_list', to: 'buttons#gift_list'
   # ギフトのルーティング
