@@ -14,6 +14,7 @@ class GiftsController < ApplicationController
 
   def create
     @gift = Gift.new(gift_params)
+    @gift.giver = current_user # 現在ログインしているユーザーをgiverに設定
     if @gift.save
       redirect_to @gift, notice: 'Gift was successfully created.'
     else
@@ -38,29 +39,33 @@ class GiftsController < ApplicationController
   end
 
   # app/controllers/gifts_controller.rb
-  # app/controllers/gifts_controller.rb
-def send_gift
-  @gift = Gift.find(params[:id])
-  # 更新時に gift_params で sent_at とメッセージも更新する
-  if @gift.update(gift_params.merge(sent_at: Time.current, sender_message: params[:gift][:sender_message]))
-    respond_to do |format|
-      format.turbo_stream do
-        # ギフトが正常に送信された後、そのギフトのカードを削除
-        render turbo_stream: turbo_stream.remove("gift_card_#{params[:id]}")
-      end
-      format.html { redirect_to gifts_path, notice: 'ギフトとメッセージを送信しました。' }
+  def send_gift
+    @gift = Gift.find(params[:id])
+    @gift.giver_id = current_user.id
+    @gift.receiver = User.find_by(id: params[:gift][:receiver_id])  # 送信先のユーザーIDをパラメータから取得# 送信先のユーザーIDをパラメータから取得
+
+    if @gift.receiver.nil?
+      Rails.logger.info("Receiver not found")
+      return
     end
-  else
-    respond_to do |dormat|
-      format.turbo_stream do
-        # エラーがある場合はエラーメッセージを表示
-        render turbo_stream: turbo_stream.replace("send_gift_frame_#{params[:id]}", partial: "gifts/send_gift_error", locals: { gift: @gift })
+  
+    if @gift.save
+      @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
+      @total_sent_gifts = Gift.where(giver_id: current_user.id).count
+      @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            "content", 
+            partial: "buttons/menu/send_gift_response", 
+            locals: { gifts: @gifts }
+          )
+        end
       end
-      format.html { render :show, alert: 'ギフトの送信に失敗しました。' }
+    else
+      Rails.logger.info(@gift.errors.full_messages.join(", "))
     end
   end
-end
-
 
   private
 
@@ -71,6 +76,6 @@ end
   end
 
   def gift_params
-    params.require(:gift).permit(:giver_id, :receiver_id, :gift_category_id, :message, :sent_at)
+    params.require(:gift).permit(:receiver_id, :item_name, :description, :color, :sender_message)
   end
 end

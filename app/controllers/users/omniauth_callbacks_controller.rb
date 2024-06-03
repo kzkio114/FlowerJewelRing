@@ -30,6 +30,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         # ユーザーが新規の場合、プロフィール編集ページにリダイレクト
         flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: kind)
         sign_in(@user)
+
+        # 新規ユーザーにランダムに10個のギフトを与える
+        gifts = Gift.order("RANDOM()").limit(10)
+        gifts.each do |gift|
+          gift.update!(receiver_id: @user.id)
+        end
+
         redirect_to edit_user_profile_user_path(@user)
       else
         # 既存のユーザーの場合、通常のログイン処理

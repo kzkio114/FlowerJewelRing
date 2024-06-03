@@ -1,16 +1,16 @@
 <div id="content" class="container is-small">
   <div style="overflow-y: auto; max-height: 50%;">
-    皆さんの感謝の気持ちで変動します！！ <%= @total_sent_gifts %>
+    皆さんの感謝の気持ちで変動します！ <%= @total_sent_gifts_all_users %>
   </div>
-  <% if @total_sent_gifts > 250 %>
+  <% if @total_sent_gifts_all_users > 250 %>
     <%= image_tag "6.webp", style: 'max-width: 50%; max-height: 50%;' %>
-  <% elsif @total_sent_gifts > 200 %>
+  <% elsif @total_sent_gifts_all_users > 200 %>
     <%= image_tag "5.webp", style: 'max-width: 50%; max-height: 50%;' %>
-  <% elsif @total_sent_gifts > 150 %>
+  <% elsif @total_sent_gifts_all_users > 150 %>
     <%= image_tag "4.webp", style: 'max-width: 50%; max-height: 50%;' %>
-  <% elsif @total_sent_gifts > 100 %>
+  <% elsif @total_sent_gifts_all_users > 100 %>
     <%= image_tag "3.webp", style: 'max-width: 50%; max-height: 50%;' %>
-  <% elsif @total_sent_gifts > 50 %>
+  <% elsif @total_sent_gifts_all_users > 50 %>
     <%= image_tag "2.webp", style: 'max-width: 50%; max-height: 50%;' %>
   <% else %>
     <%= image_tag "1.webp", style: 'max-width: 50%; max-height: 50%;' %>

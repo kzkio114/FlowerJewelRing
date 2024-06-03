@@ -1,7 +1,3 @@
-# 例えば、Userモデルが存在し、最初のユーザーをgiver、2番目のユーザーをreceiverとする場合
-giver = User.first
-receiver = User.second
-
 # ギフトカテゴリを作成
 plant_category = GiftCategory.create!(name: '植物', description: '美しい植物のギフト')
 #gem_category = GiftCategory.create!(name: '宝石', description: '価値ある宝石のギフト')
@@ -40,12 +36,11 @@ flowers = [
   ["スミレ", "誠実な愛"]
 ]
 
+
 # 各日付の花と花言葉に対応するギフトを作成
 flowers.each_with_index do |(flower, message), i|
   Gift.create!(
-    giver: giver,
-    receiver: receiver,
-    gift_category: plant_category,
+    gift_category_id: plant_category.id, # plant_categoryは適切なGiftCategoryオブジェクトに置き換えてください
     item_name: flower,
     description: message, # 花言葉をdescriptionに保存
     color: 'green',
