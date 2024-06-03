@@ -17,7 +17,7 @@
         <p><strong>ギフトを贈った回数：</strong><%= @user.sent_gifts.count %></p>
         <ul>
           <% @user.sent_gifts.each do |gift| %>
-            <li><%= gift.name %></li>
+            <li><%= gift.item_name %></li>
           <% end %>
         </ul>
 
@@ -25,7 +25,7 @@
         <p><strong>ギフトを受け取った回数：</strong><%= @user.received_gifts.count %></p>
         <ul>
           <% @user.received_gifts.each do |gift| %>
-            <li><%= gift.name %></li>
+            <li><%= gift.item_name %></li>
           <% end %>
         </ul>
 

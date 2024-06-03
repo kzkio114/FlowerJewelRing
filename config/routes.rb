@@ -79,7 +79,7 @@ Rails.application.routes.draw do
   # post 'buttons/hide_worries', to: 'buttons#hide_worries', as: 'buttons_hide_worries'  # 悩み相談を閉じるボタンを押した時のルーティング
   post 'buttons/gift_list', to: 'buttons#gift_list', as: 'buttons_gift_list'  # ギフト一覧ボタンを押した時のルーティング
   post 'buttons/chat', to: 'buttons#chat', as: 'buttons_chat'  # チャットボタンを押した時のルーティング
-  post 'buttons/send_gift', to: 'buttons#send_gift', as: 'buttons_send_gift'  # ギフト送信ボタンを押した時のルーティング
+  post 'buttons/send_gift_response', to: 'buttons#send_gift_response', as: 'buttons_send_gift_response' # ギフト送信ボタンを押した時のルーティング
   post 'buttons/user', to: 'buttons#user', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
 
   post 'buttons/enter_app', to: 'buttons#enter_app'  # 説明を見るボタンを押した時のルーティング

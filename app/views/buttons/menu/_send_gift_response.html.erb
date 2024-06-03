@@ -12,17 +12,21 @@
           <div class="content">
             植物名: <%= gift.item_name %><br>
             <img src="<%= gift.image_url %>" alt="ギフトの画像" style="width: 200px;"><br>
-            花言葉: <%= gift.message %>
+            花言葉: <%= gift.description %>
             <br>
             <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
-              <div class="field">
-                <%= form.label :message, "感謝のメッセージ" %>
-                <%= form.text_area :message, class: 'textarea', placeholder: "ここにメッセージを入力してください" %>
-              </div>
-              <div class="field">
-                <%= form.submit "このギフトを送る", class: "button is-primary is-small" %>
-              </div>
-            <% end %>
+            <div class="field">
+              <%= form.label :receiver_id, "送信先ユーザー" %>
+              <%= form.collection_select :receiver_id, User.all, :id, :name, prompt: "ユーザーを選択してください" %>
+            </div>
+            <div class="field">
+              <%= form.label :sender_message, "感謝のメッセージ" %>
+              <%= form.text_area :sender_message, class: 'textarea', placeholder: "ここにメッセージを入力してください" %>
+            </div>
+            <div class="field">
+              <%= form.submit "このギフトを送る", class: "button is-primary is-small" %>
+            </div>
+          <% end %>
           </div>
         </div>
       </div>

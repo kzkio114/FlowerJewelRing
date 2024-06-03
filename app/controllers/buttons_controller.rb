@@ -149,14 +149,15 @@ class ButtonsController < ApplicationController
 
 
   def gift_list
-    @total_sent_gifts = Gift.where.not(sent_at: nil).count
-
+    @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
+    @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
+  
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "content",
           partial: "buttons/menu/gift_list_response",
-          locals: { total_gifts: @total_gifts }
+          locals: { total_sent_gifts_all_users: @total_sent_gifts_all_users }  # @total_sent_giftsを直接設定
         )
       end
     end
@@ -192,8 +193,8 @@ class ButtonsController < ApplicationController
 
 
 
-  def send_gift
-    @gifts = Gift.includes(:gift_category).where(sent_at: nil)  # 未送付のギフトのみを取得
+  def send_gift_response
+    @gifts = Gift.includes(:gift_category, :giver, :receiver).where(receiver_id: current_user.id)# ユーザーが受け取ったギフトを取得
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
@@ -204,6 +205,27 @@ class ButtonsController < ApplicationController
       end
     end
   end
+
+  # def send_gift
+  #   @gift = Gift.find(params[:id])
+  #   @gift.giver_id = current_user.id
+  #   @gift.receiver_id = params[:receiver_id]  # 送信先のユーザーIDをパラメータから取得
+  
+  #   if @gift.save
+  #     @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
+  #     respond_to do |format|
+  #       format.turbo_stream do
+  #         render turbo_stream: turbo_stream.replace(
+  #           "content", 
+  #           partial: "buttons/menu/send_gift_response", 
+  #           locals: { gifts: @gifts }
+  #         )
+  #       end
+  #     end
+  #   else
+  #     # ギフトの保存に失敗した場合の処理を書く
+  #   end
+  # end
 
   def user
     @users = User.all
