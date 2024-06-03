@@ -13,23 +13,22 @@
         <p><strong>自己紹介：</strong> <%= @user.profile&.introduction || '未登録' %></p>
         <p><strong>興味・関心：</strong> <%= @user.profile&.interests || '未登録' %></p>
 
-        <p><strong>送ったギフト：</strong></p>
-        <p><strong>ギフトを贈った回数：</strong><%= @user.sent_gifts.count %></p>
+        <p><strong>贈ったギフトと回数：</strong><%= @user.sent_gifts.count %></p>
         <ul>
           <% @user.sent_gifts.each do |gift| %>
             <li><%= gift.item_name %></li>
           <% end %>
         </ul>
 
-        <p><strong>受け取ったギフト：</strong></p>
-        <p><strong>ギフトを受け取った回数：</strong><%= @user.received_gifts.count %></p>
+        <p><strong>受け取ったギフトと回数：</strong><%= @user.received_gifts.count %></p>
         <ul>
           <% @user.received_gifts.each do |gift| %>
             <li><%= gift.item_name %></li>
           <% end %>
         </ul>
 
-        <%= link_to 'プロフィール編集', edit_user_profile_user_path(current_user), class: 'button is-link' %>
+        <%= link_to 'プロフィール編集', edit_user_profile_user_path(@user), class: 'button is-link' %>
+        <%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info' %>
       </div>
     </div>
   </div>
