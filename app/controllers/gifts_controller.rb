@@ -42,7 +42,7 @@ class GiftsController < ApplicationController
 def send_gift
   @gift = Gift.find(params[:id])
   # 更新時に gift_params で sent_at とメッセージも更新する
-  if @gift.update(gift_params.merge(sent_at: Time.current))
+  if @gift.update(gift_params.merge(sent_at: Time.current, sender_message: params[:gift][:sender_message]))
     respond_to do |format|
       format.turbo_stream do
         # ギフトが正常に送信された後、そのギフトのカードを削除

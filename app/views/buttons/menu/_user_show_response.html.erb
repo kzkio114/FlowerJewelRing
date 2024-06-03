@@ -9,7 +9,7 @@
       <p><strong>ギフトを贈った回数：</strong><%= @user.sent_gifts.count %></p>
       <ul>
         <% @user.sent_gifts.each do |gift| %>
-          <li><%= gift.name %></li>
+          <%= gift.item_name %>
         <% end %>
       </ul>
     </div>
