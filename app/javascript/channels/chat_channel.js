@@ -9,21 +9,26 @@ const chatChannel = consumer.subscriptions.create("ChatChannel", {
     console.log("Disconnected from the chat channel");
   },
   received(data) {
+    console.log("Received data:", data); // 受信データをログに出力
     const messages = document.getElementById('messages');
-    // ブロードキャストされたHTMLを直接追加
-    messages.innerHTML += data.html;
+    if (messages) {
+      messages.innerHTML += data.html; // サーバーから受け取ったHTMLを挿入
+    }
+  },
+  speak(message, receiver_id) {
+    this.perform('speak', { message: message, receiver_id: receiver_id });
   }
 });
 
 document.addEventListener('turbo:load', () => {
-  const input = document.getElementById('chat_message');
-  const button = document.getElementById('send_message_button');
+  const input = document.getElementById('chat_message_input');
+  const button = document.querySelector('input[type="submit"]');
 
   if (input && button) {
     const sendMessage = () => {
       const message = input.value;
       if (message.trim() !== '') {
-        chatChannel.speak(message, input.dataset.receiverId);  // 受信者IDを動的に取得
+        chatChannel.speak(message, input.dataset.receiverId);
         input.value = '';
       }
     };
@@ -35,8 +40,9 @@ document.addEventListener('turbo:load', () => {
       }
     });
 
-    button.addEventListener('click', () => {
+    button.addEventListener('click', (event) => {
       sendMessage();
+      event.preventDefault(); // フォームのデフォルトの送信動作を防ぐ
     });
   }
 });

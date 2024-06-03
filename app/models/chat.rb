@@ -9,10 +9,13 @@ class Chat < ApplicationRecord
   before_save :encrypt_message
 
   def encrypt_message
-    self.encrypted = Base64.encode64(message) # 簡易的な暗号化。実際にはより強力な暗号化方法を使用してください。
+    self.encrypted = Base64.encode64(message.encode('UTF-8'))
+    Rails.logger.debug "Encrypted message: #{self.encrypted}"
   end
 
   def decrypted_message
-    Base64.decode64(encrypted)
+    decoded_message = Base64.decode64(encrypted).force_encoding('UTF-8')
+    Rails.logger.debug "Decrypted message: #{decoded_message}"
+    decoded_message
   end
 end

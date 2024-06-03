@@ -2,7 +2,7 @@
   <div class="has-text-white">
     <div id="messages">
       <% chats.each do |chat| %>
-        <p><strong><%= chat.sender.name %>:</strong> <%= chat.decrypted_message %></p>
+        <p><strong><%= chat.sender.name.force_encoding('UTF-8') %>:</strong> <%= chat.decrypted_message.force_encoding('UTF-8') %></p>
       <% end %>
     </div>
     <%= form_with model: @chat, url: chats_path, method: :post, data: { turbo: true } do |form| %>
