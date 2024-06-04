@@ -21,7 +21,7 @@ class ChatsController < ApplicationController
   def chat
     @chats = Chat.all
     @chat = Chat.new
-    @receiver_id = 65 # 固定の受信者IDを設定する場合
+    @receiver_id = params[:receiver_id] # 受信者IDを動的に設定
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [

@@ -66,7 +66,6 @@ Rails.application.routes.draw do
   # ボタン内のメニュールーティング（悩み相談）
   post 'consultations_post', to: 'buttons#consultations_post', as: 'consultations_post'
 
-  
   # Deviseのルーティング
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
