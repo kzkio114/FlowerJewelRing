@@ -44,7 +44,7 @@ flowers.each_with_index do |(flower, message), i|
     item_name: flower,
     description: message, # 花言葉をdescriptionに保存
     color: 'green',
-    #image_url: "assets/#{i+1}.webp", # 画像のURLは適宜調整してください
+    image_url: "assets/#{i+1}.webp", # 画像のURLは適宜調整してください
     sender_message: "", # sender_messageは空にしておく
   )
 end
