@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  # チャットのルーティング
+  resources :chats, only: [:create, :destroy]
+  post 'chat', to: 'chats#chat', as: 'custom_chat'
+  # その他のルート
+
+ 
+  # ActionCableのサーバー接続エンドポイント
+  mount ActionCable.server => '/cable'
+  
   # メニューのルーティング
   get 'gift_list', to: 'buttons#gift_list'
   # ギフトのルーティング
@@ -57,7 +66,6 @@ Rails.application.routes.draw do
   # ボタン内のメニュールーティング（悩み相談）
   post 'consultations_post', to: 'buttons#consultations_post', as: 'consultations_post'
 
-  
   # Deviseのルーティング
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'

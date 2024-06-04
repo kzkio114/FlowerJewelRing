@@ -1,8 +1,5 @@
 <div id="content" class="container is-small frame-fixed-height has-background-success">
   <div class="has-text-white">
-    <% if selected_user %>
-      <p>選択されたユーザー: <%= selected_user.name %></p>
-    <% end %>
     <div id="messages">
       <% chats.each do |chat| %>
         <div id="chat_<%= chat.id %>">
@@ -15,7 +12,7 @@
       <%= form.hidden_field :receiver_id, value: receiver_id %>
       <div class="field has-addons">
         <div class="control is-expanded">
-          <%= form.text_field :message, placeholder: "メッセージを入れて下さい!!", class: "input", id: "chat_message_input" %>
+          <%= form.text_field :message, placeholder: "Type your message here...", class: "input", id: "chat_message_input" %>
         </div>
         <div class="control">
           <%= form.submit "Send", class: "button is-primary" %>
@@ -23,8 +20,4 @@
       </div>
     <% end %>
   </div>
-  <%= form_with url: custom_chat_path, method: :post do |f| %>
-  <%= f.collection_select :receiver_id, User.where.not(id: current_user.id), :id, :name %>
-  <%= f.submit "相手を選んでください！！" %>
-<% end %>
 </div>

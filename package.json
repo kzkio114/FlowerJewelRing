@@ -8,8 +8,9 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.4",
+    "@rails/actioncable": "^7.0.8-3",
     "bulma": "^1.0.1",
-    "sass": "^1.77.2",
-    "bun": "^1.1.8"
+    "bun": "^1.1.8",
+    "sass": "^1.77.2"
   }
 }
