@@ -1,10 +1,16 @@
+# app/controllers/chats_controller.rb
 class ChatsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :chat]
+  before_action :authenticate_user!, only: [:create, :chat, :destroy]
+  before_action :set_chat, only: [:destroy]
 
   def create
     @chat = current_user.sent_chats.build(chat_params)
     if @chat.save
-      ActionCable.server.broadcast 'chat_channel', { message: @chat.message, sender_id: @chat.sender_id, receiver_id: @chat.receiver_id }
+      ActionCable.server.broadcast 'chat_channel', {
+        html: ApplicationController.renderer.render(partial: "chats/message", locals: { chat: @chat }, formats: [:html]),
+        sender_id: @chat.sender_id,
+        receiver_id: @chat.receiver_id
+      }
       head :ok
     else
       logger.debug @chat.errors.full_messages.join(", ")
@@ -26,9 +32,21 @@ class ChatsController < ApplicationController
     end
   end
 
+  def destroy
+    if @chat.destroy
+      head :ok
+    else
+      render json: @chat.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def chat_params
     params.require(:chat).permit(:receiver_id, :message)
+  end
+
+  def set_chat
+    @chat = Chat.find(params[:id])
   end
 end

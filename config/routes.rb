@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # チャットのルーティング
-  resources :chats, only: [:create]
-  post 'chat', to: 'chats#chat', as: 'chat'
+  resources :chats, only: [:create, :destroy]
+  post 'chat', to: 'chats#chat', as: 'custom_chat'
   # その他のルート
 
  

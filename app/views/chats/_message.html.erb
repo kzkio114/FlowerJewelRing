@@ -1,0 +1,4 @@
+<!-- app/views/chats/_message.html.erb -->
+<p><strong><%= chat.sender.name.force_encoding('UTF-8') %>:</strong> <%= chat.decrypted_message.force_encoding('UTF-8') %></p>
+<%= button_to '削除', chat_path(chat), method: :delete, data: { confirm: '本当に削除しますか？' }, remote: true %>
+

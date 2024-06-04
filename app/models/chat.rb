@@ -7,9 +7,10 @@ class Chat < ApplicationRecord
   validates :message, presence: true
 
   before_save :encrypt_message
+  
 
   def encrypt_message
-    self.encrypted = Base64.encode64(message.encode('UTF-8'))
+    self.encrypted = Base64.encode64(message)
     Rails.logger.debug "Encrypted message: #{self.encrypted}"
   end
 
