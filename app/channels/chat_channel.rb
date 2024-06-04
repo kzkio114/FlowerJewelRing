@@ -12,9 +12,13 @@ class ChatChannel < ApplicationCable::Channel
     message = Chat.create!(sender_id: current_user.id, receiver_id: data['receiver_id'], message: data['message'])
     
     ActionCable.server.broadcast("chat_channel", {
-      html: ApplicationController.renderer.render(partial: "chats/message", locals: { chat: message }, formats: [:html]),
-      sender_id: message.sender_id,
-      receiver_id: message.receiver_id
+      message: render_message(message)
     })
+  end
+
+  private
+
+  def render_message(message)
+    ApplicationController.renderer.render(partial: 'chats/message', locals: { chat: message })
   end
 end

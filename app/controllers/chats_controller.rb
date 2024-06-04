@@ -7,9 +7,8 @@ class ChatsController < ApplicationController
     @chat = current_user.sent_chats.build(chat_params)
     if @chat.save
       ActionCable.server.broadcast 'chat_channel', {
-        html: ApplicationController.renderer.render(partial: "chats/message", locals: { chat: @chat }, formats: [:html]),
-        sender_id: @chat.sender_id,
-        receiver_id: @chat.receiver_id
+        action: 'create',
+        message: render_to_string(partial: 'chats/message', locals: { chat: @chat }, formats: [:html])
       }
       head :ok
     else
@@ -33,7 +32,12 @@ class ChatsController < ApplicationController
   end
 
   def destroy
+    chat_id = @chat.id
     if @chat.destroy
+      ActionCable.server.broadcast 'chat_channel', {
+        action: 'destroy',
+        chat_id: chat_id
+      }
       head :ok
     else
       render json: @chat.errors, status: :unprocessable_entity

@@ -11,10 +11,13 @@ const chatChannel = consumer.subscriptions.create("ChatChannel", {
   received(data) {
     console.log("Received data:", data); // 受信データをログに出力
     const messages = document.getElementById('messages');
-    if (messages && data.html) {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(data.html, 'text/html');
-      messages.appendChild(doc.body.firstChild);
+    if (data.action === 'create' && messages && data.message) {
+      messages.innerHTML += data.message; // サーバーから受け取ったHTMLを挿入
+    } else if (data.action === 'destroy' && data.chat_id) {
+      const chatElement = document.getElementById(`chat_${data.chat_id}`);
+      if (chatElement) {
+        chatElement.remove(); // メッセージを削除
+      }
     }
   },
   speak(message, receiver_id) {
