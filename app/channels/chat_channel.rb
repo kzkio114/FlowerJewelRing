@@ -12,7 +12,8 @@ class ChatChannel < ApplicationCable::Channel
     message = Chat.create!(sender_id: current_user.id, receiver_id: data['receiver_id'], message: data['message'])
     
     ActionCable.server.broadcast("chat_channel", {
-      message: render_message(message)
+      message: render_message(message),
+      success: message.persisted? # メッセージが正常に作成されたことを示すフラグ
     })
   end
 

@@ -8,9 +8,10 @@ class ChatsController < ApplicationController
     if @chat.save
       ActionCable.server.broadcast 'chat_channel', {
         action: 'create',
-        message: render_to_string(partial: 'chats/message', locals: { chat: @chat }, formats: [:html])
+        message: render_to_string(partial: 'chats/message', locals: { chat: @chat }, formats: [:html]),
+        success: true
       }
-      head :ok
+      render turbo_stream: turbo_stream.append('messages', partial: 'chats/message', locals: { chat: @chat })
     else
       logger.debug @chat.errors.full_messages.join(", ")
       render json: @chat.errors, status: :unprocessable_entity

@@ -9,10 +9,16 @@ const chatChannel = consumer.subscriptions.create("ChatChannel", {
     console.log("Disconnected from the chat channel");
   },
   received(data) {
-    console.log("Received data:", data); // 受信データをログに出力
+    console.log("Received data:", data, "Success:", data.success); // この行を修正
     const messages = document.getElementById('messages');
     if (data.action === 'create' && messages && data.message) {
       messages.innerHTML += data.message; // サーバーから受け取ったHTMLを挿入
+      if (data.success) {
+        const input = document.getElementById('chat_message_input');
+        if (input) {
+          input.value = ''; // フィールドをクリア
+        }
+      }
     } else if (data.action === 'destroy' && data.chat_id) {
       const chatElement = document.getElementById(`chat_${data.chat_id}`);
       if (chatElement) {
@@ -34,7 +40,7 @@ document.addEventListener('turbo:load', () => {
       const message = input.value;
       if (message.trim() !== '') {
         chatChannel.speak(message, input.dataset.receiverId);
-        input.value = '';
+        input.value = ''; // フィールドをクリア
       }
     };
 

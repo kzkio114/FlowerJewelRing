@@ -2,8 +2,10 @@
   <div class="has-text-white">
     <div id="messages">
       <% chats.each do |chat| %>
-        <p><strong><%= chat.sender.name.force_encoding('UTF-8') %>:</strong> <%= chat.decrypted_message.force_encoding('UTF-8') %></p>
-        <%= button_to '削除', chat_path(chat), method: :delete, data: { confirm: '本当に削除しますか？' }, remote: true %>
+        <div id="chat_<%= chat.id %>">
+          <p><strong><%= chat.sender.name.force_encoding('UTF-8') %>:</strong> <%= chat.decrypted_message.force_encoding('UTF-8') %></p>
+          <%= button_to '削除', chat_path(chat), method: :delete, data: { confirm: '本当に削除しますか？' }, remote: true %>
+        </div>
       <% end %>
     </div>
     <%= form_with model: @chat, url: chats_path, method: :post, data: { turbo: true } do |form| %>
