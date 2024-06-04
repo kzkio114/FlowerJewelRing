@@ -1,5 +1,8 @@
 <div id="content" class="container is-small frame-fixed-height has-background-success">
   <div class="has-text-white">
+    <% if selected_user %>
+      <p>選択されたユーザー: <%= selected_user.name %></p>
+    <% end %>
     <div id="messages">
       <% chats.each do |chat| %>
         <div id="chat_<%= chat.id %>">
