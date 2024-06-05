@@ -98,3 +98,6 @@ gem 'devise-i18n'
 
 # omniauthのバージョンを指定するためのgem
 gem 'omniauth', '2.1.2'
+
+# Action CableのためのRedisを追加
+gem 'redis', '~> 4.0'

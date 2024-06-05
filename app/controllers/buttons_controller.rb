@@ -4,9 +4,7 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("response_area", partial: "buttons/enter_app_response"),
-          turbo_stream.append("response_area", partial: "buttons/enter_app_response"),
-          turbo_stream.replace("enter_app_button", partial: "buttons/without_login_button")
+          turbo_stream.replace("response_area", partial: "buttons/enter_app_response")
         ]
       end
     end
@@ -17,7 +15,6 @@ class ButtonsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.replace("response_area", partial: "buttons/login_response"),
-          turbo_stream.append("response_area", partial: "buttons/login_response"),
           turbo_stream.replace("login_button", partial: "buttons/without_login_button"),
           turbo_stream.replace("content", partial: "buttons/menu/trial_login_response")
         ]
@@ -28,7 +25,10 @@ class ButtonsController < ApplicationController
   def menu
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons")
+        render turbo_stream: [
+        turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons"),
+        turbo_stream.replace("content", partial: "buttons/response")
+        ]
       end
     end
   end
@@ -36,7 +36,10 @@ class ButtonsController < ApplicationController
   def close_menu
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("menu", partial: "buttons/menu/closed_menu")
+        render turbo_stream: [
+        turbo_stream.replace("menu", partial: "buttons/menu/closed_menu"),
+        turbo_stream.replace("content", partial: "buttons/response")
+        ]
       end
     end
   end
@@ -149,7 +152,7 @@ class ButtonsController < ApplicationController
 
 
   def gift_list
-    @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
+    #@gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
     @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
   
     respond_to do |format|
