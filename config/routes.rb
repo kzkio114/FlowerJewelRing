@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  #暫定　ソーシャルログインだけの場合
+  get '/users/sign_in', to: redirect('/')
+
   # チャットのルーティング
   resources :chats, only: [:create, :destroy]
   post 'chat', to: 'chats#chat', as: 'custom_chat'

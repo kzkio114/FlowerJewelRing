@@ -17,6 +17,7 @@
     <% end %>
   </div>
 
+  <% if user_signed_in? %>
   <!-- 新しいコンサルテーションを作成するためのフォームを追加 -->
   <div class="container is-small">
     <div class="columns">
@@ -56,4 +57,5 @@
       </div>
     </div>
   </div>
+  <% end %>
 </div>
