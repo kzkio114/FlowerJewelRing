@@ -8,7 +8,9 @@
             <% consultation.replies.each do |reply| %>
             <div id="reply_<%= reply.id %>">
               <p><strong><%= reply.user.name %>:</strong> <%= reply.content %></p>
+              <% if current_user == reply.user %>
               <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger' %>
+              <% end %>
             </div>
           <% end %>
           </div>
