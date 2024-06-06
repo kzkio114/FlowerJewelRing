@@ -1,36 +1,43 @@
 <div id="content" class="container is-small frame-fixed-height has-background-info">
   <div class="columns is-multiline">
-  <% gifts.each do |gift| %>
-    <div id="gift_card_<%= gift.id %>" class="column is-one-third">
-      <div class="card">
-        <header class="card-header">
-          <p class="card-header-title">
-            カテゴリ: <%= gift.gift_category.name %>
-          </p>
-        </header>
-        <div class="card-content">
-          <div class="content">
-            植物名: <%= gift.item_name %><br>
-            <img src="<%= gift.image_url %>" alt="ギフトの画像" style="width: 200px;"><br>
-            花言葉: <%= gift.description %>
-            <br>
-            <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
-            <div class="field">
-              <%= form.label :receiver_id, "送信先ユーザー" %>
-              <%= form.collection_select :receiver_id, @reply_users, :id, :name, prompt: "ユーザーを選択してください" %>
+    <% gifts.each do |gift| %>
+      <% unless gift.sent_at.present? %> <!-- 送信されたギフトは表示しない -->
+        <div id="gift_card_<%= gift.id %>" class="column is-one-third">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                カテゴリ: <%= gift.gift_category.name %>
+              </p>
+            </header>
+            <div class="card-content">
+              <div class="content">
+                植物名: <%= gift.item_name %><br>
+                <img src="<%= gift.image_url %>" alt="ギフトの画像" style="width: 200px;"><br>
+                花言葉: <%= gift.description %>
+                <br>
+                <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
+                  <div class="field">
+                    <%= form.label :receiver_id, "送信先ユーザー" %>
+                    <% if @reply_users.present? %>
+                      <%= form.collection_select :receiver_id, @reply_users, :id, :name, prompt: "ユーザーを選択してください" %>
+                    <% else %>
+                      <p>選択可能なユーザーがいません。</p>
+                    <% end %>
+                  </div>
+                  <div class="field">
+                    <%= form.label :sender_message, "感謝のメッセージ" %>
+                    <%= form.text_area :sender_message, class: 'textarea', placeholder: "ここにメッセージを入力してください" %>
+                  </div>
+                  <div class="field">
+                    <%= form.submit "このギフトを送る", class: "button is-primary is-small" %>
+                  </div>
+                <% end %>
+              </div>
             </div>
-            <div class="field">
-              <%= form.label :sender_message, "感謝のメッセージ" %>
-              <%= form.text_area :sender_message, class: 'textarea', placeholder: "ここにメッセージを入力してください" %>
-            </div>
-            <div class="field">
-              <%= form.submit "このギフトを送る", class: "button is-primary is-small" %>
-            </div>
-          <% end %>
           </div>
         </div>
-      </div>
-    </div>
-  <% end %>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 

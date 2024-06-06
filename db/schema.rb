@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_05_080620) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_06_123701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,17 +107,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_080620) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.bigint "sender_id"
-    t.bigint "recipient_id"
-    t.text "content"
-    t.boolean "read", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
-    t.index ["sender_id"], name: "index_notifications_on_sender_id"
-  end
-
   create_table "organizations", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
@@ -193,8 +182,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_05_080620) do
   add_foreign_key "group_chat_members", "users"
   add_foreign_key "group_chat_messages", "group_chats"
   add_foreign_key "group_chat_messages", "users"
-  add_foreign_key "notifications", "users", column: "recipient_id"
-  add_foreign_key "notifications", "users", column: "sender_id"
   add_foreign_key "profiles", "users"
   add_foreign_key "replies", "consultations"
   add_foreign_key "replies", "users"
