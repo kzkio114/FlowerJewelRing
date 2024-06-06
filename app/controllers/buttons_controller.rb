@@ -195,17 +195,27 @@ class ButtonsController < ApplicationController
 
 
   def send_gift_response
-    @gifts = Gift.includes(:gift_category, :giver, :receiver).where(receiver_id: current_user.id)# ユーザーが受け取ったギフトを取得
+    # 自分の相談を取得
+    @my_consultations = Consultation.where(user_id: current_user.id)
+    
+    # 自分の相談に対する返信者のIDを取得
+    replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
+    # 返信者のユーザーオブジェクトを取得
+    @reply_users = User.where(id: replier_ids)
+    # 返信者が受け取ったギフトのみを取得
+    @gifts = Gift.includes(:gift_category, :giver, :receiver).where(receiver_id: replier_ids)
+    
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "content", 
           partial: "buttons/menu/send_gift_response", 
-          locals: { gifts: @gifts }
+          locals: { gifts: @gifts, reply_users: @reply_users }
         )
       end
     end
   end
+  
 
   # def send_gift
   #   @gift = Gift.find(params[:id])
