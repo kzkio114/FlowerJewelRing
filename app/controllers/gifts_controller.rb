@@ -69,7 +69,6 @@ class GiftsController < ApplicationController
         @my_consultations = Consultation.where(user_id: current_user.id)
         replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
         @reply_users = User.where(id: replier_ids)
-        @reply_users = User.none if @reply_users.nil?
 
         @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
         @total_sent_gifts = Gift.where(giver_id: current_user.id).count
@@ -77,8 +76,8 @@ class GiftsController < ApplicationController
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
-            turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
-            turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts })
+              turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
+              turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts, reply_users: @reply_users })
             ]
           end
         end
@@ -86,10 +85,15 @@ class GiftsController < ApplicationController
         Rails.logger.info(@gift.errors.full_messages.join(", "))
       end
     else
-      redirect_to gifts_path, alert: "未読の返信がないため、ギフトを送信できません。"
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("error-message", partial: "shared/error_message", locals: { message: "未読の返信がないため、ギフトを送信できません。" })
+          ]
+        end
+      end
     end
   end
-
 
   private
 

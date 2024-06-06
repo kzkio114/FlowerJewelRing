@@ -1,4 +1,5 @@
 <div id="content" class="container is-small frame-fixed-height has-background-info">
+<div id="error-message"></div> <!-- ここにエラーメッセージを表示 -->
   <div class="columns is-multiline">
     <% gifts.each do |gift| %>
       <% unless gift.sent_at.present? %> <!-- 送信されたギフトは表示しない -->
