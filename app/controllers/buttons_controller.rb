@@ -131,8 +131,12 @@ class ButtonsController < ApplicationController
   
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.remove("reply_#{@reply.id}")
+        render turbo_stream: [
+          turbo_stream.remove("reply_#{@reply.id}"),  # ここを修正
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+        ]
       end
+      format.html { redirect_to @consultation, notice: 'Reply was successfully deleted.' }
     end
   end
 

@@ -9,7 +9,7 @@
           </li>
           <% if user_signed_in? %>
             <li>
-              <span>未読返信: <%= current_user.unread_replies_count %></span>  <!-- 未読返信数を表示 -->
+              <span id="unread-replies-count">未読返信: <%= current_user.unread_replies_count %></span>
               <%= link_to "#{current_user.name}さんのプロフィール", user_path(current_user) if current_user.present? %>
               <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { "data-turbo" => "false" } %>
             </li>
