@@ -49,37 +49,47 @@ class GiftsController < ApplicationController
       Rails.logger.info("Receiver not found")
       return
     end
-  
-    if @gift.save
 
-       # 関連する返信を既読にする
-      replies_to_mark_read = Reply.joins(:consultation)
-                                  .where(consultations: { user_id: @gift.giver_id })
-                                  .where(user_id: @gift.receiver_id, read: false)
-      replies_to_mark_read.update_all(read: true)
+    # 関連する未読の返信があるかどうかを確認
+    unread_replies_exist = Reply.joins(:consultation)
+                                .where(consultations: { user_id: @gift.giver_id })
+                                .where(user_id: @gift.receiver_id, read: false)
+                                .exists?
 
-      @gift.update(sent_at: Time.current)  # 送信されたことを記録
+    if unread_replies_exist
+      if @gift.save
+        # 関連する返信を既読にする
+        replies_to_mark_read = Reply.joins(:consultation)
+                                    .where(consultations: { user_id: @gift.giver_id })
+                                    .where(user_id: @gift.receiver_id, read: false)
+        replies_to_mark_read.update_all(read: true)
 
-      @my_consultations = Consultation.where(user_id: current_user.id)
-      replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
-      @reply_users = User.where(id: replier_ids)
-      @reply_users = User.none if @reply_users.nil?
+        @gift.update(sent_at: Time.current)  # 送信されたことを記録
 
-      @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
-      @total_sent_gifts = Gift.where(giver_id: current_user.id).count
-      @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: [
-          turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
-          turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts })
-          ]
+        @my_consultations = Consultation.where(user_id: current_user.id)
+        replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
+        @reply_users = User.where(id: replier_ids)
+        @reply_users = User.none if @reply_users.nil?
+
+        @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
+        @total_sent_gifts = Gift.where(giver_id: current_user.id).count
+        @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: [
+            turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
+            turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts })
+            ]
+          end
         end
+      else
+        Rails.logger.info(@gift.errors.full_messages.join(", "))
       end
     else
-      Rails.logger.info(@gift.errors.full_messages.join(", "))
+      redirect_to gifts_path, alert: "未読の返信がないため、ギフトを送信できません。"
     end
   end
+
 
   private
 
