@@ -3,6 +3,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :discord, :twitter, :github, :line]
 
+         # ユーザーが持つ相談から、未読の返信数を返すメソッド
+  def unread_replies_count
+    Reply.joins(:consultation)
+         .where(consultations: { user_id: id })
+         .where(read: false) # read は返信が読まれたかどうかを示す属性
+         .count
+  end
 
   has_many :admin_users
   has_many :organizations, through: :user_organizations
