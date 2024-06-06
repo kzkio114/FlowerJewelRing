@@ -27,7 +27,8 @@ class ButtonsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
         turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons"),
-        turbo_stream.replace("content", partial: "buttons/response")
+        turbo_stream.replace("content", partial: "buttons/response"),
+        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
     end
@@ -38,7 +39,8 @@ class ButtonsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
         turbo_stream.replace("menu", partial: "buttons/menu/closed_menu"),
-        turbo_stream.replace("content", partial: "buttons/response")
+        turbo_stream.replace("content", partial: "buttons/response"),
+        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
     end
@@ -54,7 +56,8 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations })
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
     end
@@ -161,11 +164,10 @@ class ButtonsController < ApplicationController
   
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "content",
-          partial: "buttons/menu/gift_list_response",
-          locals: { total_sent_gifts_all_users: @total_sent_gifts_all_users }  # @total_sent_giftsを直接設定
-        )
+        render turbo_stream:[
+          turbo_stream.replace("content",partial: "buttons/menu/gift_list_response",locals: { total_sent_gifts_all_users: @total_sent_gifts_all_users }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+      ]
       end
     end
   end
@@ -181,12 +183,11 @@ class ButtonsController < ApplicationController
     @gifts = Gift.includes(:gift_category).all
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "content", 
-          partial: "buttons/menu/gift_all_response", 
-          locals: { gifts: @gifts }
-        )
-      end
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/gift_all_response", locals: { gifts: @gifts }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+      ]
+        end
     end
   end
 
@@ -232,7 +233,8 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/user_response")
+          turbo_stream.replace("content", partial: "buttons/menu/user_response"),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
     end

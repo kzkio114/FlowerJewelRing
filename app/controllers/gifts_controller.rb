@@ -55,11 +55,9 @@ class GiftsController < ApplicationController
       @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            "content", 
-            partial: "buttons/menu/send_gift_response", 
-            locals: { gifts: @gifts }
-          )
+          render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts })
+          ]
         end
       end
     else
