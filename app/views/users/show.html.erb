@@ -16,14 +16,21 @@
         <p><strong>贈ったギフトと回数：</strong><%= @user.sent_gifts.count %></p>
         <ul>
           <% @user.sent_gifts.each do |gift| %>
-            <li><%= gift.item_name %></li>
+            <%= gift.item_name %>
           <% end %>
         </ul>
 
         <p><strong>受け取ったギフトと回数：</strong><%= @user.received_gifts.count %></p>
         <ul>
           <% @user.received_gifts.each do |gift| %>
-            <li><%= gift.item_name %></li>
+            <%= gift.item_name %><p>メッセージ: <%= gift.sender_message %></p>
+          <% end %>
+        </ul>
+        <ul>
+          <% @user.consultations.each do |consultation| %>
+            <% consultation.replies.each do |reply| %>
+              <li>返信者: <%= reply.user.name %>, 返信内容: <%= reply.content %></li>
+            <% end %>
           <% end %>
         </ul>
 

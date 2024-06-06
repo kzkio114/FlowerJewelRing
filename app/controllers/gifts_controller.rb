@@ -43,6 +43,7 @@ class GiftsController < ApplicationController
     @gift = Gift.find(params[:id])
     @gift.giver_id = current_user.id
     @gift.receiver = User.find_by(id: params[:gift][:receiver_id])  # 送信先のユーザーIDをパラメータから取得# 送信先のユーザーIDをパラメータから取得
+    @gift.assign_attributes(gift_params)  # gift_paramsからの値でギフトを更新
 
     if @gift.receiver.nil?
       Rails.logger.info("Receiver not found")
