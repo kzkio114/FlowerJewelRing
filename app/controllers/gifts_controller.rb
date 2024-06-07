@@ -64,6 +64,8 @@ class GiftsController < ApplicationController
                             .first
         replies_to_mark_read.update(read: true) if replies_to_mark_read
 
+        @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
+
         @gift.update(sent_at: Time.current, sender_message: "") # sender_messageをクリア
 
         assign_random_gift_to_user(@gift.giver_id)
@@ -74,8 +76,6 @@ class GiftsController < ApplicationController
 
         # 全てのギフトを取得
         @gifts = Gift.includes(:gift_category).all
-        @total_sent_gifts = Gift.where(giver_id: current_user.id).count
-        @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
