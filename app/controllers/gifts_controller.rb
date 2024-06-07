@@ -42,15 +42,14 @@ class GiftsController < ApplicationController
   def send_gift
     @gift = Gift.find(params[:id])
     @gift.giver_id = current_user.id
-    @gift.receiver = User.find_by(id: params[:gift][:receiver_id])  # 送信先のユーザーIDをパラメータから取得# 送信先のユーザーIDをパラメータから取得
-    @gift.assign_attributes(gift_params)  # gift_paramsからの値でギフトを更新
+    @gift.receiver = User.find_by(id: params[:gift][:receiver_id])
+    @gift.assign_attributes(gift_params)
 
     if @gift.receiver.nil?
       Rails.logger.info("Receiver not found")
       return
     end
 
-    # 関連する未読の返信があるかどうかを確認
     unread_replies_exist = Reply.joins(:consultation)
                                 .where(consultations: { user_id: @gift.giver_id })
                                 .where(user_id: @gift.receiver_id, read: false)
@@ -58,19 +57,20 @@ class GiftsController < ApplicationController
 
     if unread_replies_exist
       if @gift.save
-        # 関連する返信を既読にする
         replies_to_mark_read = Reply.joins(:consultation)
                                     .where(consultations: { user_id: @gift.giver_id })
                                     .where(user_id: @gift.receiver_id, read: false)
         replies_to_mark_read.update_all(read: true)
 
-        @gift.update(sent_at: Time.current)  # 送信されたことを記録
+        @gift.update(sent_at: Time.current)
+
+        assign_random_gift_to_user(@gift.giver_id)
 
         @my_consultations = Consultation.where(user_id: current_user.id)
         replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
         @reply_users = User.where(id: replier_ids)
 
-        @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
+        @gifts = Gift.includes(:gift_category).where(receiver_id: @gift.receiver_id)
         @total_sent_gifts = Gift.where(giver_id: current_user.id).count
         @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
         respond_to do |format|
@@ -105,5 +105,12 @@ class GiftsController < ApplicationController
 
   def gift_params
     params.require(:gift).permit(:receiver_id, :item_name, :description, :color, :sender_message)
+  end
+
+  def assign_random_gift_to_user(user_id)
+    new_gifts = Gift.order("RANDOM()").limit(1)
+    new_gifts.each do |new_gift|
+      new_gift.update!(receiver_id: user_id)
+    end
   end
 end
