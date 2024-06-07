@@ -38,7 +38,6 @@ class GiftsController < ApplicationController
     redirect_to gifts_url, notice: 'Gift was successfully destroyed.'
   end
 
-  # app/controllers/gifts_controller.rb
   def send_gift
     @gift = Gift.find(params[:id])
     @gift.giver_id = current_user.id
@@ -110,7 +109,7 @@ class GiftsController < ApplicationController
   def assign_random_gift_to_user(user_id)
     new_gifts = Gift.order("RANDOM()").limit(1)
     new_gifts.each do |new_gift|
-      new_gift.update!(receiver_id: user_id)
+      new_gift.update!(giver_id: user_id, sent_at: nil, receiver_id: nil)
     end
   end
 end

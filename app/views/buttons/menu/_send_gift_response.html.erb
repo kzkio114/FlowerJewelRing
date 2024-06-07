@@ -2,7 +2,7 @@
 <div id="error-message"></div> <!-- ここにエラーメッセージを表示 -->
   <div class="columns is-multiline">
     <% gifts.each do |gift| %>
-      <% unless gift.sent_at.present? %> <!-- 送信されたギフトは表示しない -->
+      <% unless gift.sent_at.present? && gift.sender_message.present? %> <!-- 送信されたギフトでコメントが入っているものは表示しない -->
         <div id="gift_card_<%= gift.id %>" class="column is-one-third">
           <div class="card">
             <header class="card-header">
