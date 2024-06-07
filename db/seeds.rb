@@ -4,6 +4,7 @@ plant_category = GiftCategory.find_or_create_by!(name: '植物') do |category|
   category.description = '美しい植物のギフト'
 end
 
+
 # 各日付の花と花言葉を配列に格納
 flowers = [
   ["フクジュソウ", "幸せを招く"],
