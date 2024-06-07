@@ -3,6 +3,15 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def show
+    @user = User.find(params[:id])
+    @sent_gifts = @user.sent_gifts
+
+    # 自分の相談に対する返信者のIDを取得
+    replier_ids = @user.consultations.joins(:replies).pluck('replies.user_id').uniq
+    # 返信者が送ったギフトのみを取得
+    @received_gifts_from_repliers = @user.received_gifts.where(giver_id: replier_ids)
+
+    @consultations = @user.consultations.includes(:replies)
   end
 
   def edit

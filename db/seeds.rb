@@ -1,7 +1,8 @@
 # ギフトカテゴリを作成
-plant_category = GiftCategory.create!(name: '植物', description: '美しい植物のギフト')
-#gem_category = GiftCategory.create!(name: '宝石', description: '価値ある宝石のギフト')
-
+# 既存のギフトカテゴリを使用
+plant_category = GiftCategory.find_or_create_by!(name: '植物') do |category|
+  category.description = '美しい植物のギフト'
+end
 
 # 各日付の花と花言葉を配列に格納
 flowers = [
@@ -36,18 +37,20 @@ flowers = [
   ["スミレ", "誠実な愛"]
 ]
 
-
 # 各日付の花と花言葉に対応するギフトを作成
 flowers.each_with_index do |(flower, message), i|
-  Gift.create!(
-    gift_category_id: plant_category.id, # plant_categoryは適切なGiftCategoryオブジェクトに置き換えてください
+  Gift.find_or_create_by!(
+    gift_category: plant_category,
     item_name: flower,
     description: message, # 花言葉をdescriptionに保存
     color: 'green',
-    image_url: "assets/#{i+1}.webp", # 画像のURLは適宜調整してください
-    sender_message: "", # sender_messageは空にしておく
+    # image_url: "assets/#{i+1}.webp", # 画像のURLは適宜調整してください
+    sender_message: "" # sender_messageは空にしておく
   )
 end
+
+puts "シードデータの作成が完了しました。"
+
 
 # # カテゴリを作成
 # categories = ['家庭', '仕事', '健康', '金銭', '人間関係'].map do |name|

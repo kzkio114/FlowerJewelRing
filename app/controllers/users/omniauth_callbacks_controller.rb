@@ -32,7 +32,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         sign_in(@user)
 
         # 新規ユーザーにランダムに10個のギフトを与える
-        gifts = Gift.order("RANDOM()").limit(10)
+        gifts = Gift.order("RANDOM()").limit(30)
         gifts.each do |gift|
           gift.update!(receiver_id: @user.id)
         end

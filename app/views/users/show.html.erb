@@ -20,10 +20,22 @@
           <% end %>
         </ul>
 
-        <p><strong>受け取ったギフトと回数：</strong><%= @user.received_gifts.count %></p>
+        <p><strong>相談の返信者から受け取ったギフト：</strong><%= @received_gifts_from_repliers.count %></p>
         <ul>
-          <% @user.received_gifts.each do |gift| %>
-            <li><%= gift.item_name %></li>
+          <% @received_gifts_from_repliers.each do |gift| %>
+            <li>
+              <%= gift.item_name %>
+              <p>メッセージ: <%= gift.sender_message %></p>
+            </li>
+          <% end %>
+        </ul>
+
+        <p><strong>相談への返信：</strong></p>
+        <ul>
+          <% @user.consultations.each do |consultation| %>
+            <% consultation.replies.each do |reply| %>
+              <li>返信者: <%= reply.user.name %>, 返信内容: <%= reply.content %></li>
+            <% end %>
           <% end %>
         </ul>
 
@@ -33,3 +45,4 @@
     </div>
   </div>
 </div>
+

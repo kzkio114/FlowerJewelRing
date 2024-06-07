@@ -38,32 +38,62 @@ class GiftsController < ApplicationController
     redirect_to gifts_url, notice: 'Gift was successfully destroyed.'
   end
 
-  # app/controllers/gifts_controller.rb
   def send_gift
     @gift = Gift.find(params[:id])
     @gift.giver_id = current_user.id
-    @gift.receiver = User.find_by(id: params[:gift][:receiver_id])  # 送信先のユーザーIDをパラメータから取得# 送信先のユーザーIDをパラメータから取得
+    @gift.receiver = User.find_by(id: params[:gift][:receiver_id])
+    @gift.assign_attributes(gift_params)
 
     if @gift.receiver.nil?
       Rails.logger.info("Receiver not found")
       return
     end
-  
-    if @gift.save
-      @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
-      @total_sent_gifts = Gift.where(giver_id: current_user.id).count
-      @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            "content", 
-            partial: "buttons/menu/send_gift_response", 
-            locals: { gifts: @gifts }
-          )
+
+    unread_replies_exist = Reply.joins(:consultation)
+                                .where(consultations: { user_id: @gift.giver_id })
+                                .where(user_id: @gift.receiver_id, read: false)
+                                .exists?
+
+    if unread_replies_exist
+      if @gift.save
+
+        replies_to_mark_read = Reply.joins(:consultation)
+                            .where(consultations: { user_id: @gift.giver_id })
+                            .where(user_id: @gift.receiver_id, read: false)
+                            .order(created_at: :desc)
+                            .first
+        replies_to_mark_read.update(read: true) if replies_to_mark_read
+
+        @gift.update(sent_at: Time.current)
+
+        assign_random_gift_to_user(@gift.giver_id)
+
+        @my_consultations = Consultation.where(user_id: current_user.id)
+        replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
+        @reply_users = User.where(id: replier_ids)
+
+        @gifts = Gift.includes(:gift_category).where(receiver_id: @gift.receiver_id)
+        @total_sent_gifts = Gift.where(giver_id: current_user.id).count
+        @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: [
+              turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
+              turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts, reply_users: @reply_users })
+            ]
+          end
         end
+      else
+        Rails.logger.info(@gift.errors.full_messages.join(", "))
       end
     else
-      Rails.logger.info(@gift.errors.full_messages.join(", "))
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("error-message", partial: "shared/error_message", locals: { message: "未読の返信がないため、ギフトを送信できません。" })
+          ]
+        end
+      end
     end
   end
 
@@ -77,5 +107,12 @@ class GiftsController < ApplicationController
 
   def gift_params
     params.require(:gift).permit(:receiver_id, :item_name, :description, :color, :sender_message)
+  end
+
+  def assign_random_gift_to_user(user_id)
+    new_gifts = Gift.order("RANDOM()").limit(1)
+    new_gifts.each do |new_gift|
+      new_gift.update!(giver_id: user_id, sent_at: nil, receiver_id: nil)
+    end
   end
 end

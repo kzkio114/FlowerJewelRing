@@ -4,6 +4,9 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2, :discord, :twitter, :github, :line]
 
 
+
+  #has_many :gift_users
+  #has_many :received_gifts, through: :gift_users, source: :gift  # 更新された関連付け
   has_many :admin_users
   has_many :organizations, through: :user_organizations
   has_many :sent_chats, class_name: 'Chat', foreign_key: 'sender_id'
@@ -32,5 +35,14 @@ class User < ApplicationRecord
       return nil
     end
     user
+  end
+
+
+         # ユーザーが持つ相談から、未読の返信数を返すメソッド
+  def unread_replies_count
+    Reply.joins(:consultation)
+         .where(consultations: { user_id: id })
+         .where(read: false) # read は返信が読まれたかどうかを示す属性
+         .count
   end
 end

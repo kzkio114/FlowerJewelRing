@@ -27,7 +27,8 @@ class ButtonsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
         turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons"),
-        turbo_stream.replace("content", partial: "buttons/response")
+        turbo_stream.replace("content", partial: "buttons/response"),
+        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
     end
@@ -38,7 +39,8 @@ class ButtonsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
         turbo_stream.replace("menu", partial: "buttons/menu/closed_menu"),
-        turbo_stream.replace("content", partial: "buttons/response")
+        turbo_stream.replace("content", partial: "buttons/response"),
+        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
     end
@@ -54,7 +56,8 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations })
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
     end
@@ -131,8 +134,12 @@ class ButtonsController < ApplicationController
   
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.remove("reply_#{@reply.id}")
+        render turbo_stream: [
+          turbo_stream.remove("reply_#{@reply.id}"),  # ここを修正
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+        ]
       end
+      format.html { redirect_to @consultation, notice: 'Reply was successfully deleted.' }
     end
   end
 
@@ -157,11 +164,10 @@ class ButtonsController < ApplicationController
   
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "content",
-          partial: "buttons/menu/gift_list_response",
-          locals: { total_sent_gifts_all_users: @total_sent_gifts_all_users }  # @total_sent_giftsを直接設定
-        )
+        render turbo_stream:[
+          turbo_stream.replace("content",partial: "buttons/menu/gift_list_response",locals: { total_sent_gifts_all_users: @total_sent_gifts_all_users }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+      ]
       end
     end
   end
@@ -177,12 +183,11 @@ class ButtonsController < ApplicationController
     @gifts = Gift.includes(:gift_category).all
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(
-          "content", 
-          partial: "buttons/menu/gift_all_response", 
-          locals: { gifts: @gifts }
-        )
-      end
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/gift_all_response", locals: { gifts: @gifts }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+      ]
+        end
     end
   end
 
@@ -190,17 +195,27 @@ class ButtonsController < ApplicationController
 
 
   def send_gift_response
-    @gifts = Gift.includes(:gift_category, :giver, :receiver).where(receiver_id: current_user.id)# ユーザーが受け取ったギフトを取得
+    # 自分の相談を取得
+    @my_consultations = Consultation.where(user_id: current_user.id)
+    
+    # 自分の相談に対する返信者のIDを取得
+    replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
+    # 返信者のユーザーオブジェクトを取得
+    @reply_users = User.where(id: replier_ids)
+    # 返信者が受け取ったギフトのみを取得
+    @gifts = Gift.includes(:gift_category, :giver, :receiver).where(receiver_id: replier_ids)
+    
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "content", 
           partial: "buttons/menu/send_gift_response", 
-          locals: { gifts: @gifts }
+          locals: { gifts: @gifts, reply_users: @reply_users }
         )
       end
     end
   end
+  
 
   # def send_gift
   #   @gift = Gift.find(params[:id])
@@ -228,7 +243,8 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/user_response")
+          turbo_stream.replace("content", partial: "buttons/menu/user_response"),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
     end
