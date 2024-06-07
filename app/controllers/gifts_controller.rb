@@ -64,7 +64,7 @@ class GiftsController < ApplicationController
                             .first
         replies_to_mark_read.update(read: true) if replies_to_mark_read
 
-        @gift.update(sent_at: Time.current)
+        @gift.update(sent_at: Time.current, sender_message: "") # sender_messageをクリア
 
         assign_random_gift_to_user(@gift.giver_id)
 
