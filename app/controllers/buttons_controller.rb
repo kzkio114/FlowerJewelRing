@@ -202,9 +202,9 @@ class ButtonsController < ApplicationController
     replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
     # 返信者のユーザーオブジェクトを取得
     @reply_users = User.where(id: replier_ids)
-    # 返信者が受け取ったギフトのみを取得
-    @gifts = Gift.includes(:gift_category, :giver, :receiver).where(receiver_id: replier_ids)
-    
+    # 全てのギフトを取得
+    @gifts = Gift.all
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
