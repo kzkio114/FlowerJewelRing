@@ -56,10 +56,13 @@ class GiftsController < ApplicationController
 
     if unread_replies_exist
       if @gift.save
+
         replies_to_mark_read = Reply.joins(:consultation)
-                                    .where(consultations: { user_id: @gift.giver_id })
-                                    .where(user_id: @gift.receiver_id, read: false)
-        replies_to_mark_read.update_all(read: true)
+                            .where(consultations: { user_id: @gift.giver_id })
+                            .where(user_id: @gift.receiver_id, read: false)
+                            .order(created_at: :desc)
+                            .first
+        replies_to_mark_read.update(read: true) if replies_to_mark_read
 
         @gift.update(sent_at: Time.current)
 
