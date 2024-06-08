@@ -37,7 +37,6 @@
             </div>
           </div>
 
-          <!-- ユーザーがカテゴリーを選択できるようにします -->
           <div class="field">
             <%= form.label :category_id, class: "label" %>
             <div class="control">
@@ -45,12 +44,11 @@
             </div>
           </div>
 
-          <!-- 現在ログインしているユーザーのIDを自動的に設定します -->
           <%= form.hidden_field :user_id, value: current_user.id %>
 
           <div class="field is-grouped is-grouped-right">
             <div class="control">
-              <%= form.submit "投稿", class: "button is-primary" %>
+              <%= form.submit "投稿", class: "button is-link" %>
             </div>
           </div>
         <% end %>

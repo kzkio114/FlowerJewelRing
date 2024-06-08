@@ -36,7 +36,9 @@
           </div>
         </div>
       </div>
-        <%= button_to "詳細ページに戻る", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" %>
+        <div class="is-pulled-right">
+        <%= button_to "詳細ページに戻る", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-primary" %>
+        </div>
     </div>
   </div>
 </div>

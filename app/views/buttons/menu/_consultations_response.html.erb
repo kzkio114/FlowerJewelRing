@@ -13,9 +13,9 @@
       </div>
       <div class="is-flex is-justify-content-flex-end is-align-items-flex-end md-3">
         <% if user_signed_in? %>
-        <%= button_to '相談返信に向かう', consultations_detail_path(id: consultation.id), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth is-rounded" %>
+        <%= button_to '相談返信に向かう', consultations_detail_path(id: consultation.id), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth is-link" %>
         <% end %>
-        <%= button_to 'みんなの悩みに戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-fullwidth is-rounded" %>
+        <%= button_to 'みんなの悩みに戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-fullwidth is-primary" %>
         <% if consultation.user == current_user %>
           <%= button_to '削除', consultations_destroy_path(consultation), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }, class: "button is-danger" %>
         <% end %>
