@@ -1,12 +1,20 @@
-<div id="content" class="container is-small frame-fixed-height has-background-warning">
-  <% @users.each do |user| %>
-    <div class="card">
-      <div class="card-content has-text-white">
-        <p class="title">ユーザー名: <%= user.name %></p>
+<div id="content" class="container is-small frame-fixed-height">
+  <div class="columns is-multiline">
+    <% @users.each do |user| %>
+      <div class="column is-one-third">
+        <div class="card">
+          <div class="card-content has-text-white">
+            <p class="title is-5">名前: <%= user.name %></p>
+          </div>
+          <footer class="card-footer">
+            <div class="card-footer-item">
+              <div class="is-pulled-right">
+                <%= button_to '詳細を見る', buttons_user_show_path(id: user.id), method: :post, class: 'button is-primary is-small' %>
+              </div>
+            </div>
+          </footer>
+        </div>
       </div>
-      <footer class="card-footer">
-        <%= button_to '詳細を見る', buttons_user_show_path(id: user.id), method: :post, class: 'button is-primary is-small column is-full mt-5' %>
-      </footer>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
