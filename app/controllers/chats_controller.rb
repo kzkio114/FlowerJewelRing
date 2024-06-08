@@ -1,4 +1,3 @@
-# app/controllers/chats_controller.rb
 class ChatsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :chat, :destroy]
   before_action :set_chat, only: [:destroy]

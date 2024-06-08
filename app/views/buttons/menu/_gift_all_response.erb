@@ -1,12 +1,12 @@
-<div id="content" class="container is-small frame-fixed-height has-background-info">
+<div id="content" class="container is-small frame-fixed-height ">
   <div class="columns is-multiline">
     <div class="column is-full">
       <div class="level">
         <div class="level-left">
-          <h1 class="title">ギフト一覧</h1>
+          <h3 class="title is-size-3">みんなの花言葉</h3>
         </div>
         <div class="level-right">
-          <%= button_to '感謝の気持ちを伝える', buttons_send_gift_response_path, method: :post, class: 'button is-primary is-large mt-5' , data: { turbo_frame: 'content' } %>
+          <%= button_to '感謝の気持ちを伝える', buttons_send_gift_response_path, method: :post, class: 'button is-primary mt-5' , data: { turbo_frame: 'content' } %>
         </div>
       </div>
     </div>

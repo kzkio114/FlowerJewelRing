@@ -1,15 +1,20 @@
-<div id="content" class="container is-small frame-fixed-height has-background-warning">
+<div id="content" class="container is-small frame-fixed-height">
   <div class="card">
     <div class="card-content">
-      <p class="title">名前: <%= @user.name %></p>
-      <p class="subtitle">組織: <%= @user.organization&.name || '未登録' %></p>
-      <p class="subtitle">自己紹介: <%= @user.profile&.introduction || '未登録' %></p>
-      <p class="subtitle">興味・関心: <%= @user.profile&.interests || '未登録' %></p>
-      <p><strong>送ったギフト：</strong></p>
-      <p><strong>ギフトを贈った回数：</strong><%= @user.sent_gifts.count %></p>
-      <ul>
+      <div class="is-flex is-justify-content-space-between is-align-items-center m-3">
+        <p class="title is-size-4-mobile">
+          名前: <%= @user.name %>
+        </p>
+        <%= button_to 'ユーザーの一覧に戻る', buttons_user_path, method: :post, class: 'button is-primary' %>
+      </div>
+      <p class="subtitle is-size-5-mobile m-3">組織: <%= @user.organization&.name || '未登録' %></p>
+      <p class="subtitle is-size-5-mobile m-3">自己紹介: <%= @user.profile&.introduction || '未登録' %></p>
+      <p class="subtitle is-size-5-mobile m-3">興味・関心: <%= @user.profile&.interests || '未登録' %></p>
+      <p class="m-3"><strong>ギフトを贈った回数：</strong><%= @user.sent_gifts.count %></p>
+      <p class="m-3"><strong>送ったギフト：</strong></p>
+      <ul class="mt-3">
         <% @user.sent_gifts.each do |gift| %>
-          <%= gift.item_name %>
+            <li><%= gift.item_name %></li>
         <% end %>
       </ul>
     </div>

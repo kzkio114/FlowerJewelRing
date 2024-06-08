@@ -1,5 +1,5 @@
-<div id="content" class="container is-small frame-fixed-height has-background-primary">
-  みんなの悩み！詳細
+<div id="content" class="container is-small frame-fixed-height">
+  みんなの悩み！の詳細
   <div class="columns">
     <div class="column">
       <div id="<%= dom_id(@consultation) %>" class="card">
@@ -13,10 +13,9 @@
       </div>
       <div class="is-flex is-justify-content-flex-end is-align-items-flex-end md-3">
         <% if user_signed_in? %>
-        <%= button_to '相談返信に向かう', consultations_detail_path(id: consultation.id), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth is-rounded card" %>
+        <%= button_to '相談返信に向かう', consultations_detail_path(id: consultation.id), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth is-rounded" %>
         <% end %>
-        <%= button_to 'みんなの悩みに戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-fullwidth is-rounded card" %>
-        <!-- 現在ログインしているユーザーが投稿したコンサルテーションのみに削除ボタンを表示 -->
+        <%= button_to 'みんなの悩みに戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-fullwidth is-rounded" %>
         <% if consultation.user == current_user %>
           <%= button_to '削除', consultations_destroy_path(consultation), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }, class: "button is-danger" %>
         <% end %>

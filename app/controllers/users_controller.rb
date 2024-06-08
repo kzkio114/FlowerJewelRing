@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      redirect_to dashboard_path, notice: 'User was successfully updated.'
+      redirect_to dashboard_path, notice: 'ユーザーは正常に更新されました。'
     else
       Rails.logger.debug @user.errors.full_messages
       render :edit, status: :unprocessable_entity
