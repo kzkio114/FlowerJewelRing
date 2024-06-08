@@ -64,7 +64,9 @@ class GiftsController < ApplicationController
                             .first
         replies_to_mark_read.update(read: true) if replies_to_mark_read
 
-        @gift.update(sent_at: Time.current)
+        @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
+
+        @gift.update(sent_at: Time.current, sender_message: "") # sender_messageをクリア
 
         assign_random_gift_to_user(@gift.giver_id)
 
@@ -72,9 +74,8 @@ class GiftsController < ApplicationController
         replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
         @reply_users = User.where(id: replier_ids)
 
-        @gifts = Gift.includes(:gift_category).where(receiver_id: @gift.receiver_id)
-        @total_sent_gifts = Gift.where(giver_id: current_user.id).count
-        @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
+        # 全てのギフトを取得
+        @gifts = Gift.includes(:gift_category).all
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [

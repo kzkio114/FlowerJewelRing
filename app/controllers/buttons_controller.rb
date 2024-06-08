@@ -160,14 +160,14 @@ class ButtonsController < ApplicationController
 
   def gift_list
     #@gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
-    @total_sent_gifts_all_users = Gift.where.not(giver_id: nil).count
-  
+    @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
+    
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream:[
-          turbo_stream.replace("content",partial: "buttons/menu/gift_list_response",locals: { total_sent_gifts_all_users: @total_sent_gifts_all_users }),
+          turbo_stream.replace("content", partial: "buttons/menu/gift_list_response", locals: { total_sender_messages_count: @total_sender_messages_count }),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
-      ]
+        ]
       end
     end
   end
@@ -202,9 +202,9 @@ class ButtonsController < ApplicationController
     replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
     # 返信者のユーザーオブジェクトを取得
     @reply_users = User.where(id: replier_ids)
-    # 返信者が受け取ったギフトのみを取得
-    @gifts = Gift.includes(:gift_category, :giver, :receiver).where(receiver_id: replier_ids)
-    
+    # 全てのギフトを取得
+    @gifts = Gift.all
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
