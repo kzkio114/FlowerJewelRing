@@ -36,7 +36,7 @@ class ConsultationsController < ApplicationController
     @consultation = Consultation.new(consultation_params)
 
     if @consultation.save
-      redirect_to @consultation, notice: 'Consultation was successfully created.'
+      redirect_to @consultation, notice: ''
     else
       render :new
     end
@@ -45,7 +45,7 @@ class ConsultationsController < ApplicationController
   # PATCH/PUT /consultations/1
   def update
     if @consultation.update(consultation_params)
-      redirect_to @consultation, notice: 'Consultation was successfully updated.'
+      redirect_to @consultation, notice: 'コンサルテーションが正常に作成されました。'
     else
       render :edit
     end
