@@ -34,6 +34,6 @@
     <!-- 現在ログインしているユーザーのIDを自動的に設定します -->
     <%= form.hidden_field :user_id, value: current_user.id %>
 
-    <%= form.submit "投稿" %>
+    <%= form.submit "投稿", class: "button is-link" %>
   <% end %>
 </div>
