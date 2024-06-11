@@ -3,9 +3,14 @@ Rails.application.routes.draw do
   get '/users/sign_in', to: redirect('/')
 
   # チャットのルーティング
-  resources :chats, only: [:create, :destroy]
+  resources :chats, only: [:index, :show, :create, :destroy]  # showを追加
   post 'chat', to: 'chats#chat', as: 'custom_chat'
   # その他のルート
+
+  #プライベートチャットのルーティング
+  resources :private_chats, only: [:index, :show, :create, :destroy]
+  post 'private_chat', to: 'private_chats#private_chat', as: 'custom_private_chat'
+
 
  
   # ActionCableのサーバー接続エンドポイント

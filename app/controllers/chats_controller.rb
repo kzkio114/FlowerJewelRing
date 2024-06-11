@@ -25,7 +25,7 @@ class ChatsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/chat_response", locals: { chats: @chats, receiver_id: @receiver_id, selected_user: @selected_user }),
+          turbo_stream.replace("content", partial: "chats/chat_response", locals: { chats: @chats, receiver_id: @receiver_id, selected_user: @selected_user }),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
