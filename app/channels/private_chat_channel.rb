@@ -1,10 +1,6 @@
 class PrivateChatChannel < ApplicationCable::Channel
   def subscribed
-    # セキュリティのために、チャットルームごとにストリームを作成
-    if current_user && params[:chat_id]
-      @chat = Chat.find(params[:chat.jpg])
-      stream_for @chat if @chat.participants.include?(current_user)
-    end
+    stream_for current_user
   end
 
   def unsubscribed
@@ -12,15 +8,17 @@ class PrivateChatChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    @chat = Chat.find(data['chat_id'])
-    return unless @chat.participants.include?(current_user)
-
-    message = @chat.messages.create!(sender_id: current_user.id, message: data['message'])
+    receiver = User.find(data['receiver_id'])
+    message = Chat.create!(sender_id: current_user.id, receiver_id: receiver.id, message: data['message'])
     
     # 送信者と受信者にそれぞれブロードキャスト
-    PrivateChatChannel.broadcast_to(@chat, {
+    PrivateChatChannel.broadcast_to(receiver, {
       message: render_message(message),
-      chat_id: @chat.id,
+      success: message.persisted?
+    })
+    
+    PrivateChatChannel.broadcast_to(current_user, {
+      message: render_message(message),
       success: message.persisted?
     })
   end
@@ -28,6 +26,6 @@ class PrivateChatChannel < ApplicationCable::Channel
   private
 
   def render_message(message)
-    ApplicationController.renderer.render(partial: 'chats/message', locals: { chat: message })
+    ApplicationController.renderer.render(partial: 'private_chats/chat_message', locals: { chat: message })
   end
 end

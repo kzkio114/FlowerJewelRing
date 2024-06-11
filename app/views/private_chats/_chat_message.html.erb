@@ -1,4 +1,4 @@
 <div id="chat_<%= chat.id %>">
     <p class="has-text-black"><strong><%= chat.sender.name %>:</strong> <%= chat.message %></p>
-    <%= button_to '削除', private_chat_path(chat), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'has-text-black', data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %>
+    <%= button_to '削除', private_chat_path(chat), method: :delete, data: { confirm: '本当に削除しますか？', turbo_action: 'replace' }, class: 'has-text-black' %>
 </div>

@@ -3,35 +3,36 @@ class PrivateChatsController < ApplicationController
   before_action :set_chat, only: [:destroy]
 
   def create
-    @chat = current_user.sent_chats.build(chat_params)
-    if @chat.save
+    @private_chat = current_user.sent_chats.build(chat_params)
+    if @private_chat.save
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.append('messages', partial: 'chats/chat_message', locals: { chat: @chat })
+            turbo_stream.append('messages', partial: 'private_chats/chat_message', locals: { chat: @private_chat })
           ]
         end
-        format.html { redirect_to private_chats_path(receiver_id: @chat.receiver_id) }
+        format.html { redirect_to private_chats_path(receiver_id: @private_chat.receiver_id) }
       end
     else
-      logger.debug @chat.errors.full_messages.join(", ")
-      render json: @chat.errors, status: :unprocessable_entity
+      logger.debug @private_chat.errors.full_messages.join(", ")
+      render json: @private_chat.errors, status: :unprocessable_entity
     end
   end
 
   def private_chat
+    @private_chat = Chat.new
     @receiver_id = params[:receiver_id]
     if @receiver_id.present?
       @selected_user = User.find(@receiver_id)
-      @chats = Chat.where(sender: current_user, receiver: @selected_user)
+      @private_chats = Chat.where(sender: current_user, receiver: @selected_user)
                    .or(Chat.where(sender: @selected_user, receiver: current_user))
     else
-      @chats = []
+      @private_chats = []
     end
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "private_chats/chat_form", locals: { chats: @chats, receiver_id: @receiver_id, selected_user: @selected_user }),
+          turbo_stream.replace("content", partial: "private_chats/chat_form", locals: { chats: @private_chats, receiver_id: @receiver_id, selected_user: @selected_user }),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
@@ -40,8 +41,8 @@ class PrivateChatsController < ApplicationController
   end
 
   def destroy
-    chat_id = @chat.id
-    if @chat.destroy
+    chat_id = @private_chat.id
+    if @private_chat.destroy
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.remove("chat_#{chat_id}")
@@ -49,7 +50,7 @@ class PrivateChatsController < ApplicationController
         format.html { redirect_to private_chats_path }
       end
     else
-      render json: @chat.errors, status: :unprocessable_entity
+      render json: @private_chat.errors, status: :unprocessable_entity
     end
   end
 
@@ -60,6 +61,6 @@ class PrivateChatsController < ApplicationController
   end
 
   def set_chat
-    @chat = Chat.find(params[:id])
+    @private_chat = Chat.find(params[:id])
   end
 end
