@@ -1,32 +1,34 @@
-<div id="content" class="container frame-fixed-height">
-  <h3 class="title is-size-3">チャット</h3>
-  <h3 class="title is-size-3">全ユーザに、コメント削除権限があります。</h3>
-  <div class="has-text-white mt-5">
-    <% if selected_user %>
-      <p class="has-text-black mb-3">選択されたユーザー: <%= selected_user.name %></p>
-    <% end %>
-    <div id="messages">
-      <% @private_chats.each do |chat| %>
-        <div id="chat_<%= chat.id %>">
-          <p class="has-text-black"><strong><%= chat.sender.name.force_encoding('UTF-8') %>:</strong> <%= chat.decrypted_message.force_encoding('UTF-8') %></p>
-          <%= button_to '削除', private_chat_path(chat), method: :delete, data: { confirm: '本当に削除しますか？', turbo_action: 'replace' }, class: 'has-text-black' %>
+<div id="chat" data-user-id="<%= current_user.id %>">
+  <div id="content" class="container frame-fixed-height">
+    <h3 class="title is-size-3">チャット</h3>
+    <h3 class="title is-size-3">全ユーザに、コメント削除権限があります。</h3>
+    <div class="has-text-white mt-5">
+      <% if selected_user %>
+        <p class="has-text-black mb-3">選択されたユーザー: <%= selected_user.name %></p>
+      <% end %>
+      <div id="messages">
+        <% @private_chats.each do |chat| %>
+          <div id="chat_<%= chat.id %>">
+            <p class="has-text-black"><strong><%= chat.sender.name.force_encoding('UTF-8') %>:</strong> <%= chat.decrypted_message.force_encoding('UTF-8') %></p>
+            <%= button_to '削除', private_chat_path(chat), method: :delete, data: { confirm: '本当に削除しますか？', turbo_action: 'replace' }, class: 'has-text-black' %>
+          </div>
+        <% end %>
+      </div>
+      <%= form_with model: [:chat, @private_chat], url: private_chats_path, method: :post, data: { turbo: true } do |form| %>
+        <%= form.hidden_field :receiver_id, value: receiver_id %>
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <%= form.text_field :message, placeholder: "メッセージを入れてエンターキーを押してください!!", class: "input", id: "chat_message_input", data: { receiver_id: receiver_id } %>
+          </div>
+          <div class="control">
+            <%= form.submit "Send", class: "button is-primary" %>
+          </div>
         </div>
       <% end %>
     </div>
-    <%= form_with model: [:chat,  @private_chat], url: private_chats_path, method: :post, data: { turbo: true } do |form| %>
-      <%= form.hidden_field :receiver_id, value: receiver_id %>
-      <div class="field has-addons">
-        <div class="control is-expanded">
-          <%= form.text_field :message, placeholder: "メッセージを入れてエンターキーを押してください!!", class: "input", id: "chat_message_input" %>
-        </div>
-        <div class="control">
-          <%= form.submit "Send", class: "button is-primary" %>
-        </div>
-      </div>
+    <%= form_with url: custom_private_chat_path, method: :post do |f| %>
+      <%= f.collection_select :receiver_id, User.where.not(id: current_user.id), :id, :name %>
+      <%= f.submit "まず始めに、相手を選んでボタンを押してください！！" %>
     <% end %>
   </div>
-  <%= form_with url: custom_private_chat_path, method: :post do |f| %>
-    <%= f.collection_select :receiver_id, User.where.not(id: current_user.id), :id, :name %>
-    <%= f.submit "まず始めに、相手を選んでボタンを押してください！！" %>
-  <% end %>
 </div>

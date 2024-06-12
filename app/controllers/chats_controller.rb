@@ -18,11 +18,11 @@ class ChatsController < ApplicationController
   end
 
   def chat
-    @private_chats = Chat.where.not(receiver_id: nil, sender: current_user).or(Chat.where.not(receiver_id: nil, receiver: current_user))
-    @chats = Chat.where(id: @private_chats.pluck(:id))
+    @chats = Chat.all
     @chat = Chat.new
     @receiver_id = params[:receiver_id] # 受信者IDを動的に設定
     @selected_user = User.find(@receiver_id) if @receiver_id.present? # 選択されたユーザーを取得
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
