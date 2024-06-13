@@ -1,6 +1,7 @@
 class GroupChatChannel < ApplicationCable::Channel
   def subscribed
-    stream_for GroupChat.find(params[:id])
+    group_chat = GroupChat.find(params[:group_chat_id])
+    stream_for group_chat
   end
 
   def unsubscribed
@@ -13,7 +14,8 @@ class GroupChatChannel < ApplicationCable::Channel
 
     GroupChatChannel.broadcast_to(group_chat, {
       message: render_message(message),
-      success: message.persisted?
+      user_id: message.user.id,
+      group_chat_id: group_chat.id
     })
   end
 

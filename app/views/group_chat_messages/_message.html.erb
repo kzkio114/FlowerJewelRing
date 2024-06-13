@@ -1,6 +1,6 @@
-<div id="chat_<%= message.id %>">
+<div id="message_<%= message.id %>">
   <p class="has-text-black"><strong><%= message.user.name.force_encoding('UTF-8') %>:</strong> <%= message.message.force_encoding('UTF-8') %></p>
   <% if show_delete_button %>
-    <%= button_to '削除', group_chat_message_path(message), method: :delete, data: { confirm: '本当に削除しますか？' }, remote: true, class: 'has-text-black' %>
+    <%= button_to '削除', group_chat_group_chat_message_path(message.group_chat, message), method: :delete, data: { confirm: '本当に削除しますか？' }, remote: true, class: 'has-text-black' %>
   <% end %>
 </div>

@@ -1,6 +1,6 @@
 class GroupChatsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :group_chat, :destroy]
-  before_action :set_group_chat, only: [:group_chat, :destroy]
+  before_action :authenticate_user!
+  before_action :set_group_chat, only: [:group_chat, :edit, :update, :destroy]
 
   def new
     @group_chat = GroupChat.new
@@ -9,14 +9,13 @@ class GroupChatsController < ApplicationController
   def create
     @group_chat = GroupChat.new(group_chat_params)
     if @group_chat.save
-      redirect_to custom_group_chat_group_chat_path(@group_chat)
+      redirect_to custom_group_chat_group_chat_path(@group_chat), notice: 'グループチャットが作成されました'
     else
       render :new
     end
   end
 
   def group_chat
-    @group_chat = GroupChat.first_or_create(title: "Default Group Chat") # グループチャットが存在しない場合、新規作成
     @group_chat_messages = @group_chat.group_chat_messages.includes(:user)
     @group_chat_message = GroupChatMessage.new
     respond_to do |format|
@@ -29,12 +28,20 @@ class GroupChatsController < ApplicationController
     end
   end
 
-  def destroy
-    if @group_chat.destroy
-      head :ok
+  def edit
+  end
+
+  def update
+    if @group_chat.update(group_chat_params)
+      redirect_to custom_group_chat_group_chat_path(@group_chat), notice: 'グループチャットが更新されました'
     else
-      render json: @group_chat.errors, status: :unprocessable_entity
+      render :edit
     end
+  end
+
+  def destroy
+    @group_chat.destroy
+    redirect_to root_path, notice: 'グループチャットが削除されました'
   end
 
   private
