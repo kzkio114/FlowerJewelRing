@@ -1,0 +1,25 @@
+<div id="content" class="container frame-fixed-height">
+  <h3 class="title is-size-3"><%= group_chat.title %></h3>
+  <div class="has-text-white mt-5">
+    <div id="messages">
+      <% group_chat_messages.each do |message| %>
+        <%= render partial: 'group_chat_messages/message', locals: { message: message, show_delete_button: message.user == current_user } %>
+      <% end %>
+    </div>
+    <%= form_with model: [group_chat, group_chat_message], local: false do |form| %>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <%= form.text_area :message, placeholder: "メッセージを入れてエンターキーを押してください!!", class: "input", id: "chat_message_input", data: { group_chat_id: group_chat.id } %>
+        </div>
+        <div class="control">
+          <%= form.submit "Send", class: "button is-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="buttons">
+    <%= button_to "Add Member", new_group_chat_group_chat_member_path(group_chat), class: "button is-primary" %>
+    <%= button_to "Edit Group", edit_group_chat_path(group_chat), class: "button is-info" %>
+    <%= button_to "Delete Group", group_chat_path(group_chat), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "button is-danger" %>
+  </div>
+</div>
