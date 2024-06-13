@@ -6,7 +6,7 @@
     <% end %>
     <div id="messages">
       <% chats.each do |chat| %>
-        <%= render partial: 'chats/chat_message', locals: { chat: chat } %>
+        <%= render partial: 'chats/message', locals: { chat: chat } %>
       <% end %>
     </div>
     <%= form_with model: @chat, url: chats_path, method: :post, data: { turbo: true } do |form| %>
