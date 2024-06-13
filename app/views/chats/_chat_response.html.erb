@@ -1,0 +1,28 @@
+<div id="content" class="container frame-fixed-height">
+  <h3 class="title is-size-3">プライベートチャット</h3>
+  <div class="has-text-white mt-5">
+    <% if selected_user %>
+      <p class="has-text-black mb-3">選択されたユーザー: <%= selected_user.name %></p>
+    <% end %>
+    <div id="messages">
+    <% chats.each do |chat| %>
+        <%= render partial: 'chats/message', locals: { chat: chat, show_delete_button: chat.sender == current_user } %>
+      <% end %>
+    </div>
+    <%= form_with model: @chat, url: chats_path, method: :post, data: { turbo: true } do |form| %>
+      <%= form.hidden_field :receiver_id, value: receiver_id %>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <%= form.text_field :message, placeholder: "メッセージを入れてエンターキーを押してください!!", class: "input", id: "chat_message_input", data: { receiver_id: receiver_id } %>
+        </div>
+        <div class="control">
+          <%= form.submit "Send", class: "button is-primary" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= form_with url: custom_chat_path, method: :post do |f| %>
+    <%= f.collection_select :receiver_id, User.where.not(id: current_user.id), :id, :name %>
+    <%= f.submit "まず始めに、相手を選んでボタンを押してください！！" %>
+  <% end %>
+</div>
