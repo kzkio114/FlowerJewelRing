@@ -15,7 +15,7 @@ document.addEventListener('turbo:load', () => {
       received(data) {
         console.log("Received data:", data, "Success:", data.success);
         const messages = document.getElementById('messages');
-        if (data.message && messages) {
+        if (data.action === 'create' && messages && data.message) {
           messages.innerHTML += data.message;
           if (data.success) {
             const input = document.getElementById('chat_message_input');
@@ -23,10 +23,18 @@ document.addEventListener('turbo:load', () => {
               input.value = ''; // フィールドをクリア
             }
           }
+        } else if (data.action === 'destroy' && data.chat_id) {
+          const chatElement = document.getElementById(`chat_${data.chat_id}`);
+          if (chatElement) {
+            chatElement.remove();
+          }
         }
       },
       speak(message, receiver_id) {
         this.perform('speak', { message: message, receiver_id: receiver_id });
+      },
+      deleteMessage(chat_id) {
+        this.perform('delete_message', { chat_id: chat_id });
       }
     });
 
@@ -54,5 +62,12 @@ document.addEventListener('turbo:load', () => {
         event.preventDefault();
       });
     }
+
+    document.addEventListener('click', (event) => {
+      if (event.target.matches('.delete-chat-button')) {
+        const chatId = event.target.dataset.chatId;
+        chatChannel.deleteMessage(chatId);
+      }
+    });
   }
 });

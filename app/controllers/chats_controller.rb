@@ -8,15 +8,17 @@ class ChatsController < ApplicationController
     if @chat.save
       ChatChannel.broadcast_to(@chat.receiver, {
         action: 'create',
-        message: render_to_string(partial: 'chats/message', locals: { chat: @chat }, formats: [:html]),
+        message: render_to_string(partial: 'chats/message', locals: { chat: @chat, show_delete_button: false }, formats: [:html]),
+        chat_id: @chat.id,
         success: true
       })
       ChatChannel.broadcast_to(current_user, {
         action: 'create',
-        message: render_to_string(partial: 'chats/message', locals: { chat: @chat }, formats: [:html]),
+        message: render_to_string(partial: 'chats/message', locals: { chat: @chat, show_delete_button: true }, formats: [:html]),
+        chat_id: @chat.id,
         success: true
       })
-      render turbo_stream: turbo_stream.append('messages', partial: 'chats/message', locals: { chat: @chat })
+      render turbo_stream: turbo_stream.append('messages', partial: 'chats/message', locals: { chat: @chat, show_delete_button: true })
     else
       logger.debug @chat.errors.full_messages.join(", ")
       render json: @chat.errors, status: :unprocessable_entity
