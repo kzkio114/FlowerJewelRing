@@ -1,4 +1,6 @@
 <div id="chat_<%= chat.id %>">
   <p class="has-text-black"><strong><%= chat.sender.name.force_encoding('UTF-8') %>:</strong> <%= chat.decrypted_message.force_encoding('UTF-8') %></p>
+  <% if chat.sender == current_user %>
     <button class="delete-chat-button has-text-black" data-chat-id="<%= chat.id %>">削除</button>
+  <% end %>
 </div>

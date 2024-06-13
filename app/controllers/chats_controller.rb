@@ -1,6 +1,7 @@
 class ChatsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :chat, :destroy]
   before_action :set_chat, only: [:destroy]
+  before_action :ensure_sender, only: [:destroy]
 
   def create
     @chat = current_user.sent_chats.build(chat_params)
@@ -71,5 +72,11 @@ class ChatsController < ApplicationController
 
   def set_chat
     @chat = Chat.find(params[:id])
+  end
+
+  def ensure_sender
+    unless @chat.sender == current_user
+      render json: { error: "You are not authorized to delete this message." }, status: :forbidden
+    end
   end
 end
