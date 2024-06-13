@@ -1,4 +1,3 @@
-# app/controllers/private_chats_controller.rb
 class PrivateChatsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :private_chat, :destroy]
   before_action :set_chat, only: [:destroy]
@@ -6,16 +5,20 @@ class PrivateChatsController < ApplicationController
   def create
     @private_chat = current_user.sent_chats.build(chat_params)
     if @private_chat.save
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.append('messages', partial: 'private_chats/chat_message', locals: { chat: @private_chat })
-          ]
-        end
-        format.html { redirect_to private_chats_path(receiver_id: @private_chat.receiver_id) }
-      end
+      PrivateChatChannel.broadcast_to(@private_chat.receiver, {
+        action: 'create',
+        message: render_to_string(partial: 'private_chats/chat_message', locals: { chat: @private_chat }, formats: [:html]),
+        chat: @private_chat,
+        success: true
+      })
+      PrivateChatChannel.broadcast_to(current_user, {
+        action: 'create',
+        message: render_to_string(partial: 'private_chats/chat_message', locals: { chat: @private_chat }, formats: [:html]),
+        chat: @private_chat,
+        success: true
+      })
+      render turbo_stream: turbo_stream.append('messages', partial: 'private_chats/chat_message', locals: { chat: @private_chat })
     else
-      logger.debug @private_chat.errors.full_messages.join(", ")
       render json: @private_chat.errors, status: :unprocessable_entity
     end
   end
@@ -32,9 +35,7 @@ class PrivateChatsController < ApplicationController
     end
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "private_chats/chat_form", locals: { chats: @private_chats, receiver_id: @receiver_id, selected_user: @selected_user })
-        ]
+        render turbo_stream: turbo_stream.replace("content", partial: "private_chats/chat_form", locals: { chats: @private_chats, receiver_id: @receiver_id, selected_user: @selected_user })
       end
       format.html
     end
@@ -43,12 +44,15 @@ class PrivateChatsController < ApplicationController
   def destroy
     chat_id = @private_chat.id
     if @private_chat.destroy
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.remove("chat_#{chat_id}")
-        end
-        format.html { redirect_to private_chats_path }
-      end
+      PrivateChatChannel.broadcast_to(current_user, {
+        action: 'destroy',
+        chat_id: chat_id
+      })
+      PrivateChatChannel.broadcast_to(@private_chat.receiver, {
+        action: 'destroy',
+        chat_id: chat_id
+      })
+      head :ok
     else
       render json: @private_chat.errors, status: :unprocessable_entity
     end

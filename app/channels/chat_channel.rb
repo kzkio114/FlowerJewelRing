@@ -1,6 +1,6 @@
 class ChatChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "chat_channel"
+    stream_for current_user
   end
 
   def unsubscribed
@@ -9,8 +9,14 @@ class ChatChannel < ApplicationCable::Channel
 
   def speak(data)
     message = Chat.create!(sender_id: current_user.id, receiver_id: data['receiver_id'], message: data['message'])
-    
-    ActionCable.server.broadcast("chat_channel", {
+
+    # 送信者と受信者にブロードキャスト
+    ChatChannel.broadcast_to(message.receiver, {
+      message: render_message(message),
+      success: message.persisted? # メッセージが正常に作成されたことを示すフラグ
+    })
+
+    ChatChannel.broadcast_to(message.sender, {
       message: render_message(message),
       success: message.persisted? # メッセージが正常に作成されたことを示すフラグ
     })

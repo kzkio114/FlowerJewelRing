@@ -5,11 +5,16 @@ class ChatsController < ApplicationController
   def create
     @chat = current_user.sent_chats.build(chat_params)
     if @chat.save
-      ActionCable.server.broadcast 'chat_channel', {
+      ChatChannel.broadcast_to(@chat.receiver, {
         action: 'create',
         message: render_to_string(partial: 'chats/message', locals: { chat: @chat }, formats: [:html]),
         success: true
-      }
+      })
+      ChatChannel.broadcast_to(current_user, {
+        action: 'create',
+        message: render_to_string(partial: 'chats/message', locals: { chat: @chat }, formats: [:html]),
+        success: true
+      })
       render turbo_stream: turbo_stream.append('messages', partial: 'chats/message', locals: { chat: @chat })
     else
       logger.debug @chat.errors.full_messages.join(", ")
@@ -18,10 +23,17 @@ class ChatsController < ApplicationController
   end
 
   def chat
-    @chats = Chat.all
+    @receiver_id = params[:receiver_id]
+    @selected_user = User.find(@receiver_id) if @receiver_id.present?
+
+    if @selected_user
+      @chats = Chat.where(sender: current_user, receiver: @selected_user)
+                   .or(Chat.where(sender: @selected_user, receiver: current_user))
+    else
+      @chats = []
+    end
+
     @chat = Chat.new
-    @receiver_id = params[:receiver_id] # 受信者IDを動的に設定
-    @selected_user = User.find(@receiver_id) if @receiver_id.present? # 選択されたユーザーを取得
 
     respond_to do |format|
       format.turbo_stream do
@@ -37,10 +49,14 @@ class ChatsController < ApplicationController
   def destroy
     chat_id = @chat.id
     if @chat.destroy
-      ActionCable.server.broadcast 'chat_channel', {
+      ChatChannel.broadcast_to(current_user, {
         action: 'destroy',
         chat_id: chat_id
-      }
+      })
+      ChatChannel.broadcast_to(@chat.receiver, {
+        action: 'destroy',
+        chat_id: chat_id
+      })
       head :ok
     else
       render json: @chat.errors, status: :unprocessable_entity

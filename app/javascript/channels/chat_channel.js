@@ -1,4 +1,3 @@
-// app/javascript/channels/chat_channel.js
 import consumer from "./consumer"
 
 document.addEventListener('turbo:load', () => {
@@ -16,18 +15,13 @@ document.addEventListener('turbo:load', () => {
       received(data) {
         console.log("Received data:", data, "Success:", data.success);
         const messages = document.getElementById('messages');
-        if (data.action === 'create' && messages && data.message) {
+        if (data.message && messages) {
           messages.innerHTML += data.message;
           if (data.success) {
             const input = document.getElementById('chat_message_input');
             if (input) {
               input.value = ''; // フィールドをクリア
             }
-          }
-        } else if (data.action === 'destroy' && data.chat_id) {
-          const chatElement = document.getElementById(`chat_${data.chat_id}`);
-          if (chatElement) {
-            chatElement.remove();
           }
         }
       },
