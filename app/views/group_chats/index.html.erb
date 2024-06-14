@@ -1,0 +1,8 @@
+<div id="group_chat_list">
+  <h3>グループチャット一覧</h3>
+  <% group_chats.each do |group_chat| %>
+    <div id="group_chat_<%= group_chat.id %>">
+      <%= button_to group_chat.title, group_chat_path(group_chat), method: :post, data: { turbo: true, turbo_method: :post }, class: 'button is-primary' %>
+    </div>
+  <% end %>
+</div>

@@ -1,3 +1,5 @@
-<%#= button_to 'チャット', buttons_chat_path, method: :post, class: 'button is-primary is-small column is-full mt-5' %>
 <%= button_to 'プライベートチャット', custom_chat_path, method: :post, class: 'button is-primary is-small column is-full mt-5', data: { turbo: true, turbo_method: :post } %>
-<%= button_to 'グループチャット', group_chat_group_chat_path(@group_chat), method: :post, class: 'button is-primary is-small column is-full mt-5', data: { turbo: true, turbo_method: :post } %>
+
+<%= button_to 'グループチャット', group_chat_group_chat_path(@group_chat), method: :post, class: 'button is-primary is-small column is-full mt-5', data: { turbo: true } %>
+<%= button_to 'グループチャット一覧', group_chats_path, method: :get, class: 'button is-primary is-small column is-full mt-5', data: { turbo: true } %>
+<%= link_to '新しいグループチャットを作成', new_group_chat_path, class: 'button is-primary is-small column is-full mt-5', data: { turbo: true } %>

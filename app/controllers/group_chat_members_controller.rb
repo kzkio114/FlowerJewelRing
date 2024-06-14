@@ -1,5 +1,7 @@
 class GroupChatMembersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_group_chat
+  before_action :set_group_chat_member, only: [:destroy]
 
   def new
     @group_chat_member = GroupChatMember.new
@@ -26,12 +28,9 @@ class GroupChatMembersController < ApplicationController
   end
 
   def destroy
-    @group_chat_member = @group_chat.group_chat_members.find(params[:id])
     @group_chat_member.destroy
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.remove(@group_chat_member)
-      end
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@group_chat_member) }
       format.html { redirect_to group_chat_path(@group_chat), notice: 'メンバーが削除されました。' }
     end
   end
@@ -40,6 +39,10 @@ class GroupChatMembersController < ApplicationController
 
   def set_group_chat
     @group_chat = GroupChat.find(params[:group_chat_id])
+  end
+
+  def set_group_chat_member
+    @group_chat_member = @group_chat.group_chat_members.find(params[:id])
   end
 
   def group_chat_member_params

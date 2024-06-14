@@ -1,0 +1,12 @@
+<%= form_with(model: @group_chat, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :title %>
+    <div class="control">
+      <%= form.text_field :title, class: 'input' %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Create Group Chat', class: 'button is-primary' %>
+  </div>
+<% end %>

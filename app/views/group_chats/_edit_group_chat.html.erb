@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "edit_group_chat" do %>
+  <%= form_with(model: group_chat, local: true) do |form| %>
+    <div class="field">
+      <%= form.label :title %>
+      <%= form.text_field :title %>
+    </div>
+    <div class="actions">
+      <%= form.submit '更新', class: 'button is-primary' %>
+    </div>
+  <% end %>
+<% end %>
