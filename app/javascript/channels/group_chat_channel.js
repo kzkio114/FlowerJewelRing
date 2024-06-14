@@ -1,55 +1,45 @@
 import consumer from "./consumer"
 
 document.addEventListener('turbo:load', () => {
-  const groupChatElement = document.getElementById('group_chat')
-  if (groupChatElement) {
-    const groupChatId = groupChatElement.dataset.groupChatId
+  const groupChatElement = document.getElementById('chat_message_input');
+  const groupChatId = groupChatElement.dataset.groupChatId;
 
-    const groupChatChannel = consumer.subscriptions.create(
-      { channel: "GroupChatChannel", group_chat_id: groupChatId },
-      {
-        connected() {
-          console.log("Connected to the group chat channel")
-        },
-        disconnected() {
-          console.log("Disconnected from the group chat channel")
-        },
-        received(data) {
-          console.log("Received data:", data)
-          const messages = document.getElementById('messages')
-          if (data.message && messages) {
-            messages.innerHTML += data.message
+  if (groupChatId) {
+    const groupChatChannel = consumer.subscriptions.create({ channel: "GroupChatChannel", group_chat_id: groupChatId }, {
+      connected() {
+        console.log(`Connected to the group chat channel for group ${groupChatId}`);
+      },
+      disconnected() {
+        console.log(`Disconnected from the group chat channel for group ${groupChatId}`);
+      },
+      received(data) {
+        const messages = document.getElementById('messages');
+        if (data.action === 'create' && messages) {
+          messages.innerHTML += data.message;
+          if (data.user_id === parseInt(groupChatElement.dataset.currentUserId)) {
+            groupChatElement.value = '';
           }
-        },
-        speak(message) {
-          this.perform('speak', { message: message, group_chat_id: groupChatId })
+        } else if (data.action === 'destroy' && data.message_id) {
+          const messageElement = document.getElementById(`message_${data.message_id}`);
+          if (messageElement) {
+            messageElement.remove();
+          }
         }
+      },
+      speak(message) {
+        this.perform('speak', { message: message, group_chat_id: groupChatId });
       }
-    )
+    });
 
-    const input = document.getElementById('chat_message_input')
-    const button = document.querySelector('input[type="submit"]')
-
-    if (input && button) {
-      const sendMessage = () => {
-        const message = input.value
+    groupChatElement.addEventListener('keypress', function(event) {
+      if (event.keyCode === 13) {
+        const message = groupChatElement.value;
         if (message.trim() !== '') {
-          groupChatChannel.speak(message)
-          input.value = ''
+          groupChatChannel.speak(message);
+          groupChatElement.value = '';
         }
+        event.preventDefault();
       }
-
-      input.addEventListener('keypress', function (event) {
-        if (event.keyCode === 13) {
-          sendMessage()
-          event.preventDefault()
-        }
-      })
-
-      button.addEventListener('click', (event) => {
-        sendMessage()
-        event.preventDefault()
-      })
-    }
+    });
   }
-})
+});

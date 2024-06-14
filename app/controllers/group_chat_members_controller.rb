@@ -1,15 +1,25 @@
 class GroupChatMembersController < ApplicationController
-  before_action :authenticate_user!
   before_action :set_group_chat
 
   def new
     @group_chat_member = GroupChatMember.new
+    @users = User.where.not(id: @group_chat.users.pluck(:id))
   end
 
   def create
     @group_chat_member = @group_chat.group_chat_members.build(group_chat_member_params)
+    @users = User.where.not(id: @group_chat.users.pluck(:id))
+
     if @group_chat_member.save
-      redirect_to custom_group_chat_group_chat_path(@group_chat), notice: 'メンバーが追加されました'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.append("group_chat_members", partial: "group_chat_members/member", locals: { group_chat_member: @group_chat_member }),
+            turbo_stream.replace("new_group_chat_member", partial: "group_chat_members/form", locals: { group_chat: @group_chat, group_chat_member: GroupChatMember.new, users: @users })
+          ]
+        end
+        format.html { redirect_to group_chat_path(@group_chat), notice: 'メンバーが追加されました。' }
+      end
     else
       render :new
     end
@@ -18,7 +28,12 @@ class GroupChatMembersController < ApplicationController
   def destroy
     @group_chat_member = @group_chat.group_chat_members.find(params[:id])
     @group_chat_member.destroy
-    redirect_to custom_group_chat_group_chat_path(@group_chat), notice: 'メンバーが削除されました'
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.remove(@group_chat_member)
+      end
+      format.html { redirect_to group_chat_path(@group_chat), notice: 'メンバーが削除されました。' }
+    end
   end
 
   private

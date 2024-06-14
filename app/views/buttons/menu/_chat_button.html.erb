@@ -1,5 +1,3 @@
 <%#= button_to 'チャット', buttons_chat_path, method: :post, class: 'button is-primary is-small column is-full mt-5' %>
 <%= button_to 'プライベートチャット', custom_chat_path, method: :post, class: 'button is-primary is-small column is-full mt-5', data: { turbo: true, turbo_method: :post } %>
-
-
-<%= button_to 'グループチャット', custom_group_chat_group_chat_path(GroupChat.first_or_create(title: "Default Group Chat")), method: :post, class: 'button is-primary is-small column is-full mt-5', data: { turbo: true, turbo_method: :post } %>
+<%= button_to 'グループチャット', group_chat_group_chat_path(@group_chat), method: :post, class: 'button is-primary is-small column is-full mt-5', data: { turbo: true, turbo_method: :post } %>

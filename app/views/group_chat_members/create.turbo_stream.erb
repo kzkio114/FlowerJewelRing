@@ -1,0 +1,2 @@
+<%= turbo_stream.append "group_chat_members", partial: "group_chat_members/member", locals: { group_chat_member: @group_chat_member } %>
+<%= turbo_stream.replace "new_group_chat_member", partial: "group_chat_members/form", locals: { group_chat: @group_chat, group_chat_member: GroupChatMember.new, users: User.where.not(id: @group_chat.users.pluck(:id)) } %>

@@ -1,13 +1,15 @@
 class GroupChatMessagesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_group_chat
+  before_action :set_group_chat_message, only: [:destroy]
 
   def create
     @group_chat_message = @group_chat.group_chat_messages.build(group_chat_message_params)
     @group_chat_message.user = current_user
     if @group_chat_message.save
       ActionCable.server.broadcast "group_chat_#{@group_chat.id}", {
-        message: render_message(@group_chat_message),
+        action: 'create',
+        message: render_message(@group_chat_message, true),
         user_id: @group_chat_message.user.id,
         group_chat_id: @group_chat.id
       }
@@ -19,8 +21,16 @@ class GroupChatMessagesController < ApplicationController
 
   def destroy
     @group_chat_message = @group_chat.group_chat_messages.find(params[:id])
-    @group_chat_message.destroy
-    head :ok
+    if @group_chat_message.user == current_user
+      @group_chat_message.destroy
+      ActionCable.server.broadcast "group_chat_#{@group_chat.id}", {
+        action: 'destroy',
+        message_id: @group_chat_message.id
+      }
+      head :ok
+    else
+      head :forbidden
+    end
   end
 
   private
@@ -33,7 +43,11 @@ class GroupChatMessagesController < ApplicationController
     @group_chat = GroupChat.find(params[:group_chat_id])
   end
 
-  def render_message(message)
-    ApplicationController.renderer.render(partial: 'group_chat_messages/message', locals: { message: message })
+  def set_group_chat_message
+    @group_chat_message = @group_chat.group_chat_messages.find(params[:id])
+  end
+
+  def render_message(message, show_delete_button)
+    ApplicationController.renderer.render(partial: 'group_chat_messages/message', locals: { message: message, show_delete_button: show_delete_button })
   end
 end

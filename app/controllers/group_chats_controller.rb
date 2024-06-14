@@ -2,27 +2,12 @@ class GroupChatsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_group_chat, only: [:group_chat, :edit, :update, :destroy]
 
-  def new
-    @group_chat = GroupChat.new
-  end
-
-  def create
-    @group_chat = GroupChat.new(group_chat_params)
-    if @group_chat.save
-      redirect_to custom_group_chat_group_chat_path(@group_chat), notice: 'グループチャットが作成されました'
-    else
-      render :new
-    end
-  end
-
   def group_chat
     @group_chat_messages = @group_chat.group_chat_messages.includes(:user)
     @group_chat_message = GroupChatMessage.new
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "group_chats/chat_response", locals: { group_chat: @group_chat, group_chat_messages: @group_chat_messages, group_chat_message: @group_chat_message })
-        ]
+        render turbo_stream: turbo_stream.replace("content", partial: "group_chats/chat_response", locals: { group_chat: @group_chat, group_chat_messages: @group_chat_messages, group_chat_message: @group_chat_message, show_delete_button: true })
       end
       format.html
     end
@@ -33,7 +18,15 @@ class GroupChatsController < ApplicationController
 
   def update
     if @group_chat.update(group_chat_params)
-      redirect_to custom_group_chat_group_chat_path(@group_chat), notice: 'グループチャットが更新されました'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("edit_group_chat", ""),
+            turbo_stream.replace("content", partial: "group_chats/chat_response", locals: { group_chat: @group_chat, group_chat_messages: @group_chat_messages, group_chat_message: @group_chat_message, show_delete_button: true })
+          ]
+        end
+        format.html { redirect_to group_chat_path(@group_chat), notice: 'グループチャットが更新されました' }
+      end
     else
       render :edit
     end

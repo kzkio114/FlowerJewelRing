@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "new_group_chat_member" do %>
+  <%= render 'form', group_chat: @group_chat, group_chat_member: @group_chat_member, users: @users %>
+<% end %>

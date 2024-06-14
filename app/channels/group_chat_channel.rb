@@ -13,6 +13,7 @@ class GroupChatChannel < ApplicationCable::Channel
     message = group_chat.group_chat_messages.create!(user: current_user, message: data['message'])
 
     GroupChatChannel.broadcast_to(group_chat, {
+      action: 'create',
       message: render_message(message),
       user_id: message.user.id,
       group_chat_id: group_chat.id
@@ -22,6 +23,6 @@ class GroupChatChannel < ApplicationCable::Channel
   private
 
   def render_message(message)
-    ApplicationController.renderer.render(partial: 'group_chat_messages/message', locals: { message: message })
+    ApplicationController.renderer.render(partial: 'group_chat_messages/message', locals: { message: message, show_delete_button: message.user == current_user })
   end
 end

@@ -13,14 +13,15 @@ Rails.application.routes.draw do
 
 
   # グループチャットのルーティング
-  resources :group_chats, only: [:new, :create, :edit, :update, :destroy] do
+  
+
+  resources :group_chats do
     member do
-      post 'group_chat', to: 'group_chats#group_chat', as: 'custom_group_chat'
+      post 'group_chat'
     end
     resources :group_chat_messages, only: [:create, :destroy]
     resources :group_chat_members, only: [:new, :create, :destroy]
   end
-
 
  
   # ActionCableのサーバー接続エンドポイント

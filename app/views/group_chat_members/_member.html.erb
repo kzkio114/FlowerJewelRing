@@ -1,0 +1,4 @@
+<div id="group_chat_member_<%= group_chat_member.id %>">
+  <p><%= group_chat_member.user.name %> (<%= group_chat_member.role %>)</p>
+  <%= button_to '削除', group_chat_group_chat_member_path(group_chat_member.group_chat, group_chat_member), method: :delete, data: { turbo_confirm: '本当に削除しますか？' }, class: 'button is-danger' %>
+</div>
