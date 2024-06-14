@@ -23,7 +23,7 @@ class ButtonsController < ApplicationController
   end
 
   def menu
-    @group_chat = GroupChat.first_or_create(title: "Default Group Chat")
+    @group_chats = GroupChat.all
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [

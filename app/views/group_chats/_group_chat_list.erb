@@ -1,0 +1,24 @@
+<div id="content" class="container is-small frame-fixed-height">
+<div id="group_chat_list">
+  <h3>グループチャット一覧</h3>
+  <% group_chats.each do |group_chat| %>
+    <div id="group_chat_<%= group_chat.id %>">
+      <%= button_to group_chat.title, group_chat_group_chat_path(group_chat), method: :post, data: { turbo: true, turbo_method: :post }, class: 'button is-primary' %>
+    </div>
+  <% end %>
+</div>
+
+<h3>新しいグループチャットを作成</h3>
+<%= form_with(model: group_chat, url: group_chats_path, method: :post, data: { turbo: true }) do |form| %>
+  <div class="field">
+    <div class="control">
+      <%= form.label :title, "グループチャットのタイトル" %>
+      <%= form.text_field :title, class: 'input' %>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <%= form.submit "作成", class: 'button is-primary' %>
+    </div>
+  </div>
+<% end %>

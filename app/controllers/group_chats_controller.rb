@@ -2,16 +2,17 @@ class GroupChatsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_group_chat, only: [:group_chat, :edit, :update, :destroy]
 
-  def index
+  def group_chat_list
     @group_chats = GroupChat.all
+    @group_chat = GroupChat.new
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "group_chats/index", locals: { group_chats: @group_chats }),
+          turbo_stream.replace("content", partial: "group_chats/group_chat_list", locals: { group_chats: @group_chats, group_chat: @group_chat }),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
-      format.html { render :index, locals: { group_chats: @group_chats } }
+      format.html { render :index, locals: { group_chats: @group_chats, group_chat: @group_chat } }
     end
   end
 
@@ -39,11 +40,21 @@ class GroupChatsController < ApplicationController
     @group_chat = GroupChat.new(group_chat_params)
     if @group_chat.save
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.append('group_chat_list', partial: 'group_chats/group_chat', locals: { group_chat: @group_chat }) }
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("content", partial: "group_chats/group_chat", locals: { group_chat: @group_chat }),
+            turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          ]
+        end
         format.html { redirect_to @group_chat, notice: 'グループチャットが作成されました' }
       end
     else
-      render :new
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("content", partial: "group_chats/form", locals: { group_chat: @group_chat })
+        end
+        format.html { render :new }
+      end
     end
   end
 
@@ -59,7 +70,7 @@ class GroupChatsController < ApplicationController
   def update
     if @group_chat.update(group_chat_params)
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace('group_chat_content', partial: 'group_chats/group_chat_response', locals: { group_chat: @group_chat }) }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace('group_chat_content', partial: 'group_chats/group_chat', locals: { group_chat: @group_chat }) }
         format.html { redirect_to @group_chat, notice: 'グループチャットが更新されました' }
       end
     else
