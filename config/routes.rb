@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   resources :group_chats, only: [:new, :index, :edit, :create, :update, :destroy] do
     member do
+      post 'add_member'
       post 'group_chat'
       post 'group_chat_list'
     end

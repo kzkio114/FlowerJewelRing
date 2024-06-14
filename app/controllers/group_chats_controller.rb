@@ -21,6 +21,11 @@ class GroupChatsController < ApplicationController
     @group_chat_message = GroupChatMessage.new
     @group_chat_members = @group_chat.group_chat_members
 
+    # Public グループチャットの場合、ユーザーを自動的にメンバーとして追加
+    if @group_chat.group_chat_members.exists?(role: 'free') && !@group_chat.member?(current_user)
+      @group_chat.group_chat_members.create(user: current_user, role: :free)
+    end
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -37,8 +42,11 @@ class GroupChatsController < ApplicationController
   end
 
   def create
-    @group_chat = GroupChat.new(group_chat_params)
+    @group_chat = GroupChat.new(group_chat_params.except(:role))
     if @group_chat.save
+      @group_chats = GroupChat.all
+      role = group_chat_params[:role] == 'free' ? :free : :admin
+      GroupChatMember.create(group_chat: @group_chat, user: current_user, role: role)
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
@@ -49,9 +57,10 @@ class GroupChatsController < ApplicationController
         format.html { redirect_to @group_chat, notice: 'グループチャットが作成されました' }
       end
     else
+      @group_chats = GroupChat.all
       respond_to do |format|
         format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("content", partial: "group_chats/form", locals: { group_chat: @group_chat })
+          render turbo_stream: turbo_stream.replace("content", partial: "group_chats/group_chat_list", locals: { group_chats: @group_chats, group_chat: @group_chat })
         end
         format.html { render :new }
       end
@@ -93,6 +102,6 @@ class GroupChatsController < ApplicationController
   end
 
   def group_chat_params
-    params.require(:group_chat).permit(:title)
+    params.require(:group_chat).permit(:title, :role)
   end
 end
