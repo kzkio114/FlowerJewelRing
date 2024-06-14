@@ -6,6 +6,10 @@ class GroupChatMessagesController < ApplicationController
     @group_chat_message.user = current_user
 
     if @group_chat_message.save
+      GroupChatChannel.broadcast_to(@group_chat, {
+        message: render_to_string(partial: 'group_chat_messages/message', locals: { message: @group_chat_message, show_delete_button: true }),
+        user_id: current_user.id
+      })
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.append('messages', partial: 'group_chat_messages/message', locals: { message: @group_chat_message, show_delete_button: true }) }
         format.html { redirect_to @group_chat, notice: 'メッセージが送信されました。' }
