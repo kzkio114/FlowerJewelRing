@@ -1,14 +1,21 @@
+// app/javascript/channels/chat_channel.js
 import consumer from "./consumer";
 
 document.addEventListener("turbo:load", () => {
-  const chatElement = document.getElementById("chat");
+  const chatElement = document.getElementById("content");
 
   if (!chatElement) {
     console.warn("Chat element not found");
     return;
   }
 
-  const userId = chatElement.dataset.userId;
+  const inputElement = document.getElementById("chat_message_input");
+  if (!inputElement) {
+    console.warn("Chat message input not found");
+    return;
+  }
+
+  const userId = inputElement.dataset.receiverId;
 
   if (!userId) {
     console.warn("User ID not found");
