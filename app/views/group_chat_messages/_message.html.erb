@@ -1,6 +1,6 @@
-<div id="message_<%= message.id %>">
+<div id="message_<%= message.id %>" data-turbo="true">
   <p class="has-text-black"><strong><%= message.user.name %>:</strong> <%= message.message %></p>
   <% if show_delete_button %>
-    <%= button_to '削除', group_chat_group_chat_message_path(message.group_chat, message), method: :delete, data: { confirm: '本当に削除しますか？' }, remote: true, class: 'has-text-black' %>
+    <%= button_to '削除', group_chat_group_chat_message_path(message.group_chat, message), method: :delete, data: { confirm: '本当に削除しますか？', turbo: true }, class: 'has-text-black delete-chat-button', data: { message_id: message.id } %>
   <% end %>
 </div>

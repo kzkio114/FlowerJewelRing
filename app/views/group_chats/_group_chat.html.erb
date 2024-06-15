@@ -1,23 +1,23 @@
+<!-- app/views/group_chats/_group_chat.html.erb -->
 <div id="content" class="container is-small frame-fixed-height">
-
-<div id="group_chat" data-group-chat-id="<%= @group_chat.id %>">
-  <h2><%= @group_chat.title %> (ID: <%= @group_chat.id %>)</h2>
-  <div id="messages">
-    <% @group_chat.group_chat_messages.each do |message| %>
-      <%= render partial: "group_chat_messages/message", locals: { message: message, show_delete_button: message.user == current_user } %>
+  <div id="group_chat" data-group-chat-id="<%= @group_chat.id %>">
+    <h2><%= @group_chat.title %> (ID: <%= @group_chat.id %>)</h2>
+    <div id="messages">
+      <% @group_chat.group_chat_messages.each do |message| %>
+        <%= render partial: "group_chat_messages/message", locals: { message: message, show_delete_button: message.user == current_user } %>
+      <% end %>
+    </div>
+    <%= form_with(model: [@group_chat, GroupChatMessage.new], data: { turbo: true }, id: "new_group_chat_message") do |form| %>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <%= form.text_area :message, placeholder: "メッセージを入力してください", class: "input", id: "chat_message_input" %>
+        </div>
+        <div class="control">
+          <%= form.submit "送信", class: "button is-primary" %>
+        </div>
+      </div>
     <% end %>
   </div>
-  <%= form_with(model: [@group_chat, GroupChatMessage.new], data: { turbo: true }, id: "new_group_chat_message") do |form| %>
-    <div class="field has-addons">
-      <div class="control is-expanded">
-        <%= form.text_area :message, placeholder: "メッセージを入力してください", class: "input", id: "chat_message_input", data: { group_chat_id: @group_chat.id, current_user_id: current_user.id } %>
-      </div>
-      <div class="control">
-        <%= form.submit "送信", class: "button is-primary" %>
-      </div>
-    </div>
-  <% end %>
-</div>
 
   <div id="group_chat_members">
     <% group_chat.group_chat_members.each do |member| %>
@@ -34,7 +34,7 @@
     <%= button_to "グループ削除", group_chat_path(group_chat), method: :delete, data: { confirm: "本当に削除しますか？" }, class: 'button is-danger' %>
     <% end %>
   </div>
-  </div>
 
-<%= turbo_frame_tag "new_group_chat_member" %>
-<%= turbo_frame_tag "edit_group_chat" %>
+  <%= turbo_frame_tag "new_group_chat_member" %>
+  <%= turbo_frame_tag "edit_group_chat" %>
+</div>

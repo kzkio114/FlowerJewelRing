@@ -12,18 +12,17 @@ class GroupChatChannel < ApplicationCable::Channel
     message = GroupChatMessage.create!(group_chat_id: data['group_chat_id'], user: current_user, message: data['message'])
     GroupChatChannel.broadcast_to(message.group_chat, {
       action: 'create',
-      message: render_message(message),
-      group_chat_id: message.group_chat_id
+      message_html: render_message(message),
+      message_id: message.id
     })
   end
 
-  def destroy(data)
+  def delete_message(data)
     message = GroupChatMessage.find(data['message_id'])
     if message.destroy
       GroupChatChannel.broadcast_to(message.group_chat, {
         action: 'destroy',
-        message_id: data['message_id'],
-        group_chat_id: message.group_chat_id
+        message_id: data['message_id']
       })
     end
   end

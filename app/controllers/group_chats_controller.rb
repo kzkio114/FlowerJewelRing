@@ -12,7 +12,6 @@ class GroupChatsController < ApplicationController
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
-      format.html { render :index, locals: { group_chats: @group_chats, group_chat: @group_chat } }
     end
   end
 
@@ -33,7 +32,6 @@ class GroupChatsController < ApplicationController
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
-      format.html
     end
   end
 
@@ -54,7 +52,6 @@ class GroupChatsController < ApplicationController
             turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
           ]
         end
-        format.html { redirect_to @group_chat, notice: 'グループチャットが作成されました' }
       end
     else
       @group_chats = GroupChat.all
@@ -62,7 +59,6 @@ class GroupChatsController < ApplicationController
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace("content", partial: "group_chats/group_chat_list", locals: { group_chats: @group_chats, group_chat: @group_chat })
         end
-        format.html { render :new }
       end
     end
   end
@@ -72,7 +68,6 @@ class GroupChatsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace("edit_group_chat", partial: "group_chats/edit_group_chat", locals: { group_chat: @group_chat })
       end
-      format.html { render :edit }
     end
   end
 
@@ -80,7 +75,6 @@ class GroupChatsController < ApplicationController
     if @group_chat.update(group_chat_params)
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.replace('group_chat_content', partial: 'group_chats/group_chat', locals: { group_chat: @group_chat }) }
-        format.html { redirect_to @group_chat, notice: 'グループチャットが更新されました' }
       end
     else
       render :edit
@@ -91,7 +85,6 @@ class GroupChatsController < ApplicationController
     @group_chat.destroy
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove("group_chat_#{params[:id]}") }
-      format.html { redirect_to group_chats_url, notice: 'グループチャットが削除されました' }
     end
   end
 

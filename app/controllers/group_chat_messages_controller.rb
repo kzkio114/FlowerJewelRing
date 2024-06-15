@@ -7,12 +7,13 @@ class GroupChatMessagesController < ApplicationController
 
     if @group_chat_message.save
       GroupChatChannel.broadcast_to(@group_chat, {
-        message: render_to_string(partial: 'group_chat_messages/message', locals: { message: @group_chat_message, show_delete_button: true }),
-        user_id: current_user.id
+        action: 'create',
+        message_html: render_to_string(partial: 'group_chat_messages/message', locals: { message: @group_chat_message, show_delete_button: true }, formats: [:html]),
+        message_id: @group_chat_message.id,
+        success: true
       })
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.append('messages', partial: 'group_chat_messages/message', locals: { message: @group_chat_message, show_delete_button: true }) }
-        format.html { redirect_to @group_chat, notice: 'メッセージが送信されました。' }
       end
     else
       render :new
@@ -23,9 +24,13 @@ class GroupChatMessagesController < ApplicationController
     @group_chat_message = @group_chat.group_chat_messages.find(params[:id])
     @group_chat_message.destroy
 
+    GroupChatChannel.broadcast_to(@group_chat, {
+      action: 'destroy',
+      message_id: @group_chat_message.id
+    })
+
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove("message_#{@group_chat_message.id}") }
-      format.html { redirect_to @group_chat, notice: 'メッセージが削除されました。' }
     end
   end
 
