@@ -1,4 +1,3 @@
-// app/javascript/channels/chat_channel.js
 import consumer from "./consumer";
 
 document.addEventListener("turbo:load", () => {
