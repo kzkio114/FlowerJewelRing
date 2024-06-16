@@ -6,15 +6,18 @@ class ChatsController < ApplicationController
   def create
     @chat = current_user.sent_chats.build(chat_params)
     if @chat.save
+      message_html = render_to_string(partial: 'chats/message', locals: { chat: @chat, show_delete_button: false }, formats: [:html])
       ChatChannel.broadcast_to(@chat.receiver, {
         action: 'create',
-        message: render_to_string(partial: 'chats/message', locals: { chat: @chat, show_delete_button: false }, formats: [:html]),
+        message: message_html,
         chat_id: @chat.id,
         success: true
       })
+      
+      message_html_with_delete = render_to_string(partial: 'chats/message', locals: { chat: @chat, show_delete_button: true }, formats: [:html])
       ChatChannel.broadcast_to(current_user, {
         action: 'create',
-        message: render_to_string(partial: 'chats/message', locals: { chat: @chat, show_delete_button: true }, formats: [:html]),
+        message: message_html_with_delete,
         chat_id: @chat.id,
         success: true
       })
@@ -23,6 +26,9 @@ class ChatsController < ApplicationController
       logger.debug @chat.errors.full_messages.join(", ")
       render json: @chat.errors, status: :unprocessable_entity
     end
+  rescue => e
+    logger.error "Failed to create chat: #{e.message}"
+    render json: { error: 'Failed to create chat' }, status: :unprocessable_entity
   end
 
   def chat
@@ -47,6 +53,9 @@ class ChatsController < ApplicationController
       end
       format.html
     end
+  rescue => e
+    logger.error "Failed to load chat: #{e.message}"
+    render json: { error: 'Failed to load chat' }, status: :unprocessable_entity
   end
 
   def destroy
@@ -64,6 +73,9 @@ class ChatsController < ApplicationController
     else
       render json: @chat.errors, status: :unprocessable_entity
     end
+  rescue => e
+    logger.error "Failed to destroy chat: #{e.message}"
+    render json: { error: 'Failed to destroy chat' }, status: :unprocessable_entity
   end
 
   private
