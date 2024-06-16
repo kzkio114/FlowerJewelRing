@@ -1,6 +1,8 @@
 ja:
   activerecord:
     attributes:
+      group_chat:
+        title: "タイトル"
       user:
         confirmation_sent_at: パスワード確認送信時刻
         confirmation_token: パスワード確認用トークン
@@ -26,6 +28,7 @@ ja:
         unlock_token: ロック解除用トークン
         updated_at: 更新日
     models:
+      group_chat: グループチャット
       user: ユーザー
   devise:
     confirmations:
@@ -133,6 +136,7 @@ ja:
       unlocked: アカウントをロック解除しました。
   errors:
     messages:
+      blank: "を入力してください"
       already_confirmed: は既に登録済みです。ログインしてください。
       confirmation_period_expired: の期限が切れました。%{period} までに確認する必要があります。 新しくリクエストしてください。
       expired: の有効期限が切れました。新しくリクエストしてください。
@@ -141,3 +145,12 @@ ja:
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
+    errors:
+      models:
+        group_chat:
+          attributes:
+            title:
+              blank: "タイトルを入力してください"
+          blank: "必須項目です"
+      messages:
+        blank: "入力してください"

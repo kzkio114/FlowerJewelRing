@@ -23,6 +23,7 @@ class ButtonsController < ApplicationController
   end
 
   def menu
+    @group_chats = GroupChat.all
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -143,21 +144,6 @@ class ButtonsController < ApplicationController
     end
   end
 
-
-  # def consultations_post
-  #   @consultations = Consultation.includes(:category).all
-
-  #   respond_to do |format|
-  #     format.turbo_stream do
-  #       render turbo_stream: [
-  #         turbo_stream.replace("content", partial: "buttons/menu/consultations_post", locals: { consultations: @consultations })
-  #       ]
-  #     end
-  #   end
-  # end
-
-
-
   def gift_list
     #@gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
     @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
@@ -172,13 +158,6 @@ class ButtonsController < ApplicationController
     end
   end
 
-
-
-
-  
-
-
-
   def gift_all
     @gifts = Gift.includes(:gift_category).all
     respond_to do |format|
@@ -190,9 +169,6 @@ class ButtonsController < ApplicationController
         end
     end
   end
-
-
-
 
   def send_gift_response
     # 自分の相談を取得
@@ -215,28 +191,8 @@ class ButtonsController < ApplicationController
       end
     end
   end
-  
 
-  # def send_gift
-  #   @gift = Gift.find(params[:id])
-  #   @gift.giver_id = current_user.id
-  #   @gift.receiver_id = params[:receiver_id]  # 送信先のユーザーIDをパラメータから取得
-  
-  #   if @gift.save
-  #     @gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
-  #     respond_to do |format|
-  #       format.turbo_stream do
-  #         render turbo_stream: turbo_stream.replace(
-  #           "content", 
-  #           partial: "buttons/menu/send_gift_response", 
-  #           locals: { gifts: @gifts }
-  #         )
-  #       end
-  #     end
-  #   else
-  #     # ギフトの保存に失敗した場合の処理を書く
-  #   end
-  # end
+
 
   def user
     @users = User.all
@@ -250,6 +206,7 @@ class ButtonsController < ApplicationController
     end
   end
 
+
   def user_show
     @user = User.find(params[:id])
     respond_to do |format|
@@ -260,50 +217,4 @@ class ButtonsController < ApplicationController
       end
     end
   end
-
-  # def user_profile
-  #   @users = User.all
-  #   respond_to do |format|
-  #     format.turbo_stream do
-  #       render turbo_stream: [
-  #         turbo_stream.replace("content", partial: "buttons/menu/user_profile")
-  #       ]
-  #     end
-  #   end
-  # end
-
-  # def chat
-  #   @chats = Chat.all
-  #   @chat = Chat.new
-  #   respond_to do |format|
-  #     format.turbo_stream do
-  #       render turbo_stream: [
-  #         turbo_stream.replace("content", partial: "buttons/menu/chat_response", locals: { chats: @chats })
-  #       ]
-  #     end
-  #   end
-  # end
-
-#   def create_chat
-#     @chat = Chat.new(chat_params)
-#     @chat.sender_id = current_user.id
-
-#     if @chat.save
-#       ActionCable.server.broadcast "chat_channel", message: @chat.decrypted_message, sender_id: @chat.sender_id, receiver_id: @chat.receiver_id
-#       head :ok
-#     else
-#       head :unprocessable_entity
-#     end
-#   end
-
-#   private
-
-#   def chat_params
-#     params.require(:chat).permit(:receiver_id, :message)
-#   end
 end
-
-
-
-
-

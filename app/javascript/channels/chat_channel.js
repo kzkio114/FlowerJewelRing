@@ -2,6 +2,12 @@ import consumer from "./consumer"
 
 document.addEventListener('turbo:load', () => {
   const chatElement = document.getElementById('chat');
+
+  if (!chatElement) {
+    console.warn("Chat element not found");
+    return;
+  }
+
   const userId = chatElement.dataset.userId; // current_userのID
 
   if (userId) {
@@ -69,5 +75,7 @@ document.addEventListener('turbo:load', () => {
         chatChannel.deleteMessage(chatId);
       }
     });
+  } else {
+    console.warn("User ID not found");
   }
 });

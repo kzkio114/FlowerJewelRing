@@ -1,0 +1,22 @@
+<%= form_with model: @group_chat, local: true do |form| %>
+  <% if @group_chat.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group_chat.errors.count, "error") %> prohibited this group_chat from being saved:</h2>
+
+      <ul>
+        <% @group_chat.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Create Group Chat" %>
+  </div>
+<% end %>

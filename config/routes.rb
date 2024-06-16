@@ -12,6 +12,19 @@ Rails.application.routes.draw do
   post 'private_chat', to: 'private_chats#private_chat', as: 'custom_private_chat'
 
 
+  # グループチャットのルーティング
+  
+
+  resources :group_chats, only: [:new, :index, :edit, :create, :update, :destroy] do
+    member do
+      post 'add_member'
+      post 'group_chat'
+      post 'group_chat_list'
+    end
+    resources :group_chat_members, only: [:new, :create, :destroy]
+    resources :group_chat_messages, only: [:create, :destroy]
+  end
+
  
   # ActionCableのサーバー接続エンドポイント
   mount ActionCable.server => '/cable'
