@@ -13,10 +13,21 @@ class GroupChatMessagesController < ApplicationController
         success: true
       })
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.append('messages', partial: 'group_chat_messages/message', locals: { message: @group_chat_message, show_delete_button: true }) }
+        format.turbo_stream {
+          render turbo_stream: [
+            turbo_stream.append('messages', partial: 'group_chat_messages/message', locals: { message: @group_chat_message, show_delete_button: true }),
+            turbo_stream.replace('new_group_chat_message', partial: 'group_chat_messages/form', locals: { group_chat: @group_chat, group_chat_message: GroupChatMessage.new }) # フォームをクリアする
+          ]
+        }
+        format.html { redirect_to group_chat_path(@group_chat) }
       end
     else
-      render :new
+      respond_to do |format|
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace('new_group_chat_message', partial: 'group_chat_messages/form', locals: { group_chat_message: @group_chat_message })
+        }
+        format.html { render 'group_chats/group_chat' }
+      end
     end
   end
 
@@ -31,6 +42,7 @@ class GroupChatMessagesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove("message_#{@group_chat_message.id}") }
+      format.html { redirect_to group_chat_path(@group_chat) }
     end
   end
 

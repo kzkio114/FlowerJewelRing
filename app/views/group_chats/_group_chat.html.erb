@@ -1,4 +1,3 @@
-<!-- app/views/group_chats/_group_chat.html.erb -->
 <div id="content" class="container is-small frame-fixed-height">
   <div id="group_chat" data-group-chat-id="<%= @group_chat.id %>">
     <h2><%= @group_chat.title %> (ID: <%= @group_chat.id %>)</h2>
@@ -7,31 +6,24 @@
         <%= render partial: "group_chat_messages/message", locals: { message: message, show_delete_button: message.user == current_user } %>
       <% end %>
     </div>
-    <%= form_with(model: [@group_chat, GroupChatMessage.new], data: { turbo: true }, id: "new_group_chat_message") do |form| %>
-      <div class="field has-addons">
-        <div class="control is-expanded">
-          <%= form.text_area :message, placeholder: "メッセージを入力してください", class: "input", id: "chat_message_input" %>
-        </div>
-        <div class="control">
-          <%= form.submit "送信", class: "button is-primary" %>
-        </div>
-      </div>
-    <% end %>
+    <div id="new_group_chat_message">
+      <%= render partial: 'group_chat_messages/form', locals: { group_chat_message: GroupChatMessage.new } %>
+    </div>
   </div>
 
   <div id="group_chat_members">
-    <% group_chat.group_chat_members.each do |member| %>
+    <% @group_chat.group_chat_members.each do |member| %>
       <%= render partial: "group_chat_members/member", locals: { group_chat_member: member } %>
     <% end %>
   </div>
 
   <div class="buttons">
     <% if current_user.group_chat_members.find_by(group_chat: group_chat)&.admin? %>
-    <% unless group_chat.group_chat_members.find_by(user: current_user)&.role == 'free' %>
-    <%= link_to "メンバー追加", new_group_chat_group_chat_member_path(group_chat), class: "button is-primary", data: { turbo_frame: "new_group_chat_member" } %>
-    <% end %>
-    <%= button_to "グループ編集", edit_group_chat_path(group_chat), method: :get, data: { turbo: true, turbo_frame: "edit_group_chat" }, class: 'button is-info' %>
-    <%= button_to "グループ削除", group_chat_path(group_chat), method: :delete, data: { confirm: "本当に削除しますか？" }, class: 'button is-danger' %>
+      <% unless group_chat.group_chat_members.find_by(user: current_user)&.role == 'free' %>
+        <%= link_to "メンバー追加", new_group_chat_group_chat_member_path(group_chat), class: "button is-primary", data: { turbo_frame: "new_group_chat_member" } %>
+      <% end %>
+      <%= link_to "グループ編集", edit_group_chat_path(group_chat), class: "button is-info", data: { turbo_frame: "edit_group_chat" } %>
+      <%= button_to "グループ削除", group_chat_path(group_chat), method: :delete, data: { confirm: "本当に削除しますか？" }, class: 'button is-danger' %>
     <% end %>
   </div>
 
