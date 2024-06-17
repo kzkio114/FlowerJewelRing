@@ -68,6 +68,9 @@ class GroupChatsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace("edit_group_chat", partial: "group_chats/edit_group_chat", locals: { group_chat: @group_chat })
       end
+      format.html do
+        render partial: "group_chats/edit_group_chat", locals: { group_chat: @group_chat }
+      end
     end
   end
 
