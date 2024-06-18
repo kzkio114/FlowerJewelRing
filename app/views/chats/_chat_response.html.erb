@@ -5,10 +5,15 @@
       <p class="has-text-black mb-3">選択されたユーザー: <%= selected_user.name %></p>
     <% end %>
     <div id="messages">
-    <% chats.each do |chat| %>
+      <% chats.each do |chat| %>
         <%= render partial: 'chats/message', locals: { chat: chat, show_delete_button: chat.sender == current_user } %>
       <% end %>
     </div>
+    <% if flash[:alert] %>
+      <div class="notification is-danger">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
     <%= form_with model: @chat, url: chats_path, method: :post, data: { turbo: true } do |form| %>
       <%= form.hidden_field :receiver_id, value: receiver_id %>
       <div class="field has-addons">

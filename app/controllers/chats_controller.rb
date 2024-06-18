@@ -5,6 +5,12 @@ class ChatsController < ApplicationController
 
   def create
     @chat = current_user.sent_chats.build(chat_params)
+    if @chat.receiver_id.blank?
+      flash.now[:alert] = '相手が選ばれていません!!相談相手を下のフォームから選択してボタンを押して下さい!!'
+      render turbo_stream: turbo_stream.replace("content", partial: "chats/chat_response", locals: { chats: Chat.none, receiver_id: nil, selected_user: nil })
+      return
+    end
+
     if @chat.save
       message_html = render_to_string(partial: 'chats/message', locals: { chat: @chat, show_delete_button: false }, formats: [:html])
       ChatChannel.broadcast_to(@chat.receiver, {
@@ -13,7 +19,7 @@ class ChatsController < ApplicationController
         chat_id: @chat.id,
         success: true
       })
-      
+
       message_html_with_delete = render_to_string(partial: 'chats/message', locals: { chat: @chat, show_delete_button: true }, formats: [:html])
       ChatChannel.broadcast_to(current_user, {
         action: 'create',
