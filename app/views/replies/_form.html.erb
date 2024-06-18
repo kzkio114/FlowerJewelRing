@@ -1,0 +1,19 @@
+<%= form_with(model: [consultation, reply], local: true, data: { turbo_frame: dom_id(consultation, :replies) }, id: 'reply_form') do |form| %>
+  <% if reply.errors.any? %>
+    <div id="error_explanation" class="notification is-danger">
+      <h2 class="is-size-5"><%= pluralize(reply.errors.count, "エラー") %>が発生しました:</h2>
+      <ul>
+        <% reply.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :content, "返信内容" %>
+    <%= form.text_area :content, class: 'textarea' %>
+  </div>
+  <div class="field">
+    <%= form.submit "返信送信", class: "button is-link is-pulled-right" %>
+  </div>
+<% end %>

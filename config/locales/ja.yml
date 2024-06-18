@@ -5,6 +5,8 @@ ja:
         title: "タイトル"
         content: "内容"
         category_id: "カテゴリー"
+      reply:
+        content: "返信内容"
       group_chat:
         title: "タイトル"
       user:
