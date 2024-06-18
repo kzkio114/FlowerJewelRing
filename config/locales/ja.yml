@@ -4,6 +4,7 @@ ja:
       consultation:
         title: "タイトル"
         content: "内容"
+        category_id: "カテゴリー"
       group_chat:
         title: "タイトル"
       user:
