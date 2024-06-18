@@ -15,13 +15,14 @@
         <% if user_signed_in? %>
           <%= button_to '相談返信に向かう', consultations_detail_path(id: @consultation.id), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth is-link" %>
         <% end %>
-        <%= button_to 'みんなの悩みに戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-fullwidth is-primary" %>
+        <%= button_to 'みんなの悩みに戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-fullwidth is-primary ml-2" %>
         <% if @consultation.user == current_user %>
-          <%= button_to '削除', consultations_destroy_path(@consultation), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }, class: "button is-danger" %>
-          <% 
-            message = "誰か話を聞いてくれると嬉しいです。「#{ERB::Util.url_encode(@consultation.title)}」について、アドバイスをいただけると嬉しいです。\n詳しくはこちら: #{ERB::Util.url_encode(request.original_url)}"
+          <%
+            fixed_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com/dashboard"
+            message = "「#{ERB::Util.url_encode(@consultation.title)}」を投稿しました。%0A みなさんから、アドバイスをいただけると嬉しいです。%0A#{ERB::Util.url_encode(fixed_url)}"
           %>
-          <%= link_to 'Twitterに投稿', "https://twitter.com/intent/tweet?text=#{message}", target: "_blank", class: "button is-info" %>
+          <%= link_to 'Xに相談投稿', "https://twitter.com/intent/tweet?text=#{message}", target: "_blank", class: "button is-info ml-4" %>
+          <%= button_to '削除', consultations_destroy_path(@consultation), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }, class: "button is-danger ml-5" %>
         <% end %>
       </div>
     </div>
