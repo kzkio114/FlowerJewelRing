@@ -1,6 +1,9 @@
 ja:
   activerecord:
     attributes:
+      consultation:
+        title: "タイトル"
+        content: "内容"
       group_chat:
         title: "タイトル"
       user:
@@ -30,6 +33,21 @@ ja:
     models:
       group_chat: グループチャット
       user: ユーザー
+      consultation: コンサルテーション
+    errors:
+      models:
+        consultation:
+          attributes:
+            title:
+              blank: "を入力してください"
+              invalid: "は空白文字だけで投稿できません"
+            content:
+              blank: "を入力してください"
+              invalid: "は空白文字だけで投稿できません"
+        group_chat:
+          attributes:
+            title:
+              blank: "タイトルを入力してください"
   devise:
     confirmations:
       confirmed: メールアドレスが確認できました。
@@ -145,12 +163,3 @@ ja:
       not_saved:
         one: エラーが発生したため %{resource} は保存されませんでした。
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
-    errors:
-      models:
-        group_chat:
-          attributes:
-            title:
-              blank: "タイトルを入力してください"
-          blank: "必須項目です"
-      messages:
-        blank: "入力してください"
