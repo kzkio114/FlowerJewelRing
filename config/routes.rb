@@ -11,10 +11,12 @@ Rails.application.routes.draw do
   resources :private_chats, only: [:index, :show, :create, :destroy]
   post 'private_chat', to: 'private_chats#private_chat', as: 'custom_private_chat'
 
+  # 
+  post 'buttons/tos', to: 'buttons#tos', as: :tos  # 利用規約ボタンを押した時のルーティング
+  post 'buttons/pp', to: 'buttons#pp', as: :pp  # プライバシーポリシーボタンを押した時のルーティング
+
 
   # グループチャットのルーティング
-  
-
   resources :group_chats, only: [:new, :index, :edit, :create, :update, :destroy] do
     member do
       post 'add_member'

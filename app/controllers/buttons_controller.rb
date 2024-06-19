@@ -10,6 +10,26 @@ class ButtonsController < ApplicationController
     end
   end
 
+  def tos
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("response_area", partial: "buttons/tos_response")
+        ]
+      end
+    end
+  end
+
+  def pp
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("response_area", partial: "buttons/pp_response")
+        ]
+      end
+    end
+  end
+
   def login
     respond_to do |format|
       format.turbo_stream do
