@@ -25,19 +25,25 @@
           <% @received_gifts_from_repliers.each do |gift| %>
             <% if gift.item_name.present? && (gift.sender_message.present? || gift.gift_histories.any? { |history| history.sender_message.present? }) %>
               <li>
-                <%= gift.item_name %>
+                <p><strong>ギフト名:</strong> <%= gift.item_name %></p>
+                <p><strong>花言葉:</strong> <%= gift.description %></p> <!-- 花言葉を表示 -->
                 <% if gift.giver.present? %>
                   <p>送り主: <%= gift.giver.name %></p>
                 <% end %>
                 <% if gift.gift_histories.any? %>
-                      <% gift.gift_histories.each do |history| %>
-                        <% if history.sender_message.present? %>
-                              <p>メッセージ: <%= history.sender_message %></p>
-                        <% end %>
-                      <% end %>
+                  <% gift.gift_histories.each do |history| %>
+                    <% if history.sender_message.present? %>
+                      <p>メッセージ: <%= history.sender_message %></p>
+                    <% end %>
+                  <% end %>
                 <% elsif gift.sender_message.present? %>
-                      <p>メッセージ: <%= gift.sender_message %></p>
+                  <p>メッセージ: <%= gift.sender_message %></p>
                 <% end %>
+                <%
+                  app_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
+                  tweet_message = "相談のお礼に「#{ERB::Util.url_encode(gift.item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(gift.description)}」の意味が込められてます。%0Aみなさんも素敵なお礼貰いませんか？%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
+                %>
+                <%= link_to 'Xに投稿', "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-info mt-2" %>
               </li>
             <% end %>
           <% end %>
@@ -56,6 +62,6 @@
   </div>
 </div>
 <div class="container is-small show-buttons-fixed-height mt-5">
-      <%= link_to 'プロフィール編集', edit_user_profile_user_path(@user), class: 'button is-link' %>
-      <%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info ml-1' %>
+  <%= link_to 'プロフィール編集', edit_user_profile_user_path(@user), class: 'button is-link' %>
+  <%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info ml-1' %>
 </div>

@@ -10,6 +10,26 @@ class ButtonsController < ApplicationController
     end
   end
 
+  def tos
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("response_area", partial: "buttons/tos_response")
+        ]
+      end
+    end
+  end
+
+  def pp
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("response_area", partial: "buttons/pp_response")
+        ]
+      end
+    end
+  end
+
   def login
     respond_to do |format|
       format.turbo_stream do
@@ -53,11 +73,12 @@ class ButtonsController < ApplicationController
     else
       @consultations = Consultation.includes(:category).all
     end
+    @consultation = Consultation.new
 
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations }),
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @consultation }),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
         ]
       end
@@ -101,11 +122,12 @@ class ButtonsController < ApplicationController
     @consultation.destroy
   
     @consultations = Consultation.includes(:category).all
+    @new_consultation = Consultation.new  # 新しいConsultationインスタンスを作成
   
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations })
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @new_consultation })
         ]
       end
     end

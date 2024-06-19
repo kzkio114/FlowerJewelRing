@@ -7,12 +7,14 @@
           <div class="content">
             <% consultation.replies.each do |reply| %>
             <div id="reply_<%= reply.id %>">
-              <p><strong><%= reply.user.name %>:</strong> <%= reply.content %></p>
-              <% if current_user == reply.user %>
-              <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger' %>
-              <% end %>
+              <div class="is-flex is-justify-content-space-between">
+                <p><strong><%= reply.user.name %>:</strong> <%= reply.content %></p>
+                <% if current_user == reply.user %>
+                  <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger is-small ml-2' %>
+                <% end %>
+              </div>
             </div>
-          <% end %>
+            <% end %>
           </div>
         </div>
       </div>
@@ -24,21 +26,13 @@
           <div class="content">
             <p><%= consultation.content %></p>
             <p>投稿者: <%= consultation.user.name %></p>
-            <%= form_with(model: [consultation, consultation.replies.build], local: true, data: { turbo_frame: dom_id(consultation, :replies) }) do |form| %>
-              <div class="field">
-                <%= form.label :content, "返信内容" %>
-                <%= form.text_area :content, class: 'textarea' %>
-              </div>
-              <div class="field">
-                <%= form.submit "返信送信", class: "button is-link is-pulled-right" %>
-              </div>
-            <% end %>
+            <%= render 'replies/form', consultation: consultation, reply: consultation.replies.build %>
           </div>
         </div>
       </div>
-        <div class="is-pulled-right">
+      <div class="is-pulled-right">
         <%= button_to "詳細ページに戻る", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-primary" %>
-        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,40 +1,41 @@
 <div class="container is-small show-fixed-height mt-5">
-<%= form_for(@user) do |f| %>
-  <div class="field">
-    <%= f.label :name, "名前", class: 'label' %>
-    <%= f.text_field :name, class: 'input', placeholder: '名前を入力してください' %>
-  </div>
+  <%= form_for(@user) do |f| %>
+    <% if @user.errors.any? %>
+      <div class="notification is-danger">
+        <h2><%= pluralize(@user.errors.count, "エラー") %>が発生しました:</h2>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :email, "メールアドレス", class: 'label' %>
-    <%= f.email_field :email, class: 'input', placeholder: 'メールアドレスを入力してください' %>
-  </div>
-
-  <%= f.fields_for :profile do |p| %>
     <div class="field">
-      <%= p.label :introduction, "自己紹介", class: 'label' %>
-      <%= p.text_area :introduction, class: 'textarea', placeholder: '自己紹介を入力してください' %>
+      <%= f.label :name, "名前", class: 'label' %>
+      <%= f.text_field :name, class: 'input', placeholder: '名前を入力してください' %>
     </div>
 
     <div class="field">
-      <%= p.label :interests, "興味・関心", class: 'label' %>
-      <%= p.text_area :interests, class: 'textarea', placeholder: '興味・関心を入力してください' %>
+      <%= f.label :email, "メールアドレス", class: 'label' %>
+      <%= f.email_field :email, class: 'input', placeholder: 'メールアドレスを入力してください' %>
     </div>
 
-    <%# div class="field">
-      <%= f.label :password, "新しいパスワード", class: 'label' % >
-      <%= f.password_field :password, class: 'input', placeholder: '新しいパスワードを入力してください' % >
-    </div>
+    <%= f.fields_for :profile do |p| %>
+      <div class="field">
+        <%= p.label :introduction, "自己紹介", class: 'label' %>
+        <%= p.text_area :introduction, class: 'textarea', placeholder: '自己紹介を入力してください' %>
+      </div>
 
-    <div class="field">
-      <%= f.label :password_confirmation, "新しいパスワード（確認）", class: 'label' % >
-      <%= f.password_field :password_confirmation, class: 'input', placeholder: '新しいパスワードを再度入力してください' % >
-    </div> %>
+      <div class="field">
+        <%= p.label :interests, "興味・関心", class: 'label' %>
+        <%= p.text_area :interests, class: 'textarea', placeholder: '興味・関心を入力してください' %>
+      </div>
+    <% end %>
+
+    <div class="field mt-6">
+      <%= f.submit "プロフィールを更新", class: 'button is-primary' %>
+      <%= link_to 'プロフィールに戻る', user_path(current_user), class: 'button is-info ml-1' %>
+    </div>
   <% end %>
-
-  <div class="field mt-6">
-    <%= f.submit "プロフィールを更新", class: 'button is-primary' %>
-    <%= link_to 'プロフィールに戻る', user_path(current_user), class: 'button is-info ml-1' %>
-  </div>
-  </div>
-<% end %>
+</div>

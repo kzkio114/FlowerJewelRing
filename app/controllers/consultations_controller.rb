@@ -12,7 +12,7 @@ class ConsultationsController < ApplicationController
     @consultations = Consultation.includes(:category).all
     respond_to do |format|
       format.html # show.html.erb で @consultation を使用
-      format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultation: @consultation }) }
+      format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultations: @consultations, consultation: @consultation }) }
     end
   rescue ActiveRecord::RecordNotFound
     respond_to do |format|
@@ -20,7 +20,6 @@ class ConsultationsController < ApplicationController
       format.turbo_stream { render turbo_stream: turbo_stream.replace("content", partial: "shared/not_found") }
     end
   end
-
 
   # GET /consultations/new
   def new
@@ -35,17 +34,27 @@ class ConsultationsController < ApplicationController
   def create
     @consultation = Consultation.new(consultation_params)
 
-    if @consultation.save
-      redirect_to @consultation, notice: ''
-    else
-      render :new
+    respond_to do |format|
+      if @consultation.save
+        format.html { redirect_to @consultation, notice: 'コンサルテーションが正常に作成されました。' }
+        format.turbo_stream do
+          @consultations = Consultation.includes(:category).all
+          render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultations: @consultations, consultation: Consultation.new })
+        end
+      else
+        format.html { render :new }
+        format.turbo_stream do
+          @consultations = Consultation.includes(:category).all
+          render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultations: @consultations, consultation: @consultation })
+        end
+      end
     end
   end
 
   # PATCH/PUT /consultations/1
   def update
     if @consultation.update(consultation_params)
-      redirect_to @consultation, notice: 'コンサルテーションが正常に作成されました。'
+      redirect_to @consultation, notice: 'コンサルテーションが正常に更新されました。'
     else
       render :edit
     end
@@ -53,6 +62,8 @@ class ConsultationsController < ApplicationController
 
   # DELETE /consultations/1
   def destroy
+    @consultation.destroy
+    redirect_to consultations_url, notice: 'コンサルテーションが正常に削除されました。'
   end
 
   private
