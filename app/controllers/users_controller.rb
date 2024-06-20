@@ -5,13 +5,11 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @sent_gifts = @user.sent_gifts
-
-    # 自分の相談に対する返信者のIDを取得
     replier_ids = @user.consultations.joins(:replies).pluck('replies.user_id').uniq
-    # 返信者が送ったギフトのみを取得
     @received_gifts_from_repliers = @user.received_gifts.where(giver_id: replier_ids)
 
-    @consultations = @user.consultations.includes(:replies)
+    # 未読のギフトのコメントおよびsender_messageを既読にする
+    mark_gift_comments_and_messages_as_read(@received_gifts_from_repliers)
   end
 
   def edit
@@ -44,5 +42,12 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :display_name, profile_attributes: [:introduction, :interests])
+  end
+
+  def mark_gift_comments_and_messages_as_read(gifts)
+    gifts.each do |gift|
+      gift.gift_histories.where(read: false).update_all(read: true)
+      gift.update(sender_message: nil) if gift.sender_message.present?
+    end
   end
 end

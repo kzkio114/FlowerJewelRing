@@ -1,0 +1,15 @@
+<% if received_gifts_from_repliers.present? %>
+  <span id="unread-gifts-count" class="<%= received_gifts_from_repliers.any? { |gift| gift.gift_histories.any? { |history| !history.read } || gift.sender_message.present? } ? 'has-unread' : '' %>">
+    <span class="icon">
+      <i class="fas fa-gift"></i>
+    </span>
+    未読のギフト: <%= received_gifts_from_repliers.sum { |gift| gift.gift_histories.where(read: false).count + (gift.sender_message.present? ? 1 : 0) } %>
+  </span>
+<% else %>
+  <span id="unread-gifts-count" class="">
+    <span class="icon">
+      <i class="fas fa-gift"></i>
+    </span>
+    未読のギフト: 0
+  </span>
+<% end %>

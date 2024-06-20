@@ -80,6 +80,7 @@ class GiftsController < ApplicationController
           format.turbo_stream do
             render turbo_stream: [
               turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
+              turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { received_gifts_from_repliers: current_user.received_gifts_from_repliers }),
               turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts, reply_users: @reply_users })
             ]
           end

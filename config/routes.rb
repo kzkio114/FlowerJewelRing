@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
   resources :gifts do
     member do
+      patch :mark_as_read
       post 'send_gift', to: 'gifts#send_gift'
     end
   end

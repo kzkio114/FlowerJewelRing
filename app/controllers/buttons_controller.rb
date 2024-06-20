@@ -49,19 +49,22 @@ class ButtonsController < ApplicationController
         render turbo_stream: [
         turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons"),
         turbo_stream.replace("content", partial: "buttons/response"),
-        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+        turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { received_gifts_from_repliers: current_user.received_gifts_from_repliers })
         ]
       end
     end
   end
 
   def close_menu
+    
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
         turbo_stream.replace("menu", partial: "buttons/menu/closed_menu"),
         turbo_stream.replace("content", partial: "buttons/response"),
-        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+        turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { received_gifts_from_repliers: current_user.received_gifts_from_repliers })
         ]
       end
     end
@@ -79,7 +82,8 @@ class ButtonsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @consultation }),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { received_gifts_from_repliers: current_user.received_gifts_from_repliers })
         ]
       end
     end
@@ -174,7 +178,8 @@ class ButtonsController < ApplicationController
       format.turbo_stream do
         render turbo_stream:[
           turbo_stream.replace("content", partial: "buttons/menu/gift_list_response", locals: { total_sender_messages_count: @total_sender_messages_count }),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { received_gifts_from_repliers: current_user.received_gifts_from_repliers })
         ]
       end
     end
@@ -186,7 +191,8 @@ class ButtonsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.replace("content", partial: "buttons/menu/gift_all_response", locals: { gifts: @gifts }),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { received_gifts_from_repliers: current_user.received_gifts_from_repliers })
       ]
         end
     end
@@ -222,7 +228,8 @@ class ButtonsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.replace("content", partial: "buttons/menu/user_response"),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { received_gifts_from_repliers: current_user.received_gifts_from_repliers })
         ]
       end
     end

@@ -24,6 +24,13 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
 
+
+   # 新しいメソッドを追加
+   def received_gifts_from_repliers
+    replier_ids = consultations.joins(:replies).pluck('replies.user_id').uniq
+    received_gifts.where(giver_id: replier_ids)
+  end
+
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(email: data['email']).first_or_initialize

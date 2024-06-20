@@ -1,24 +1,44 @@
 <% if show_header? %>
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <%= link_to root_path, title: 'トップに戻る' do %>
-              <%= render 'top/title' %>
-            <% end %>
-          </li>
-          <% if user_signed_in? %>
-            <li>
-              <span id="unread-replies-count">相談の未読返信: <%= current_user.unread_replies_count %></span>
-              <%= link_to "#{current_user.name}さんのプロフィール", user_path(current_user) if current_user.present? %>
-              <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { "data-turbo" => "false" } %>
-            </li>
-          <% else %>
-            <li>
-              <%= button_to 'ログイン', buttons_login_path, method: :post %>
-            </li>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <%= link_to root_path, title: 'トップに戻る' do %>
+            <%= render 'top/title' %>
           <% end %>
-        </ul>
-      </nav>
-    </header>
+        </li>
+        <% if user_signed_in? %>
+          <li>
+            <span id="unread-replies-count" class="<%= current_user.unread_replies_count > 0 ? 'has-unread' : '' %>">
+              <span class="icon">
+                <i class="fas fa-envelope"></i>
+              </span>
+              相談の未読返信: <%= current_user.unread_replies_count %>
+            </span>
+            <% if @received_gifts_from_repliers.present? %>
+              <span id="unread-gifts-count" class="<%= @received_gifts_from_repliers.any? { |gift| gift.gift_histories.any? { |history| !history.read } || gift.sender_message.present? } ? 'has-unread' : '' %>">
+                <span class="icon">
+                  <i class="fas fa-gift"></i>
+                </span>
+                未読のギフト: <%= @received_gifts_from_repliers.sum { |gift| gift.gift_histories.where(read: false).count + (gift.sender_message.present? ? 1 : 0) } %>
+              </span>
+            <% else %>
+              <span id="unread-gifts-count" class="">
+                <span class="icon">
+                  <i class="fas fa-gift"></i>
+                </span>
+                未読のギフト: 0
+              </span>
+            <% end %>
+            <%= link_to "#{current_user.name}さんのプロフィール", user_path(current_user) if current_user.present? %>
+            <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { "data-turbo" => "false" } %>
+          </li>
+        <% else %>
+          <li>
+            <%= button_to 'ログイン', buttons_login_path, method: :post %>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+  </header>
 <% end %>
