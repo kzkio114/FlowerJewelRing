@@ -56,12 +56,11 @@ class GiftsController < ApplicationController
 
     if unread_replies_exist
       if @gift.save
-
         replies_to_mark_read = Reply.joins(:consultation)
-                            .where(consultations: { user_id: @gift.giver_id })
-                            .where(user_id: @gift.receiver_id, read: false)
-                            .order(created_at: :desc)
-                            .first
+                                    .where(consultations: { user_id: @gift.giver_id })
+                                    .where(user_id: @gift.receiver_id, read: false)
+                                    .order(created_at: :desc)
+                                    .first
         replies_to_mark_read.update(read: true) if replies_to_mark_read
 
         @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
@@ -76,10 +75,15 @@ class GiftsController < ApplicationController
 
         # 全てのギフトを取得
         @gifts = Gift.includes(:gift_category).all
+
+        # 未読のギフト数を計算
+        @unread_gifts_count = current_user.calculate_unread_gifts_count
+
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
               turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
+              turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count }),
               turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts, reply_users: @reply_users })
             ]
           end

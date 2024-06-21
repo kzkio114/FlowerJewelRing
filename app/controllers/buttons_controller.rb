@@ -1,6 +1,7 @@
 class ButtonsController < ApplicationController
 
   def enter_app
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -11,6 +12,7 @@ class ButtonsController < ApplicationController
   end
 
   def tos
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -21,6 +23,7 @@ class ButtonsController < ApplicationController
   end
 
   def pp
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -31,6 +34,7 @@ class ButtonsController < ApplicationController
   end
 
   def login
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -44,24 +48,28 @@ class ButtonsController < ApplicationController
 
   def menu
     @group_chats = GroupChat.all
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-        turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons"),
-        turbo_stream.replace("content", partial: "buttons/response"),
-        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons"),
+          turbo_stream.replace("content", partial: "buttons/response"),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
       end
     end
   end
 
   def close_menu
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-        turbo_stream.replace("menu", partial: "buttons/menu/closed_menu"),
-        turbo_stream.replace("content", partial: "buttons/response"),
-        turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace("menu", partial: "buttons/menu/closed_menu"),
+          turbo_stream.replace("content", partial: "buttons/response"),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
       end
     end
@@ -74,12 +82,14 @@ class ButtonsController < ApplicationController
       @consultations = Consultation.includes(:category).all
     end
     @consultation = Consultation.new
+    set_unread_gifts_count
 
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @consultation }),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
       end
     end
@@ -92,6 +102,8 @@ class ButtonsController < ApplicationController
       @consultations = Consultation.includes(:category).all
     end
   
+    set_unread_gifts_count
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -101,11 +113,9 @@ class ButtonsController < ApplicationController
     end
   end
 
-
-
-
   def consultations_response
     @consultation = Consultation.find(params[:id])  # idはルーティングで設定された :member から取得
+    set_unread_gifts_count
     respond_to do |format|
       format.html { redirect_to @consultation }  # HTML応答が必要な場合
       format.turbo_stream do
@@ -120,7 +130,7 @@ class ButtonsController < ApplicationController
   def consultations_destroy
     @consultation = Consultation.find(params[:id])
     @consultation.destroy
-  
+    set_unread_gifts_count
     @consultations = Consultation.includes(:category).all
     @new_consultation = Consultation.new  # 新しいConsultationインスタンスを作成
   
@@ -133,13 +143,10 @@ class ButtonsController < ApplicationController
     end
   end
 
-
-
-
   def consultations_detail
     @consultation = Consultation.includes(replies: :user).find(params[:id])
     @consultations = Consultation.includes(:category).all
-
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -149,17 +156,17 @@ class ButtonsController < ApplicationController
     end
   end
 
-
   def consultations_destroy_reply
     @consultation = Consultation.includes(replies: :user).find(params[:consultation_id])
     @reply = @consultation.replies.find(params[:reply_id])
     @reply.destroy
-  
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.remove("reply_#{@reply.id}"),  # ここを修正
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
       end
       format.html { redirect_to @consultation, notice: 'Reply was successfully deleted.' }
@@ -167,14 +174,14 @@ class ButtonsController < ApplicationController
   end
 
   def gift_list
-    #@gifts = Gift.includes(:gift_category).where(receiver_id: current_user.id)  # ユーザーが受け取ったギフトを取得
     @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
-    
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream:[
           turbo_stream.replace("content", partial: "buttons/menu/gift_list_response", locals: { total_sender_messages_count: @total_sender_messages_count }),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
       end
     end
@@ -182,27 +189,24 @@ class ButtonsController < ApplicationController
 
   def gift_all
     @gifts = Gift.includes(:gift_category).all
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.replace("content", partial: "buttons/menu/gift_all_response", locals: { gifts: @gifts }),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
       ]
         end
     end
   end
 
   def send_gift_response
-    # 自分の相談を取得
     @my_consultations = Consultation.where(user_id: current_user.id)
-    
-    # 自分の相談に対する返信者のIDを取得
     replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
-    # 返信者のユーザーオブジェクトを取得
     @reply_users = User.where(id: replier_ids)
-    # 全てのギフトを取得
     @gifts = Gift.all
-
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
@@ -214,23 +218,23 @@ class ButtonsController < ApplicationController
     end
   end
 
-
-
   def user
     @users = User.all
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
           turbo_stream.replace("content", partial: "buttons/menu/user_response"),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user })
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
       end
     end
   end
 
-
   def user_show
     @user = User.find(params[:id])
+    set_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -238,5 +242,11 @@ class ButtonsController < ApplicationController
         ]
       end
     end
+  end
+
+  private
+
+  def set_unread_gifts_count
+    @unread_gifts_count = current_user&.calculate_unread_gifts_count || 0
   end
 end

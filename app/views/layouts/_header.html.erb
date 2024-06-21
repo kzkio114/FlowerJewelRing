@@ -1,24 +1,30 @@
 <% if show_header? %>
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <%= link_to root_path, title: 'トップに戻る' do %>
-              <%= render 'top/title' %>
-            <% end %>
-          </li>
-          <% if user_signed_in? %>
-            <li>
-              <span id="unread-replies-count">相談の未読返信: <%= current_user.unread_replies_count %></span>
-              <%= link_to "#{current_user.name}さんのプロフィール", user_path(current_user) if current_user.present? %>
-              <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { "data-turbo" => "false" } %>
-            </li>
-          <% else %>
-            <li>
-              <%= button_to 'ログイン', buttons_login_path, method: :post %>
-            </li>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <%= link_to root_path, title: 'トップに戻る' do %>
+            <%= render 'top/title' %>
           <% end %>
-        </ul>
-      </nav>
-    </header>
+        </li>
+        <% if user_signed_in? %>
+          <li>
+            <span id="unread-replies-count" class="<%= current_user.unread_replies_count > 0 ? 'has-unread' : '' %>">
+              <span class="icon">
+                <i class="fas fa-envelope"></i>
+              </span>
+              相談の未読返信: <%= current_user.unread_replies_count %>
+            </span>
+            <%= render 'layouts/unread_gifts_count', unread_gifts_count: @unread_gifts_count %>
+            <%= link_to "#{current_user.name}さんのプロフィール", user_path(current_user) if current_user.present? %>
+            <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { "data-turbo" => "false" } %>
+          </li>
+        <% else %>
+          <li>
+            <%= button_to 'ログイン', buttons_login_path, method: :post %>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+  </header>
 <% end %>

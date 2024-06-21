@@ -1,7 +1,36 @@
-<span id="unread-replies-count">
-  <% if user %>
+<% if user %>
+<span id="unread-replies-count" class="<%= current_user.unread_replies_count > 0 ? 'has-unread' : '' %>">
+  <span class="icon">
+  <i class="fas fa-envelope"></i>
+</span>
     相談の未読返信: <%= user.unread_replies_count %>
   <% else %>
     相談の未読返信: 0
   <% end %>
 </span>
+
+    <!-- スタイルをここに配置 -->
+    <style>
+      #unread-replies-count .icon {
+        margin-right: 1px;
+        color: inherit;
+      }
+
+      #unread-replies-count.has-unread .icon {
+        color: blue !important; /* 色を青に変更 */
+        animation: bounce 1s forwards;
+      }
+
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-20px);
+        }
+        60% {
+          transform: translateY(-10px);
+        }
+      }
+    </style> <!---->
+  </head>
