@@ -26,6 +26,19 @@ class User < ApplicationRecord
     received_gifts.where(giver_id: replier_ids)
   end
 
+  def self.from_omniauth(access_token)
+    data = access_token.info
+    user = User.where(email: data['email']).first_or_initialize
+  
+    user.name = data['name']
+    user.password = Devise.friendly_token[0, 20] if user.new_record?
+    unless user.save
+      Rails.logger.info("ユーザー保存失敗: #{user.errors.full_messages.to_sentence}")
+      return nil
+    end
+    user
+  end
+
   # ユーザーが持つ相談から、未読の返信数を返すメソッド
   def unread_replies_count
     Reply.joins(:consultation)
@@ -37,12 +50,7 @@ class User < ApplicationRecord
   # 未読のギフト数を計算するメソッド
   def calculate_unread_gifts_count
     received_gifts_from_repliers.sum do |gift|
-      unread_histories_count = gift.gift_histories.where(read: false).count
-      sender_message_count = gift.sender_message.present? ? 1 : 0
-
-      Rails.logger.info "Gift ID: #{gift.id}, Unread Histories: #{unread_histories_count}, Sender Message Count: #{sender_message_count}"
-
-      unread_histories_count + sender_message_count
+      gift.gift_histories.where(read: false).count + (gift.sender_message.present? ? 1 : 0)
     end
   end
 end

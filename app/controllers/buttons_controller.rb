@@ -247,6 +247,6 @@ class ButtonsController < ApplicationController
   private
 
   def set_unread_gifts_count
-    @unread_gifts_count = current_user.calculate_unread_gifts_count
+    @unread_gifts_count = current_user&.calculate_unread_gifts_count || 0
   end
 end
