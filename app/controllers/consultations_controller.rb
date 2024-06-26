@@ -11,7 +11,7 @@ class ConsultationsController < ApplicationController
     @consultation = Consultation.includes(replies: :user).find(params[:id])
     @consultations = Consultation.includes(:category).all
     respond_to do |format|
-      format.html # show.html.erb で @consultation を使用
+      format.html  # show.html.erb で @consultation を使用　
       format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultations: @consultations, consultation: @consultation }) }
     end
   rescue ActiveRecord::RecordNotFound

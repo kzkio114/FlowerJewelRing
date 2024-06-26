@@ -1,0 +1,119 @@
+<div id="content" class="container is-small mt-5">
+  <div class="card">
+    <header class="card-header">
+      <div class="columns is-vcentered is-mobile">
+        <div class="column is-narrow">
+          <strong class="is-size-4">最新のお知らせ</strong>
+          <p class="is-size-6 mr-6">
+            最新の通知は5件のみ表示されています。<br>
+            <%= case @current_time.hour
+                  when 5..11
+                    "おはようございます、#{@user.name}さん"
+                  when 12..17
+                    "こんにちは、#{@user.name}さん"
+                  when 18..24
+                    "こんばんは、#{@user.name}さん"
+                  else
+                    "こんな時間に、お疲れ様です！#{@user.name}さん"
+                  end %>
+          </p>
+        </div>
+        <div class="column mt-6">
+          <div id="notification-section" class="is-flex is-justify-content-flex-end">
+            <span id="unread-replies-count" class="is-flex <%= @user.unread_replies_count > 0 ? 'has-unread' : '' %>">
+              <span class="icon mr-1 ml-12">
+                <i class="fas fa-envelope"></i>
+              </span>
+              相談の未読返信: <%= @user.unread_replies_count %>
+            </span>
+
+            <% if @unread_gifts_count.present? && @unread_gifts_count > 0 %>
+              <span id="unread-gifts-count" class="is-flex has-unread ml-1">
+                <span class="icon mr-1">
+                  <i class="fas fa-gift"></i>
+                </span>
+                確認してください！！ <%#= @unread_gifts_count %>
+              </span>
+            <% else %>
+              <span id="unread-gifts-count" class="is-flex ml-4">
+                <span class="icon mr-1">
+                  <i class="fas fa-gift"></i>
+                </span>
+              </span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        <div class="columns">
+          <div class="column is-one-third">
+            <div id="latest-messages" class="mb-2">
+              <h3>最新のメッセージ</h3>
+              <% if @latest_replies.present? %>
+                <ul>
+                  <% @latest_replies.each do |reply| %>
+                    <li>
+                      <p><strong>返信者:</strong> <%= reply.user_name %>さん</p>
+                      <p><strong>返信内容:</strong> <%= reply.content %></p>
+                      <p><strong>受信日時:</strong> <%= reply.created_at.in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></p>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p>最新のメッセージはありません。</p>
+              <% end %>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div id="gift-section" class="mb-2">
+              <h3>感謝の気持ちを伝える</h3>
+              <%= render partial: 'buttons/menu/info_send_gift_response', locals: { gifts: @gifts, reply_users: @reply_users } %>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div id="latest-gifts" class="mb-2">
+              <h3>最新の感謝の気持ち</h3>
+              <div class="show-fixed">
+              <% if @latest_gift_messages.present? %>
+                <div class="columns is-multiline">
+                  <% @latest_gift_messages.each do |entry| %>
+                    <div class="column is-full">
+                      <div class="card mb-2">
+                        <div class="card-content">
+                          <div class="content">
+                            <p><strong>ギフト名:</strong> <%= entry[:gift].item_name %></p>
+                            <% if entry[:gift].image_url.present? %>
+                              <%= image_tag asset_path(entry[:gift].image_url), alt: "ギフトの画像", style: "width: 150px;" %>
+                            <% end %>
+                            <p><strong>花言葉:</strong> <%= entry[:gift].description %></p>
+                            <p><strong>送り主:</strong> <%= entry[:gift].giver.name %>さん</p>
+                            <p><strong>感謝のメッセージ</strong></p>
+                            <p><%= entry[:message] %></p>
+                            <p><strong>受信日時:</strong> <%= entry[:created_at].in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></p>
+                            <%
+                            app_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
+                            tweet_message = "相談のお礼に「#{ERB::Util.url_encode(entry[:gift].item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(entry[:gift].description)}」の意味が込められてます。%0Aみなさんも素敵なお礼貰いませんか？%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
+                            %>
+                            <%= link_to 'Xに投稿', "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-small is-info mt-2" %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+              <% else %>
+                <p>最新のギフトメッセージはありません。</p>
+              <% end %>
+            </div>
+            <div class="field is-grouped is-grouped-right"> <!-- 右寄せするためのクラスを追加 -->
+              <%= button_to '感謝の気持ちを確認', reset_gift_notifications_path, method: :post, class: 'button is-danger mt-6' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
