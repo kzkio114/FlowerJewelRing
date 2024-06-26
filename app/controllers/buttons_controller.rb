@@ -1,4 +1,6 @@
 class ButtonsController < ApplicationController
+  before_action :set_unread_gifts_count
+  before_action :set_latest_replies_and_notifications, only: [:info, :menu, :close_menu, :worries, :gift_list, :gift_all, :user]
 
   def enter_app
     set_unread_gifts_count
@@ -75,6 +77,17 @@ class ButtonsController < ApplicationController
     end
   end
 
+  def info
+    set_unread_gifts_count
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { unread_gifts_count: @unread_gifts_count, latest_replies: @latest_replies, notifications: @notifications })
+        ]
+      end
+    end
+  end
+
   def worries
     if params[:category_id]
       @consultations = Consultation.includes(:category).where(category_id: params[:category_id])
@@ -101,7 +114,7 @@ class ButtonsController < ApplicationController
     else
       @consultations = Consultation.includes(:category).all
     end
-  
+
     set_unread_gifts_count
 
     respond_to do |format|
@@ -133,7 +146,7 @@ class ButtonsController < ApplicationController
     set_unread_gifts_count
     @consultations = Consultation.includes(:category).all
     @new_consultation = Consultation.new  # 新しいConsultationインスタンスを作成
-  
+
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -164,7 +177,7 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.remove("reply_#{@reply.id}"),  # ここを修正
+          turbo_stream.remove("reply_#{@reply.id}"),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
           turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
@@ -197,7 +210,7 @@ class ButtonsController < ApplicationController
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
           turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
       ]
-        end
+      end
     end
   end
 
@@ -210,8 +223,8 @@ class ButtonsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
-          "content", 
-          partial: "buttons/menu/send_gift_response", 
+          "content",
+          partial: "buttons/menu/send_gift_response",
           locals: { gifts: @gifts, reply_users: @reply_users }
         )
       end
@@ -248,5 +261,9 @@ class ButtonsController < ApplicationController
 
   def set_unread_gifts_count
     @unread_gifts_count = current_user&.calculate_unread_gifts_count || 0
+  end
+
+  def set_latest_replies_and_notifications
+    @latest_replies = current_user.consultations.joins(:replies).order('replies.created_at DESC').limit(5).pluck('replies.content, replies.created_at')
   end
 end

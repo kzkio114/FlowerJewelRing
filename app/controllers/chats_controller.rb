@@ -43,7 +43,7 @@ class ChatsController < ApplicationController
 
     if @selected_user
       @chats = Chat.where(sender: current_user, receiver: @selected_user)
-                   .or(Chat.where(sender: @selected_user, receiver: current_user))
+                    .or(Chat.where(sender: @selected_user, receiver: current_user))
     else
       @chats = []
     end

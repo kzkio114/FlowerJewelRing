@@ -101,5 +101,3 @@ gem 'omniauth', '2.1.2'
 
 # Action CableのためのRedisを追加
 gem 'redis', '~> 4.0'
-
-
