@@ -88,13 +88,15 @@ class GiftsController < ApplicationController
         # 最新のギフトメッセージを取得
         @latest_gift_messages = fetch_latest_gift_messages
 
+        @current_time = Time.zone.now.in_time_zone('Asia/Tokyo')
+
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
               turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
               turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count }),
               if params[:return_to] == "info"
-                turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { gifts: @gifts, reply_users: @reply_users, latest_gift_messages: @latest_gift_messages })
+                turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { gifts: @gifts, reply_users: @reply_users, latest_gift_messages: @latest_gift_messages, current_time: @current_time})
               else
                 turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts, reply_users: @reply_users })
               end

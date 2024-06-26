@@ -4,6 +4,7 @@ class ButtonsController < ApplicationController
   before_action :set_latest_replies_and_notifications, only: [:info, :menu, :close_menu, :worries, :gift_list, :gift_all, :user]
 
   def info
+    @current_time = Time.zone.now.in_time_zone('Asia/Tokyo')
     @group_chats = GroupChat.all
     @user = current_user
     @unread_gifts_count = current_user.calculate_unread_gifts_count
