@@ -37,7 +37,7 @@
     <div class="card-content">
       <div class="content">
         <div class="columns">
-          <div class="column is-half">
+          <div class="column is-one-third">
             <div id="latest-messages" class="mt-4">
               <h3>最新のメッセージ</h3>
               <% if @latest_replies.present? %>
@@ -46,7 +46,7 @@
                     <li>
                       <p><strong>返信者:</strong> <%= reply.user_name %></p>
                       <p><strong>返信内容:</strong> <%= reply.content %></p>
-                      <p><strong>受信日時:</strong> <%= reply.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+                      <p><strong>受信日時:</strong> <%= reply.created_at.in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></p>
                     </li>
                   <% end %>
                 </ul>
@@ -55,10 +55,33 @@
               <% end %>
             </div>
           </div>
-          <div class="column is-half show-fixed-height">
+          <div class="column is-one-third">
             <div id="gift-section" class="mt-3">
               <h3>感謝の気持ちを伝える</h3>
               <%= render partial: 'buttons/menu/info_send_gift_response', locals: { gifts: @gifts, reply_users: @reply_users } %>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div id="latest-gifts" class="mt-4">
+              <h3>最新のギフトメッセージ</h3>
+              <% if @latest_gift_messages.present? %>
+                <ul>
+                  <% @latest_gift_messages.each do |entry| %>
+                    <li>
+                      <p><strong>ギフト名:</strong> <%= entry[:gift].item_name %></p>
+                      <p><strong>花言葉:</strong> <%= entry[:gift].description %></p>
+                      <p><strong>受信日時:</strong> <%= entry[:created_at].in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></p>
+                      <% if entry[:gift].image_url.present? %>
+                        <%= image_tag asset_path(entry[:gift].image_url), alt: "ギフトの画像", style: "width: 150px;" %>
+                      <% end %>
+                      <p><strong>送り主:</strong> <%= entry[:gift].giver.name %></p>
+                      <p><strong>メッセージ:</strong> <%= entry[:message] %></p>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <p>最新のギフトメッセージはありません。</p>
+              <% end %>
             </div>
           </div>
         </div>

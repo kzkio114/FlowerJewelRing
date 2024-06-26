@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>App</title>
+    <title>めぐる宝石花</title>
+    <link rel="icon" href="<%= image_path('10.webp') %>">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -19,8 +20,16 @@
     <!-- Font Awesome  -->
     <script src="https://kit.fontawesome.com/6fa0d54baa.js" crossorigin="anonymous"></script>
 
-    <!-- スタイルをここに配置 -->
+    <!-- CSS -->
     <style>
+      .show-fixed {
+        background-color: hsl(174, 80%, 92%);
+        height: 490px;
+        width: 290px;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+
       #unread-replies-count .icon {
         margin-right: 1px;
         color: inherit;

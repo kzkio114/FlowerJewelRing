@@ -79,12 +79,22 @@ class GiftsController < ApplicationController
         # 未読のギフト数を計算
         @unread_gifts_count = current_user.calculate_unread_gifts_count
 
+        # 現在のユーザーを設定
+        @user = current_user
+
+        # 最新の返信を設定
+        @latest_replies = current_user.consultations.joins(replies: :user).select('replies.*, users.name as user_name').order('replies.created_at DESC').limit(5)
+
+        # 最新のギフトメッセージを取得
+        @latest_gift_messages = fetch_latest_gift_messages
+
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: [
               turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
               turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count }),
-              turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts, reply_users: @reply_users })
+              turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts, reply_users: @reply_users }),
+              turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { gifts: @gifts, reply_users: @reply_users, latest_gift_messages: @latest_gift_messages })
             ]
           end
         end
@@ -118,6 +128,19 @@ class GiftsController < ApplicationController
     new_gifts = Gift.order("RANDOM()").limit(1)
     new_gifts.each do |new_gift|
       new_gift.update!(giver_id: user_id, sent_at: nil, receiver_id: nil)
+    end
+  end
+
+  def fetch_latest_gift_messages
+    gift_messages = current_user.received_gifts.joins(:gift_histories).pluck('gift_histories.sender_message', 'gift_histories.created_at', 'gifts.id') +
+                    current_user.received_gifts.pluck(:sender_message, :created_at, :id)
+    gift_messages = gift_messages.reject { |message, _, _| message.blank? }
+                                 .sort_by { |_, created_at, _| created_at }
+                                 .reverse
+                                 .first(5)
+    gift_messages.map do |message, created_at, gift_id|
+      gift = Gift.find(gift_id)
+      { message: message, created_at: created_at, gift: gift }
     end
   end
 end

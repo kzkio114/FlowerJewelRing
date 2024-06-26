@@ -1,15 +1,11 @@
+<div class="show-fixed">
 <div class="container is-small">
   <div id="error-message"></div> <!-- ここにエラーメッセージを表示 -->
   <div class="columns is-multiline">
     <% gifts.each do |gift| %>
       <div id="gift_card_<%= gift.id %>" class="column is-full">
         <div class="card">
-          <header class="card-header">
-            <p class="card-header-title is-size-6"> <!-- 文字サイズを小さく -->
-              カテゴリ: <%= gift.gift_category.name %>
-            </p>
-          </header>
-          <div class="card-content ml-3">
+          <div class="card-content">
             <div class="content">
               植物名: <%= gift.item_name %><br>
               <%= image_tag asset_path(gift.image_url), alt: "ギフトの画像", style: "width: 150px;" %><br> <!-- 画像サイズを小さく -->
@@ -19,7 +15,7 @@
                 <div class="field">
                   <%= form.label :receiver_id, "送信先ユーザー", class: 'is-size-6' %> <!-- 文字サイズを小さく -->
                   <% if reply_users.present? %>
-                    <%= form.collection_select :receiver_id, reply_users, :id, :name, { prompt: "ユーザーを選択してください" }, { class: 'is-size-7' } %> <!-- 文字サイズを小さく -->
+                    <%= form.collection_select :receiver_id, reply_users, :id, :name, { prompt: "ユーザーを選択してください" }, { class: 'is-size-6' } %> <!-- 文字サイズを小さく -->
                   <% else %>
                     <p class="is-size-6">選択可能なユーザーがいません。</p> <!-- 文字サイズを小さく -->
                   <% end %>
@@ -38,4 +34,5 @@
       </div>
     <% end %>
   </div>
+</div>
 </div>
