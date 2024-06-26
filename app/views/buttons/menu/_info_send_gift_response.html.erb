@@ -1,38 +1,39 @@
 <div class="show-fixed">
-<div class="container is-small">
-  <div id="error-message"></div> <!-- ここにエラーメッセージを表示 -->
-  <div class="columns is-multiline">
-    <% gifts.each do |gift| %>
-      <div id="gift_card_<%= gift.id %>" class="column is-full">
-        <div class="card">
-          <div class="card-content">
-            <div class="content">
-              植物名: <%= gift.item_name %><br>
-              <%= image_tag asset_path(gift.image_url), alt: "ギフトの画像", style: "width: 150px;" %><br> <!-- 画像サイズを小さく -->
-              花言葉: <%= gift.description %>
-              <br>
-              <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
-                <div class="field">
-                  <%= form.label :receiver_id, "送信先ユーザー", class: 'is-size-6' %> <!-- 文字サイズを小さく -->
-                  <% if reply_users.present? %>
-                    <%= form.collection_select :receiver_id, reply_users, :id, :name, { prompt: "ユーザーを選択してください" }, { class: 'is-size-6' } %> <!-- 文字サイズを小さく -->
-                  <% else %>
-                    <p class="is-size-6">選択可能なユーザーがいません。</p> <!-- 文字サイズを小さく -->
-                  <% end %>
-                </div>
-                <div class="field">
-                  <%= form.label :sender_message, "感謝のメッセージ", class: 'is-size-6' %> <!-- 文字サイズを小さく -->
-                  <%= form.text_area :sender_message, class: 'textarea', placeholder: "ここにメッセージを入力してください" %> <!-- テキストエリアサイズを小さく -->
-                </div>
-                <div class="field">
-                  <%= form.submit "この内容で送る", class: "button is-primary is-small" %>
-                </div>
-              <% end %>
+  <div class="container is-small">
+    <div id="error-message"></div> <!-- ここにエラーメッセージを表示 -->
+    <div class="columns is-multiline">
+      <% gifts.each do |gift| %>
+        <div id="gift_card_<%= gift.id %>" class="column is-full">
+          <div class="card">
+            <div class="card-content"> <!-- パディングを減らす -->
+              <div class="content">
+                植物名: <%= gift.item_name %><br>
+                <%= image_tag asset_path(gift.image_url), alt: "ギフトの画像", style: "width: 150px;" %><br> <!-- 画像サイズを小さく -->
+                花言葉: <%= gift.description %>
+                <br>
+                <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
+                  <%= hidden_field_tag :return_to, 'info' %> <!-- リクエスト元情報を追加 -->
+                  <div class="field">
+                    <%= form.label :receiver_id, "送信先ユーザー", class: 'is-size-6' %> <!-- 文字サイズを小さく -->
+                    <% if reply_users.present? %>
+                      <%= form.collection_select :receiver_id, reply_users, :id, :name, { prompt: "ユーザーを選択してください" } %> <!-- 文字サイズを小さく -->
+                    <% else %>
+                      <p class="is-size-6">選択可能なユーザーがいません。</p> <!-- 文字サイズを小さく -->
+                    <% end %>
+                  </div>
+                  <div class="field">
+                    <%= form.label :sender_message, "感謝のメッセージ", class: 'is-size-6' %> <!-- 文字サイズを小さく -->
+                    <%= form.text_area :sender_message, class: 'textarea', placeholder: "ここにメッセージを入力してください" , rows: 3 %> <!-- テキストエリアサイズを小さく -->
+                  </div>
+                  <div class="field is-grouped is-grouped-right"> <!-- 右寄せするためのクラスを追加 -->
+                    <%= form.submit "この内容で送る", class: "button is-primary is-small" %>
+                  </div>
+                <% end %>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
-</div>
 </div>

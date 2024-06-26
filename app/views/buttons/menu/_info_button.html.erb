@@ -1,0 +1,8 @@
+<% button_class = 'button is-small column is-full mt-5' %>
+<% if @unread_gifts_count > 0 || @unread_replies_count > 0 %>
+  <% button_class += ' is-danger' %>
+<% else %>
+  <% button_class += ' is-primary' %>
+<% end %>
+
+<%= button_to "最新のお知らせ", info_buttons_path, remote: true, method: :post, class: button_class %>

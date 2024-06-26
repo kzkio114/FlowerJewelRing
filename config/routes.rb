@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   #暫定　ソーシャルログインだけの場合
   get '/users/sign_in', to: redirect('/')
 
+  # ダッシュボードのルーティング
+  post 'reset_gift_notifications', to: 'dashboard#reset_gift_notifications', as: 'reset_gift_notifications'
+  post 'buttons/info', to: 'buttons#info', as: 'info_buttons'
   # チャットのルーティング
   resources :chats, only: [:index, :show, :create, :destroy]  # showを追加
   post 'chat', to: 'chats#chat', as: 'custom_chat'
