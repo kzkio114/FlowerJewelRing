@@ -72,7 +72,7 @@
               <%= render partial: 'buttons/menu/info_send_gift_response', locals: { gifts: @gifts, reply_users: @reply_users } %>
             </div>
           </div>
-          <div class="column is-one-third">
+          <!--<div class="column is-one-third">
             <div id="latest-gifts" class="mb-2">
               <h3>最新の感謝の気持ち</h3>
               <div class="show-fixed">
@@ -101,14 +101,14 @@
                         </div>
                       </div>
                     </div>
-                  <% end %>
+                  <% end %> -->
                 </div>
               </div>
               <% else %>
                 <p>最新のギフトメッセージはありません。</p>
               <% end %>
             </div>
-            <div class="field is-grouped is-grouped-right"> <!-- 右寄せするためのクラスを追加 -->
+            <div class="field is-grouped is-grouped-right">
               <%= button_to '感謝の気持ちを確認', reset_gift_notifications_path, method: :post, class: 'button is-danger mt-6' %>
             </div>
           </div>
