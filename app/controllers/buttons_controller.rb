@@ -1,6 +1,6 @@
 class ButtonsController < ApplicationController
-  before_action :set_unread_gifts_count
-  before_action :set_unread_replies_count
+  before_action :set_unread_gifts_count, except: [:login, :enter_app, :tos, :pp]
+  before_action :set_unread_replies_count, except: [:login, :enter_app, :tos, :pp]
   before_action :set_latest_replies_and_notifications, only: [:info, :menu, :close_menu, :worries, :gift_list, :gift_all, :user]
 
   def info
@@ -26,8 +26,6 @@ class ButtonsController < ApplicationController
   end
 
   def enter_app
-    set_unread_gifts_count
-    set_unread_replies_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -38,8 +36,6 @@ class ButtonsController < ApplicationController
   end
 
   def tos
-    set_unread_gifts_count
-    set_unread_replies_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -50,8 +46,6 @@ class ButtonsController < ApplicationController
   end
 
   def pp
-    set_unread_gifts_count
-    set_unread_replies_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
@@ -62,8 +56,6 @@ class ButtonsController < ApplicationController
   end
 
   def login
-    set_unread_gifts_count
-    set_unread_replies_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
