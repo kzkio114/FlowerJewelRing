@@ -1,4 +1,4 @@
-<div class="container is-small show-fixed-height mt-5">
+<div class="container is-small mt-5">
   <%= form_for(@user) do |f| %>
     <% if @user.errors.any? %>
       <div class="notification is-danger">
@@ -33,9 +33,9 @@
       </div>
     <% end %>
 
-    <div class="field mt-6">
-      <%= f.submit "プロフィールを更新", class: 'button is-primary' %>
-      <%= link_to 'プロフィールに戻る', user_path(current_user), class: 'button is-info ml-1' %>
+    <div class="field is-flex is-justify-content-flex-end mt-3">
+      <%= f.submit "プロフィールを更新", class: 'button is-primary is-small' %>
+      <%= link_to 'プロフィールに戻る', user_path(current_user), class: 'button is-info is-small ml-2' %>
     </div>
   <% end %>
 </div>
