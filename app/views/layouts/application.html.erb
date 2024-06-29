@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <!-- Font Awesome  -->
+    <script src="https://kit.fontawesome.com/6fa0d54baa.js" crossorigin="anonymous"></script>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
@@ -15,43 +17,7 @@
     <meta name="twitter:site" content="@kzkio_0114">
     <meta name="twitter:title" content="めぐる宝石花">
     <meta name="twitter:description" content="このアプリは相談する→相談されるの流れを繰り返して行い、また、相談した人には相談された人に感謝の気持ちとアイテムが貰えて、相談を出来る回数が増えていく循環・複合型相談アプリです。">
-    <meta name="twitter:image" content="<%= asset_path('top.png') %>">
-
-    <!-- Font Awesome  -->
-    <script src="https://kit.fontawesome.com/6fa0d54baa.js" crossorigin="anonymous"></script>
-
-    <!-- CSS -->
-    <style>
-      .show-fixed {
-        background-color: hsl(174, 80%, 92%);
-        height: 460px;
-        width: 290px;
-        overflow-y: auto;
-        overflow-x: hidden;
-      }
-
-      #unread-replies-count .icon {
-        margin-right: 1px;
-        color: inherit;
-      }
-
-      #unread-replies-count.has-unread .icon {
-        color: blue !important; /* 色を青に変更 */
-        animation: bounce 1s forwards;
-      }
-
-      @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {
-          transform: translateY(0);
-        }
-        40% {
-          transform: translateY(-20px);
-        }
-        60% {
-          transform: translateY(-10px);
-        }
-      }
-    </style>
+    <meta name="twitter:image" content="<%= iamge_path('top.png') %>">
   </head>
 
   <body>
