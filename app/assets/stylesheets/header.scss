@@ -27,4 +27,52 @@ header {
       }
     }
   }
+
+  @media (max-width: 768px) {
+    padding: 10px 0;  // タブレット用のパディング
+
+    nav {
+      ul {
+        flex-direction: column;  // タブレット用に縦方向のフレックスボックスに変更
+        align-items: center;  // アイテムを中央に配置
+
+        li {
+          margin: 10px 0;  // 各アイテムの上下に10pxのマージンを設定
+
+          &:first-child {
+            margin-right: 0;  // 最初のアイテムの右マージンをリセット
+          }
+
+          &:last-child {
+            margin-left: 0;  // 最後のアイテムの左マージンをリセット
+            margin-top: 10px;  // 最後のアイテムの上部に10pxのマージンを追加
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 5px 0;  // スマホ用のパディング
+
+    nav {
+      ul {
+        flex-direction: column;  // スマホ用に縦方向のフレックスボックスに変更
+        align-items: center;  // アイテムを中央に配置
+
+        li {
+          margin: 5px 0;  // 各アイテムの上下に5pxのマージンを設定
+
+          &:first-child {
+            margin-right: 0;  // 最初のアイテムの右マージンをリセット
+          }
+
+          &:last-child {
+            margin-left: 0;  // 最後のアイテムの左マージンをリセット
+            margin-top: 5px;  // 最後のアイテムの上部に5pxのマージンを追加
+          }
+        }
+      }
+    }
+  }
 }

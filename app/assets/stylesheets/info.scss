@@ -1,7 +1,17 @@
 .show-fixed {
   background-color: hsl(174, 42%, 95%); //枠の背景色を設定
-  height: 500px;  //枠の高さを400pxに固定
-  width: 250px;   /* 枠の幅を400pxに固定 */
-  overflow-y: auto; //枠の高さを超えた場合、スクロールバーを表示
-  overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
+  height: 500px;  // デフォルトの高さ
+  width: 250px;   // デフォルトの幅
+  overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
+  overflow-x: hidden; // 横方向のスクロールバーを非表示
+
+  @media (max-width: 768px) {
+    height: 400px; // タブレット用の高さ
+    width: 200px; // タブレット用の幅
+  }
+
+  @media (max-width: 480px) {
+    height: 300px; // スマホ用の高さ
+    width: 150px; // スマホ用の幅
+  }
 }
