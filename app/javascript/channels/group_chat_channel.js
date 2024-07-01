@@ -1,8 +1,6 @@
 import consumer from "./consumer";
 
-document.addEventListener('turbo:load', () => {
   const chatElement = document.getElementById('group_chat');
-
   if (chatElement) {
     const groupChatId = chatElement.dataset.groupChatId;
     const groupChatChannel = consumer.subscriptions.create(
@@ -33,7 +31,7 @@ document.addEventListener('turbo:load', () => {
         }
       }
     );
-
+    document.addEventListener('turbo:load', () => {
     const input = document.getElementById('chat_message_input');
     const button = document.querySelector('input[type="submit"]');
 
@@ -41,22 +39,25 @@ document.addEventListener('turbo:load', () => {
       const sendMessage = () => {
         const message = input.value;
         if (message.trim() !== '') {
-          groupChatChannel.speak(message);
-          input.value = '';
+          if (confirm('Are you sure you want to send this message?')) {
+            groupChatChannel.speak(message);
+            input.value = '';
+          }
         }
+      };
+
+      const handleEvent = (event) => {
+        sendMessage();
+        event.preventDefault();
       };
 
       input.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
-          sendMessage();
-          event.preventDefault();
+          handleEvent(event);
         }
       });
 
-      button.addEventListener('click', (event) => {
-        sendMessage();
-        event.preventDefault();
-      });
+      button.addEventListener('click', handleEvent);
     }
-  }
-});
+  });
+}
