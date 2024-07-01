@@ -1,8 +1,17 @@
-// layout.scss
 .fixed-height {
-  height: 350px;  //枠の高さを400pxに固定
+  height: 350px; // デフォルトの高さ
+
+  @media (max-width: 768px) { // タブレットやスマホ用
+    height: 200px; // 小さな画面では高さを小さくする
+  }
+
+  @media (max-width: 480px) { // スマホ用
+    height: 150px; // さらに小さな画面ではさらに高さを小さくする
+  }
+
   overflow-y: auto;
 }
+
 
 .frame-fixed-height {
   background-color: hsl(176, 70%, 71%); //枠の背景色を設定
