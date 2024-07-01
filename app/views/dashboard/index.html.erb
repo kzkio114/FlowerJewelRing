@@ -8,12 +8,12 @@
     <section class="section is-fullheight">
       <div class="container is-flex is-flex-direction-column">
         <div id="content" >
-        <%= render "buttons/menu/info_response", unread_gifts_count: @unread_gifts_count %>
         <% if flash[:notice] == 'ユーザーは正常に更新されました。' %>
           <div class="notification is-success">
             <%= flash[:notice] %>
           </div>
         <% end %>
+        <%= render "buttons/menu/info_response", unread_gifts_count: @unread_gifts_count %>
         </div>
       </div>
     </section>
