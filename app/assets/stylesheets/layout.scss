@@ -1,16 +1,8 @@
-.show-fixed {
-  background-color: hsl(174, 42%, 95%); //枠の背景色を設定
-  height: 500px;  //枠の高さを固定
-  width: 250px;   //枠の幅を固定
-  overflow-y: auto; //枠の高さを超えた場合、スクロールバーを表示
-  overflow-x: hidden; //横方向のスクロールバーを非表示
-}
-
 .fixed-height {
   height: 350px; // デフォルトの高さ
 
   @media (max-width: 768px) { // タブレットやスマホ用
-    height: 200px; // 小さな画面では高さを小さくする
+    height: 350px; // 小さな画面では高さを小さくする
   }
 
   @media (max-width: 480px) { // スマホ用
@@ -32,9 +24,9 @@
     width: 600px; // タブレット用の幅
   }
 
-  @media (max-width: 480px) {
-    height: 500px; // スマホ用の高さ
-    width: 100px; // スマホ用の幅
+  @media (max-width: 380px) {
+    height: 450px; // スマホ用の高さ
+    width: 200px; // スマホ用の幅
   }
 }
 

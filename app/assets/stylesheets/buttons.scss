@@ -15,6 +15,13 @@
       width: 120px; // スマホ用の幅
     }
   }
+
+  .button-wrap-text {
+    @media (max-width: 480px) {
+      white-space: normal;
+      flex-wrap: wrap;
+    }
+  }
 }
 
 .buttons-left {
@@ -29,10 +36,19 @@
 
     @media (max-width: 768px) {
       width: 120px; // タブレット用の幅
+      min-height: 60px; // ボタンの最小高さを設定
     }
 
     @media (max-width: 480px) {
       width: 100px; // スマホ用の幅
+      min-height: 60px; // ボタンの最小高さを設定
+    }
+  }
+
+  .button-wrap-text {
+    @media (max-width: 480px) {
+      white-space: normal;
+      flex-wrap: wrap;
     }
   }
 }
