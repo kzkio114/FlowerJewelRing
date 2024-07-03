@@ -1,6 +1,6 @@
 .user-show {
   background-color: hsl(174, 80%, 92%);//枠の背景色を設定
-  height: 800px;  // デフォルトの高さ
+  height: 600px;  // デフォルトの高さ
   width: 1500px;   // デフォルトの幅
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
@@ -11,7 +11,7 @@
   }
 
   @media (max-width: 380px) {
-    height: 450px; // スマホ用の高さ
+    height: 405px; // スマホ用の高さ
     width: 350px; // スマホ用の幅
   }
 }
@@ -30,6 +30,6 @@
 
   @media (max-width: 380px) {
     height: 50px; // スマホ用の高さ
-    width: 350px; // スマホ用の幅
+    width: 360px; // スマホ用の幅
   }
 }
