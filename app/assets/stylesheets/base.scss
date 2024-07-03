@@ -15,7 +15,7 @@ html, body {
 @media screen and (max-width: 599px) {
   html, body {
     height: 100%;
-    overflow-y: hidden; /* スマートフォンではスクロールを禁止 */
+    overflow-y: auto;  /* スマートフォンではスクロールを禁止 */
   }
 }
 
