@@ -3,6 +3,22 @@ html, body {
   margin: 0;
 }
 
+/* タブレット向けのスタイル */
+@media screen and (max-width: 1000px) {
+  html, body {
+    height: 100%;
+    overflow-y: auto; /* タブレットではスクロールを許可 */
+  }
+}
+
+/* スマートフォン向けのスタイル */
+@media screen and (max-width: 599px) {
+  html, body {
+    height: 100%;
+    overflow-y: hidden; /* スマートフォンではスクロールを禁止 */
+  }
+}
+
 body {
   background-color: hsl(174, 80%, 92%);
   display: flex;

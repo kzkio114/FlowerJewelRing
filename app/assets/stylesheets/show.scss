@@ -5,9 +5,9 @@
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
-  @media (max-width: 768px) {
-    height: 600px; // タブレット用の高さ
-    width: 600px; // タブレット用の幅
+  @media (max-width: 1100px) {
+    height: 840px; // タブレット用の高さ
+    width: 480px; // タブレット用の幅
   }
 
   @media (max-width: 380px) {
@@ -23,13 +23,13 @@
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
-  @media (max-width: 768px) {
+  @media (max-width: 1100px) {
     height: 50px; // タブレット用の高さ
-    width: 600px; // タブレット用の幅
+    width: 480px; // タブレット用の幅
   }
 
   @media (max-width: 380px) {
     height: 50px; // スマホ用の高さ
-    width: 360px; // スマホ用の幅
+    width: 350px; // スマホ用の幅
   }
 }
