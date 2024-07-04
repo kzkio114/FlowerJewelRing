@@ -7,10 +7,6 @@
     text-align: center;
     width: 150px; // デフォルトの幅
 
-    @media (max-width: 768px) {
-      width: 130px; // タブレット用の幅
-    }
-
     @media (max-width: 480px) {
       width: 120px; // スマホ用の幅
     }
@@ -33,11 +29,6 @@
     flex-grow: 1;
     text-align: center;
     width: 150px; // デフォルトの幅
-
-    @media (max-width: 800px) {
-      width: 80px; // タブレット用の幅
-      min-height: 80px; // ボタンの最小高さを設定
-    }
 
     @media (max-width: 480px) {
       width: 80px; // スマホ用の幅

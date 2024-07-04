@@ -8,7 +8,7 @@
           <% end %>
         </li>
         <% if user_signed_in? %>
-          <li>
+          <li class="user-info">
             <span id="unread-replies-count" class="<%= current_user.unread_replies_count > 0 ? 'has-unread' : '' %>">
               <span class="icon">
                 <i class="fas fa-envelope"></i>
@@ -16,6 +16,8 @@
               相談の未読返信: <%= current_user.unread_replies_count %>
             </span>
             <%= render 'layouts/unread_gifts_count', unread_gifts_count: @unread_gifts_count %>
+          </li>
+          <li class="user-actions">
             <%= link_to "#{current_user.name}さんのプロフィール", user_path(current_user) if current_user.present? %>
             <%= button_to 'ログアウト', destroy_user_session_path, method: :delete, form: { "data-turbo" => "false" } %>
           </li>

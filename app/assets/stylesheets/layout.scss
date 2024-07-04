@@ -19,11 +19,6 @@
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
-  @media (max-width: 1050px) {
-    height: 400px; // タブレット用の高さ
-    width: 250px; // タブレット用の幅
-  }
-
   @media (max-width: 380px) {
     height: 300px; // スマホ用の高さ
     width: 200px; // スマホ用の幅
@@ -34,10 +29,6 @@
   background-color: hsl(174, 80%, 92%); //枠の背景色を設定
   height: 100px;  // デフォルトの高さ
   width: 900px;   // デフォルトの幅
-
-  @media (max-width: 768px) {
-    width: 600px;  // タブレット用の幅
-  }
 
   @media (max-width: 480px) {
     width: 400px;  // スマホ用の幅
@@ -52,11 +43,6 @@
   height: 600px;  // デフォルトの高さ
   width: 900px;   // デフォルトの幅
 
-  @media (max-width: 768px) {
-    height: 400px; // タブレット用の高さ
-    width: 600px;  // タブレット用の幅
-  }
-
   @media (max-width: 480px) {
     height: 300px; // スマホ用の高さ
     width: 400px;  // スマホ用の幅
@@ -70,11 +56,6 @@
   background-color: hsl(180, 41%, 38%); //枠の背景色を設定
   height: 400px;  // デフォルトの高さ
   width: 600px;   // デフォルトの幅
-
-  @media (max-width: 768px) {
-    height: 300px; // タブレット用の高さ
-    width: 400px;  // タブレット用の幅
-  }
 
   @media (max-width: 480px) {
     height: 200px; // スマホ用の高さ

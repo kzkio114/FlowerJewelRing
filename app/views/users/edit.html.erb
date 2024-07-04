@@ -11,7 +11,7 @@
       </div>
     <% end %>
 
-    <div class="field">
+    <div class="field mt-1">
       <%= f.label :name, "名前", class: 'label' %>
       <%= f.text_field :name, class: 'input', placeholder: '名前を入力してください' %>
     </div>
@@ -22,18 +22,18 @@
     </div>
 
     <%= f.fields_for :profile do |p| %>
-      <div class="field mt-1">
+      <div class="field">
         <%= p.label :introduction, "自己紹介", class: 'label' %>
         <%= p.text_area :introduction, class: 'textarea', placeholder: '自己紹介を入力してください' %>
       </div>
 
-      <div class="field mt-1">
+      <div class="field">
         <%= p.label :interests, "興味・関心", class: 'label' %>
         <%= p.text_area :interests, class: 'textarea', placeholder: '興味・関心を入力してください' %>
       </div>
     <% end %>
 
-    <div class="field is-flex is-justify-content-flex-end mt-1">
+    <div class="field is-flex is-justify-content-flex-end mt-2">
       <%= f.submit "プロフィールを更新", class: 'button is-primary is-small' %>
       <%= link_to 'プロフィールに戻る', user_path(current_user), class: 'button is-info is-small ml-2' %>
     </div>
