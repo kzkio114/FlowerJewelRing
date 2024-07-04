@@ -5,8 +5,8 @@
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
-  @media (max-width: 1100px) {
-    height: 840px; // タブレット用の高さ
+  @media (max-width: 480px) {
+    height: 800px; // タブレット用の高さ
     width: 480px; // タブレット用の幅
   }
 
@@ -23,7 +23,7 @@
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
-  @media (max-width: 1100px) {
+  @media (max-width: 480px) {
     height: 50px; // タブレット用の高さ
     width: 480px; // タブレット用の幅
   }

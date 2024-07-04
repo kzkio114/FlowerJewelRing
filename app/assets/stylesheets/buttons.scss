@@ -34,13 +34,13 @@
     text-align: center;
     width: 150px; // デフォルトの幅
 
-    @media (max-width: 768px) {
-      width: 120px; // タブレット用の幅
-      min-height: 60px; // ボタンの最小高さを設定
+    @media (max-width: 800px) {
+      width: 80px; // タブレット用の幅
+      min-height: 80px; // ボタンの最小高さを設定
     }
 
     @media (max-width: 480px) {
-      width: 100px; // スマホ用の幅
+      width: 80px; // スマホ用の幅
       min-height: 60px; // ボタンの最小高さを設定
     }
   }

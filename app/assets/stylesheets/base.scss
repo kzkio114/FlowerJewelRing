@@ -7,7 +7,6 @@ html, body {
 @media screen and (max-width: 800px) {
   html, body {
     height: 100%;
-    margin: 0;
     overflow-y: auto; /* タブレットではスクロールを許可 */
   }
 }
