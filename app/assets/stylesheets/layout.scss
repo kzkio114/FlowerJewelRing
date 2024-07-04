@@ -20,12 +20,12 @@
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
   @media (max-width: 1050px) {
-    height: 790px; // タブレット用の高さ
-    width: 300px; // タブレット用の幅
+    height: 600px; // タブレット用の高さ
+    width: 270px; // タブレット用の幅
   }
 
   @media (max-width: 380px) {
-    height: 450px; // スマホ用の高さ
+    height: 400px; // スマホ用の高さ
     width: 200px; // スマホ用の幅
   }
 }

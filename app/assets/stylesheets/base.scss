@@ -4,9 +4,10 @@ html, body {
 }
 
 /* タブレット向けのスタイル */
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 800px) {
   html, body {
     height: 100%;
+    margin: 0;
     overflow-y: auto; /* タブレットではスクロールを許可 */
   }
 }
