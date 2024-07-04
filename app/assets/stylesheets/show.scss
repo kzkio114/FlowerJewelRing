@@ -5,7 +5,7 @@
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
-  @media (max-width: 380px) {
+  @media (max-width: 480px) {
     height: 445px; // スマホ用の高さ
     width: 360px; // スマホ用の幅
   }
@@ -18,7 +18,7 @@
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
-  @media (max-width: 380px) {
+  @media (max-width: 480px) {
     height: 50px; // スマホ用の高さ
     width: 360px; // スマホ用の幅
   }

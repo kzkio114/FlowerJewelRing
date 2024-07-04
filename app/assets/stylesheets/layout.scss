@@ -1,10 +1,6 @@
 .fixed-height {
   height: 350px; // デフォルトの高さ
 
-  @media (max-width: 768px) { // タブレットやスマホ用
-    height: 350px; // 小さな画面では高さを小さくする
-  }
-
   @media (max-width: 480px) { // スマホ用
     height: 150px; // さらに小さな画面ではさらに高さを小さくする
   }
@@ -19,9 +15,9 @@
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
-  @media (max-width: 380px) {
-    height: 300px; // スマホ用の高さ
-    width: 200px; // スマホ用の幅
+  @media (max-width: 480px) {
+    height: 400px; // スマホ用の高さ
+    width: 230px; // スマホ用の幅
   }
 }
 
