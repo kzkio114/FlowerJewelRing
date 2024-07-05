@@ -9,15 +9,20 @@
 }
 
 .frame-fixed-height {
-  background-color: hsl(176, 70%, 71%); //枠の背景色を設定
+  background-color: hsl(174, 80%, 92%); //枠の背景色を設定
   height: 600px;  // デフォルトの高さ
   width: 900px;   // デフォルトの幅
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
+  border-radius: 10px; /* 角を丸くする */
+  transform: translateZ(0); /* 高解像度ディスプレイ対策 */
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
+  -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
+  backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
 
   @media (max-width: 480px) {
-    height: 400px; // スマホ用の高さ
-    width: 230px; // スマホ用の幅
+    height: 500px; // スマホ用の高さ
+    width: 250px; // スマホ用の幅
   }
 }
 
