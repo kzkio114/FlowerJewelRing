@@ -6,8 +6,8 @@
   overflow-x: hidden; // 横方向のスクロールバーを非表示
 
   @media (max-width: 480px) {
-    height: 445px; // スマホ用の高さ
-    width: 360px; // スマホ用の幅
+    height: 600px; // スマホ用の高さ
+    width: 480px; // スマホ用の幅
   }
 }
 
@@ -20,6 +20,6 @@
 
   @media (max-width: 480px) {
     height: 50px; // スマホ用の高さ
-    width: 360px; // スマホ用の幅
+    width: 480px; // スマホ用の幅
   }
 }
