@@ -1,5 +1,5 @@
-<div class="columns is-centered is-mobile">
-  <div class="column mr-2 is-1">
+<div class="columns is-mobile is-centered">
+  <div class="column is-1 mr-2">
     <div id="menu">
       <%= render "buttons/menu/menu_buttons" %>
     </div>
@@ -7,13 +7,13 @@
   <div class="column is-flex is-align-items-start">
     <section class="section is-fullheight">
       <div class="container is-flex is-flex-direction-column">
-        <div id="content" >
-        <% if flash[:notice] == 'ユーザーは正常に更新されました。' %>
-          <div class="notification is-success">
-            <%= flash[:notice] %>
-          </div>
-        <% end %>
-        <%= render "buttons/menu/info_response", unread_gifts_count: @unread_gifts_count %>
+        <div id="content">
+          <% if flash[:notice] == 'ユーザーは正常に更新されました。' %>
+            <div class="notification is-success">
+              <%= flash[:notice] %>
+            </div>
+          <% end %>
+          <%= render "buttons/menu/info_response", unread_gifts_count: @unread_gifts_count %>
         </div>
       </div>
     </section>
