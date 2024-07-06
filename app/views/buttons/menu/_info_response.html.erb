@@ -1,10 +1,10 @@
-<div id="content" class="frame-fixed-height container is-small mt-5">
+<div id="content" class="frame-fixed-height container is-small ml-5">
   <div class="card">
     <header class="card-header">
       <div class="columns is-vcentered is-mobile">
         <div class="column is-narrow">
-          <strong class="is-size-4">最新のお知らせ</strong>
-          <p class="is-size-6 mr-6">
+          <strong class="is-size-4 ml-4">最新のお知らせ</strong>
+          <p class="is-size-6 mr-6 ml-5">
             最新の通知は5件のみ表示されています。<br>
             <%= case @current_time.hour
                   when 5..11
@@ -21,7 +21,7 @@
         <div class="column mt-6">
           <div id="notification-section" class="is-flex is-justify-content-flex-end">
             <span id="unread-replies-count" class="is-flex <%= @user.unread_replies_count > 0 ? 'has-unread' : '' %>">
-              <span class="icon mr-1 ml-12">
+              <span class="icon mr-1 ml-10">
                 <i class="fas fa-envelope"></i>
               </span>
               相談の未読返信: <%= @user.unread_replies_count %>

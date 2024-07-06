@@ -15,16 +15,74 @@
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
   border-radius: 10px; /* 角を丸くする */
-  transform: translateZ(0); /* 高解像度ディスプレイ対策 */
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
-  -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
-  backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
 
   @media (max-width: 480px) {
-    height: 500px; // スマホ用の高さ
+    height: 550px; // スマホ用の高さ
     width: 250px; // スマホ用の幅
+    transform: translateZ(0); /* 高解像度ディスプレイ対策 */
+    -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
+    backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
+  }
+
+  @media (max-width: 411px) {
+    height: 450px; // スマホ用の高さ
+    width: 250px; // スマホ用の幅
+    transform: translateZ(0); /* 高解像度ディスプレイ対策 */
+    -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
+    backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
   }
 }
+
+@media (max-width: 480px) {
+  .frame-fixed-height .columns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .frame-fixed-height .column {
+    width: 100%;
+    margin: 0; /* 余白をリセット */
+  }
+
+  .frame-fixed-height .card-header .columns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .frame-fixed-height .card-header .column {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  #notification-section {
+    flex-direction: column;
+    align-items: center; /* 中央揃えに設定 */
+    text-align: center; /* テキストを中央揃えに設定 */
+  }
+
+  #notification-section .is-flex {
+    width: 100%;
+    justify-content: center; /* 中央揃えに設定 */
+    margin-bottom: 0.5rem;
+  }
+
+  #unread-replies-count .icon {
+    margin-left: 0; /* アイコンの左マージンをリセット */
+  }
+
+  /* 特定の要素に対してスタイルを適用 */
+  .column.is-narrow {
+    text-align: center; /* テキストを中央揃え */
+  }
+
+  .column.is-narrow strong.is-size-4,
+  .column.is-narrow p.is-size-6 {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 
 .show-buttons-fixed-height {
   background-color: hsl(174, 80%, 92%); //枠の背景色を設定
@@ -79,4 +137,8 @@
 
 .ml-12 {
   margin-left: 12.2rem;
+}
+
+.ml-10 {
+  margin-left: 10rem;
 }

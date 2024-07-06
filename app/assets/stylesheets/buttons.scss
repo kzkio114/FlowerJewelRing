@@ -29,7 +29,7 @@
     flex-grow: 1;
     text-align: center;
     width: 103px; /* デフォルトの幅 */
-    height: 60px; /* デフォルトの高さ */
+    height: 52px; /* デフォルトの高さ */
     display: flex; /* フレックスボックスを使用 */
     align-items: center; /* 垂直方向に中央揃え */
     justify-content: center; /* 水平方向に中央揃え */
@@ -41,16 +41,18 @@
     transition: border-color 0.3s ease; /* ボーダーの変化にトランジションを追加 */
 
     @media (max-width: 480px) {
-      width: 100px; /* スマホ用の幅 */
+      width: 103px; /* スマホ用の幅 */
       height: 50px; /* スマホ用の高さ */
       border-radius: 30px; /* スマホ用の丸みを調整 */
+      margin-bottom: 1px; /* ボタン間のスペース */
     }
 
     @media (max-width: 411px) {
-      width: 100px; /* スマホ用の幅 */
-      height: 50px; /* スマホ用の高さ */
+      width: 103px; /* スマホ用の幅 */
+      height: 45px; /* スマホ用の高さ */
       border-radius: 30px; /* スマホ用の丸みを調整 */
-      margin-bottom: 0px; /* ボタン間のスペース */
+      margin-bottom: -5px; /* ボタン間のスペース */
+      margin-left: 5px; /* 左側の余白 */
     }
   }
 
