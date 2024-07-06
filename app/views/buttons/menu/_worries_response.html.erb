@@ -1,4 +1,4 @@
-<div id="content" class="frame-fixed-height container is-small">
+<div id="content" class="consultations-fixed-height container is-small">
   みんなの悩み！
   <div class="has-text-white">
     <% if consultations.nil? || consultations.empty? %>
@@ -20,7 +20,6 @@
   </div>
 
   <% if user_signed_in? %>
-    <!-- 新しいコンサルテーションを作成するためのフォームを追加 -->
     <div class="container is-small">
       <div class="columns">
         <div class="column is-offset-3 is-6">

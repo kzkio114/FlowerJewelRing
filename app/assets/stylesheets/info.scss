@@ -1,3 +1,133 @@
+.info-fixed-height {
+  background-color: hsl(174, 80%, 92%); //枠の背景色を設定
+  height: 700px;  // デフォルトの高さ
+  width: 900px;   // デフォルトの幅
+  overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
+  overflow-x: hidden; // 横方向のスクロールバーを非表示
+  border-radius: 10px; /* 角を丸くする */
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
+
+  @media (max-width: 480px) {
+    height: 550px; // スマホ用の高さ
+    width: 250px; // スマホ用の幅
+    transform: translateZ(0); /* 高解像度ディスプレイ対策 */
+    -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
+    backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
+  }
+
+  @media (max-width: 411px) {
+    height: 450px; // スマホ用の高さ
+    width: 210px; // スマホ用の幅
+    transform: translateZ(0); /* 高解像度ディスプレイ対策 */
+    -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
+    backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
+  }
+}
+
+@media (max-width: 480px) {
+  .frame-fixed-height .columns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .frame-fixed-height .card-header .columns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .frame-fixed-height .card-header .column {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  #notification-section {
+    flex-direction: column;
+    align-items: center; /* 中央揃えに設定 */
+    text-align: center; /* テキストを中央揃えに設定 */
+  }
+
+  #notification-section .is-flex {
+    width: 100%;
+    justify-content: center; /* 中央揃えに設定 */
+  }
+
+  #unread-replies-count .icon {
+    margin-left: 0; /* アイコンの左マージンをリセット */
+  }
+
+  /* 特定の要素に対してスタイルを適用 */
+  .column.is-narrow {
+    text-align: center; /* テキストを中央揃え */
+  }
+
+  .mobile-line-break {
+    display: block; /* スマホの場合の改行 */
+  }
+
+  .info-margin {
+    margin-right: 0 !important; /* 右マージンをリセット */
+    margin-left: 1.75rem !important;        /* 左マージンを追加 */
+    text-align: center !important; /* テキストを中央揃え */
+  }
+
+  .icon-margin {
+    margin-left: 1.75rem !important;        /* 左マージンを追加 */
+    text-align: center !important; /* テキストを中央揃え */
+  }
+}
+
+@media (max-width: 411px) {
+  .frame-fixed-height .columns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .frame-fixed-height .card-header .columns {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .frame-fixed-height .card-header .column {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  #notification-section {
+    flex-direction: column;
+    align-items: center; /* 中央揃えに設定 */
+    text-align: center; /* テキストを中央揃えに設定 */
+  }
+
+  #notification-section .is-flex {
+    width: 100%;
+    justify-content: center; /* 中央揃えに設定 */
+  }
+
+  #unread-replies-count .icon {
+    margin-left: 0; /* アイコンの左マージンをリセット */
+  }
+
+  /* 特定の要素に対してスタイルを適用 */
+  .column.is-narrow {
+    text-align: center; /* テキストを中央揃え */
+  }
+
+  .mobile-line-break {
+    display: block; /* スマホの場合の改行 */
+  }
+
+  .info-margin {
+    margin-right: 0 !important; /* 右マージンをリセット */
+    margin-left: 0.4rem !important; /* 左マージンを追加 */
+    text-align: center; /* テキストを中央揃え */
+  }
+
+  .icon-margin {
+    margin-left: -0.2rem !important; /* 左マージンを追加 */
+    text-align: center !important; /* テキストを中央揃え */
+  }
+}
+
 .show-fixed {
   background-color: hsl(174, 42%, 95%); /* 枠の背景色を設定 */
   height: 500px;  /* デフォルトの高さ */
