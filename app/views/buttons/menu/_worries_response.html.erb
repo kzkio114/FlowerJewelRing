@@ -2,8 +2,8 @@
   <div class="consultation-message is-small ml-2 mb-1">
     <p>みんなの悩み！</p>
   </div>
-  <div class="info-fixed-height is-small">
-    <div class="consultation-list ml-5">
+  <div class="consultations-fixed-height is-small">
+    <div class="consultation-list">
       <div class="has-text-white">
         <% if consultations.nil? || consultations.empty? %>
           <p>現在、コンサルテーションはありません。</p>
@@ -25,7 +25,7 @@
     </div>
 
     <% if user_signed_in? %>
-      <div class="consultation-form ml-5">
+      <div class="consultation-form">
         <div class="container is-small">
           <div class="columns">
             <div class="column is-offset-3 is-6 mt-1">
