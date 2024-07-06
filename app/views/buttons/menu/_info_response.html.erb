@@ -32,7 +32,7 @@
                 <span class="icon mr-1">
                   <i class="fas fa-gift"></i>
                 </span>
-                確認してください！！ <%#= @unread_gifts_count %>
+                確認してください！！
               </span>
             <% else %>
               <span id="unread-gifts-count" class="is-flex ml-4">
@@ -97,7 +97,7 @@
                             tweet_message = "相談のお礼に「#{ERB::Util.url_encode(entry[:gift].item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(entry[:gift].description)}」の意味が込められてます。%0Aみなさんも素敵なお礼貰いませんか？%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
                             %>
                             <div class="field is-grouped is-grouped-right">
-                            <%= link_to 'Xに投稿', "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-small is-info mt-2" %>
+                              <%= link_to 'Xに投稿', "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-small is-info mt-2" %>
                             </div>
                           </div>
                         </div>

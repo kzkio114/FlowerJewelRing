@@ -45,6 +45,7 @@
       height: 50px; /* スマホ用の高さ */
       border-radius: 30px; /* スマホ用の丸みを調整 */
       margin-bottom: 1px; /* ボタン間のスペース */
+      margin-left: -5px; /* 右側の余白 */
     }
 
     @media (max-width: 411px) {
