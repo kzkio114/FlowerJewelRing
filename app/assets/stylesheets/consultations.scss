@@ -24,7 +24,7 @@
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
 
   @media (max-width: 480px) {
-    height: 550px; /* スマホ用の高さ */
+    height: 525px; /* スマホ用の高さ */
     width: 250px; /* スマホ用の幅 */
     margin-left: 20px; /* 左側の余白 */
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
