@@ -8,6 +8,7 @@
   @media (max-width: 480px) {
     height: 20px; /* スマホ用の高さ */
     width: 250px; /* スマホ用の幅 */
+    margin-left: 20px; /* 左側の余白 */
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
     -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
     backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
@@ -25,6 +26,7 @@
   @media (max-width: 480px) {
     height: 550px; /* スマホ用の高さ */
     width: 250px; /* スマホ用の幅 */
+    margin-left: 20px; /* 左側の余白 */
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
     -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
     backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
@@ -33,6 +35,7 @@
   @media (max-width: 411px) {
     height: 450px; /* スマホ用の高さ */
     width: 210px; /* スマホ用の幅 */
+    margin-left: 10px; /* 左側の余白 */
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
     -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
     backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
@@ -52,11 +55,11 @@
 
 @media (max-width: 480px) {
   .consultation-list {
-    height: 60px; /* スマホ用の固定表示部分の高さ */
+    height: 65px; /* スマホ用の固定表示部分の高さ */
   }
 
   .consultation-form {
-    height: calc(100% - 60px); /* スマホ用の固定部分を引いた高さを設定 */
+    height: calc(100% - 65px); /* スマホ用の固定部分を引いた高さを設定 */
   }
 }
 
