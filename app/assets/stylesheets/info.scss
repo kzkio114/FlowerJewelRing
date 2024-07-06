@@ -1,12 +1,53 @@
 .show-fixed {
-  background-color: hsl(174, 42%, 95%); //枠の背景色を設定
-  height: 500px;  // デフォルトの高さ
-  width: 250px;   // デフォルトの幅
-  overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
-  overflow-x: hidden; // 横方向のスクロールバーを非表示
+  background-color: hsl(174, 42%, 95%); /* 枠の背景色を設定 */
+  height: 500px;  /* デフォルトの高さ */
+  width: 250px;   /* デフォルトの幅 */
+  overflow-y: auto; /* 枠の高さを超えた場合、スクロールバーを表示 */
+  overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
+}
 
-  @media (max-width: 480px) {
-    height: 300px; // スマホ用の高さ
-    width: 150px; // スマホ用の幅
+@media (max-width: 480px) {
+  .show-fixed {
+    height: 500px; /* スマホ用の高さ */
+    width: 240px; /* スマホ用の幅 */
+  }
+
+  .card-content {
+    padding: 10px; /* スマホ用のパディングを減らす */
+  }
+
+  .is-size-6 {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .textarea {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .button.is-small {
+    font-size: 0.75rem; /* スマホ用のボタンフォントサイズを小さく */
+  }
+}
+
+@media (max-width: 411px) {
+  .show-fixed {
+    height: 500px; /* スマホ用の高さ */
+    width: 210px; /* スマホ用の幅 */
+  }
+
+  .card-content {
+    padding: 1px; /* スマホ用のパディングを減らす */
+  }
+
+  .is-size-6 {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .textarea {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .button.is-small {
+    font-size: 0.65rem; /* スマホ用のボタンフォントサイズを小さく */
   }
 }
