@@ -1,6 +1,6 @@
 .info-fixed-height {
   background-color: hsl(174, 80%, 92%); //枠の背景色を設定
-  height: 700px;  // デフォルトの高さ
+  height: 750px;  // デフォルトの高さ
   width: 900px;   // デフォルトの幅
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
@@ -8,7 +8,7 @@
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
 
   @media (max-width: 480px) {
-    height: 550px; // スマホ用の高さ
+    height: 525px; // スマホ用の高さ
     width: 250px; // スマホ用の幅
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
     -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
@@ -130,7 +130,7 @@
 
 .show-fixed {
   background-color: hsl(174, 42%, 95%); /* 枠の背景色を設定 */
-  height: 500px;  /* デフォルトの高さ */
+  height: 460px;  /* デフォルトの高さ */
   width: 250px;   /* デフォルトの幅 */
   overflow-y: auto; /* 枠の高さを超えた場合、スクロールバーを表示 */
   overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
@@ -138,7 +138,7 @@
 
 @media (max-width: 480px) {
   .show-fixed {
-    height: 500px; /* スマホ用の高さ */
+    height: 430px; /* スマホ用の高さ */
     width: 240px; /* スマホ用の幅 */
   }
 
@@ -161,6 +161,60 @@
 
 @media (max-width: 411px) {
   .show-fixed {
+    height: 500px; /* スマホ用の高さ */
+    width: 210px; /* スマホ用の幅 */
+  }
+
+  .card-content {
+    padding: 1px; /* スマホ用のパディングを減らす */
+  }
+
+  .is-size-6 {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .textarea {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .button.is-small {
+    font-size: 0.65rem; /* スマホ用のボタンフォントサイズを小さく */
+  }
+}
+
+.show-info-fixed {
+  background-color: hsl(174, 42%, 95%); /* 枠の背景色を設定 */
+  height: 510px;  /* デフォルトの高さ */
+  width: 250px;   /* デフォルトの幅 */
+  overflow-y: auto; /* 枠の高さを超えた場合、スクロールバーを表示 */
+  overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
+}
+
+@media (max-width: 480px) {
+  .show-info-fixed {
+    height: 470px; /* スマホ用の高さ */
+    width: 240px; /* スマホ用の幅 */
+  }
+
+  .card-content {
+    padding: 10px; /* スマホ用のパディングを減らす */
+  }
+
+  .is-size-6 {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .textarea {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .button.is-small {
+    font-size: 0.75rem; /* スマホ用のボタンフォントサイズを小さく */
+  }
+}
+
+@media (max-width: 411px) {
+  .show-info-fixed {
     height: 500px; /* スマホ用の高さ */
     width: 210px; /* スマホ用の幅 */
   }

@@ -24,8 +24,8 @@
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
 
   @media (max-width: 480px) {
-    height: 525px; /* スマホ用の高さ */
-    width: 250px; /* スマホ用の幅 */
+    height: 500px; /* スマホ用の高さ */
+    width: 280px; /* スマホ用の幅 */
     margin-left: 20px; /* 左側の余白 */
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
     -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
@@ -81,6 +81,6 @@
 /* スマホ用のスタイル */
 @media (max-width: 480px) {
   .notification {
-    font-size: 0.8rem; /* スマホ用のフォントサイズを小さく */
+    font-size: 0.75rem; /* スマホ用のフォントサイズを小さく */
   }
 }

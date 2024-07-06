@@ -75,7 +75,7 @@
           <div class="column is-one-third">
             <div id="latest-gifts" class="mb-2">
               <h3>最新の感謝の気持ち</h3>
-              <div class="show-fixed">
+              <div class="show-info-fixed">
               <% if @latest_gift_messages.present? %>
                 <div class="columns is-multiline">
                   <% @latest_gift_messages.each do |entry| %>
@@ -111,7 +111,7 @@
               <% end %>
             </div>
             <div class="field is-grouped is-grouped-right">
-              <%= button_to '感謝の気持ちを確認', reset_gift_notifications_path, method: :post, class: 'button is-danger mt-6' %>
+              <%= button_to '感謝の気持ちを確認', reset_gift_notifications_path, method: :post, class: 'button is-danger is-small mt-1' %>
             </div>
           </div>
         </div>
