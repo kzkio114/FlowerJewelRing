@@ -57,11 +57,11 @@
 
 @media (max-width: 480px) {
   .consultation-list {
-    height: 65px; /* スマホ用の固定表示部分の高さ */
+    height: 63px; /* スマホ用の固定表示部分の高さ */
   }
 
   .consultation-form {
-    height: calc(100% - 65px); /* スマホ用の固定部分を引いた高さを設定 */
+    height: calc(100% - 62px); /* スマホ用の固定部分を引いた高さを設定 */
   }
 }
 

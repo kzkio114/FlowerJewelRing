@@ -1,0 +1,21 @@
+.twitter-button {
+  transition: background-color 0.3s ease;
+}
+
+.twitter-button:hover {
+  background-color: #000; /* 背景を黒に */
+}
+
+.twitter-button .twitter-icon {
+  transition: color 0.3s ease;
+}
+
+.twitter-button:hover .twitter-icon {
+  display: none;
+}
+
+.twitter-button:hover::before {
+  content: "\f099"; /* Font AwesomeのTwitterアイコンのUnicode */
+  font-family: "Font Awesome 5 Brands";
+  color: #fff; /* アイコンの色を白に */
+}
