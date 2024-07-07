@@ -61,13 +61,26 @@
     background-color: #fff; /* 背景色は白 */
     color: #519bea; /* テキスト色 */
     border-color: #78ddf6; /* ボーダーの色を設定 */
+
+    &:hover {
+      background-color: hsl(176, 88%, 57%);  /* ホバー時の背景色 */
+      color: #fff; /* ホバー時のテキスト色 */
+      border-color: hsl(176, 88%, 57%);  /* ホバー時のボーダー色 */
+    }
   }
+
 
   .button.is-warning {
     background-color: #fff; /* 背景色は白 */
     color: #ff7043; /* テキスト色 */
     border-color: #ffa726; /* ボーダーの色を設定 */
     animation: glow 3s ease-in-out infinite; /* 光るアニメーションを追加 */
+
+    &:hover {
+      background-color: #ffa726; /* ホバー時の背景色 */
+      color: #fff; /* ホバー時のテキスト色 */
+      border-color: #ffa726; /* ホバー時のボーダー色 */
+    }
   }
 
   @keyframes glow {
