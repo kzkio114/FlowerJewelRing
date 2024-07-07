@@ -1,4 +1,4 @@
-<div id="content" class="container is-small frame-fixed-height">
+<div id="content" class="container is-small user-fixed-height">
   <div class="columns is-multiline">
     <% @users.each do |user| %>
       <div class="column is-one-third">
@@ -8,7 +8,7 @@
           </div>
           <footer class="card-footer">
             <div class="card-footer-item">
-              <div class="is-pulled-right">
+              <div class="is-pulled-right buttons-right">
                 <%= button_to '詳細を見る', buttons_user_show_path(id: user.id), method: :post, class: 'button is-primary is-small' %>
               </div>
             </div>

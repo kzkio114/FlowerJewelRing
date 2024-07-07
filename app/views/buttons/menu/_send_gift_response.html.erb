@@ -1,4 +1,4 @@
-<div id="content" class="container is-small frame-fixed-height ">
+<div id="content" class="container is-small gift-fixed-height">
   <div id="error-message"></div> <!-- ここにエラーメッセージを表示 -->
   <div class="columns is-multiline">
     <div class="column is-full">
@@ -6,8 +6,8 @@
         <div class="level-left">
           <h3 class="title is-size-3">感謝の気持ちを伝える</h3>
         </div>
-        <div class="level-right">
-          <%= button_to '感謝の気持ちに戻る', gift_all_path, method: :post,  class: 'button is-primary mt-5', data: { turbo_frame: 'content' } %>
+        <div class="level-right buttons-right">
+          <%= button_to '戻る', gift_all_path, method: :post,  class: 'button is-primary is-small custom-long-left mt-5', data: { turbo_frame: 'content' } %>
         </div>
       </div>
     </div>
@@ -38,8 +38,8 @@
                   <%= form.label :sender_message, "感謝のメッセージ" %>
                   <%= form.text_area :sender_message, class: 'textarea', placeholder: "ここにメッセージを入力してください" %>
                 </div>
-                <div class="field">
-                  <%= form.submit "この内容で送る", class: "button is-primary is-small" %>
+                <div class="field is-pulled-right buttons-right">
+                  <%= form.submit "送る", class: "button is-primary is-small" %>
                 </div>
               <% end %>
             </div>
