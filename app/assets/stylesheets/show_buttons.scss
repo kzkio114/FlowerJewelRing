@@ -26,8 +26,15 @@
       width: 100px; /* スマホ用の幅 */
       height: 40px; /* スマホ用の高さ */
       border-radius: 30px; /* スマホ用の丸みを調整 */
-      margin-bottom: 1px; /* ボタン間のスペース */
+      margin-bottom: 5px; /* ボタン間のスペース */
       margin-left: -5px; /* 左側の余白 */
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
+    }
+    .custom-delete-top {
+      margin-top: 30px; /* 特定のボタンの下部マージンを増やす */
+    }
+    .custom-top {
+      margin-top: 10px; /* 特定のボタンの下部マージンを増やす */
     }
   }
 
@@ -38,6 +45,7 @@
       border-radius: 30px; /* スマホ用の丸みを調整 */
       margin-bottom: -5px; /* ボタン間のスペース */
       margin-left: -5px; /* 左側の余白 */
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
     }
   }
 
@@ -120,11 +128,13 @@
     @media (max-width: 480px) {
       white-space: normal;
       flex-wrap: wrap;
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
     }
 
     @media (max-width: 411px) {
       white-space: normal;
       flex-wrap: wrap;
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
     }
   }
 }
