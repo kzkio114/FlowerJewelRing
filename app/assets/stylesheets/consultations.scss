@@ -8,7 +8,7 @@
   @media (max-width: 480px) {
     height: 20px; /* スマホ用の高さ */
     width: 250px; /* スマホ用の幅 */
-    margin-left: 15px !important;  /* 右側の余白 */
+    margin-left: 15px;  /* 右側の余白 */
     margin-top: -30px; /* 上側の余白 */
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
     -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */

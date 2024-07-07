@@ -1,7 +1,8 @@
-<div id="content" class="container is-small frame-fixed-height">
+<div id="content" class="container is-small">
+<div class="chat-fixed-height">
   <div id="group_chat" data-group-chat-id="<%= @group_chat.id %>">
     <h2><%= @group_chat.title %> (ID: <%= @group_chat.id %>)</h2>
-    <div id="messages">
+    <div id="messages" class="chat-height">
       <% @group_chat.group_chat_messages.each do |message| %>
         <%= render partial: "group_chat_messages/message", locals: { message: message, show_delete_button: message.user == current_user } %>
       <% end %>
@@ -29,4 +30,5 @@
 
   <%= turbo_frame_tag "new_group_chat_member" %>
   <%= turbo_frame_tag "edit_group_chat" %>
+</div>
 </div>

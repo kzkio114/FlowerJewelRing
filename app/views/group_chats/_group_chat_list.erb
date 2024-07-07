@@ -1,5 +1,6 @@
-<div id="content" class="container is-small frame-fixed-height">
-  <div id="group_chat_list">
+<div id="content" class="container is-small">
+<div class="chat-fixed-height">
+  <div id="group_chat_list" class="group-chat-height">
     <h3>グループチャット一覧</h3>
     <% group_chats.each do |group_chat| %>
       <% if group_chat.group_chat_members.exists?(user: current_user) || group_chat.free? %>
@@ -40,3 +41,4 @@
       </div>
     </div>
   <% end %>
+</div>

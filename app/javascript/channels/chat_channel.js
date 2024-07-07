@@ -19,6 +19,8 @@ const chatChannel = consumer.subscriptions.create("ChatChannel", {
           input.value = ''; // フィールドをクリア
         }
       }
+      // 新しいメッセージを追加した後にスクロール
+      messages.scrollTop = messages.scrollHeight;
     } else if (data.action === 'destroy' && data.chat_id) {
       const chatElement = document.getElementById(`chat_${data.chat_id}`);
       if (chatElement) {
