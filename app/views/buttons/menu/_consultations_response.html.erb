@@ -20,12 +20,14 @@
         <%= button_to '戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-primary button-wrap-text ml-2" %>
         <% if @consultation.user == current_user %>
           <%
-            fixed_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com/dashboard"
+            fixed_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
             message = "「#{ERB::Util.url_encode(@consultation.title)}」を投稿しました。%0A みなさんから、アドバイスをいただけると嬉しいです。%0A %23めぐる宝石花 %0A#{ERB::Util.url_encode(fixed_url)}"
           %>
-            <%= link_to "https://twitter.com/intent/tweet?text=#{message}", target: "_blank", class: "button is-info button-wrap-text ml-4 twitter-button" do %>
-            <i class="fab fa-twitter twitter-icon"></i> タイトル投稿
-          <% end %>
+          <div class="field twitter">
+            <%= link_to "https://twitter.com/intent/tweet?text=#{message}", target: "_blank", class: "button is-info button-wrap-text ml-2 tooltip", data: { tooltip: "タイトルを投稿" } do %>
+              <i class="fab fa-twitter twitter-icon"></i>
+            <% end %>
+          </div>
           <%= button_to '削除', consultations_destroy_path(@consultation), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }, class: "button is-danger button-wrap-text ml-5" %>
         <% end %>
       </div>
