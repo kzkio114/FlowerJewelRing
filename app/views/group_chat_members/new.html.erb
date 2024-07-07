@@ -8,8 +8,8 @@
       <%= form.label :role, 'ロール' %>
       <%= form.select :role, GroupChatMember.roles.keys.map { |role| [role.titleize, role] } %>
     </div>
-    <div class="actions">
-      <%= form.submit '追加', class: 'button is-primary' %>
+    <div class="actions group-buttons">
+      <%= form.submit '追加', class: 'button is-primary is-small' %>
     </div>
   <% end %>
 <% end %>

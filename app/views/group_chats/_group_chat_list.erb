@@ -1,10 +1,10 @@
-<div id="content" class="container is-small">
-<div class="chat-fixed-height">
+<div id="content">
+<div class="group-chat-fixed-height">
   <div id="group_chat_list" class="group-chat-height">
     <h3>グループチャット一覧</h3>
     <% group_chats.each do |group_chat| %>
       <% if group_chat.group_chat_members.exists?(user: current_user) || group_chat.free? %>
-        <div id="group_chat_<%= group_chat.id %>">
+        <div id="group_chat_<%= group_chat.id %> " class="group-buttons">
           <%= button_to group_chat.title, group_chat_group_chat_path(group_chat), method: :post, data: { turbo: true, turbo_method: :post }, class: 'button is-primary' %>
         </div>
       <% end %>
@@ -35,9 +35,9 @@
       </div>
     </div>
     </div>
-    <div class="field">
+    <div class="field group-buttons">
       <div class="control">
-        <%= form.submit "作成", class: 'button is-primary' %>
+        <%= form.submit "作成", class: 'button is-primary is-small mt-1' %>
       </div>
     </div>
   <% end %>
