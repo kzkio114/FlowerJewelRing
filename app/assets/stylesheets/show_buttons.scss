@@ -131,16 +131,4 @@
       flex-wrap: wrap;
     }
   }
-
-  .twitter-button {
-    &:hover .twitter-icon {
-      display: none;
-    }
-
-    &:hover::before {
-      content: "\f099"; /* Font AwesomeのTwitterアイコンのUnicode */
-      font-family: "Font Awesome 5 Brands";
-      color: #fff; /* アイコンの色を白に */
-    }
-  }
 }
