@@ -25,8 +25,10 @@
                     <%= form.label :sender_message, "感謝のメッセージ", class: 'is-size-6' %> <!-- 文字サイズを小さく -->
                     <%= form.text_area :sender_message, class: 'textarea', placeholder: "ここにメッセージを入力してください" , rows: 3 %> <!-- テキストエリアサイズを小さく -->
                   </div>
-                  <div class="field is-grouped is-grouped-right"> <!-- 右寄せするためのクラスを追加 -->
-                    <%= form.submit "この内容で送る", class: "button is-primary is-small" %>
+                  <div class="field is-grouped is-grouped-right">
+                    <div class="buttons-right"><!-- 右寄せするためのクラスを追加 -->
+                    <%= form.submit "送る", class: "button is-primary is-small" %>
+                    </div>
                   </div>
                 <% end %>
               </div>

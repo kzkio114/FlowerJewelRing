@@ -36,6 +36,9 @@
     .custom-top {
       margin-top: 10px; /* 特定のボタンの下部マージンを増やす */
     }
+    .custom-left {
+      margin-left: 50px; /* 特定のボタンの左マージンを増やす */
+    }
   }
 
   @media (max-width: 411px) {
@@ -125,6 +128,8 @@
   }
 
   .button-wrap-text {
+    font-size: 0.8rem; /* スマホ用のフォントサイズ */
+
     @media (max-width: 480px) {
       white-space: normal;
       flex-wrap: wrap;
