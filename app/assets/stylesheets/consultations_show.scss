@@ -66,9 +66,20 @@
       border-color: #209cee; /* ボーダーの色を設定 */
 
       &:hover {
-        background-color: #209cee; /* Bulmaの$info-color */
+        background-color: #010407; /* Bulmaの$info-color */
         color: #fff; /* テキスト色を白に */
-        border-color: #209cee; /* ボーダーの色を設定 */
+        border-color: #01070b; /* ボーダーの色を設定 */
+      }
+
+      &:hover .twitter-icon {
+        display: none;
+      }
+
+      &:hover::before {
+        content: "\e61b"; /* Font AwesomeのTwitterアイコンのUnicode */
+        font-family: "Font Awesome 6 Brands";
+        color: #fff; /* アイコンの色を白に */
+        display: inline-block;
       }
     }
 
