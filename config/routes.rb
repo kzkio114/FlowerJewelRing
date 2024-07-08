@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'admin_users/index'
+  get 'admin_users/show'
+  get 'admin_users/new'
+  get 'admin_users/edit'
+  get 'admin_users/create'
+  get 'admin_users/update'
+  get 'admin_users/destroy'
   #暫定　ソーシャルログインだけの場合
   get '/users/sign_in', to: redirect('/')
 
