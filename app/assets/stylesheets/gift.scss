@@ -1,16 +1,6 @@
-.fixed-height {
-  height: 350px; // デフォルトの高さ
-
-  @media (max-width: 480px) { // スマホ用
-    height: 150px; // さらに小さな画面ではさらに高さを小さくする
-  }
-
-  overflow-y: auto;
-}
-
-.user-fixed-height {
+.gift-fixed-height {
   background-color: hsl(174, 80%, 92%); //枠の背景色を設定
-  height: 600px;  // デフォルトの高さ
+  height: 720px;  // デフォルトの高さ
   width: 900px;   // デフォルトの幅
   overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
   overflow-x: hidden; // 横方向のスクロールバーを非表示
@@ -34,52 +24,28 @@
   }
 }
 
-.show-fixed-height {
+.gift-list-height {
   background-color: hsl(174, 80%, 92%); //枠の背景色を設定
-  height: 600px;  // デフォルトの高さ
+  height: 520px;  // デフォルトの高さ
   width: 900px;   // デフォルトの幅
+  overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
+  overflow-x: hidden; // 横方向のスクロールバーを非表示
+  border-radius: 10px; /* 角を丸くする */
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
 
   @media (max-width: 480px) {
-    height: 300px; // スマホ用の高さ
-    width: 400px;  // スマホ用の幅
+    height: 475px; // スマホ用の高さ
+    width: 250px; // スマホ用の幅
+    transform: translateZ(0); /* 高解像度ディスプレイ対策 */
+    -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
+    backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
   }
 
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.test-fixed-height {
-  background-color: hsl(180, 41%, 38%); //枠の背景色を設定
-  height: 400px;  // デフォルトの高さ
-  width: 600px;   // デフォルトの幅
-
-  @media (max-width: 480px) {
-    height: 200px; // スマホ用の高さ
-    width: 300px;  // スマホ用の幅
+  @media (max-width: 411px) {
+    height: 470px; // スマホ用の高さ
+    width: 210px; // スマホ用の幅
+    transform: translateZ(0); /* 高解像度ディスプレイ対策 */
+    -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
+    backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
   }
-
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: fixed;
-}
-
-.content {
-  margin-bottom: 2em;
-}
-
-.footer {
-  background-color: hsl(174, 80%, 92%);
-  margin-top: auto;
-}
-
-.ml-12 {
-  margin-left: 12.2rem;
-}
-
-.ml-9 {
-  margin-left: 9rem;
-}
-
-.ml-8 {
-  margin-left: 8rem;
 }

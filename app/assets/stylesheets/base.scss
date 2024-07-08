@@ -1,5 +1,33 @@
-// base.scss
 html, body {
   height: 100%;
   margin: 0;
+}
+
+/* スマートフォン向けのスタイル */
+@media screen and (max-width: 480px) {
+  html, body {
+    height: 100%;
+    overflow-y: auto;  /* スマートフォンではスクロールを禁止 */
+  }
+}
+
+body {
+  background-color: hsl(174, 80%, 92%);
+  display: flex;
+  flex-direction: column;
+}
+
+.section.is-fullheight {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 100%;
+  justify-content: space-between;
 }

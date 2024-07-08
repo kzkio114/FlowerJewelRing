@@ -13,7 +13,9 @@
               <span class="icon">
                 <i class="fas fa-envelope"></i>
               </span>
-              相談の未読返信: <%= current_user.unread_replies_count %>
+              <span class="message">
+                相談の未読返信: <%= current_user.unread_replies_count %>
+              </span>
             </span>
             <%= render 'layouts/unread_gifts_count', unread_gifts_count: @unread_gifts_count %>
             <%= link_to "#{current_user.name}さんのプロフィール", user_path(current_user) if current_user.present? %>

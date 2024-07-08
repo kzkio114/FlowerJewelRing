@@ -1,18 +1,20 @@
-<div id="content" class="container is-small">
-  <div style="overflow-y: auto; max-height: 50%;">
-    皆さんの感謝の気持ちで変動します！ <%= total_sender_messages_count %>
+<div id="content">
+  <div class="consultation-message is-small ml-5 mb-1">
+    感謝の気持ち!! <%= total_sender_messages_count %>
   </div>
+  <div class="consultations-fixed-height ml-4">
   <% if total_sender_messages_count > 250 %>
-    <%= image_tag "6.webp", style: 'max-width: 50%; max-height: 50%;' %>
+    <%= image_tag "6.webp", style: 'max-width: 100%; max-height: 100%;' %>
   <% elsif total_sender_messages_count > 200 %>
-    <%= image_tag "5.webp", style: 'max-width: 50%; max-height: 50%;' %>
+    <%= image_tag "5.webp", style: 'max-width: 100%; max-height: 100%;' %>
   <% elsif total_sender_messages_count > 150 %>
-    <%= image_tag "4.webp", style: 'max-width: 50%; max-height: 50%;' %>
+    <%= image_tag "4.webp", style: 'max-width: 100%; max-height: 100%;' %>
   <% elsif total_sender_messages_count > 100 %>
-    <%= image_tag "3.webp", style: 'max-width: 50%; max-height: 50%;' %>
+    <%= image_tag "3.webp", style: 'max-width: 100%; max-height: 100%;' %>
   <% elsif total_sender_messages_count > 50 %>
-    <%= image_tag "2.webp", style: 'max-width: 50%; max-height: 50%;' %>
+    <%= image_tag "2.webp", style: 'max-width: 100%; max-height: 100%;' %>
   <% else %>
-    <%= image_tag "1.webp", style: 'max-width: 50%; max-height: 50%;' %>
+    <%= image_tag "1.webp", style: 'max-width: 100%; max-height: 100%;' %>
   <% end %>
+  </div>
 </div>

@@ -1,0 +1,37 @@
+.twitter {
+  position: relative; /* 相対位置を設定してツールチップの位置を制御 */
+}
+
+.tooltip[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 100%; /* ツールチップをボタンの下に表示 */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  margin-top: 5px; /* ボタンとの間にスペースを追加 */
+}
+
+.tooltip[data-tooltip]:hover::after {
+  opacity: 1;
+}
+
+/* スマホ用のスタイルを追加 */
+@media (max-width: 480px) {
+  .tooltip[data-tooltip]::after {
+    left: auto;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: normal;
+    width: max-content;
+  }
+}

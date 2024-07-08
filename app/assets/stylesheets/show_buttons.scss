@@ -1,0 +1,148 @@
+.buttons-right {
+  display: flex;
+  flex-direction: row; /* デフォルトでボタンを横に並べる */
+  justify-content: flex-end; /* ボタンを右寄せ */
+  align-items: flex-start; /* ボタンを上揃え */
+
+  .button {
+    flex-grow: 1;
+    text-align: center;
+    width: 100px; /* デフォルトの幅 */
+    height: 40px; /* デフォルトの高さ */
+    display: flex; /* フレックスボックスを使用 */
+    align-items: center; /* 垂直方向に中央揃え */
+    justify-content: center; /* 水平方向に中央揃え */
+    margin-bottom: 5px; /* ボタン間のスペース */
+    background-color: #fff; /* ボタンの背景色 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影を追加して浮いているように見せる */
+    border-radius: 50px; /* 柔らかな丸みを追加 */
+    border: 2px solid #e0e0e0; /* ボーダーを追加 */
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* ボーダーの変化にトランジションを追加 */
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column; /* スマホ用に縦並び */
+    .button {
+      width: 100px; /* スマホ用の幅 */
+      height: 40px; /* スマホ用の高さ */
+      border-radius: 30px; /* スマホ用の丸みを調整 */
+      margin-bottom: 5px; /* ボタン間のスペース */
+      margin-left: -5px; /* 左側の余白 */
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
+    }
+    .custom-delete-top {
+      margin-top: 30px; /* 特定のボタンの下部マージンを増やす */
+    }
+    .custom-top {
+      margin-top: 10px; /* 特定のボタンの下部マージンを増やす */
+    }
+    .custom-left {
+      margin-left: 110px; /* 特定のボタンの左マージンを増やす */
+    }
+    .custom-long-left {
+      margin-left: 130px; /* 特定のボタンの左マージンを増やす */
+    }
+  }
+
+  @media (max-width: 411px) {
+    .button {
+      width: 103px; /* スマホ用の幅 */
+      height: 45px; /* スマホ用の高さ */
+      border-radius: 30px; /* スマホ用の丸みを調整 */
+      margin-bottom: -5px; /* ボタン間のスペース */
+      margin-left: -5px; /* 左側の余白 */
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
+    }
+  }
+
+  .button.is-primary {
+    background-color: #fff; /* 背景色は白 */
+    color: #00d1b2; /* Bulmaの$primary-color */
+    border-color: #00d1b2; /* Bulmaの$primary-color */
+    &:hover {
+      background-color: #00d1b2; /* Bulmaの$primary-color */
+      color: #fff; /* テキスト色を白に */
+      border-color: #00d1b2; /* ボーダーの色を設定 */
+    }
+  }
+
+  .button.is-link {
+    background-color: #fff; /* 背景色は白 */
+    color: #3273dc; /* テキスト色 */
+    border-color: #3273dc; /* ボーダーの色を設定 */
+    &:hover {
+      background-color: #3273dc; /* Bulmaの$primary-color */
+      color: #fff; /* テキスト色を白に */
+      border-color: #3273dc; /* ボーダーの色を設定 */
+    }
+  }
+
+  .button.is-info {
+    background-color: #fff; /* 背景色は白 */
+    color: #209cee; /* テキスト色 */
+    border-color: #209cee; /* ボーダーの色を設定 */
+    &:hover {
+      background-color: #010407; /* Bulmaの$info-color */
+      color: #fff; /* テキスト色を白に */
+      border-color: #01070b; /* ボーダーの色を設定 */
+    }
+    &:hover .twitter-icon {
+      display: none;
+    }
+    &:hover::before {
+      content: "\e61b"; /* Font AwesomeのTwitterアイコンのUnicode */
+      font-family: "Font Awesome 6 Brands";
+      color: #fff; /* アイコンの色を白に */
+      display: inline-block;
+    }
+  }
+
+  .button.is-success {
+    background-color: #fff; /* 背景色は白 */
+    color: #23d160; /* テキスト色 */
+    border-color: #23d160; /* ボーダーの色を設定 */
+    &:hover {
+      background-color: #23d160; /* Bulmaの$success-color */
+      color: #fff; /* テキスト色を白に */
+      border-color: #23d160; /* ボーダーの色を設定 */
+    }
+  }
+
+  .button.is-warning {
+    background-color: #fff; /* 背景色は白 */
+    color: #ffdd57; /* テキスト色 */
+    border-color: #ffdd57; /* ボーダーの色を設定 */
+    &:hover {
+      background-color: #ffdd57; /* Bulmaの$warning-color */
+      color: #fff; /* テキスト色を白に */
+      border-color: #ffdd57; /* ボーダーの色を設定 */
+    }
+  }
+
+  .button.is-danger {
+    background-color: #fff; /* 背景色は白 */
+    color: #ff3860; /* テキスト色 */
+    border-color: #ff3860; /* ボーダーの色を設定 */
+    &:hover {
+      background-color: #ff3860; /* Bulmaの$danger-color */
+      color: #fff; /* テキスト色を白に */
+      border-color: #ff3860; /* ボーダーの色を設定 */
+    }
+  }
+
+  .button-wrap-text {
+    font-size: 0.8rem; /* スマホ用のフォントサイズ */
+
+    @media (max-width: 480px) {
+      white-space: normal;
+      flex-wrap: wrap;
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
+    }
+
+    @media (max-width: 411px) {
+      white-space: normal;
+      flex-wrap: wrap;
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
+    }
+  }
+}

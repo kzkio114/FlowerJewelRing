@@ -2,6 +2,10 @@ header {
   background-color: hsl(176, 70%, 71%);  // ヘッダーの背景色を設定
   padding: 20px 0;  // ヘッダーの上下にパディングを設定
 
+  @media (max-width: 480px) {
+    padding: 5px 0;  // スマホ用のパディングを設定
+  }
+
   nav {
     ul {
       display: flex;  // ul要素をフレックスボックスに設定
@@ -22,6 +26,46 @@ header {
 
           form {
             display: inline;  // フォームをインライン要素として表示
+          }
+        }
+      }
+    }
+  }
+
+  .icon {
+    margin-right: 5px; /* アイコンとテキストの間にスペースを追加 */
+  }
+
+  @media (max-width: 480px) {
+    padding: 5px 0;
+
+    nav {
+      ul {
+        flex-direction: column;
+        align-items: center;
+
+        li {
+          display: block;
+          margin: 5px 0 0 0;
+
+          &:first-child {
+            margin-right: 0;
+          }
+
+          &:last-child {
+            margin-left: 0;
+            margin-top: 5px;
+          }
+
+          span#unread-replies-count, span#unread-gifts-count {
+            display: flex; /* アイコンとメッセージを横並びにする */
+            align-items: center; /* アイコンとメッセージを縦方向に中央揃え */
+
+            @media (max-width: 480px) {
+              flex-direction: row; /* スマホサイズでも横並び */
+              justify-content: center; /* 中央に配置 */
+              white-space: nowrap; /* テキストの改行を防ぐ */
+            }
           }
         }
       }

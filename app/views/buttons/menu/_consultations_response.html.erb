@@ -1,6 +1,8 @@
-<div id="content" class="container is-small frame-fixed-height">
-  みんなの悩み！の詳細
-  <div class="columns">
+<div id="content">
+  <div class="consultation-message is-small ml-2 mb-1">
+    <p>みんなの悩みの詳細</p>
+  </div>
+  <div class="columns consultations-show-fixed-height">
     <div class="column">
       <div id="<%= dom_id(@consultation) %>" class="card">
         <p class="title">タイトル: <%= @consultation.title %></p>
@@ -11,18 +13,22 @@
           </div>
         </div>
       </div>
-      <div class="is-flex is-justify-content-flex-end is-align-items-flex-end md-3">
+      <div class="is-flex is-justify-content-flex-end is-align-items-flex-end mt-1 buttons-right">
         <% if user_signed_in? %>
-          <%= button_to '相談返信に向かう', consultations_detail_path(id: @consultation.id), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth is-link" %>
+          <%= button_to '返信', consultations_detail_path(id: @consultation.id), method: :post, data: { turbo_frame: "content" }, class: "button is-link button-wrap-text custom-top" %>
         <% end %>
-        <%= button_to 'みんなの悩みに戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-fullwidth is-primary ml-2" %>
+        <%= button_to '戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-primary button-wrap-text ml-2" %>
         <% if @consultation.user == current_user %>
           <%
-            fixed_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com/dashboard"
+            fixed_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
             message = "「#{ERB::Util.url_encode(@consultation.title)}」を投稿しました。%0A みなさんから、アドバイスをいただけると嬉しいです。%0A %23めぐる宝石花 %0A#{ERB::Util.url_encode(fixed_url)}"
           %>
-          <%= link_to 'Xに相談のタイトルを投稿', "https://twitter.com/intent/tweet?text=#{message}", target: "_blank", class: "button is-info ml-4" %>
-          <%= button_to '削除', consultations_destroy_path(@consultation), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }, class: "button is-danger ml-5" %>
+          <div class="twitter">
+            <%= link_to "https://twitter.com/intent/tweet?text=#{message}", target: "_blank", class: "button is-info button-wrap-text ml-2 tooltip", data: { tooltip: "ツイートを投稿" } do %>
+              <i class="fab fa-twitter twitter-icon"></i>
+            <% end %>
+          </div>
+          <%= button_to '削除', consultations_destroy_path(@consultation), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }, class: "button is-danger button-wrap-text ml-5 custom-delete-top" %>
         <% end %>
       </div>
     </div>

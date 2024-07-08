@@ -1,0 +1,35 @@
+.user-show {
+  background-color: hsl(174, 80%, 92%);//枠の背景色を設定
+  height: 600px;  // デフォルトの高さ
+  width: 1500px;   // デフォルトの幅
+  overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
+  overflow-x: hidden; // 横方向のスクロールバーを非表示
+
+  @media (max-width: 480px) {
+    height: 550px; // スマホ用の高さ
+    width: 412px; // スマホ用の幅
+  }
+
+  @media (max-width: 411px) {
+    height: 400px; // スマホ用の高さ
+    width: 319px; // スマホ用の幅
+  }
+}
+
+.user-show-button {
+  background-color: hsl(174, 80%, 92%);//枠の背景色を設定
+  height: 50px;  // デフォルトの高さ
+  width: 1500px;   // デフォルトの幅
+  overflow-y: auto; // 枠の高さを超えた場合、スクロールバーを表示
+  overflow-x: hidden; // 横方向のスクロールバーを非表示
+
+  @media (max-width: 480px) {
+    height: 50px; // スマホ用の高さ
+    width: 412px; // スマホ用の幅
+  }
+
+  @media (max-width: 411px) {
+    height: 50px; // スマホ用の高さ
+    width: 319px; // スマホ用の幅
+  }
+}

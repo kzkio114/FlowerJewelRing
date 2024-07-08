@@ -1,11 +1,11 @@
-<div id="content" class="container is-small mt-5">
+<div id="content" class="info-fixed-height container is-small ml-5">
   <div class="card">
     <header class="card-header">
       <div class="columns is-vcentered is-mobile">
         <div class="column is-narrow">
-          <strong class="is-size-4">最新のお知らせ</strong>
-          <p class="is-size-6 mr-6">
-            最新の通知は5件のみ表示されています。<br>
+          <strong class="is-size-4 ml-4 info-margin">最新のお知らせ</strong>
+          <p class="is-size-6 mr-6 ml-5 info-margin">
+            最新の通知は、<span class="mobile-line-break"></span>5件のみ表示されています。<br>
             <%= case @current_time.hour
                   when 5..11
                     "おはようございます、#{@user.name}さん"
@@ -18,10 +18,10 @@
                   end %>
           </p>
         </div>
-        <div class="column mt-6">
+        <div class="column mt-6 icon-margin">
           <div id="notification-section" class="is-flex is-justify-content-flex-end">
             <span id="unread-replies-count" class="is-flex <%= @user.unread_replies_count > 0 ? 'has-unread' : '' %>">
-              <span class="icon mr-1 ml-12">
+              <span class="icon mr-1 ml-8">
                 <i class="fas fa-envelope"></i>
               </span>
               相談の未読返信: <%= @user.unread_replies_count %>
@@ -32,7 +32,7 @@
                 <span class="icon mr-1">
                   <i class="fas fa-gift"></i>
                 </span>
-                確認してください！！ <%#= @unread_gifts_count %>
+                確認してください！！
               </span>
             <% else %>
               <span id="unread-gifts-count" class="is-flex ml-4">
@@ -50,7 +50,7 @@
         <div class="columns">
           <div class="column is-one-third">
             <div id="latest-messages" class="mb-2">
-              <h3>最新のメッセージ</h3>
+              <h3 class="custom-message-title">最新のメッセージ</h3>
               <% if @latest_replies.present? %>
                 <ul>
                   <% @latest_replies.each do |reply| %>
@@ -75,7 +75,7 @@
           <div class="column is-one-third">
             <div id="latest-gifts" class="mb-2">
               <h3>最新の感謝の気持ち</h3>
-              <div class="show-fixed">
+              <div class="show-info-fixed">
               <% if @latest_gift_messages.present? %>
                 <div class="columns is-multiline">
                   <% @latest_gift_messages.each do |entry| %>
@@ -96,7 +96,13 @@
                             app_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
                             tweet_message = "相談のお礼に「#{ERB::Util.url_encode(entry[:gift].item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(entry[:gift].description)}」の意味が込められてます。%0Aみなさんも素敵なお礼貰いませんか？%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
                             %>
-                            <%= link_to 'Xに投稿', "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-small is-info mt-2" %>
+                            <div class="field is-grouped is-grouped-right custom-left buttons-right">
+                              <div class="twitter custom-left">
+                              <%= link_to "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-info button-wrap-text ml-2 tooltip", data: { tooltip: "ツイートを投稿" } do %>
+                              <i class="fab fa-twitter twitter-icon"></i>
+                                <% end %>
+                            </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -108,8 +114,8 @@
                 <p>最新のギフトメッセージはありません。</p>
               <% end %>
             </div>
-            <div class="field is-grouped is-grouped-right">
-              <%= button_to '感謝の気持ちを確認', reset_gift_notifications_path, method: :post, class: 'button is-danger mt-6' %>
+            <div class="field is-grouped is-grouped-right buttons-right">
+              <%= button_to '情報を確認済み', reset_gift_notifications_path, method: :post, class: 'button is-danger is-small custom-long-left mt-5' %>
             </div>
           </div>
         </div>

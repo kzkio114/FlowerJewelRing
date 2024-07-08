@@ -1,5 +1,8 @@
-<div id="content" class="container is-small frame-fixed-height">
-  <div class="columns is-multiline">
+<div id="content">
+  <div class="consultation-message is-small ml-2 mb-1">
+    <p>みんなのの返信を行う</p>
+  </div>
+  <div class="columns consultations-show-fixed-height is-multiline">
     <!-- 左側のカラム（返信表示） -->
     <div class="column is-half">
       <div class="card">
@@ -10,7 +13,9 @@
               <div class="is-flex is-justify-content-space-between">
                 <p><strong><%= reply.user.name %>:</strong> <%= reply.content %></p>
                 <% if current_user == reply.user %>
-                  <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger is-small ml-2' %>
+                  <div class="is-pulled-right buttons-right">
+                    <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger is-small button-wrap-text ml-2' %>
+                  </div>
                 <% end %>
               </div>
             </div>
@@ -30,8 +35,8 @@
           </div>
         </div>
       </div>
-      <div class="is-pulled-right">
-        <%= button_to "詳細ページに戻る", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-primary" %>
+      <div class="is-pulled-right buttons-right">
+        <%= button_to "戻る", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-primary button-wrap-text custom-left custom-top" %>
       </div>
     </div>
   </div>

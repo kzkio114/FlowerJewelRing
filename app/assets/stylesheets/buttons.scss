@@ -5,18 +5,108 @@
   .button {
     flex-grow: 1;
     text-align: center;
-    width: 150px; // あなたが望む幅に調整してください
+    width: 150px; // デフォルトの幅
+
+    @media (max-width: 480px) {
+      width: 120px; // スマホ用の幅
+    }
+  }
+
+  .button-wrap-text {
+    @media (max-width: 480px) {
+      white-space: normal;
+      flex-wrap: wrap;
+    }
   }
 }
 
 .buttons-left {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; // ボタンを左寄せにする
+  align-items: flex-start; /* ボタンを左寄せにする */
 
   .button {
     flex-grow: 1;
     text-align: center;
-    width: 150px; // あなたが望む幅に調整してください
+    width: 103px; /* デフォルトの幅 */
+    height: 51px; /* デフォルトの高さ */
+    display: flex; /* フレックスボックスを使用 */
+    align-items: center; /* 垂直方向に中央揃え */
+    justify-content: center; /* 水平方向に中央揃え */
+    margin-bottom: 3px; /* ボタン間のスペース */
+    background-color: #fff; /* ボタンの背景色 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影を追加して浮いているように見せる */
+    border-radius: 50px; /* 柔らかな丸みを追加 */
+    border: 2px solid #e0e0e0; /* ボーダーを追加 */
+    transition: border-color 0.3s ease; /* ボーダーの変化にトランジションを追加 */
+
+    @media (max-width: 480px) {
+      width: 103px; /* スマホ用の幅 */
+      height: 50px; /* スマホ用の高さ */
+      border-radius: 30px; /* スマホ用の丸みを調整 */
+      margin-bottom: 1px; /* ボタン間のスペース */
+      margin-left: -5px; /* 右側の余白 */
+    }
+
+    @media (max-width: 411px) {
+      width: 103px; /* スマホ用の幅 */
+      height: 45px; /* スマホ用の高さ */
+      border-radius: 30px; /* スマホ用の丸みを調整 */
+      margin-bottom: -5px; /* ボタン間のスペース */
+      margin-left: -5px; /* 左側の余白 */
+    }
+  }
+
+  .button.is-primary {
+    background-color: #fff; /* 背景色は白 */
+    color: #519bea; /* テキスト色 */
+    border-color: #78ddf6; /* ボーダーの色を設定 */
+
+    &:hover {
+      background-color: hsl(176, 88%, 57%);  /* ホバー時の背景色 */
+      color: #fff; /* ホバー時のテキスト色 */
+      border-color: hsl(176, 88%, 57%);  /* ホバー時のボーダー色 */
+    }
+  }
+
+
+  .button.is-warning {
+    background-color: #fff; /* 背景色は白 */
+    color: #ff7043; /* テキスト色 */
+    border-color: #ffa726; /* ボーダーの色を設定 */
+    animation: glow 3s ease-in-out infinite; /* 光るアニメーションを追加 */
+
+    &:hover {
+      background-color: #ffa726; /* ホバー時の背景色 */
+      color: #fff; /* ホバー時のテキスト色 */
+      border-color: #ffa726; /* ホバー時のボーダー色 */
+    }
+  }
+
+  @keyframes glow {
+    0% {
+      border-color: #ffa726;
+      box-shadow: 0 0 5px #ffa726;
+    }
+    50% {
+      border-color: #ffcc80;
+      box-shadow: 0 0 15px #ffcc80;
+    }
+    100% {
+      border-color: #ffa726;
+      box-shadow: 0 0 5px #ffa726;
+    }
+  }
+
+  .button-wrap-text {
+    @media (max-width: 480px) {
+      white-space: normal;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 411px) {
+      white-space: normal;
+      flex-wrap: wrap;
+    }
   }
 }
