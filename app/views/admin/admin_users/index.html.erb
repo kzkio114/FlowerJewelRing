@@ -1,0 +1,27 @@
+<!-- app/views/admin/admin_users/index.html.erb -->
+<h1>管理者ユーザー一覧</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ユーザー名</th>
+      <th>組織名</th>
+      <th>管理者ロール</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @admin_users.each do |admin_user| %>
+      <tr>
+        <td><%= admin_user.user.name %></td>
+        <td><%= admin_user.organization.name %></td>
+        <td><%= admin_user.admin_role %></td>
+        <td>
+          <%= link_to '編集', edit_admin_admin_user_path(admin_user) %>
+          <%= link_to '削除', admin_admin_user_path(admin_user), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+

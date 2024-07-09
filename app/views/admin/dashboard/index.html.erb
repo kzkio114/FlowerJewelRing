@@ -1,0 +1,26 @@
+<% @users.each do |user| %>
+  <p>
+    <%= user.name %>
+    <% if current_user.super_admin? || current_user.admin? %>
+      <%= link_to '削除', admin_admin_destroy_user_path(user), method: :delete, data: { confirm: '本当にこのユーザーを削除しますか？' } %>
+    <% end %>
+  </p>
+<% end %>
+
+<% @consultations.each do |consultation| %>
+  <p>
+    <%= consultation.title %>
+    <% if current_user.super_admin? || current_user.admin? %>
+      <%= link_to '削除', admin_admin_destroy_consultation_path(consultation), method: :delete, data: { confirm: '本当にこの相談を削除しますか？' } %>
+    <% end %>
+  </p>
+<% end %>
+
+<% @gifts.each do |gift| %>
+  <p>
+    <%= gift.item_name %>
+    <% if current_user.super_admin? || current_user.admin? %>
+      <%= link_to '削除', admin_admin_destroy_gift_path(gift), method: :delete, data: { confirm: '本当にこのギフトを削除しますか？' } %>
+    <% end %>
+  </p>
+<% end %>

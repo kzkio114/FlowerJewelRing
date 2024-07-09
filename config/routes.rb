@@ -1,11 +1,24 @@
 Rails.application.routes.draw do
-  get 'admin_users/index'
-  get 'admin_users/show'
-  get 'admin_users/new'
-  get 'admin_users/edit'
-  get 'admin_users/create'
-  get 'admin_users/update'
-  get 'admin_users/destroy'
+
+  # Deviseのルーティング
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+
+  # 管理者ユーザー編集用のルート
+  authenticate :user, ->(u) { u.super_admin? } do
+    namespace :admin do
+      resources :dashboard, only: [:index]
+      delete 'users/:id', to: 'dashboard#destroy_user', as: 'admin_destroy_user'
+      delete 'consultations/:id', to: 'dashboard#destroy_consultation', as: 'admin_destroy_consultation'
+      delete 'gifts/:id', to: 'dashboard#destroy_gift', as: 'admin_destroy_gift'
+    end
+  end
+
+  # ログインしている場合のみアクセスできるページ
+  authenticate :user do
+    get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+  end
+
   #暫定　ソーシャルログインだけの場合
   get '/users/sign_in', to: redirect('/')
 
@@ -21,7 +34,6 @@ Rails.application.routes.draw do
   resources :private_chats, only: [:index, :show, :create, :destroy]
   post 'private_chat', to: 'private_chats#private_chat', as: 'custom_private_chat'
 
-  # 
   post 'buttons/tos', to: 'buttons#tos', as: :tos  # 利用規約ボタンを押した時のルーティング
   post 'buttons/pp', to: 'buttons#pp', as: :pp  # プライバシーポリシーボタンを押した時のルーティング
 
@@ -100,14 +112,7 @@ Rails.application.routes.draw do
   # ボタン内のメニュールーティング（悩み相談）
   post 'consultations_post', to: 'buttons#consultations_post', as: 'consultations_post'
 
-  # Deviseのルーティング
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
-
-  # ログインしている場合のみアクセスできるページ
-  authenticate :user do
-    get 'dashboard', to: 'dashboard#index'
-  end
+ 
   root 'top#index' # トップページを表示するためのルーティング
 
   get 'trial', to: 'trials#index', as: 'trial' # お試しページを表示するためのルーティング
