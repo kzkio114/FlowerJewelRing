@@ -7,10 +7,10 @@ Rails.application.routes.draw do
   # 管理者ユーザー編集用のルート
   authenticate :user, ->(u) { u.super_admin? } do
     namespace :admin do
-      resources :dashboard, only: [:index]
-      delete 'users/:id', to: 'dashboard#destroy_user', as: 'admin_destroy_user'
-      delete 'consultations/:id', to: 'dashboard#destroy_consultation', as: 'admin_destroy_consultation'
-      delete 'gifts/:id', to: 'dashboard#destroy_gift', as: 'admin_destroy_gift'
+      resources :users, only: [:destroy]
+      resources :consultations, only: [:destroy]
+      resources :gifts, only: [:destroy]
+      get 'dashboard', to: 'dashboard#index'
     end
   end
 

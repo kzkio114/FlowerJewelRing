@@ -1,26 +1,26 @@
 <% @users.each do |user| %>
-  <p>
+  <p id="<%= dom_id(user) %>">
     <%= user.name %>
     <% if current_user.super_admin? || current_user.admin? %>
-      <%= link_to '削除', admin_admin_destroy_user_path(user), method: :delete, data: { confirm: '本当にこのユーザーを削除しますか？' } %>
+      <%= link_to '削除', admin_user_path(user), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当にこのユーザーを削除しますか？' }, remote: true %>
     <% end %>
   </p>
 <% end %>
 
 <% @consultations.each do |consultation| %>
-  <p>
+  <p id="<%= dom_id(consultation) %>">
     <%= consultation.title %>
     <% if current_user.super_admin? || current_user.admin? %>
-      <%= link_to '削除', admin_admin_destroy_consultation_path(consultation), method: :delete, data: { confirm: '本当にこの相談を削除しますか？' } %>
+      <%= link_to '削除', admin_consultation_path(consultation), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当にこの相談を削除しますか？' }, remote: true %>
     <% end %>
   </p>
 <% end %>
 
 <% @gifts.each do |gift| %>
-  <p>
+  <p id="<%= dom_id(gift) %>">
     <%= gift.item_name %>
     <% if current_user.super_admin? || current_user.admin? %>
-      <%= link_to '削除', admin_admin_destroy_gift_path(gift), method: :delete, data: { confirm: '本当にこのギフトを削除しますか？' } %>
+      <%= link_to '削除', admin_gift_path(gift), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当にこのギフトを削除しますか？' }, remote: true %>
     <% end %>
   </p>
 <% end %>
