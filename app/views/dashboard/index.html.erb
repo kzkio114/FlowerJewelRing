@@ -14,6 +14,7 @@
             </div>
           <% end %>
           <%= render "buttons/menu/info_response", unread_gifts_count: @unread_gifts_count %>
+          <%= button_to '管理者ダッシュボード', admin_dashboard_path, method: :post, data: { turbo: true }, class: 'button is-primary' %>
         </div>
       </div>
     </section>

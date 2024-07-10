@@ -2,7 +2,7 @@ class Admin::DashboardController < Admin::ApplicationController
   before_action :set_consultation, only: [:destroy_consultation]
 
   def index
-    @admin_users = AdminUser.all
+    @admin_users = AdminUser.includes(:user, :organization).all
     @current_time = Time.zone.now.in_time_zone('Asia/Tokyo')
     @group_chats = GroupChat.all
     @users = User.all
@@ -14,7 +14,7 @@ class Admin::DashboardController < Admin::ApplicationController
     user = User.find(params[:id])
     user.destroy
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(user) }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(user)) }
       format.html { redirect_to admin_dashboard_index_path, notice: 'ユーザーを削除しました。' }
     end
   end
@@ -22,17 +22,8 @@ class Admin::DashboardController < Admin::ApplicationController
   def destroy_consultation
     consultation = Consultation.find(params[:id])
     consultation.destroy
-    set_unread_gifts_count
-    set_unread_replies_count
-    @consultations = Consultation.includes(:category).all
-    @new_consultation = Consultation.new
-
     respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @new_consultation })
-        ]
-      end
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(consultation)) }
       format.html { redirect_to admin_dashboard_index_path, notice: '相談を削除しました。' }
     end
   end
@@ -41,9 +32,13 @@ class Admin::DashboardController < Admin::ApplicationController
     gift = Gift.find(params[:id])
     gift.destroy
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(gift) }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(gift)) }
       format.html { redirect_to admin_dashboard_index_path, notice: 'ギフトを削除しました。' }
     end
+  end
+
+  def redirect_to_dashboard
+    redirect_to admin_dashboard_path
   end
 
   private

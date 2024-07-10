@@ -2,6 +2,7 @@ class DashboardController < ApplicationController
   before_action :set_latest_replies_and_notifications, only: [:index]
 
   def index
+    @admin_users = AdminUser.includes(:user, :organization).all
     @current_time = Time.zone.now.in_time_zone('Asia/Tokyo')
     @group_chats = GroupChat.all
     @user = current_user

@@ -1,26 +1,37 @@
+<h1>管理者ダッシュボード</h1>
+
+<h2>ユーザー一覧</h2>
 <% @users.each do |user| %>
-  <p id="<%= dom_id(user) %>">
-    <%= user.name %>
-    <% if current_user.super_admin? || current_user.admin? %>
-      <%= link_to '削除', admin_user_path(user), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当にこのユーザーを削除しますか？' }, remote: true %>
-    <% end %>
-  </p>
+  <div id="<%= dom_id(user) %>">
+    <p>
+      <%= user.name %>
+      <% if current_user.super_admin? || current_user.admin? %>
+        <%= button_to '削除', admin_user_path(user), method: :delete, data: { turbo_confirm: '本当にこのユーザーを削除しますか？' }, form: { data: { turbo: true } } %>
+      <% end %>
+    </p>
+  </div>
 <% end %>
 
+<h2>相談一覧</h2>
 <% @consultations.each do |consultation| %>
-  <p id="<%= dom_id(consultation) %>">
-    <%= consultation.title %>
-    <% if current_user.super_admin? || current_user.admin? %>
-      <%= link_to '削除', admin_consultation_path(consultation), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当にこの相談を削除しますか？' }, remote: true %>
-    <% end %>
-  </p>
+  <div id="<%= dom_id(consultation) %>">
+    <p>
+      <%= consultation.title %>
+      <% if current_user.super_admin? || current_user.admin? %>
+        <%= button_to '削除', admin_consultation_path(consultation), method: :delete, data: { turbo_confirm: '本当にこの相談を削除しますか？' }, form: { data: { turbo: true } } %>
+      <% end %>
+    </p>
+  </div>
 <% end %>
 
+<h2>ギフト一覧</h2>
 <% @gifts.each do |gift| %>
-  <p id="<%= dom_id(gift) %>">
-    <%= gift.item_name %>
-    <% if current_user.super_admin? || current_user.admin? %>
-      <%= link_to '削除', admin_gift_path(gift), method: :delete, data: { turbo_method: :delete, turbo_confirm: '本当にこのギフトを削除しますか？' }, remote: true %>
-    <% end %>
-  </p>
+  <div id="<%= dom_id(gift) %>">
+    <p>
+      <%= gift.item_name %>
+      <% if current_user.super_admin? || current_user.admin? %>
+        <%= button_to '削除', admin_gift_path(gift), method: :delete, data: { turbo_confirm: '本当にこのギフトを削除しますか？' }, form: { data: { turbo: true } } %>
+      <% end %>
+    </p>
+  </div>
 <% end %>
