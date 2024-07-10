@@ -6,7 +6,7 @@
     <p>
       <%= user.name %>
       <% if current_user.super_admin? || current_user.admin? %>
-        <%= button_to '削除', admin_user_path(user), method: :delete, data: { turbo_confirm: '本当にこのユーザーを削除しますか？' }, form: { data: { turbo: true } } %>
+        <%= button_to '削除', admin_user_path(user), method: :delete, data: { turbo_confirm: '本当にこのユーザーを削除しますか？' }, remote: true, form: { data: { turbo: true } } %>
       <% end %>
     </p>
   </div>
@@ -18,7 +18,7 @@
     <p>
       <%= consultation.title %>
       <% if current_user.super_admin? || current_user.admin? %>
-        <%= button_to '削除', admin_consultation_path(consultation), method: :delete, data: { turbo_confirm: '本当にこの相談を削除しますか？' }, form: { data: { turbo: true } } %>
+        <%= button_to '削除', admin_consultation_path(consultation), method: :delete, data: { turbo_confirm: '本当にこの相談を削除しますか？' }, remote: true, form: { data: { turbo: true } } %>
       <% end %>
     </p>
   </div>
@@ -30,8 +30,10 @@
     <p>
       <%= gift.item_name %>
       <% if current_user.super_admin? || current_user.admin? %>
-        <%= button_to '削除', admin_gift_path(gift), method: :delete, data: { turbo_confirm: '本当にこのギフトを削除しますか？' }, form: { data: { turbo: true } } %>
+        <%= button_to '削除', admin_gift_path(gift), method: :delete, data: { turbo_confirm: '本当にこのギフトを削除しますか？' }, remote: true, form: { data: { turbo: true } } %>
       <% end %>
     </p>
   </div>
 <% end %>
+
+
