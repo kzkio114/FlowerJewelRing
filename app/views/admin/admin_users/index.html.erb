@@ -1,6 +1,5 @@
-<!-- app/views/admin/admin_users/index.html.erb -->
-<h1>管理者ユーザー一覧</h1>
-<table>
+<h1 class="title">管理者ユーザー一覧</h1>
+<table class="table">
   <thead>
     <tr>
       <th>ユーザー名</th>
@@ -9,17 +8,18 @@
       <th>操作</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody id="admin_users_list">
     <% @admin_users.each do |admin_user| %>
-      <tr>
+      <tr id="<%= dom_id(admin_user) %>">
         <td><%= admin_user.user.name %></td>
         <td><%= admin_user.organization.name %></td>
         <td><%= admin_user.admin_role %></td>
         <td>
-          <%= link_to '編集', edit_admin_admin_user_path(admin_user) %>
-          <%= link_to '削除', admin_admin_user_path(admin_user), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+          <%= link_to '編集', edit_admin_admin_user_path(admin_user), class: 'button is-info' %>
+          <%= button_to '削除', admin_admin_user_path(admin_user), method: :delete, data: { turbo_confirm: '本当に削除しますか？' }, class: 'button is-danger' %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info is-small ml-2' %>

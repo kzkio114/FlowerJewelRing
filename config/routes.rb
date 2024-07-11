@@ -11,7 +11,8 @@ Rails.application.routes.draw do
       resources :consultations, only: [:destroy]
       resources :gifts, only: [:destroy]
       get 'dashboard', to: 'dashboard#index'
-      post 'dashboard', to: 'dashboard#redirect_to_dashboard' # 追加
+      post 'dashboard', to: 'dashboard#redirect_to_dashboard'
+      resources :admin_users, only: [:index, :edit, :update, :destroy]
     end
   end
 

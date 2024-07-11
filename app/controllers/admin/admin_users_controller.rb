@@ -1,5 +1,6 @@
 class Admin::AdminUsersController < Admin::ApplicationController
   before_action :set_admin_user, only: [:edit, :update, :destroy]
+  include ActionView::RecordIdentifier  # Turbo Streamsで使用するために追加
 
   def index
     @admin_users = AdminUser.all
@@ -18,7 +19,10 @@ class Admin::AdminUsersController < Admin::ApplicationController
 
   def destroy
     @admin_user.destroy
-    redirect_to admin_admin_users_path, notice: '管理者ユーザーが削除されました。'
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(@admin_user)) }
+      format.html { redirect_to admin_admin_users_path, notice: '管理者ユーザーが削除されました。' }
+    end
   end
 
   private

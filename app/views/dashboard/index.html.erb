@@ -14,8 +14,6 @@
             </div>
           <% end %>
           <%= render "buttons/menu/info_response", unread_gifts_count: @unread_gifts_count %>
-          <h2>管理者ダッシュボードに移動</h2>
-          <%= button_to '管理者ダッシュボードへ', admin_dashboard_path, method: :get, data: { turbo: true }, class: 'button' %>
         </div>
       </div>
     </section>
