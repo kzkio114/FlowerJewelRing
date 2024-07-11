@@ -4,6 +4,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2, :discord, :twitter, :github, :line]
 
   has_many :admin_users
+  has_many :organizations, through: :admin_users
   has_many :organizations, through: :user_organizations
   has_many :sent_chats, class_name: 'Chat', foreign_key: 'sender_id'
   has_many :received_chats, class_name: 'Chat', foreign_key: 'receiver_id'
@@ -19,6 +20,22 @@ class User < ApplicationRecord
   has_many :user_organizations, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+
+  # ユーザーが管理者かどうかを判定するメソッド
+  def admin?
+    admin_users.exists?
+  end
+
+
+  # ユーザーが特定の組織の管理者かどうかを判定するメソッド
+  def admin_for?(organization)
+    admin_users.exists?(organization: organization)
+  end
+
+  # ユーザーがスーパー管理者かどうかを判定するメソッド
+  def super_admin?
+    admin_users.exists?(admin_role: :super_admin)
+  end
 
   # 新しいメソッドを追加
   def received_gifts_from_repliers

@@ -1,0 +1,19 @@
+<!-- app/views/admin/admin_users/edit.html.erb -->
+<h1>管理者ユーザー編集</h1>
+<%= form_with(model: [:admin, @admin_user], local: true) do |form| %>
+  <div class="field">
+    <%= form.label :user_id, "ユーザー" %>
+    <%= form.collection_select :user_id, User.all, :id, :name, prompt: "ユーザーを選択" %>
+  </div>
+  <div class="field">
+    <%= form.label :organization_id, "組織" %>
+    <%= form.collection_select :organization_id, Organization.all, :id, :name, prompt: "組織を選択" %>
+  </div>
+  <div class="field">
+    <%= form.label :admin_role, "管理者ロール" %>
+    <%= form.select :admin_role, AdminUser.admin_roles.keys.map { |role| [role.titleize, role] }, prompt: "ロールを選択" %>
+  </div>
+  <div class="actions">
+    <%= form.submit "更新" %>
+  </div>
+<% end %>

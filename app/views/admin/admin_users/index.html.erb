@@ -1,0 +1,28 @@
+<h1 class="title">管理者ユーザー一覧</h1>
+<div class="is-flex mt-2">
+  <%= button_to '管理者画面', admin_dashboard_path, method: :get, data: { turbo: true }, class: 'button is-danger ml-2' %>
+  <%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info ml-2' %>
+</div>
+<table class="table mt-2">
+  <thead>
+    <tr>
+      <th>ユーザー名</th>
+      <th>組織名</th>
+      <th>管理者ロール</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody id="admin_users_list">
+    <% @admin_users.each do |admin_user| %>
+      <tr id="<%= dom_id(admin_user) %>">
+        <td><%= admin_user.user.name %></td>
+        <td><%= admin_user.organization.name %></td>
+        <td><%= admin_user.admin_role %></td>
+        <td>
+          <%= link_to '編集', edit_admin_admin_user_path(admin_user), class: 'button is-info mb-2' %>
+          <%= button_to '削除', admin_admin_user_path(admin_user), method: :delete, data: { turbo_confirm: '本当に削除しますか？' }, class: 'button is-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

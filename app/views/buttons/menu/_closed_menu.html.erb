@@ -1,5 +1,8 @@
 <div id="menu">
   <div class="buttons-left columns is-multiline ml-4 mt-1">
     <%= render "buttons/menu/menu_response" %>
+    <% if user_signed_in? && (current_user.super_admin? || current_user.admin?) %>
+      <%= render "admin/dashboard/admin_button" %>
+    <% end %>
   </div>
 </div>

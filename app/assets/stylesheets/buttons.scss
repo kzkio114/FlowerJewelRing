@@ -69,6 +69,16 @@
     }
   }
 
+  .button.is-danger {
+    background-color: #fff; /* 背景色は白 */
+    color: #ff3860; /* テキスト色 */
+    border-color: #ff3860; /* ボーダーの色を設定 */
+    &:hover {
+      background-color: #ff3860; /* Bulmaの$danger-color */
+      color: #fff; /* テキスト色を白に */
+      border-color: #ff3860; /* ボーダーの色を設定 */
+    }
+  }
 
   .button.is-warning {
     background-color: #fff; /* 背景色は白 */
