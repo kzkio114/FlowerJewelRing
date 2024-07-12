@@ -13,8 +13,13 @@ class DashboardController < ApplicationController
     @latest_gifts = Gift.order(created_at: :desc).limit(5)
     @sent_gifts = @user.sent_gifts
     @received_gifts = @user.received_gifts
-
     @latest_gift_messages = fetch_latest_gift_messages
+
+    if params[:query].present?
+      @consultations = Consultation.search(params[:query])
+    else
+      @consultations = Consultation.none
+    end
   end
 
   def reset_gift_notifications
