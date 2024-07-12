@@ -15,8 +15,11 @@ class DashboardController < ApplicationController
     @received_gifts = @user.received_gifts
     @latest_gift_messages = fetch_latest_gift_messages
 
-    if params[:query].present?
-      @consultations = Consultation.search(params[:query])
+    if params[:query].present? && params[:query].strip.present?
+      queries = params[:query].split(/[\s　]+/) # 全角スペースと半角スペースで分割
+      @consultations = queries.flat_map do |q|
+        Consultation.search(q, fields: [:title, :content, :category_name, :user_name], match: :word_middle)
+      end.uniq
     else
       @consultations = Consultation.none
     end

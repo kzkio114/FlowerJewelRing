@@ -21,12 +21,12 @@
       </tr>
     </thead>
     <tbody>
-      <% @consultations.each do |consultation| %>
+      <% @consultations.results.each do |consultation| %>
         <tr>
-          <td><%= consultation.title %></td>
-          <td><%= consultation.content %></td>
-          <td><%= consultation.category.name %></td>
-          <td><%= consultation.user.name %></td>
+          <td><%= raw(consultation.highlight.title ? consultation.highlight.title.join(" ") : consultation.title) %></td>
+          <td><%= raw(consultation.highlight.content ? consultation.highlight.content.join(" ") : consultation.content) %></td>
+          <td><%= raw(consultation.highlight.category_name ? consultation.highlight.category_name.join(" ") : consultation.category_name) %></td>
+          <td><%= raw(consultation.highlight.user_name ? consultation.highlight.user_name.join(" ") : consultation.user_name) %></td>
           <td><%= consultation.created_at %></td>
         </tr>
       <% end %>
