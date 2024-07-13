@@ -36,7 +36,6 @@ services:
     environment:
       - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - ELASTIC_PASSWORD=4*773l=za4IM=+nQKBh0
     ports:
       - 9200:9200
     volumes:
