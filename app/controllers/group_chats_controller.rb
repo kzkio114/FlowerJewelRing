@@ -41,8 +41,8 @@ class GroupChatsController < ApplicationController
 
   def create
     @group_chat = GroupChat.new(group_chat_params.except(:role))
+    @group_chats = GroupChat.all
     if @group_chat.save
-      @group_chats = GroupChat.all
       role = group_chat_params[:role] == 'free' ? :free : :admin
       GroupChatMember.create(group_chat: @group_chat, user: current_user, role: role)
       respond_to do |format|
@@ -54,7 +54,6 @@ class GroupChatsController < ApplicationController
         end
       end
     else
-      @group_chats = GroupChat.all
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace("content", partial: "group_chats/group_chat_list", locals: { group_chats: @group_chats, group_chat: @group_chat })

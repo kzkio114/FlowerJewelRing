@@ -4,7 +4,7 @@
     <h3>グループチャット一覧</h3>
     <% group_chats.each do |group_chat| %>
       <% if group_chat.group_chat_members.exists?(user: current_user) || group_chat.free? %>
-        <div id="group_chat_<%= group_chat.id %> " class="group-buttons">
+        <div id="group_chat_<%= group_chat.id %> " class="group-member-buttons">
           <%= button_to group_chat.title, group_chat_group_chat_path(group_chat), method: :post, data: { turbo: true, turbo_method: :post }, class: 'button is-primary' %>
         </div>
       <% end %>
