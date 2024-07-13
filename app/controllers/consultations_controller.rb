@@ -11,7 +11,7 @@ class ConsultationsController < ApplicationController
     @consultation = Consultation.includes(replies: :user).find(params[:id])
     @consultations = Consultation.includes(:category).all
     respond_to do |format|
-      format.html  # show.html.erb で @consultation を使用　
+      format.html  # show.html.erb で @consultation を使用
       format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultations: @consultations, consultation: @consultation }) }
     end
   rescue ActiveRecord::RecordNotFound
@@ -62,8 +62,18 @@ class ConsultationsController < ApplicationController
 
   # DELETE /consultations/1
   def destroy
+    @consultation = Consultation.find(params[:id])
     @consultation.destroy
-    redirect_to consultations_url, notice: 'コンサルテーションが正常に削除されました。'
+    @consultations = Consultation.includes(:category).all
+    @new_consultation = Consultation.new
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @new_consultation })
+        ]
+      end
+    end
   end
 
   private
@@ -74,6 +84,6 @@ class ConsultationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def consultation_params
-      params.require(:consultation).permit(:user_id, :category_id, :title, :content)
+      params.require(:consultation).permit(:title, :content, :category_id, :reply_tone, :desired_reply_tone, :user_id)
     end
 end

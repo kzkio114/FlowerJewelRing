@@ -1,0 +1,152 @@
+.buttons-tone {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* ボタン間のスペース */
+
+  .button {
+    flex-grow: 1;
+    text-align: center;
+    width: 90px; /* デフォルトの幅 */
+    height: 40px; /* デフォルトの高さ */
+    display: flex;
+    align-items: center; /* 垂直方向に中央揃え */
+    justify-content: center; /* 水平方向に中央揃え */
+    margin-bottom: 5px; /* ボタン間のスペース */
+    background-color: #fff; /* ボタンの背景色 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影を追加して浮いているように見せる */
+    border-radius: 50px; /* 柔らかな丸みを追加 */
+    border: 2px solid #e0e0e0; /* ボーダーを追加 */
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* ボーダーの変化にトランジションを追加 */
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column; /* スマホ用に縦並び */
+    align-items: center; /* スマホ用にボタンを中央揃え */
+    .button {
+      width: 100px; /* スマホ用の幅 */
+      height: 40px; /* スマホ用の高さ */
+      border-radius: 30px; /* スマホ用の丸みを調整 */
+      margin-bottom: 5px; /* ボタン間のスペース */
+      margin-left: 0; /* 左側の余白をリセット */
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
+    }
+    .custom-delete-top {
+      margin-top: 30px; /* 特定のボタンの下部マージンを増やす */
+    }
+    .custom-top {
+      margin-top: 10px; /* 特定のボタンの下部マージンを増やす */
+    }
+    .custom-left {
+      margin-left: 0; /* 左側の余白をリセット */
+    }
+    .custom-long-left {
+      margin-left: 0; /* 左側の余白をリセット */
+    }
+  }
+
+  @media (max-width: 411px) {
+    .button {
+      width: 103px; /* スマホ用の幅 */
+      height: 45px; /* スマホ用の高さ */
+      border-radius: 30px; /* スマホ用の丸みを調整 */
+      margin-bottom: -5px; /* ボタン間のスペース */
+      margin-left: 0; /* 左側の余白をリセット */
+      font-size: 0.75rem; /* スマホ用のフォントサイズ */
+    }
+  }
+
+  .button.is-light {
+    background-color: #fff;
+    color: #4a4a4a; /* テキスト色を灰色に */
+    border-color: #090909;/* 背景色を薄い灰色に */
+    &:hover {
+      background-color: #090909;/* 背景色を薄い灰色に */
+      color: #fff; /* テキスト色を灰色に */
+      border-color: #090909; /* ボーダーの色を薄い灰色に */
+    }
+  }
+
+  .button.is-primary {
+    background-color: #fff;
+    color: #00d1b2;
+    border-color: #00d1b2;
+    &:hover {
+      background-color: #00d1b2;
+      color: #fff;
+      border-color: #00d1b2;
+    }
+  }
+
+  .button.is-link {
+    background-color: #fff;
+    color: #3273dc;
+    border-color: #3273dc;
+    &:hover {
+      background-color: #3273dc;
+      color: #fff;
+      border-color: #3273dc;
+    }
+  }
+
+  .button.is-info {
+    background-color: #fff;
+    color: #209cee;
+    border-color: #209cee;
+    &:hover {
+      background-color: #209cee;
+      color: #fff;
+      border-color: #209cee;
+    }
+  }
+
+  .button.is-success {
+    background-color: #fff;
+    color: #23d160;
+    border-color: #23d160;
+    &:hover {
+      background-color: #23d160;
+      color: #fff;
+      border-color: #23d160;
+    }
+  }
+
+  .button.is-warning {
+    background-color: #fff;
+    color: #ffdd57;
+    border-color: #ffdd57;
+    &:hover {
+      background-color: #ffdd57;
+      color: #fff;
+      border-color: #ffdd57;
+    }
+  }
+
+  .button.is-danger {
+    background-color: #fff;
+    color: #ff3860;
+    border-color: #ff3860;
+    &:hover {
+      background-color: #ff3860;
+      color: #fff;
+      border-color: #ff3860;
+    }
+  }
+
+  .button-wrap-text {
+    font-size: 0.8rem;
+
+    @media (max-width: 480px) {
+      white-space: normal;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+    }
+
+    @media (max-width: 411px) {
+      white-space: normal;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+    }
+  }
+}
