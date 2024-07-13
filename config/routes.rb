@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       resources :admin_users, only: [:index, :edit, :update, :destroy]
     end
   end
+  # 検索のルーティング
+  post 'search_response', to: 'search#search_response'
+  post 'search', to: 'search#search'
 
   # 相談のトーン選択ページのルーティング
   resources :consultations do

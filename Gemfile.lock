@@ -115,24 +115,23 @@ GEM
       dotenv (= 3.1.2)
       railties (>= 6.1)
     drb (2.2.1)
-    elastic-transport (8.3.2)
-      faraday (< 3)
+    elasticsearch (7.10.1)
+      elasticsearch-api (= 7.10.1)
+      elasticsearch-transport (= 7.10.1)
+    elasticsearch-api (7.10.1)
       multi_json
-    elasticsearch (8.14.0)
-      elastic-transport (~> 8.3)
-      elasticsearch-api (= 8.14.0)
-    elasticsearch-api (8.14.0)
-      multi_json
-    elasticsearch-model (8.0.0)
+    elasticsearch-model (7.2.1)
       activesupport (> 3)
-      elasticsearch (~> 8)
+      elasticsearch (~> 7)
       hashie
-    elasticsearch-rails (8.0.0)
+    elasticsearch-rails (7.2.1)
+    elasticsearch-transport (7.10.1)
+      faraday (~> 1)
+      multi_json
     erubi (1.12.0)
-    faraday (2.9.0)
-      faraday-net_http (>= 2.0, < 3.2)
-    faraday-net_http (3.1.0)
-      net-http
+    faraday (1.2.0)
+      multipart-post (>= 1.2, < 3)
+      ruby2_keywords
     ffi (1.17.0-aarch64-linux-gnu)
     ffi (1.17.0-x86_64-linux-gnu)
     globalid (1.2.1)
@@ -171,9 +170,8 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
+    multipart-post (2.4.1)
     mutex_m (0.2.0)
-    net-http (0.4.1)
-      uri
     net-imap (0.4.11)
       date
       net-protocol
@@ -297,6 +295,7 @@ GEM
       railties (>= 5.2)
     rexml (3.2.8)
       strscan (>= 3.0.9)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     searchkick (5.3.1)
       activemodel (>= 6.1)
@@ -328,7 +327,6 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uri (0.13.0)
     version_gem (1.1.4)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -358,9 +356,9 @@ DEPENDENCIES
   devise
   devise-i18n
   dotenv-rails
-  elasticsearch
-  elasticsearch-model (~> 8.0.0)
-  elasticsearch-rails (~> 8.0.0)
+  elasticsearch (~> 7.10.1)
+  elasticsearch-model (~> 7.1)
+  elasticsearch-rails (~> 7.1)
   jbuilder
   jsbundling-rails
   omniauth (= 2.1.2)

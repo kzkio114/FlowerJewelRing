@@ -1,3 +1,19 @@
+.consultation-show-message {
+  height: 70px;  /* デフォルトの高さ */
+  width: 900px;   /* デフォルトの幅 */
+  overflow: hidden; /* 全体のスクロールを非表示 */
+  overflow-x: hidden; // 横方向のスクロールバーを非表示
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
+
+  @media (max-width: 480px) {
+    height: 70px; /* スマホ用の高さ */
+    width: 250px; /* スマホ用の幅 */
+    transform: translateZ(0); /* 高解像度ディスプレイ対策 */
+    -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
+    backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */
+  }
+}
+
 .consultations-show-fixed-height {
   background-color: hsl(174, 80%, 92%); /* 枠の背景色を設定 */
   height: 650px;  /* デフォルトの高さ */
