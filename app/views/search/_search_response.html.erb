@@ -27,7 +27,6 @@
           <td><%= highlight(consultation.content, params[:query]) %></td>
           <td><%= highlight(consultation.category.name, params[:query]) %></td>
           <td><%= highlight(consultation.user.name, params[:query]) %></td>
-          <td><%= consultation.created_at %></td>
         </tr>
       <% end %>
     </tbody>
