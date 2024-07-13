@@ -1,4 +1,5 @@
-<div id="content" class="consultations-show-fixed-height is-small">
+<div id="content">
+<div class="consultation-show-message is-small">
 <div class="control">
     <%= label_tag :query, "検索", class: 'label' %>
   </div>
@@ -10,8 +11,9 @@
     <%= submit_tag "検索", class: 'button is-info' %>
   </div>
 <% end %>
+ </div>
 
-
+<div class="consultations-show-fixed-height is-small">
 <h2 class="title is-4">検索結果</h2>
 <% if @consultations.any? %>
   <table class="table is-striped is-hoverable is-fullwidth">
@@ -37,5 +39,6 @@
 <% else %>
   <p class="notification is-warning">検索結果はありません。</p>
 <% end %>
+ </div>
 
 </div>
