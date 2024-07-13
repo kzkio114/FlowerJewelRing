@@ -12,10 +12,17 @@ class RepliesController < ApplicationController
     respond_to do |format|
       if @reply.save
         format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
-            turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail', locals: { consultation: @consultation })
-          ]
+          if @consultation.user == current_user
+            render turbo_stream: [
+              turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+              turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail', locals: { consultation: @consultation, filter_tone: nil })
+            ]
+          else
+            render turbo_stream: [
+              turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+              turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail_all', locals: { consultation: @consultation })
+            ]
+          end
         end
         format.html { redirect_to @consultation, notice: 'Reply was successfully created.' }
       else

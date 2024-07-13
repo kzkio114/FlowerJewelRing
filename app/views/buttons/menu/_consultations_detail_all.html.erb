@@ -8,7 +8,7 @@
         <div class="card-content">
           <div class="content">
             <div class="buttons">
-              <%= button_to "すべて", consultations_detail_path(id: consultation.id, filter_tone: ""), method: :post, data: { turbo_frame: "content" }, class: "button" %>
+              <%= button_to "すべて", consultations_detail_path(id: consultation.id, filter_tone: nil), method: :post, data: { turbo_frame: "content" }, class: "button" %>
               <%= button_to "肯定", consultations_detail_path(id: consultation.id, filter_tone: "positive"), method: :post, data: { turbo_frame: "content" }, class: "button" %>
               <%= button_to "普通", consultations_detail_path(id: consultation.id, filter_tone: "neutral"), method: :post, data: { turbo_frame: "content" }, class: "button" %>
               <%= button_to "否定", consultations_detail_path(id: consultation.id, filter_tone: "negative"), method: :post, data: { turbo_frame: "content" }, class: "button" %>
