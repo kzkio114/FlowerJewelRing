@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
 
   # Deviseのルーティング
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, skip: [:sessions], controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_scope :user do
   post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+  delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
+  end
 
   # 管理者ユーザー編集用のルート
   authenticate :user, ->(u) { u.super_admin? } do
