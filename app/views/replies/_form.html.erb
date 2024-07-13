@@ -15,7 +15,7 @@
   </div>
   <div class="field">
     <%= form.label :tone, "トーン" %>
-    <%= form.select :tone, Reply.tones.keys.map { |w| [Reply.tones[w], w] }, prompt: "選択してください" %>
+    <%= form.select :tone, options_for_select(Reply.tones.keys.map { |tone| [Reply.tones[tone], tone] }, selected: 'positive'), {}, { class: "select" } %>
   </div>
   <div class="field is-pulled-right buttons-right">
     <%= form.submit "返信を送信", class: "button is-link is-small button-wrap-text" %>

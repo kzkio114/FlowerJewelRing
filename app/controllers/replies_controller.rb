@@ -20,7 +20,7 @@ class RepliesController < ApplicationController
           else
             render turbo_stream: [
               turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
-              turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail_all', locals: { consultation: @consultation })
+              turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail_all', locals: { consultation: @consultation, filter_tone: params[:filter_tone] })
             ]
           end
         end

@@ -62,8 +62,18 @@ class ConsultationsController < ApplicationController
 
   # DELETE /consultations/1
   def destroy
+    @consultation = Consultation.find(params[:id])
     @consultation.destroy
-    redirect_to consultations_url, notice: 'コンサルテーションが正常に削除されました。'
+    @consultations = Consultation.includes(:category).all
+    @new_consultation = Consultation.new
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @new_consultation })
+        ]
+      end
+    end
   end
 
   private
