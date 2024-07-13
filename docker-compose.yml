@@ -9,6 +9,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+
   web:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
@@ -21,13 +22,28 @@ services:
     environment:
       TZ: Asia/Tokyo
       POSTGRES_PASSWORD: password
+      ELASTICSEARCH_URL: http://elastic:4*773l=za4IM=+nQKBh0@elasticsearch:9200
     ports:
       - "3000:3000"
     depends_on:
       - db
+      - elasticsearch
     env_file:
       - .env
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.0
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ELASTIC_PASSWORD=4*773l=za4IM=+nQKBh0
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
 volumes:
   postgres_data:
   bundle_data:
   node_modules:
+  elasticsearch_data:

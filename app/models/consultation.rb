@@ -1,4 +1,15 @@
 class Consultation < ApplicationRecord
+  searchkick word_middle: [:title, :content, :category_name, :user_name]
+
+  def search_data
+    {
+      title: title,
+      content: content,
+      category_name: category.name,
+      user_name: user.name
+    }
+  end
+
   belongs_to :user
   belongs_to :category
   has_many :replies, dependent: :destroy

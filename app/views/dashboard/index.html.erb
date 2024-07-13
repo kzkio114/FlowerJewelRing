@@ -13,6 +13,7 @@
               <%= flash[:notice] %>
             </div>
           <% end %>
+           <%= render "elasticsearch" %>
           <%= render "buttons/menu/info_response", unread_gifts_count: @unread_gifts_count %>
         </div>
       </div>

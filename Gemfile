@@ -101,5 +101,13 @@ gem 'devise-i18n'
 # omniauthのバージョンを指定するためのgem
 gem 'omniauth', '2.1.2'
 
-# Action CableのためのRedisを追加
+# Action CableのためのRedisを追加(データベース)
 gem 'redis', '~> 4.0'
+
+# Elasticsearchを使う為のgem
+gem 'searchkick'
+
+# 独立した検索エンジンで高速検索を実現するためのgem
+gem 'elasticsearch'
+gem 'elasticsearch-model', '~> 8.0.0'
+gem 'elasticsearch-rails', '~> 8.0.0'

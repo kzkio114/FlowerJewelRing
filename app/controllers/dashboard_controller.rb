@@ -13,8 +13,16 @@ class DashboardController < ApplicationController
     @latest_gifts = Gift.order(created_at: :desc).limit(5)
     @sent_gifts = @user.sent_gifts
     @received_gifts = @user.received_gifts
-
     @latest_gift_messages = fetch_latest_gift_messages
+
+    if params[:query].present? && params[:query].strip.present?
+      queries = params[:query].split(/[\s　]+/) # 全角スペースと半角スペースで分割
+      @consultations = queries.flat_map do |q|
+        Consultation.search(q, fields: [:title, :content, :category_name, :user_name], match: :word_middle)
+      end.uniq
+    else
+      @consultations = Consultation.none
+    end
   end
 
   def reset_gift_notifications
