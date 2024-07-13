@@ -1,17 +1,20 @@
-<div id="content" class="frame-fixed-height container is-small">
-<%= form_with url: search_response_path, method: :post, local: false do %>
-  <div>
-    <%= label_tag :query, "検索" %>
-    <%= text_field_tag :query, params[:query] %>
+<div id="content" class="consultations-fixed-height is-small">
+<div class="control">
+    <%= label_tag :query, "検索", class: 'label' %>
   </div>
-  <div>
-    <%= submit_tag "検索" %>
+<%= form_with url: search_response_path, method: :post, local: false, class: 'field has-addons' do %>
+  <div class="control is-expanded">
+    <%= text_field_tag :query, params[:query], class: 'input' %>
+  </div>
+  <div class="control">
+    <%= submit_tag "検索", class: 'button is-info' %>
   </div>
 <% end %>
 
-<h2>検索結果</h2>
+
+<h2 class="title is-4">検索結果</h2>
 <% if @consultations.any? %>
-  <table>
+  <table class="table is-striped is-hoverable is-fullwidth">
     <thead>
       <tr>
         <th>タイトル</th>
@@ -32,7 +35,7 @@
     </tbody>
   </table>
 <% else %>
-  <p>検索結果が見つかりませんでした。</p>
+  <p class="notification is-warning">検索結果はありません。</p>
 <% end %>
 
 </div>
