@@ -359,7 +359,7 @@ DEPENDENCIES
   devise
   devise-i18n
   dotenv-rails
-  elasticsearch (~> 7.10)
+  elasticsearch (~> 7.17.11)
   elasticsearch-model (~> 7.1)
   elasticsearch-rails (~> 7.1)
   jbuilder
