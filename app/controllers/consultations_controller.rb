@@ -11,7 +11,7 @@ class ConsultationsController < ApplicationController
     @consultation = Consultation.includes(replies: :user).find(params[:id])
     @consultations = Consultation.includes(:category).all
     respond_to do |format|
-      format.html  # show.html.erb で @consultation を使用　
+      format.html  # show.html.erb で @consultation を使用
       format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultations: @consultations, consultation: @consultation }) }
     end
   rescue ActiveRecord::RecordNotFound
@@ -74,6 +74,6 @@ class ConsultationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def consultation_params
-      params.require(:consultation).permit(:user_id, :category_id, :title, :content)
+      params.require(:consultation).permit(:title, :content, :category_id, :reply_tone, :desired_reply_tone, :user_id)
     end
 end

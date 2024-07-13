@@ -107,7 +107,7 @@ class ButtonsController < ApplicationController
     @consultation = Consultation.new
     set_unread_gifts_count
     set_unread_replies_count
-
+  
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [

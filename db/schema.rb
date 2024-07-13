@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_19_192451) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_13_062445) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_19_192451) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "completed"
+    t.string "desired_reply_tone"
     t.index ["category_id"], name: "index_consultations_on_category_id"
     t.index ["user_id"], name: "index_consultations_on_user_id"
   end
@@ -140,6 +141,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_19_192451) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "read", default: false
+    t.string "tone"
     t.index ["consultation_id"], name: "index_replies_on_consultation_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
   end

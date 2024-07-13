@@ -6,14 +6,12 @@
         <div class="column is-full-mobile is-one-third-tablet">
           <div id="<%= dom_id(consultation) %>">
             <%= button_to "#{consultation.title} (#{consultation.category.name})", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" %>
-            <!-- ここに詳細が非同期で表示されます -->
           </div>
         </div>
       <% end %>
     </div>
   </div>
 
-  <!-- 新しいコンサルテーションを作成するためのフォームを追加 -->
   <%= form_with(model: Consultation.new, url: consultations_path, local: true) do |form| %>
     <div class="field">
       <%= form.label :title %>
@@ -25,13 +23,11 @@
       <%= form.text_area :content %>
     </div>
 
-    <!-- ユーザーがカテゴリーを選択できるようにします -->
     <div class="field">
       <%= form.label :category_id %>
       <%= form.collection_select :category_id, Category.all, :id, :name %>
     </div>
 
-    <!-- 現在ログインしているユーザーのIDを自動的に設定します -->
     <%= form.hidden_field :user_id, value: current_user.id %>
 
     <%= form.submit "投稿", class: "button is-link" %>

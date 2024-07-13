@@ -16,6 +16,12 @@ Rails.application.routes.draw do
     end
   end
 
+  # 相談のトーン選択ページのルーティング
+  resources :consultations do
+    post 'response', on: :member, to: 'buttons#consultations_response', as: :response
+    get 'select_tone', on: :member, to: 'consultations#select_tone'
+  end
+
   # ログインしている場合のみアクセスできるページ
   authenticate :user do
     get 'dashboard', to: 'dashboard#index', as: 'dashboard'

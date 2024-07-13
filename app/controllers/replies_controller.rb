@@ -1,26 +1,24 @@
 class RepliesController < ApplicationController
+  before_action :set_consultation, only: [:new, :create]
+
   def new
-    @consultation = Consultation.find(params[:consultation_id])
     @reply = @consultation.replies.build
   end
 
   def create
-    @reply = Reply.new(reply_params)
-    @reply.user_id = current_user.id
-    @reply.consultation_id = params[:consultation_id]
+    @reply = @consultation.replies.build(reply_params)
+    @reply.user = current_user
 
     respond_to do |format|
       if @reply.save
-        @consultations = Consultation.all
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
-            turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail', locals: { consultation: @reply.consultation })
+            turbo_stream.replace('content', partial: 'buttons/menu/consultations_detail', locals: { consultation: @consultation })
           ]
         end
-        format.html { redirect_to @reply.consultation, notice: 'Reply was successfully created.' }
+        format.html { redirect_to @consultation, notice: 'Reply was successfully created.' }
       else
-        @consultation = Consultation.find(params[:consultation_id])
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace('reply_form', partial: 'replies/form', locals: { consultation: @consultation, reply: @reply })
         end
@@ -32,7 +30,11 @@ class RepliesController < ApplicationController
 
   private
 
+  def set_consultation
+    @consultation = Consultation.find(params[:consultation_id])
+  end
+
   def reply_params
-    params.require(:reply).permit(:content)
+    params.require(:reply).permit(:content, :tone)
   end
 end

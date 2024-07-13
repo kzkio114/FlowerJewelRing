@@ -62,6 +62,13 @@
                   </div>
                 </div>
 
+                <div class="field">
+                  <%= form.label :desired_reply_tone, "望ましい返信スタイル", class: "label" %>
+                  <div class="control">
+                    <%= form.select :desired_reply_tone, options_for_select(Consultation.desired_reply_tones.keys.map { |tone| [Consultation.desired_reply_tones[tone], tone] }), {}, { class: "select" } %>
+                  </div>
+                </div>
+
                 <%= form.hidden_field :user_id, value: current_user.id %>
 
                 <div class="field is-grouped is-grouped-right">
