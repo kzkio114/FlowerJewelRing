@@ -1,0 +1,9 @@
+development:
+  hosts:
+    - host: 'localhost'
+      port: 9200
+      user: 'elastic'
+      password: '4*773l=za4IM=+nQKBh0'
+
+production:
+  url: <%= ENV['BONSAI_URL'] %>
