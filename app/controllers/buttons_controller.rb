@@ -177,7 +177,11 @@ class ButtonsController < ApplicationController
   def consultations_detail
     @consultation = Consultation.includes(replies: :user).find(params[:id])
     @consultations = Consultation.includes(:category).all
-    @filter_tone = params[:filter_tone] || @consultation.desired_reply_tone
+    if @consultation.user == current_user
+      @filter_tone = params[:filter_tone] || @consultation.desired_reply_tone
+    else
+      @filter_tone = params[:filter_tone].presence
+    end
     set_unread_gifts_count
     set_unread_replies_count
     respond_to do |format|
@@ -185,7 +189,7 @@ class ButtonsController < ApplicationController
         if @consultation.user == current_user
           render turbo_stream: turbo_stream.replace("content", partial: "buttons/menu/consultations_detail", locals: { consultation: @consultation, filter_tone: @filter_tone })
         else
-          render turbo_stream: turbo_stream.replace("content", partial: "buttons/menu/consultations_detail_all", locals: { consultation: @consultation })
+          render turbo_stream: turbo_stream.replace("content", partial: "buttons/menu/consultations_detail_all", locals: { consultation: @consultation, filter_tone: @filter_tone })
         end
       end
     end
