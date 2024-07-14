@@ -296,14 +296,26 @@ class ButtonsController < ApplicationController
   end
 
   def set_unread_replies_count
-    @unread_replies_count = current_user.consultations.joins(:replies).where('replies.read = ?', false).count || 0
+    if current_user
+      @unread_replies_count = current_user.consultations.joins(:replies).where('replies.read = ?', false).count || 0
+    else
+      @unread_replies_count = 0
+    end
   end
-
+  
   def set_latest_replies_and_notifications
-    @latest_replies = current_user.consultations.joins(:replies, replies: :user)
-                     .select('replies.*, users.name as user_name')
-                     .order('replies.created_at DESC')
-                     .limit(5)
+    if current_user
+      @latest_replies = current_user.consultations.joins(:replies, replies: :user)
+                       .select('replies.*, users.name as user_name')
+                       .order('replies.created_at DESC')
+                       .limit(5)
+    else
+      # 非認証ユーザー用のサンプルデータ
+      @latest_replies = [
+        OpenStruct.new(content: "サンプル返信1", user_name: "サンプルユーザー1"),
+        OpenStruct.new(content: "サンプル返信2", user_name: "サンプルユーザー2")
+      ]
+    end
   end
 
   def fetch_unread_replies_count
