@@ -108,7 +108,6 @@ gem 'redis', '~> 4.0'
 gem 'searchkick'
 
 # 独立した検索エンジンで高速検索を実現するためのgem
-# 独立した検索エンジンで高速検索を実現するためのgem
 gem 'elasticsearch', '~> 7.10.1'
 gem 'elasticsearch-model', '~> 7.1'
 gem 'elasticsearch-rails', '~> 7.1'
