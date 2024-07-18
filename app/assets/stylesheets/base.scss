@@ -1,18 +1,18 @@
 html, body {
   height: 100%;
   margin: 0;
+  background-color: hsl(174, 80%, 92%); /* 背景色を設定 */
 }
 
 /* スマートフォン向けのスタイル */
 @media screen and (max-width: 480px) {
   html, body {
     height: 100%;
-    overflow-y: auto;  /* スマートフォンではスクロールを禁止 */
+    overflow-y: auto; /* スマートフォンではスクロールを許可 */
   }
 }
 
 body {
-  background-color: hsl(174, 80%, 92%);
   display: flex;
   flex-direction: column;
 }
