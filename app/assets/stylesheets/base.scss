@@ -5,6 +5,7 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: 'Kosugi Maru', sans-serif;
+  background-color: hsl(174, 80%, 92%);
 }
 
 /* スマートフォン向けのスタイル */
@@ -16,7 +17,6 @@ html, body {
 }
 
 body {
-  background-color: hsl(174, 80%, 92%);
   display: flex;
   flex-direction: column;
 }

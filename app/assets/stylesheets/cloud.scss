@@ -1,0 +1,24 @@
+.cloud {
+  display: block; // ブロック要素として表示
+  width: 200px; // 幅を200pxに設定
+  height: 180px; // 高さを200pxに設定
+  background-color: #fff; // 背景色を白 (#fff) に設定
+  border-radius: 50%; // 丸い形にするためにボーダーの半径を50%に設定
+  box-shadow: 
+   40px 30px 0 -15px #fff,  // 右下に40px、30pxのオフセット、-15pxのぼかし半径で白のシャドウ
+   -60px 40px 0 -30px #fff, // 左下に60px、40pxのオフセット、-30pxのぼかし半径で白のシャドウ
+   -100px 0px 0 -50px #fff, // 左に100pxのオフセット、ぼかし半径なしで白のシャドウ
+   100px 0px 0 -50px #fff;  // 右に100pxのオフセット、ぼかし半径なしで白のシャドウ
+  position: relative; // 子要素が絶対位置指定を使えるように相対位置を設定
+  
+  &:before {
+    content: ""; // 空の内容を生成
+    position: absolute; // 親要素に対して絶対位置を設定
+    top: -2px; // 親要素の上から-2pxに配置
+    left: -2px; // 親要素の左から-2pxに配置
+    width: 180px; // 幅を204pxに設定
+    height: 200px; // 高さを204pxに設定
+    background-color: #fff; // 背景色を白 (#fff) に設定
+    border-radius: 50%; // 丸い形にするためにボーダーの半径を50%に設定
+  }
+}
