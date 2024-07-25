@@ -10,8 +10,6 @@
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
-  <!-- Google Fonts: Kosugi Maru -->
-  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
 
   <!-- Twitter Card data -->
   <meta name="twitter:card" content="summary_large_image">
@@ -40,11 +38,5 @@
     <%= yield %>
   </div>
 
-  <!-- Kosugi Maruフォントを全体に適用するためのスタイル -->
-  <style>
-    body {
-      font-family: 'Kosugi Maru', sans-serif;
-    }
-  </style>
 </body>
 </html>
