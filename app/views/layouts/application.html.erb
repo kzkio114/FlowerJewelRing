@@ -1,40 +1,50 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>めぐる宝石花</title>
-    <link rel="icon" href="<%= image_path('10.webp') %>">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>めぐる宝石花</title>
+  <link rel="icon" href="<%= image_path('10.webp') %>">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
-    <!-- Twitter Card data -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@kzkio_0114">
-    <meta name="twitter:title" content="めぐる宝石花">
-    <meta name="twitter:description" content="このアプリは相談する→相談されるの流れを繰り返して行い、また、相談した人には相談された人に感謝の気持ちとアイテムが貰えて、相談を出来る回数が増えていく循環・複合型相談アプリです。">
-    <meta name="twitter:image" content="<%= image_path('top.png') %>">
-  </head>
-  <!-- Font Awesome  -->
-  <script src="https://kit.fontawesome.com/6fa0d54baa.js" crossorigin="anonymous"></script>
-  <body>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE6KZH9Z54"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Google Fonts: Kosugi Maru -->
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
 
-      gtag('config', 'G-HE6KZH9Z54');
-    </script>
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@kzkio_0114">
+  <meta name="twitter:title" content="めぐる宝石花">
+  <meta name="twitter:description" content="このアプリは相談する→相談されるの流れを繰り返して行い、また、相談した人には相談された人に感謝の気持ちとアイテムが貰えて、相談を出来る回数が増えていく循環・複合型相談アプリです。">
+  <meta name="twitter:image" content="<%= image_path('top.png') %>">
+</head>
+<!-- Font Awesome  -->
+<script src="https://kit.fontawesome.com/6fa0d54baa.js" crossorigin="anonymous"></script>
+<body>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE6KZH9Z54"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-    <%= render 'layouts/header' %>
-    <div id="flash">
-      <%= render 'layouts/flash' %>
-      <%# <p class="notice"><%= notice %　></p> %>
-      <%= yield %>
-    </div>
-  </body>
+    gtag('config', 'G-HE6KZH9Z54');
+  </script>
+
+  <%= render 'layouts/header' %>
+  <div id="flash">
+    <%= render 'layouts/flash' %>
+    <%# <p class="notice"><%= notice %　></p> %>
+    <%= yield %>
+  </div>
+
+  <!-- Kosugi Maruフォントを全体に適用するためのスタイル -->
+  <style>
+    body {
+      font-family: 'Kosugi Maru', sans-serif;
+    }
+  </style>
+</body>
 </html>
