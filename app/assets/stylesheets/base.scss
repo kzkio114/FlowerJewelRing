@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+
 html, body {
   height: 100%;
   margin: 0;
-  background-color: hsl(174, 80%, 92%); /* 背景色を設定 */
+
+  font-family: 'Kosugi Maru', sans-serif;
+  background-color: hsl(174, 80%, 92%);
 }
 
 /* スマートフォン向けのスタイル */

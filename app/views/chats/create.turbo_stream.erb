@@ -1,4 +1,3 @@
-<!-- app/views/chats/create.turbo_stream.erb -->
 <%= turbo_stream.append "messages" do %>
   <%= render partial: "chats/message", locals: { chat: @chat } %>
 <% end %>

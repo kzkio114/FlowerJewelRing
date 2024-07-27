@@ -1,0 +1,47 @@
+.cloud {
+  display: block; // ブロック要素として表示
+  width: 200px; // 幅を200pxに設定
+  height: 180px; // 高さを180pxに設定
+  background-color: #fff; // 背景色を白 (#fff) に設定
+  border-radius: 50%; // 丸い形にするためにボーダーの半径を50%に設定
+  box-shadow:
+    40px 30px 0 -15px #fff,  // 右下に40px、30pxのオフセット、-15pxのぼかし半径で白のシャドウ
+    -80px 30px 0 -30px #fff, // 左下に80px、30pxのオフセット、-30pxのぼかし半径で白のシャドウ
+    -80px -30px 0 -50px #fff, // 上に70px、左に30pxのオフセット、ぼかし半径なしで白のシャドウ
+    80px -20px 0 -50px #fff, // 上に80px、右に20pxのオフセット、ぼかし半径なしで白のシャドウ
+    -110px 0px 0 -50px #fff, // 左に110pxのオフセット、ぼかし半径なしで白のシャドウ
+    100px 10px 0 -50px #fff, // 右に100px、下に10pxのオフセット、ぼかし半径なしで白のシャドウ
+    60px -40px 0 -50px #fff, // 右上に60px、上に40pxのオフセット、ぼかし半径なしで白のシャドウ
+    -50px -50px 0 -50px #fff; // 左上に50px、上に50pxのオフセット、ぼかし半径なしで白のシャドウ
+  position: relative; // 子要素が絶対位置指定を使えるように相対位置を設定
+
+  &:before {
+    content: ""; // 空の内容を生成
+    position: absolute; // 親要素に対して絶対位置を設定
+    top: -2px; // 親要素の上から-2pxに配置
+    left: -2px; // 親要素の左から-2pxに配置
+    width: 204px; // 幅を204pxに設定
+    height: 204px; // 高さを204pxに設定
+    background-color: #fff; // 背景色を白 (#fff) に設定
+    border-radius: 50%; // 丸い形にするためにボーダーの半径を50%に設定
+  }
+}
+
+.cloud-big {
+  display: block; // ブロック要素として表示
+  width: 850px; // 幅を850pxに設定
+  height: 350px; // 高さを350pxに設定
+  background-color: #fff; // 背景色を白 (#fff) に設定
+  border-radius: 50%; // 丸い形にするためにボーダーの半径を50%に設定
+  box-shadow:
+    -130px 60px 0px -50px #fff, // 左下に130px、60pxのオフセット、30pxのぼかし半径で白のシャドウ
+    180px -50px 0px -70px #fff, // 上に180px、右に50pxのオフセット、30pxのぼかし半径で白のシャドウ
+    200px 50px 0px -70px #fff, // 右に200px、下に50pxのオフセット、30pxのぼかし半径で白のシャドウ
+    150px -100px 0px -80px #fff, // 右上に150px、上に100pxのオフセット、30pxのぼかし半径で白のシャドウ
+    -150px -100px 0px -90px #fff, // 左上に150px、上に100pxのオフセット、30pxのぼかし半径で白のシャドウ
+    -190px 20px 0px -70px #fff, // 左に190px、20pxのオフセット、30pxのぼかし半径で白のシャドウ
+    -150px -80px 0px -60px #fff, // 上に150px、左に80pxのオフセット、30pxのぼかし半径で白のシャドウ
+    130px 95px 0px -70px #fff, // 右に130px、下に95pxのオフセット、30pxのぼかし半径で白のシャドウ
+     100px -100px 0px -80px #fff; // 右に100px、上に100pxのオフセット、30pxのぼかし半径で白のシャドウ
+  position: relative; // 子要素が絶対位置指定を使えるように相対位置を設定
+}

@@ -111,4 +111,3 @@ gem 'searchkick'
 gem 'elasticsearch', '~> 7.10.1'
 gem 'elasticsearch-model', '~> 7.1'
 gem 'elasticsearch-rails', '~> 7.1'
-

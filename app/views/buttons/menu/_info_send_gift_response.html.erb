@@ -1,11 +1,11 @@
 <div class="show-fixed">
   <div class="container is-small">
-    <div id="error-message"></div> <!-- ここにエラーメッセージを表示 -->
+    <div id="error-message"></div>  <!-- ここにエラーメッセージを表示 -->
     <div class="columns is-multiline">
       <% gifts.each do |gift| %>
         <div id="gift_card_<%= gift.id %>" class="column is-full">
           <div class="card">
-            <div class="card-content"> <!-- パディングを減らす -->
+            <div class="card-content">  <!-- パディングを減らす -->
               <div class="content">
                 植物名: <%= gift.item_name %><br>
                 <%= image_tag asset_path(gift.image_url), alt: "ギフトの画像", style: "width: 150px;" %><br> <!-- 画像サイズを小さく -->
