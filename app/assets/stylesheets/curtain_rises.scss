@@ -1,0 +1,172 @@
+.bg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* 中央に配置 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  color: #fff;
+  background-color: #060505; /* 初期状態は夜 */
+  z-index: 1000; /* コンテンツの上に表示 */
+  transition: background-color 5s ease; /* 遷移時間を5秒に設定 */
+
+  &.-visible {
+    background-color: #0b0b0b; /* 夜 */
+  }
+
+  &.-invisible {
+    background-color: #121515; /* 夜 */
+  }
+
+  &.-morning {
+    background-color: hsl(174, 80%, 92%); /* 朝の背景色 */
+  }
+
+  &:before {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #121515; /* 夜 */
+    transform: translate(0, 100%);
+    transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 1.5s, background-color 5s ease; /* アニメーション時間を5秒に設定 */
+    content: '';
+  }
+
+  &.-visible:before {
+    transform: translate(0, 0);
+  }
+
+  &.-invisible:before {
+    transform: translate(0, -100%);
+  }
+
+  &.-morning:before {
+    background-color: hsl(174, 80%, 92%); /* 朝の背景色 */
+  }
+
+  .circle {
+    width: 100px; /* 三日月の直径 */
+    height: 100px; /* 三日月の直径 */
+    background-color: rgb(255, 255, 0); /* 黄色 */
+    border-radius: 50%; /* 丸にする */
+    position: absolute;
+    top: 5px; /* 上に設定 */
+    right: 20px; /* 右に設定 */
+    overflow: hidden;
+    transform: translateY(0); /* 初期位置を背景と同じく下に設定 */
+    transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 1.5s, background-color 5s ease; /* 背景と同じアニメーション */
+    z-index: 1001; /* 背景よりも前面に表示 */
+  }
+
+  .circle::before {
+    content: '';
+    position: absolute;
+    width: 80px; /* 内部の円の幅 */
+    height: 80px; /* 内部の円の高さ */
+    background-color: #060505; /* 背景色と同じ色 */
+    border-radius: 100%; /* 丸にする */
+    top: 3px; /* 三日月の形を作るための位置調整 */
+    left: 21px; /* 三日月の形を作るための位置調整 */
+    transition: background-color 3s ease, width 3s ease, height 3s ease, left 3s ease, top 3s ease; /* 遷移のためのアニメーション */
+  }
+
+  @keyframes changeColor {
+    0% {
+      background-color: #060505; /* 初期色（黒） */
+    }
+    10% {
+      background-color: transparent; /* 透明 */
+    }
+    15% {
+        background-color: transparent; /* 透明 */
+    }
+    30% {
+        background-color: transparent; /* 透明 */
+    }
+    50% {
+        background-color: transparent; /* 透明 */
+    }
+    70% {
+      background-color: transparent; /* 透明 */
+    }
+    100% {
+      background-color: transparent; /* 透明 */
+    }
+  }
+
+  @keyframes moveRight {
+    0% {
+      right: 20px; /* 初期位置 */
+    }
+    100% {
+      right: 100px; /* 画面の外に移動 */
+    }
+  }
+
+  @keyframes changeCircleColor {
+    0% {
+      background-color: rgb(255, 255, 0); /* 黄色 */
+    }
+    100% {
+      background-color: rgb(239, 21, 21); /* 赤 */
+    }
+  }
+
+  &.-visible .circle {
+    transform: translateY(0); /* 表示位置に移動 */
+  }
+
+  &.-invisible .circle {
+    transform: translateY(0%); /* 非表示位置に移動 */
+  }
+
+  &.-morning .circle {
+    animation: moveRight 10s forwards, changeCircleColor 5s forwards; /* 右に移動するアニメーションと色の変更アニメーションを追加 */
+  }
+
+  &.-morning .circle::before {
+    animation: changeColor 5s forwards; /* 色の変更アニメーションを追加 */
+    width: 0; /* 内部の円を縮小 */
+    height: 100%; /* 内部の円を縮小 */
+    left: 100%; /* 内部の円を中央に配置 */
+    top: 0%; /* 内部の円を中央に配置 */
+    transform: translate(0%, 0%); /* 中央に合わせるために変形 */
+  }
+}
+
+.title {
+  display: block;
+  color: #fff;
+  font-family: 'Kosugi Maru', sans-serif;
+  text-align: center;
+
+  span {
+    display: block;
+    opacity: 0;
+    transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 1.5s, opacity linear 1.2s; /* 遷移時間を1.5秒、透明度の遷移時間を1.2秒に延ばす */
+
+    &:first-child {
+      transform: translate(0, 40px);
+      font-size: 20px;
+      transition-delay: 0.75s; /* 遅延時間を0.75秒に延ばす */
+    }
+
+    &:last-child {
+      margin-top: 18px;
+      transform: translate(0, 30px);
+      font-size: 48px;
+      transition-delay: 1s; /* 遅延時間を1秒に延ばす */
+    }
+  }
+
+  .bg.-visible & span {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}

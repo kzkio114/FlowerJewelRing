@@ -60,6 +60,7 @@
     -5px 5px 0px -5px #fff, /* 左中央に-10px、5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
     9px 8px 0px -5px #fff; /* 右中央に5px、-5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
   position: relative; /* 子要素が絶対位置指定を使えるように相対位置を設定 */
+  animation: moveClouds 30s linear infinite; /* 雲のアニメーションを設定 */
 }
 
 .cloud-mini:before {
@@ -71,4 +72,13 @@
   height: 34px; /* 高さを34pxに設定 */
   background-color: #fff; /* 背景色を白 (#fff) に設定 */
   border-radius: 50%; /* 丸い形にするためにボーダーの半径を50%に設定 */
+}
+
+@keyframes moveClouds {
+  0% {
+    transform: translateX(100vw); /* 画面右外から開始 */
+  }
+  100% {
+    transform: translateX(-100vw); /* 画面左外で終了 */
+  }
 }

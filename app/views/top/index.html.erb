@@ -1,21 +1,33 @@
-<section class="section is-fullheight">
-  <div class="container is-flex is-flex-direction-column is-justify-content-space-between">
-    <div class="content">
-      <div class="columns is-centered mt-6">
-        <div class="column is-8 has-text-centered">
-          <%= render 'top/title' %>
-          <turbo-frame id="response_area">
-            <%= render 'buttons/enter_app_response' %>
-          </turbo-frame>
+<div data-controller="visibility" data-visibility-target="bg" class="bg">
+  <div class="bird"></div>
+  <div class="bird -type_2"></div>
+  <div class="bird -type_3"></div>
+  <div class="title">
+    <span>ようこそ！！</span>
+    <span>めぐる宝石花</span>
+  </div>
+
+  <section class="section is-fullheight">
+    <div class="container is-flex is-flex-direction-column is-justify-content-space-between">
+    <div class="bird"></div>
+      <div class="bird -type_2"></div>
+      <div class="bird -type_3"></div>
+      <div class="content">
+        <div class="columns is-centered mt-6">
+          <div class="column is-8 has-text-centered">
+            <%= render 'top/title' %>
+            <turbo-frame id="response_area">
+              <%= render 'buttons/enter_app_response' %>
+            </turbo-frame>
+          </div>
+          <!--<div class="cloud"></div>-->
+          <div class="cloud-mini"></div>
+          <div class="circle"></div> <!-- 赤い丸を追加 -->
         </div>
-        <!--<div class="cloud"></div>-->
-        <div class="cloud-mini"></div>
+      </div>
+      <div class="columns is-centered mt-6">
+        <%= render 'top/buttons' %>
       </div>
     </div>
-    <div class="columns is-centered mt-6">
-      <%= render 'top/buttons' %>
-    </div>
-  </div>
-</section>
-
-
+  </section>
+</div>
