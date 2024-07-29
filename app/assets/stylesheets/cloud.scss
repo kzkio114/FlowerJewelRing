@@ -45,3 +45,72 @@
      100px -100px 0px -80px #fff; // 右に100px、上に100pxのオフセット、30pxのぼかし半径で白のシャドウ
   position: relative; // 子要素が絶対位置指定を使えるように相対位置を設定
 }
+
+.cloud-mini {
+  display: block; /* ブロック要素として表示 */
+  width: 50px; /* 幅を50pxに設定 */
+  height: 30px; /* 高さを30pxに設定 */
+  background-color: #fff; /* 背景色を白 (#fff) に設定 */
+  border-radius: 50%; /* 丸い形にするためにボーダーの半径を50%に設定 */
+  box-shadow:
+    -15px 5px 0px -5px #fff, /* 左下に-15px、10pxのオフセット、-10pxのぼかし半径で白のシャドウ */
+    10px -3px 0px -3px #fff, /* 右上に15px、-10pxのオフセット、-10pxのぼかし半径で白のシャドウ */
+    15px 6px 0px -5px #fff, /* 右下に15px、10pxのオフセット、-10pxのぼかし半径で白のシャドウ */
+    -5px -10px 0px -5px #fff, /* 左下に-5px、-10pxのオフセット、-5pxのぼかし半径で白のシャドウ */
+    -5px 5px 0px -5px #fff, /* 左中央に-10px、5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
+    9px 8px 0px -5px #fff; /* 右中央に5px、-5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
+  position: absolute; /* 子要素が絶対位置指定を使えるように相対位置を設定 */
+  z-index: 1002; /* 前面に表示 */
+}
+
+.cloud-mini:before {
+  content: ""; /* 空の内容を生成 */
+  position: absolute; /* 親要素に対して絶対位置を設定 */
+  top: -2px; /* 親要素の上から-2pxに配置 */
+  left: -2px; /* 親要素の左から-2pxに配置 */
+  width: 54px; /* 幅を54pxに設定 */
+  height: 34px; /* 高さを34pxに設定 */
+  background-color: #fff; /* 背景色を白 (#fff) に設定 */
+  border-radius: 50%; /* 丸い形にするためにボーダーの半径を50%に設定 */
+}
+
+@keyframes moveClouds {
+  0% {
+    transform: translateX(100vw); /* 画面右外から開始 */
+  }
+  100% {
+    transform: translateX(-100vw); /* 画面左外で終了 */
+  }
+}
+
+/* 個別にアニメーションを設定 */
+.cloud1 {
+  top: 20px; /* 高さを設定 */
+  animation: moveClouds 130s linear infinite;
+}
+
+.cloud2 {
+  top: 70px; /* 高さを設定 */
+  animation: moveClouds 50s linear infinite; /* 速度を変える */
+}
+
+.cloud3 {
+  top: 100px; /* 高さを設定 */
+  animation: moveClouds 80s linear infinite; /* 速度を変える */
+}
+
+/* 新たに追加する雲 */
+.cloud4 {
+  top: 50px; /* 高さを設定 */
+  animation: moveClouds 100s linear infinite; /* 速度を変える */
+}
+
+.cloud5 {
+  top: 150px; /* 高さを設定 */
+  animation: moveClouds 60s linear infinite; /* 速度を変える */
+}
+
+.cloud6 {
+  top: 200px; /* 高さを設定 */
+  animation: moveClouds 90s linear infinite; /* 速度を変える */
+}
