@@ -58,9 +58,9 @@
     15px 6px 0px -5px #fff, /* 右下に15px、10pxのオフセット、-10pxのぼかし半径で白のシャドウ */
     -5px -10px 0px -5px #fff, /* 左下に-5px、-10pxのオフセット、-5pxのぼかし半径で白のシャドウ */
     -5px 5px 0px -5px #fff, /* 左中央に-10px、5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
-    9px 8px 0px -5px #1e1717; /* 右中央に5px、-5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
-  position: relative; /* 子要素が絶対位置指定を使えるように相対位置を設定 */
-  animation: moveClouds 30s linear infinite; /* 雲のアニメーションを設定 */
+    9px 8px 0px -5px #fff; /* 右中央に5px、-5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
+  position: absolute; /* 子要素が絶対位置指定を使えるように相対位置を設定 */
+  z-index: 1002; /* 前面に表示 */
 }
 
 .cloud-mini:before {
@@ -81,4 +81,36 @@
   100% {
     transform: translateX(-100vw); /* 画面左外で終了 */
   }
+}
+
+/* 個別にアニメーションを設定 */
+.cloud1 {
+  top: 20px; /* 高さを設定 */
+  animation: moveClouds 130s linear infinite;
+}
+
+.cloud2 {
+  top: 70px; /* 高さを設定 */
+  animation: moveClouds 50s linear infinite; /* 速度を変える */
+}
+
+.cloud3 {
+  top: 100px; /* 高さを設定 */
+  animation: moveClouds 80s linear infinite; /* 速度を変える */
+}
+
+/* 新たに追加する雲 */
+.cloud4 {
+  top: 50px; /* 高さを設定 */
+  animation: moveClouds 100s linear infinite; /* 速度を変える */
+}
+
+.cloud5 {
+  top: 150px; /* 高さを設定 */
+  animation: moveClouds 60s linear infinite; /* 速度を変える */
+}
+
+.cloud6 {
+  top: 200px; /* 高さを設定 */
+  animation: moveClouds 90s linear infinite; /* 速度を変える */
 }
