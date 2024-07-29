@@ -1,5 +1,17 @@
 .fixed-height {
   height: 350px; // デフォルトの高さ
+  background-color: hsl(9, 80%, 92%); //枠の背景色を設定
+
+  @media (max-width: 480px) { // スマホ用
+    height: 150px; // さらに小さな画面ではさらに高さを小さくする
+  }
+
+  overflow-y: auto;
+}
+
+.fixed-height-login {
+  height: 350px; // デフォルトの高さ
+  width: 850px;   // デフォルトの幅
 
   @media (max-width: 480px) { // スマホ用
     height: 150px; // さらに小さな画面ではさらに高さを小さくする
