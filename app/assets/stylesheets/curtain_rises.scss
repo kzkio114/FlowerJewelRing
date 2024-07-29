@@ -119,11 +119,11 @@
   }
 
   &.-visible .circle {
-    transform: translateY(0); /* 表示位置に移動 */
+    transform: translateY(-20%); /* 表示位置に移動 */
   }
 
   &.-invisible .circle {
-    transform: translateY(0%); /* 非表示位置に移動 */
+    transform: translateY(-20%); /* 非表示位置に移動 */
   }
 
   &.-morning .circle {

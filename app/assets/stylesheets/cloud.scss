@@ -58,7 +58,7 @@
     15px 6px 0px -5px #fff, /* 右下に15px、10pxのオフセット、-10pxのぼかし半径で白のシャドウ */
     -5px -10px 0px -5px #fff, /* 左下に-5px、-10pxのオフセット、-5pxのぼかし半径で白のシャドウ */
     -5px 5px 0px -5px #fff, /* 左中央に-10px、5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
-    9px 8px 0px -5px #fff; /* 右中央に5px、-5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
+    9px 8px 0px -5px #1e1717; /* 右中央に5px、-5pxのオフセット、-5pxのぼかし半径で白のシャドウ */
   position: relative; /* 子要素が絶対位置指定を使えるように相対位置を設定 */
   animation: moveClouds 30s linear infinite; /* 雲のアニメーションを設定 */
 }
