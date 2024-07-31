@@ -1,0 +1,12 @@
+.is-hidden {
+  display: none;
+}
+
+.transition-opacity {
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+
+.transition-opacity.is-visible {
+  opacity: 1;
+}

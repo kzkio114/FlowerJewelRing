@@ -1,8 +1,57 @@
-<div id="response_area" class="container is-small">
-  <div class="notification fixed-height">
-    <strong class="is-size-z">アプリ使用説明</strong>
-    <p class="is-size-6">まず始めに、このアプリは相談する→相談されるの流れを繰り返して行い、また、相談した人には相談された人に感謝の気持ちとアイテムが貰えて、相談を出来る回数が増えていく循環・複合型相談アプリです。</p>
-    <p class="is-size-6">詳しいアプリ内容は、相談をしたいけど、ずっと相談だけだと・・・と気が引ける人に、逆の立場でアドバイスを提供し、解決時の満足感を共有する体験を通じて設計されており、相談に応じたユーザーは感謝の気持ちとアイテム(花と宝石)を受け取り、循環システムを通じて更に多くの相談が可能になり、組織内では詳細なデータも提供します。</p>
-    <p class="is-size-6">また、ユーザーが返信のスタイル（肯定、普通、否定）を選べるため、自分の気持ちに合った回答のみが表示されます。また、プライバシーを保護するために、センシティブな相談は匿名で1対1のチャットで行うことができます。</p>
+<div data-controller="rendering">
+  <div id="response_area" class="container is-small">
+    <div class="notification fixed-height">
+      <strong class="is-size-5">アプリ説明</strong>
+      <p class="is-size-6">相談する→相談されるの流れを繰り返して行い、また、相談した人には相談された人に感謝の気持ちとアイテムが貰えて、相談を出来る回数が増えていく循環・複合型相談アプリです。</p>
+      <button data-rendering-target="toggleDetails" class="button is-primary mt-3" data-action="click->rendering#toggleDetails">詳細を表示</button>
+      <div data-rendering-target="details" class="is-hidden transition-opacity">
+        <p class="is-size-6">詳細なアプリの使用方法や仕組みについて...</p>
+        <p class="is-size-6">システムは安全性を確保しつつ、ユーザーのプライバシーを保護します...</p>
+      </div>
+
+    <div data-rendering-target="extraContent" class="is-hidden">
+      <div data-rendering-target="news" class="is-hidden">
+        <strong class="is-size-5">最新のお知らせ</strong>
+        <p class="is-size-6">最新のメッセージと最新の感謝の気持ちを5件確認できます。</p>
+      </div>
+
+      <div data-rendering-target="worries" class="is-hidden">
+        <strong class="is-size-5">みんなの悩み</strong>
+        <p class="is-size-6">他のユーザーが投稿した相談内容を閲覧できる場所です。</p>
+      </div>
+
+      <div data-rendering-target="search" class="is-hidden">
+        <strong class="is-size-5">検索</strong>
+        <p class="is-size-6">過去の投稿やトピックを検索できます。</p>
+      </div>
+
+      <div data-rendering-target="chat" class="is-hidden">
+        <strong class="is-size-5">チャット機能</strong>
+        <p class="is-size-6">1対1の匿名チャットやグループチャットが可能です。</p>
+      </div>
+
+      <div data-rendering-target="thanks" class="is-hidden">
+        <strong class="is-size-5">感謝の気持ち</strong>
+        <p class="is-size-6">相談やアドバイスに対する感謝の意を表すことができます。</p>
+      </div>
+    </div>
+
+    <div class="buttons-tone columns is-centered is-mobile mt-3">
+      <div class="column is-narrow">
+        <button id="showNews" data-action="click->rendering#showContent" class="button is-primary is-small">最新のお知らせ</button>
+      </div>
+      <div class="column is-narrow">
+        <button id="showWorries" data-action="click->rendering#showContent" class="button is-primary is-small">みんなの悩み</button>
+      </div>
+      <div class="column is-narrow">
+        <button id="showSearch" data-action="click->rendering#showContent" class="button is-primary is-small">検索</button>
+      </div>
+      <div class="column is-narrow">
+        <button id="showChat" data-action="click->rendering#showContent" class="button is-primary is-small">チャット機能</button>
+      </div>
+      <div class="column is-narrow">
+        <button id="showThanks" data-action="click->rendering#showContent" class="button is-primary is-small">感謝の気持ち</button>
+      </div>
+    </div>
   </div>
 </div>
