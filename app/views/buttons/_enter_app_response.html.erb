@@ -1,8 +1,8 @@
 <div data-controller="rendering">
   <div id="response_area" class="container is-small">
     <div class="notification fixed-height">
-      <strong class="is-size-5">アプリ説明</strong>
-      <p class="is-size-6 mt-3">
+      <strong class="is-size-5" data-rendering-target="appDescriptionTitle">アプリ説明</strong>
+      <p class="is-size-6 mt-3" data-rendering-target="appDescriptionText">
         相談する→相談されるの流れを繰り返して行い、<br>
         また、相談した人には相談された人に感謝の気持ちとアイテムが貰えて、<br>
         相談を出来る回数が増えていく循環・複合型相談アプリです。
@@ -44,7 +44,7 @@
         <div data-rendering-target="search" class="is-hidden">
           <strong class="is-size-5">検索</strong>
           <p class="is-size-6">過去の投稿やトピックを検索できます。</p>
-          <%= image_tag '21.webp', alt: '検索の画像', class: 'content-image is-hidden small-image small-image', data: { rendering_target: 'searchImage' } %>
+          <%= image_tag '21.webp', alt: '検索の画像', class: 'content-image is-hidden small-image', data: { rendering_target: 'searchImage' } %>
         </div>
 
         <div data-rendering-target="chat" class="is-hidden">

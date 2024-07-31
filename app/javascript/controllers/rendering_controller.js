@@ -4,7 +4,8 @@ export default class extends Controller {
   static targets = [
     "details", "toggleDetails", "extraContent",
     "news", "worries", "search", "chat", "thanks",
-    "newsImage", "worriesImage", "searchImage", "chatImage", "thanksImage"
+    "newsImage", "worriesImage", "searchImage", "chatImage", "thanksImage",
+    "appDescriptionTitle", "appDescriptionText"
   ];
 
   connect() {
@@ -23,6 +24,10 @@ export default class extends Controller {
       showChat: this.chatImageTarget,
       showThanks: this.thanksImageTarget
     };
+
+    // 初期ロード時にタイトルと説明文を一文字ずつ表示する
+    this.displayTextSlowly(this.appDescriptionTitleTarget, 50);
+    this.displayTextSlowly(this.appDescriptionTextTarget, 50);
   }
 
   toggleDetails() {
@@ -107,5 +112,28 @@ export default class extends Controller {
         }
       }
     }
+  }
+
+  displayTextSlowly(element, speed) {
+    if (!element) return;
+    const htmlContent = element.innerHTML; // innerHTMLを使用して改行やHTMLタグを取得
+    element.innerHTML = ""; // コンテンツをクリア
+    let i = 0;
+
+    const typing = () => {
+      if (i < htmlContent.length) {
+        if (htmlContent[i] === "<" && htmlContent.slice(i).startsWith("<br>")) {
+          // <br>タグを検出して改行を追加
+          element.innerHTML += "<br>";
+          i += 4; // <br>タグの長さ分インデックスを進める
+        } else {
+          // それ以外の文字を追加
+          element.innerHTML += htmlContent[i];
+          i++;
+        }
+        setTimeout(typing, speed);
+      }
+    };
+    typing();
   }
 }
