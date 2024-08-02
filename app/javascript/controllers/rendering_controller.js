@@ -32,6 +32,29 @@ export default class extends Controller {
     this.displayTextSlowly(this.appDescriptionTextTarget, 50);
   }
 
+  displayTextSlowly(element, speed) {
+    if (!element) return;
+    const htmlContent = element.innerHTML; // innerHTMLを使用して改行やHTMLタグを取得
+    element.innerHTML = ""; // コンテンツをクリア
+    let i = 0;
+
+    const typing = () => {
+      if (i < htmlContent.length) {
+        if (htmlContent[i] === "<" && htmlContent.slice(i).startsWith("<br>")) {
+          // <br>タグを検出して改行を追加
+          element.innerHTML += "<br>";
+          i += 4; // <br>タグの長さ分インデックスを進める
+        } else {
+          // それ以外の文字を追加
+          element.innerHTML += htmlContent[i];
+          i++;
+        }
+        setTimeout(typing, speed);
+      }
+    };
+    typing();
+  }
+
   showContent(event) {
     const targetId = event.currentTarget.id;
     const targetElement = this.buttonMapping[targetId];
