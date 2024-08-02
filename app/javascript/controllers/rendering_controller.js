@@ -5,8 +5,20 @@ export default class extends Controller {
     "details", "toggleDetails", "extraContent",
     "news", "worries", "search", "chat", "thanks",
     "newsImage", "worriesImage", "searchImage", "chatImage", "thanksImage",
-    "appDescriptionTitle", "appDescriptionText"
+    "appDescriptionTitle", "appDescriptionText",
+    "modalContainer", "modalImage" // モーダルのターゲットを追加
   ];
+
+  open(event) {
+    const imgSrc = event.currentTarget.src;
+    this.modalImageTarget.src = imgSrc;
+    this.modalContainerTarget.classList.add("is-active");
+  }
+
+  close() {
+    this.modalContainerTarget.classList.remove("is-active");
+    this.modalImageTarget.src = "";
+  }
 
   connect() {
     this.buttonMapping = {

@@ -28,35 +28,45 @@
         </div>
       </div>
 
+      <div data-rendering-target="modalContainer" class="modal">
+        <div class="modal-background" data-action="click->rendering#close"></div>
+        <div class="modal-content">
+          <p class="image">
+            <img data-rendering-target="modalImage" src="" alt="拡大画像">
+          </p>
+        </div>
+        <button class="modal-close is-large" aria-label="close" data-action="click->rendering#close"></button>
+      </div>
+
       <div data-rendering-target="extraContent" class="is-hidden">
         <div data-rendering-target="news" class="is-hidden" data-no-hide>
           <strong class="is-size-5">最新のお知らせ</strong>
           <p class="is-size-6 mt-1">最新のメッセージと最新の感謝の気持ちを5件確認できます。</p>
-          <%= image_tag 'テスト.gif', alt: '最新のお知らせの画像', class: 'content-image is-hidden small-image', data: { rendering_target: 'newsImage' } %>
+          <%= image_tag 'テスト.gif', alt: '最新のお知らせの画像', class: 'content-image small-image', data: { rendering_target: 'newsImage', action: 'click->rendering#open' } %>
         </div>
 
         <div data-rendering-target="worries" class="is-hidden" data-no-hide>
           <strong class="is-size-5">みんなの悩み</strong>
-          <p class="is-size-6">他のユーザーが投稿した相談内容を閲覧できる場所です。</p>
-          <%= image_tag '24.webp', alt: 'みんなの悩みの画像', class: 'content-image is-hidden small-image', data: { rendering_target: 'worriesImage' } %>
+          <p class="is-size-6 mt-1">他のユーザーが投稿した相談内容を閲覧できる場所です。</p>
+          <%= image_tag '24.webp', alt: 'みんなの悩みの画像', class: 'content-image small-image', data: { rendering_target: 'worriesImage', action: 'click->rendering#open' } %>
         </div>
 
         <div data-rendering-target="search" class="is-hidden">
           <strong class="is-size-5">検索</strong>
-          <p class="is-size-6">過去の投稿やトピックを検索できます。</p>
-          <%= image_tag '21.webp', alt: '検索の画像', class: 'content-image is-hidden small-image', data: { rendering_target: 'searchImage' } %>
+          <p class="is-size-6 mt-1">過去の投稿やトピックを検索できます。</p>
+          <%= image_tag '21.webp', alt: '検索の画像', class: 'content-image small-image', data: { rendering_target: 'searchImage', action: 'click->rendering#open' } %>
         </div>
 
         <div data-rendering-target="chat" class="is-hidden">
           <strong class="is-size-5">チャット機能</strong>
-          <p class="is-size-6">1対1の匿名チャットやグループチャットが可能です。</p>
-          <%= image_tag '23.webp', alt: 'チャット機能の画像', class: 'content-image is-hidden small-image', data: { rendering_target: 'chatImage' } %>
+          <p class="is-size-6 mt-1">1対1の匿名チャットやグループチャットが可能です。</p>
+          <%= image_tag '23.webp', alt: 'チャット機能の画像', class: 'content-image small-image', data: { rendering_target: 'chatImage', action: 'click->rendering#open' } %>
         </div>
 
         <div data-rendering-target="thanks" class="is-hidden">
           <strong class="is-size-5">感謝の気持ち</strong>
-          <p class="is-size-6">相談やアドバイスに対する感謝の意を表すことができます。</p>
-          <%= image_tag '26.webp', alt: '感謝の気持ちの画像', class: 'content-image is-hidden small-image', data: { rendering_target: 'thanksImage' } %>
+          <p class="is-size-6 mt-1">相談やアドバイスに対する感謝の意を表すことができます。</p>
+          <%= image_tag '26.webp', alt: '感謝の気持ちの画像', class: 'content-image small-image', data: { rendering_target: 'thanksImage', action: 'click->rendering#open' } %>
         </div>
       </div>
     </div>
