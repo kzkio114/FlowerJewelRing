@@ -11,31 +11,31 @@
       <div class="fixed-buttons">
         <div class="buttons-tone columns is-centered is-mobile mt-1">
           <div class="column is-narrow">
-            <button id="showNews" data-action="click->rendering#showContent mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">最新のお知らせ</button>
+            <button id="showNews" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">最新のお知らせ</button>
           </div>
           <div class="column is-narrow">
-            <button id="showWorries" data-action="click->rendering#showContent mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">みんなの悩み</button>
+            <button id="showWorries" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">みんなの悩み</button>
           </div>
           <div class="column is-narrow">
-            <button id="showSearch" data-action="click->rendering#showContent mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">検索</button>
+            <button id="showSearch" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">検索</button>
           </div>
           <div class="column is-narrow">
-            <button id="showChat" data-action="click->rendering#showContent mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">チャット機能</button>
+            <button id="showChat" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">チャット機能</button>
           </div>
           <div class="column is-narrow">
-            <button id="showThanks" data-action="click->rendering#showContent mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">感謝の気持ち</button>
+            <button id="showThanks" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-primary is-small">感謝の気持ち</button>
           </div>
         </div>
       </div>
 
       <div data-rendering-target="extraContent" class="is-hidden">
-        <div data-rendering-target="news" class="is-hidden">
+        <div data-rendering-target="news" class="is-hidden" data-no-hide>
           <strong class="is-size-5">最新のお知らせ</strong>
-          <p class="is-size-6">最新のメッセージと最新の感謝の気持ちを5件確認できます。</p>
-          <%= image_tag '25.webp', alt: '最新のお知らせの画像', class: 'content-image is-hidden small-image', data: { rendering_target: 'newsImage' } %>
+          <p class="is-size-6 mt-1">最新のメッセージと最新の感謝の気持ちを5件確認できます。</p>
+          <%= image_tag 'テスト.gif', alt: '最新のお知らせの画像', class: 'content-image is-hidden small-image', data: { rendering_target: 'newsImage' } %>
         </div>
 
-        <div data-rendering-target="worries" class="is-hidden">
+        <div data-rendering-target="worries" class="is-hidden" data-no-hide>
           <strong class="is-size-5">みんなの悩み</strong>
           <p class="is-size-6">他のユーザーが投稿した相談内容を閲覧できる場所です。</p>
           <%= image_tag '24.webp', alt: 'みんなの悩みの画像', class: 'content-image is-hidden small-image', data: { rendering_target: 'worriesImage' } %>

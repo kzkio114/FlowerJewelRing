@@ -1,7 +1,8 @@
   .buttons {
     display: flex;
     flex-direction: column;
-  
+    margin-top: -30px; /* 左側の余白 */
+
     .button {
       flex-grow: 1;
       text-align: center;
@@ -10,7 +11,7 @@
       display: flex; /* フレックスボックスを使用 */
       align-items: center; /* 垂直方向に中央揃え */
       justify-content: center; /* 水平方向に中央揃え */
-      margin-bottom: 3px; /* ボタン間のスペース */
+      margin-bottom: 1px; /* ボタン間のスペース */
       background-color: #fff; /* ボタンの背景色 */
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影を追加して浮いているように見せる */
       border-radius: 50px; /* 柔らかな丸みを追加 */

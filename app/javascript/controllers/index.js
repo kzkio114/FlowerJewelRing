@@ -7,8 +7,11 @@ import { application } from "./application"
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
 
-import renderingController from "./rendering_controller"
-application.register("rendering", renderingController)
+import MyCustomName from "./rendering_controller";
+application.register("rendering", MyCustomName);
+
+import ModalController from "./modal_controller"
+application.register("image", ModalController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
