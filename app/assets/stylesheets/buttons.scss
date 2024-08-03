@@ -18,7 +18,7 @@
       border: 2px solid #e0e0e0; /* ボーダーを追加 */
       transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* ボーダーの変化にトランジションを追加 */
     }
-  
+
     @media (max-width: 480px) {
       flex-direction: column; /* スマホ用に縦並び */
       .button {
@@ -41,7 +41,7 @@
         margin-left: 130px; /* 特定のボタンの左マージンを増やす */
       }
     }
-  
+
     @media (max-width: 411px) {
       .button {
         width: 103px; /* スマホ用の幅 */
@@ -52,7 +52,7 @@
         font-size: 0.75rem; /* スマホ用のフォントサイズ */
       }
     }
-  
+
     .button.is-light {
       background-color: #fff;
       color: #4a4a4a; /* テキスト色を灰色に */
@@ -63,7 +63,7 @@
         border-color: #090909; /* ボーダーの色を薄い灰色に */
       }
     }
-  
+
     .button.is-primary {
       background-color: #fff;
       color: #00d1b2;
@@ -74,7 +74,7 @@
         border-color: #00d1b2;
       }
     }
-  
+
     .button.is-link {
       background-color: #fff;
       color: #3273dc;
@@ -85,7 +85,7 @@
         border-color: #3273dc;
       }
     }
-  
+
     .button.is-info {
       background-color: #fff;
       color: #209cee;
@@ -96,7 +96,7 @@
         border-color: #209cee;
       }
     }
-  
+
     .button.is-success {
       background-color: #fff;
       color: #23d160;
@@ -107,7 +107,7 @@
         border-color: #23d160;
       }
     }
-  
+
     .button.is-warning {
       background-color: #fff;
       color: #ffdd57;
@@ -118,7 +118,7 @@
         border-color: #ffdd57;
       }
     }
-  
+
     .button.is-danger {
       background-color: #fff;
       color: #ff3860;
@@ -129,16 +129,16 @@
         border-color: #ff3860;
       }
     }
-  
+
     .button-wrap-text {
       font-size: 0.8rem; /* スマホ用のフォントサイズ */
-  
+
       @media (max-width: 480px) {
         white-space: normal;
         flex-wrap: wrap;
         font-size: 0.75rem; /* スマホ用のフォントサイズ */
       }
-  
+
       @media (max-width: 411px) {
         white-space: normal;
         flex-wrap: wrap;
