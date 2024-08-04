@@ -1,10 +1,5 @@
-<div class="buttons is-centered">
+<div class="buttons-tone is-centered">
   <%= render 'buttons/enter_app_button' %>
-  <% if user_signed_in? %>
-  <%= link_to 'ログイン', dashboard_path, class: 'button is-primary is-small' %>
-  <% else %>
-  <%= render 'buttons/login_button' %>
-  <% end %>
   <%= button_to '利用規約', tos_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-primary is-small' %>
   <%= button_to 'プライバシーポリシー', pp_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-primary is-small' %>
 </div>

@@ -1,6 +1,12 @@
-<div id="response_area" class="fixed-height notification is-flex is-flex-direction-column is-justify-content-center is-align-items-center">
-  <strong class="is-size-3">ログイン</strong> どのサービスからログインしますか？
-  <div class="buttons-tone columns is-centered is-mobile mt-3">
+<div class="is-flex-direction-column is-justify-content-center is-align-items-center">
+  <strong class="is-size-3">ログイン</strong>
+  <p>どのサービスからログインしますか？</p>
+  <div class="buttons-tone columns is-centered is-mobile mt-1">
+    <% if user_signed_in? %>
+      <div class="columns is-centered mb-3">
+      <%= link_to 'ログイン', dashboard_path, class: 'button is-primary is-small' %>
+      </div>
+    <% else %>
       <div class="column is-narrow">
         <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-primary is-small' do %>
           <span class="icon">
@@ -9,14 +15,6 @@
           <span>Google</span>
         <% end %>
       </div>
-      <%# <div class="column is-narrow">
-        <%= button_to user_twitter_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-primary' do % >
-          <span class="icon">
-            <i class="fab fa-twitter"></i>
-          </span>
-          <span>Twitter</span>
-        <% end % >
-      </div> %>
       <div class="column is-narrow">
         <%= button_to user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-primary is-small' do %>
           <span class="icon">
@@ -25,14 +23,6 @@
           <span>GitHub</span>
         <% end %>
       </div>
-      <%# <div class="column is-narrow">
-        <%= button_to user_line_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-primary' do % >
-          <span class="icon">
-            <i class="fab fa-line"></i>
-          </span>
-          <span>LINE</span>
-        <% end % >
-      </div>%>
       <div class="column is-narrow">
         <%= button_to user_discord_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-primary is-small' do %>
           <span class="icon">
@@ -41,5 +31,6 @@
           <span>Discord</span>
         <% end %>
       </div>
+    <% end %>
   </div>
 </div>
