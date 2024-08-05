@@ -10,6 +10,9 @@ application.register("visibility", VisibilityController)
 import MyCustomName from "./rendering_controller"
 application.register("rendering", MyCustomName)
 
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
+
 //import TooltipController from "./tooltip_controller"
 //application.register("tooltip", TooltipController) // 'tooltip' で登録
 

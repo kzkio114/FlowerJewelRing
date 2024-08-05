@@ -6,23 +6,7 @@ export default class extends Controller {
     "news", "worries", "search", "chat", "thanks",
     "newsImage", "worriesImage", "searchImage", "chatImage", "thanksImage",
     "appDescriptionTitle", "appDescriptionText",
-    "modalContainer", "modalImage" // モーダルのターゲットを追加
   ];
-
-  open(event) {
-    const imgSrc = event.currentTarget.src;
-    this.modalImageTarget.src = imgSrc;
-    this.modalContainerTarget.classList.add("is-active");
-    this.modalImageTarget.addEventListener("click", this.close.bind(this));
-  }
-
-  close() {
-    this.modalContainerTarget.classList.remove("is-active");
-    this.modalImageTarget.src = "";
-
-    // イベントリスナーを削除してクリーンアップ
-    this.modalImageTarget.removeEventListener("click", this.close.bind(this));
-  }
 
   connect() {
     this.buttonMapping = {

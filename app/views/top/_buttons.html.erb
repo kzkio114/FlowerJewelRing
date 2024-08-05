@@ -1,5 +1,16 @@
-<div class="buttons-tone is-centered">
-  <%= render 'buttons/enter_app_button' %>
-  <%= button_to '利用規約', tos_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-primary is-small' %>
-  <%= button_to 'プライバシーポリシー', pp_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-primary is-small' %>
+<div data-controller="modal">
+  <!-- モーダルを開くためのボタンや画像 -->
+  <button type="button" class="button" data-action="click->modal#open" data-modal-type="text" data-modal-content="<h3>利用規約</h3><p>ここに利用規約の内容を表示します。</p>">利用規約</button>
+  <button type="button" class="button" data-action="click->modal#open" data-modal-type="text" data-modal-content="<h3>プライバシーポリシー</h3><p>ここにプライバシーポリシーの内容を表示します。</p>">プライバシーポリシー</button>
+  <img src="path_to_image1.jpg" data-action="click->modal#open" data-modal-type="image" />
+
+  <!-- モーダル -->
+  <div data-modal-target="modalContainer" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <img data-modal-target="modalImage" class="is-hidden" />
+      <div data-modal-target="modalContent" class="is-hidden"></div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" data-action="click->modal#close"></button>
+  </div>
 </div>

@@ -4,11 +4,11 @@
   <div class="buttons-tone columns is-centered is-mobile mt-1">
     <% if user_signed_in? %>
       <div class="columns is-centered mb-3">
-      <%= link_to 'ログイン', dashboard_path, class: 'button is-primary is-small' %>
+      <%= link_to 'ログイン', dashboard_path, class: 'button is-explanation is-small' %>
       </div>
     <% else %>
       <div class="column is-narrow">
-        <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-primary is-small' do %>
+        <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-explanation is-small' do %>
           <span class="icon">
             <i class="fab fa-google"></i>
           </span>
@@ -16,7 +16,7 @@
         <% end %>
       </div>
       <div class="column is-narrow">
-        <%= button_to user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-primary is-small' do %>
+        <%= button_to user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-explanation is-small' do %>
           <span class="icon">
             <i class="fab fa-github"></i>
           </span>
@@ -24,7 +24,7 @@
         <% end %>
       </div>
       <div class="column is-narrow">
-        <%= button_to user_discord_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-primary is-small' do %>
+        <%= button_to user_discord_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-explanation is-small' do %>
           <span class="icon">
             <i class="fab fa-discord"></i>
           </span>
@@ -32,5 +32,6 @@
         <% end %>
       </div>
     <% end %>
+    <%#= render 'buttons/enter_app_button' %>
   </div>
 </div>
