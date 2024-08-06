@@ -1,16 +1,19 @@
-<div data-controller="modal">
-  <!-- モーダルを開くためのボタンや画像 -->
-  <button type="button" class="button" data-action="click->modal#open" data-modal-type="text" data-modal-content="<h3>利用規約</h3><p>ここに利用規約の内容を表示します。</p>">利用規約</button>
-  <button type="button" class="button" data-action="click->modal#open" data-modal-type="text" data-modal-content="<h3>プライバシーポリシー</h3><p>ここにプライバシーポリシーの内容を表示します。</p>">プライバシーポリシー</button>
-  <img src="path_to_image1.jpg" data-action="click->modal#open" data-modal-type="image" />
+<div class="buttons-tone is-centered">
+  <%= link_to '#', data: { action: "click->modal#open", modal_content: "<h3>利用規約</h3><p>ここに利用規約の内容を表示します。</p>" }, class: 'button is-explanation is-small' do %>
+    利用規約
+  <% end %>
+  <%= link_to '#', data: { action: "click->modal#open", modal_content: "<h3>プライバシーポリシー</h3><p>ここにプライバシーポリシーの内容を表示します。</p>" }, class: 'button is-explanation is-small' do %>
+    プライバシーポリシー
+  <% end %>
+</div>
 
-  <!-- モーダル -->
-  <div data-modal-target="modalContainer" class="modal">
+<!-- モーダル部分 -->
+<div data-controller="modal">
+  <div data-modal-target="modalContainer" class="modal is-hidden">
     <div class="modal-background"></div>
-    <div class="modal-content">
-      <img data-modal-target="modalImage" class="is-hidden" />
-      <div data-modal-target="modalContent" class="is-hidden"></div>
-    </div>
+      <div class="modal-content">
+        <div data-modal-target="modalContent"></div>
+      </div>
     <button class="modal-close is-large" aria-label="close" data-action="click->modal#close"></button>
   </div>
 </div>
