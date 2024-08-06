@@ -1,7 +1,8 @@
   .buttons {
     display: flex;
     flex-direction: column;
-  
+    margin-top: -30px; /* 左側の余白 */
+
     .button {
       flex-grow: 1;
       text-align: center;
@@ -10,14 +11,14 @@
       display: flex; /* フレックスボックスを使用 */
       align-items: center; /* 垂直方向に中央揃え */
       justify-content: center; /* 水平方向に中央揃え */
-      margin-bottom: 3px; /* ボタン間のスペース */
+      margin-bottom: 1px; /* ボタン間のスペース */
       background-color: #fff; /* ボタンの背景色 */
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 影を追加して浮いているように見せる */
       border-radius: 50px; /* 柔らかな丸みを追加 */
       border: 2px solid #e0e0e0; /* ボーダーを追加 */
       transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* ボーダーの変化にトランジションを追加 */
     }
-  
+
     @media (max-width: 480px) {
       flex-direction: column; /* スマホ用に縦並び */
       .button {
@@ -40,7 +41,7 @@
         margin-left: 130px; /* 特定のボタンの左マージンを増やす */
       }
     }
-  
+
     @media (max-width: 411px) {
       .button {
         width: 103px; /* スマホ用の幅 */
@@ -51,7 +52,7 @@
         font-size: 0.75rem; /* スマホ用のフォントサイズ */
       }
     }
-  
+
     .button.is-light {
       background-color: #fff;
       color: #4a4a4a; /* テキスト色を灰色に */
@@ -62,7 +63,7 @@
         border-color: #090909; /* ボーダーの色を薄い灰色に */
       }
     }
-  
+
     .button.is-primary {
       background-color: #fff;
       color: #00d1b2;
@@ -73,7 +74,7 @@
         border-color: #00d1b2;
       }
     }
-  
+
     .button.is-link {
       background-color: #fff;
       color: #3273dc;
@@ -84,7 +85,7 @@
         border-color: #3273dc;
       }
     }
-  
+
     .button.is-info {
       background-color: #fff;
       color: #209cee;
@@ -95,7 +96,7 @@
         border-color: #209cee;
       }
     }
-  
+
     .button.is-success {
       background-color: #fff;
       color: #23d160;
@@ -106,7 +107,7 @@
         border-color: #23d160;
       }
     }
-  
+
     .button.is-warning {
       background-color: #fff;
       color: #ffdd57;
@@ -117,7 +118,7 @@
         border-color: #ffdd57;
       }
     }
-  
+
     .button.is-danger {
       background-color: #fff;
       color: #ff3860;
@@ -128,16 +129,16 @@
         border-color: #ff3860;
       }
     }
-  
+
     .button-wrap-text {
       font-size: 0.8rem; /* スマホ用のフォントサイズ */
-  
+
       @media (max-width: 480px) {
         white-space: normal;
         flex-wrap: wrap;
         font-size: 0.75rem; /* スマホ用のフォントサイズ */
       }
-  
+
       @media (max-width: 411px) {
         white-space: normal;
         flex-wrap: wrap;

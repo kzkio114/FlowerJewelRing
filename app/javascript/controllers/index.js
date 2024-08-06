@@ -7,8 +7,14 @@ import { application } from "./application"
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
 
-import renderingController from "./rendering_controller"
-application.register("rendering", renderingController)
+import MyCustomName from "./rendering_controller"
+application.register("rendering", MyCustomName)
+
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
+
+//import TooltipController from "./tooltip_controller"
+//application.register("tooltip", TooltipController) // 'tooltip' で登録
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)

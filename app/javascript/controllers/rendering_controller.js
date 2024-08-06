@@ -5,7 +5,7 @@ export default class extends Controller {
     "details", "toggleDetails", "extraContent",
     "news", "worries", "search", "chat", "thanks",
     "newsImage", "worriesImage", "searchImage", "chatImage", "thanksImage",
-    "appDescriptionTitle", "appDescriptionText"
+    "appDescriptionTitle", "appDescriptionText",
   ];
 
   connect() {
@@ -25,93 +25,11 @@ export default class extends Controller {
       showThanks: this.thanksImageTarget
     };
 
+    this.currentHoverElement = null; // 現在ホバー中の要素を追跡
+
     // 初期ロード時にタイトルと説明文を一文字ずつ表示する
     this.displayTextSlowly(this.appDescriptionTitleTarget, 50);
     this.displayTextSlowly(this.appDescriptionTextTarget, 50);
-  }
-
-  toggleDetails() {
-    if (this.detailsTarget.classList.contains("is-hidden")) {
-      this.detailsTarget.classList.remove("is-hidden");
-      requestAnimationFrame(() => {
-        this.detailsTarget.classList.add("is-visible");
-      });
-      this.toggleDetailsTarget.textContent = "詳細を隠す";
-    } else {
-      this.detailsTarget.classList.remove("is-visible");
-      this.detailsTarget.addEventListener('transitionend', () => {
-        this.detailsTarget.classList.add("is-hidden");
-      }, { once: true });
-      this.toggleDetailsTarget.textContent = "詳細を表示";
-    }
-  }
-
-  showContent(event) {
-    // 全てのセクションと画像を非表示にする
-    Object.values(this.buttonMapping).forEach(section => {
-      section.classList.add("is-hidden");
-    });
-
-    Object.values(this.imageMapping).forEach(image => {
-      image.classList.add("is-hidden");
-    });
-
-    // クリックされたボタンに対応するセクションと画像を表示
-    const targetId = event.currentTarget.id;
-    const targetElement = this.buttonMapping[targetId];
-    const targetImage = this.imageMapping[targetId];
-
-    if (targetElement && targetImage) {
-      targetElement.classList.remove("is-hidden");
-      targetImage.classList.remove("is-hidden");
-      this.extraContentTarget.classList.remove("is-hidden");
-
-      // クリック時のテキストに変更
-      this.activateButtonState(event.currentTarget, "click");
-    }
-  }
-
-  hoverContent(event) {
-    const button = event.currentTarget;
-    const hoverText = button.getAttribute("data-hover-text");
-
-    // 元のテキストを保存
-    if (!button.hasAttribute("data-original-text")) {
-      button.setAttribute("data-original-text", button.textContent);
-    }
-
-    // ホバーテキストを表示
-    if (hoverText) {
-      button.textContent = hoverText;
-    }
-  }
-
-  resetContent(event) {
-    const button = event.currentTarget;
-    // ホバーが解除されたときに、元のテキストに戻す
-    if (!button.hasAttribute("data-clicked")) {
-      const originalText = button.getAttribute("data-original-text");
-      if (originalText) {
-        button.textContent = originalText;
-      }
-    }
-  }
-
-  activateButtonState(button, type) {
-    if (button) {
-      if (type === "click") {
-        button.setAttribute("data-clicked", "true"); // クリック状態を記録
-        const clickText = button.getAttribute("data-click-text");
-        if (clickText) {
-          button.textContent = clickText;
-        }
-      } else {
-        const hoverText = button.getAttribute("data-hover-text");
-        if (hoverText) {
-          button.textContent = hoverText;
-        }
-      }
-    }
   }
 
   displayTextSlowly(element, speed) {
@@ -135,5 +53,59 @@ export default class extends Controller {
       }
     };
     typing();
+  }
+
+  showContent(event) {
+    const targetId = event.currentTarget.id;
+    const targetElement = this.buttonMapping[targetId];
+    const targetImage = this.imageMapping[targetId];
+
+    if (targetElement && targetImage) {
+      // ホバー状態を設定
+      this.currentHoverElement = { targetElement, targetImage };
+
+      // すべての要素を一旦非表示にしてから表示したい要素を表示
+      this.hideAllExceptCurrent();
+
+      targetElement.classList.remove("is-hidden");
+      targetImage.classList.remove("is-hidden");
+      this.extraContentTarget.classList.remove("is-hidden");
+    }
+  }
+
+  hideContent(event) {
+    // ホバーが外れた時の処理は不要
+  }
+
+  hideAll() {
+    // すべてのセクションと画像を非表示にする
+    Object.values(this.buttonMapping).forEach(section => {
+      section.classList.add("is-hidden");
+    });
+
+    Object.values(this.imageMapping).forEach(image => {
+      image.classList.add("is-hidden");
+    });
+
+    this.extraContentTarget.classList.add("is-hidden");
+  }
+
+  hideAllExceptCurrent() {
+    // 現在ホバー中の要素以外を非表示にする
+    Object.values(this.buttonMapping).forEach(section => {
+      if (!this.currentHoverElement || section !== this.currentHoverElement.targetElement) {
+        section.classList.add("is-hidden");
+      }
+    });
+
+    Object.values(this.imageMapping).forEach(image => {
+      if (!this.currentHoverElement || image !== this.currentHoverElement.targetImage) {
+        image.classList.add("is-hidden");
+      }
+    });
+
+    if (!this.currentHoverElement) {
+      this.extraContentTarget.classList.add("is-hidden");
+    }
   }
 }

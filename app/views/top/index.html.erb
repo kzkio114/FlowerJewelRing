@@ -13,13 +13,14 @@
   <section class="section is-fullheight">
     <div class="container is-flex is-flex-direction-column is-justify-content-space-between">
       <div class="content">
-        <div class="columns is-centered mt-3">
+        <div class="columns is-centered">
           <div class="column has-text-centered">
               <div class="title">
               <span>ようこそ！！</span>
               <span>めぐる宝石花</span>
               </div>
             <%= render 'top/title' %>
+            <%= render 'buttons/login_response' %>
             <turbo-frame id="response_area">
               <%= render 'buttons/enter_app_response' %>
               <div class="bird"></div>
@@ -29,9 +30,9 @@
           </div>
         </div>
       </div>
-      <div class="columns is-centered mt-3">
+              <div class="columns is-centered mt-1">
         <%= render 'top/buttons' %>
-      </div>
+        </div>
     </div>
   </section>
 </div>

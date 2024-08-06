@@ -134,6 +134,20 @@
     }
   }
 
+  .button.is-explanation {
+    width: 110px; /* デフォルトの幅 */
+    height: 35px; /* デフォルトの高さ */
+    background-color: #fff; /* 背景色は白 */
+    color: #519bea; /* テキスト色 */
+    border-color: #78ddf6; /* ボーダーの色を設定 */
+
+    &:hover {
+      background-color: hsl(176, 88%, 57%);  /* ホバー時の背景色 */
+      color: #fff; /* ホバー時のテキスト色 */
+      border-color: hsl(176, 88%, 57%);  /* ホバー時のボーダー色 */
+    }
+  }
+
   .button-wrap-text {
     font-size: 0.8rem;
 
