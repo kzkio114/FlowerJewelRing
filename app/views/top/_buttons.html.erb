@@ -1,5 +1,11 @@
-<div class="buttons-tone is-centered">
-  <%= render 'buttons/enter_app_button' %>
-  <%= button_to '利用規約', tos_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation is-small' %>
-  <%= button_to 'プライバシーポリシー', pp_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation is-small' %>
+<div class="buttons-tone columns is-centered is-mobile">
+  <div class="column is-narrow">
+    <%= render 'buttons/enter_app_button' %>
+  </div>
+  <div class="column is-narrow">
+    <%= button_to '利用規約', tos_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation-bottom is-small' %>
+  </div>
+  <div class="column is-narrow">
+    <%= button_to 'プライバシーポリシー', pp_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation-bottom is-small' %>
+  </div>
 </div>

@@ -7,8 +7,8 @@ import { application } from "./application"
 import VisibilityController from "./visibility_controller"
 application.register("visibility", VisibilityController)
 
-import MyCustomName from "./rendering_controller"
-application.register("rendering", MyCustomName)
+import RenderingController from "./rendering_controller"
+application.register("rendering", RenderingController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
