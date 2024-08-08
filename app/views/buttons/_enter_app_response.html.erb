@@ -1,62 +1,61 @@
-<div data-controller="rendering">
-  <div id="response_area" class="container is-small">
-    <div class="notification fixed-height">
-      <strong class="is-size-5" data-rendering-target="appDescriptionTitle">アプリ説明</strong>
-      <p class="is-size-6 mt-3" data-rendering-target="appDescriptionText">
-        相談する→相談されるの流れを繰り返して行い、<br>
-        また、相談した人には相談された人に感謝の気持ちとアイテムが貰えて、<br>
-        相談を出来る回数が増えていく循環・複合型相談アプリです。
-      </p>
+<div id="response_area" class="container is-small mt-5" data-controller="rendering">
+  <div class="notification fixed-height">
+    <strong class="is-size-5" data-rendering-target="appDescriptionTitle">アプリ説明</strong>
+    <p class="is-size-6 mt-3" data-rendering-target="appDescriptionText">
+      相談する→相談されるの流れを繰り返して行い、<br>
+      また、相談した人には相談された人に感謝の気持ちとアイテムが貰えて、<br>
+      相談を出来る回数が増えていく循環・複合型相談アプリです。
+    </p>
 
-      <div class="fixed-buttons">
-        <div class="buttons-tone columns is-centered is-mobile mt-1">
-          <div class="column is-narrow">
-            <button id="showNews" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">最新のお知らせ</button>
-          </div>
-          <div class="column is-narrow">
-            <button id="showWorries" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">みんなの悩み</button>
-          </div>
-          <div class="column is-narrow">
-            <button id="showSearch" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">検索</button>
-          </div>
-          <div class="column is-narrow">
-            <button id="showChat" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">チャット機能</button>
-          </div>
-          <div class="column is-narrow">
-            <button id="showThanks" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">感謝の気持ち</button>
-          </div>
+    <div class="fixed-buttons">
+      <div class="buttons-tone columns is-centered is-mobile mt-1">
+        <div class="column is-narrow">
+          <button id="showNews" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">最新のお知らせ</button>
+        </div>
+        <div class="column is-narrow">
+          <button id="showWorries" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">みんなの悩み</button>
+        </div>
+        <div class="column is-narrow">
+          <button id="showSearch" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">検索</button>
+        </div>
+        <div class="column is-narrow">
+          <button id="showChat" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">チャット機能</button>
+        </div>
+        <div class="column is-narrow">
+          <button id="showThanks" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-explanation is-small button-wrap-text">感謝の気持ち</button>
         </div>
       </div>
+    </div>
 
-      <div data-controller="modal">
-        <div data-modal-target="modalContainer" class="modal">
-          <div class="modal-background"></div>
-            <div class="modal-content">
-              <p class="image">
-                <img data-modal-target="modalImage" src="" alt="拡大画像" class="is-clickable">
-              </p>
-            </div>
-          <button class="modal-close is-large" aria-label="close" data-action="click->modal#close"></button>
-        </div>
+    <div data-controller="modal">
+      <div data-modal-target="modalContainer" class="modal">
+        <div class="modal-background"></div>
+          <div class="modal-content">
+            <p class="image">
+              <img data-modal-target="modalImage" src="" alt="拡大画像" class="is-clickable">
+            </p>
+          </div>
+        <button class="modal-close is-large" aria-label="close" data-action="click->modal#close"></button>
+      </div>
 
-        <div data-rendering-target="extraContent" class="is-hidden">
-          <div data-rendering-target="news" class="is-hidden" data-no-hide>
-            <strong class="is-size-5">最新のお知らせ</strong>
-            <p class="is-size-6 mt-1">最新のメッセージと最新の感謝の気持ちを5件確認できます。</p>
-            <div class="tooltip-container">
-              <%= image_tag 'テスト.gif', alt: '最新のお知らせの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'newsImage', action: 'click->modal#open' } %>
-              <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
-              <div class="custom-tooltip-content">最新のお知らせの説明テキスト</div>
-            </div>
+      <div data-rendering-target="extraContent" class="is-hidden">
+        <div data-rendering-target="news" class="is-hidden" data-no-hide>
+          <strong class="is-size-5">最新のお知らせ</strong>
+          <p class="is-size-6 mt-1">最新のメッセージと最新の感謝の気持ちを5件確認できます。</p>
+          <div class="tooltip-container">
+            <%= image_tag 'テスト.gif', alt: '最新のお知らせの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'newsImage', action: 'click->modal#open' } %>
+            <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
+            <div class="custom-tooltip-content">クリックで拡大表示</div>
+          </div>
         </div>
 
         <div data-rendering-target="worries" class="is-hidden" data-no-hide>
           <strong class="is-size-5">みんなの悩み</strong>
           <p class="is-size-6 mt-1">他のユーザーが投稿した相談内容を閲覧できる場所です。</p>
           <div class="tooltip-container">
-            <%= image_tag '24.webp', alt: 'みんなの悩みの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'worriesImage', action: 'click->modal#open' } %>
+            <%= image_tag 'テスト.gif', alt: 'みんなの悩みの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'worriesImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
-            <div class="custom-tooltip-content">みんなの悩みの説明テキスト</div>
+            <div class="custom-tooltip-content">クリックで拡大表示</div>
           </div>
         </div>
 
@@ -64,9 +63,9 @@
           <strong class="is-size-5">検索</strong>
           <p class="is-size-6 mt-1">過去の投稿やトピックを検索できます。</p>
           <div class="tooltip-container">
-            <%= image_tag '21.webp', alt: '検索の画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'searchImage', action: 'click->modal#open' } %>
+            <%= image_tag 'テスト.gif', alt: '検索の画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'searchImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
-            <div class="custom-tooltip-content">検索の説明テキスト</div>
+            <div class="custom-tooltip-content">クリックで拡大表示</div>
           </div>
         </div>
 
@@ -74,9 +73,9 @@
           <strong class="is-size-5">チャット機能</strong>
           <p class="is-size-6 mt-1">1対1の匿名チャットやグループチャットが可能です。</p>
           <div class="tooltip-container">
-            <%= image_tag '23.webp', alt: 'チャット機能の画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'chatImage', action: 'click->modal#open' } %>
+            <%= image_tag 'テスト.gif', alt: 'チャット機能の画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'chatImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
-            <div class="custom-tooltip-content">チャット機能の説明テキスト</div>
+            <div class="custom-tooltip-content">クリックで拡大表示</div>
           </div>
         </div>
 
@@ -84,10 +83,9 @@
           <strong class="is-size-5">感謝の気持ち</strong>
           <p class="is-size-6 mt-1">相談やアドバイスに対する感謝の意を表すことができます。</p>
           <div class="tooltip-container">
-            <%= image_tag '26.webp', alt: '感謝の気持ちの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'thanksImage', action: 'click->modal#open' } %>
+            <%= image_tag 'テスト.gif', alt: '感謝の気持ちの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'thanksImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
-            <div class="custom-tooltip-content">感謝の気持ちの説明テキスト</div>
-            </div>
+            <div class="custom-tooltip-content">クリックで拡大表示</div>
           </div>
         </div>
       </div>

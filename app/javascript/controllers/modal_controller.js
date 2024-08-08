@@ -18,5 +18,3 @@ export default class extends Controller {
     this.modalImageTarget.removeEventListener("click", this.close.bind(this));
   }
 }
-
-

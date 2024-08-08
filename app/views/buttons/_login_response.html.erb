@@ -1,12 +1,16 @@
 <div class="is-flex-direction-column is-justify-content-center is-align-items-center">
-  <strong class="is-size-3">ログイン</strong>
-  <p>どのサービスからログインしますか？</p>
-  <div class="buttons-tone columns is-centered is-mobile mt-1">
-    <% if user_signed_in? %>
-      <div class="columns is-centered mb-3">
-      <%= link_to 'ログイン', dashboard_path, class: 'button is-explanation is-small' %>
+  <% if user_signed_in? %>
+    <strong class="is-size-3">お帰りなさい！！<%= current_user.name %>さん！</strong>
+    <p class="is-size-4 has-text-custom-color">ダッシュボードに移動しますか？</p>
+    <div class="buttons-tone">
+      <div class="columns is-centered mt-1 mb-1">
+        <%= link_to 'ログイン', dashboard_path, class: 'button is-explanation is-small' %>
       </div>
-    <% else %>
+    </div>
+  <% else %>
+    <strong class="is-size-3">ログインはこちらから！！</strong>
+    <p class="is-size-4 has-text-custom-color">どのサービスからログインしますか？</p>
+    <div class="buttons-tone columns is-centered is-mobile">
       <div class="column is-narrow">
         <%= button_to user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, authenticity_token: true, class: 'button is-explanation is-small' do %>
           <span class="icon">
@@ -31,7 +35,6 @@
           <span>Discord</span>
         <% end %>
       </div>
-    <% end %>
-    <%#= render 'buttons/enter_app_button' %>
-  </div>
+    </div>
+  <% end %>
 </div>

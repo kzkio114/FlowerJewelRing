@@ -1,19 +1,11 @@
-<div class="buttons-tone is-centered">
-  <%= link_to '#', data: { action: "click->modal#open", modal_content: "<h3>利用規約</h3><p>ここに利用規約の内容を表示します。</p>" }, class: 'button is-explanation is-small' do %>
-    利用規約
-  <% end %>
-  <%= link_to '#', data: { action: "click->modal#open", modal_content: "<h3>プライバシーポリシー</h3><p>ここにプライバシーポリシーの内容を表示します。</p>" }, class: 'button is-explanation is-small' do %>
-    プライバシーポリシー
-  <% end %>
-</div>
-
-<!-- モーダル部分 -->
-<div data-controller="modal">
-  <div data-modal-target="modalContainer" class="modal is-hidden">
-    <div class="modal-background"></div>
-      <div class="modal-content">
-        <div data-modal-target="modalContent"></div>
-      </div>
-    <button class="modal-close is-large" aria-label="close" data-action="click->modal#close"></button>
+<div class="buttons-tone columns is-centered is-mobile">
+  <div class="column is-narrow">
+    <%= render 'buttons/enter_app_button' %>
+  </div>
+  <div class="column is-narrow">
+    <%= button_to '利用規約', tos_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation-bottom is-small' %>
+  </div>
+  <div class="column is-narrow">
+    <%= button_to 'プライバシーポリシー', pp_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation-bottom is-small' %>
   </div>
 </div>
