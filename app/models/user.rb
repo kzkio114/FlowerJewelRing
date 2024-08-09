@@ -3,6 +3,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :discord, :twitter, :github, :line]
 
+  before_create :generate_random_id
+
   has_many :admin_users
   has_many :organizations, through: :admin_users
   has_many :organizations, through: :user_organizations
@@ -16,7 +18,7 @@ class User < ApplicationRecord
   belongs_to :organization, optional: true
   has_one :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
-  has_many :replies
+  has_many :replies, dependent: :destroy
   has_many :user_organizations, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
@@ -25,7 +27,6 @@ class User < ApplicationRecord
   def admin?
     admin_users.exists?
   end
-
 
   # ユーザーが特定の組織の管理者かどうかを判定するメソッド
   def admin_for?(organization)
@@ -37,7 +38,7 @@ class User < ApplicationRecord
     admin_users.exists?(admin_role: :super_admin)
   end
 
-  # 新しいメソッドを追加
+  # 特定の返信者から受け取ったギフトを取得するメソッド
   def received_gifts_from_repliers
     replier_ids = consultations.joins(:replies).pluck('replies.user_id').uniq
     received_gifts.where(giver_id: replier_ids)
@@ -47,12 +48,14 @@ class User < ApplicationRecord
     data = access_token.info
     user = User.where(email: data['email']).first_or_initialize
   
-    user.name = data['name']
-    user.password = Devise.friendly_token[0, 20] if user.new_record?
-    unless user.save
-      Rails.logger.info("ユーザー保存失敗: #{user.errors.full_messages.to_sentence}")
-      return nil
+    if user.new_record?
+      # 新規ユーザーの場合のみ、名前と表示名を設定する
+      user.name = data['name']
+      user.display_name = data['nickname'] || data['name']
+      user.password = Devise.friendly_token[0, 20]
+      user.save
     end
+  
     user
   end
 
@@ -69,5 +72,12 @@ class User < ApplicationRecord
     received_gifts_from_repliers.sum do |gift|
       gift.gift_histories.where(read: false).count + (gift.sender_message.present? ? 1 : 0)
     end
+  end
+
+  private
+
+  # ランダムな8桁のIDを生成するメソッド
+  def generate_random_id
+    self.social_id = SecureRandom.hex(4) # 8桁のランダムなIDを生成
   end
 end
