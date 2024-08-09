@@ -3,7 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2, :discord, :twitter, :github, :line]
 
-  before_create :generate_random_id
+  before_create :generate_random_display_name # 追加
 
   has_many :admin_users
   has_many :organizations, through: :admin_users
@@ -51,7 +51,7 @@ class User < ApplicationRecord
     if user.new_record?
       # 新規ユーザーの場合のみ、名前と表示名を設定する
       user.name = data['name']
-      user.display_name = data['nickname'] || data['name']
+      user.display_name = data['nickname'] || data['name'] || user.generate_random_display_name
       user.password = Devise.friendly_token[0, 20]
       user.save
     end
@@ -76,8 +76,11 @@ class User < ApplicationRecord
 
   private
 
-  # ランダムな8桁のIDを生成するメソッド
-  def generate_random_id
-    self.social_id = SecureRandom.hex(4) # 8桁のランダムなIDを生成
+  # ランダムな表示名を生成するメソッド
+  def generate_random_display_name
+    loop do
+      random_name = SecureRandom.hex(5) # 10文字のランダムな表示名
+      break self.display_name = random_name unless User.exists?(display_name: random_name)
+    end
   end
 end

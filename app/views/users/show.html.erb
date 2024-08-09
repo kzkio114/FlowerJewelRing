@@ -8,6 +8,7 @@
           <div class="columns">
             <div class="column">
               <p><strong>名前：</strong> <%= @user.name %></p>
+              <p><strong>プライベートチャット表示名：</strong> <%= @user.display_name %></p>
               <p><strong>メール：</strong> <%= @user.email %></p>
               <p><strong>組織：</strong> <%= @user.organization&.name || '未登録' %></p>
               <p><strong>自己紹介：</strong> <%= @user.profile&.introduction || '未登録' %></p>

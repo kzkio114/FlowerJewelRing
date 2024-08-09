@@ -27,7 +27,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_registration_url
     elsif @user.persisted?
       if @user.previous_changes[:id].present?
-        # 新規ユーザーの場合、プロフィール編集ページにリダイレクト
+        # 新規ユーザーの場合、ランダムなdisplay_nameを割り当てる
+        @user.update!(display_name: generate_random_display_name) if @user.display_name.blank?
+
+        # プロフィール編集ページにリダイレクト
         flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: kind)
         sign_in(@user)
         
@@ -51,5 +54,14 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def failure
     redirect_to root_path
+  end
+
+  private
+
+  def generate_random_display_name
+    loop do
+      random_name = SecureRandom.hex(5) # 例: 10文字のランダムな16進数
+      break random_name unless User.exists?(display_name: random_name)
+    end
   end
 end
