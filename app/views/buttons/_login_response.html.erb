@@ -1,6 +1,15 @@
 <div class="is-flex-direction-column is-justify-content-center is-align-items-center">
   <% if user_signed_in? %>
-    <strong class="is-size-3">お帰りなさい！！<%= current_user.name %>さん！</strong>
+    <%= case @current_time.hour
+    when 5..11
+    "<strong class='is-size-3'>おはようございます!!#{current_user.name}さん</strong>".html_safe
+    when 12..17
+    "<strong class='is-size-3'>こんにちは!!#{current_user.name}さん</strong>".html_safe
+    when 18..24
+    "<strong class='is-size-3'>こんばんは!!#{current_user.name}さん</strong>".html_safe
+    else
+    "<strong class='is-size-3'>こんな時間に、お疲れ様です！!#{current_user.name}さん</strong>".html_safe
+    end %>
     <p class="is-size-4 has-text-custom-color">ダッシュボードに移動しますか？</p>
     <div class="buttons-tone">
       <div class="columns is-centered mt-1 mb-1">
