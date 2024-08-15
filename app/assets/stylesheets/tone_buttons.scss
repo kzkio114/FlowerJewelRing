@@ -21,42 +21,6 @@
     transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* ボーダーの変化にトランジションを追加 */
   }
 
-  @media (max-width: 480px) {
-    flex-direction: column; /* スマホ用に縦並び */
-    align-items: center; /* スマホ用にボタンを中央揃え */
-    .button {
-      width: 90px; /* スマホ用の幅 */
-      height: 40px; /* スマホ用の高さ */
-      border-radius: 30px; /* スマホ用の丸みを調整 */
-      margin-bottom: 5px; /* ボタン間のスペース */
-      margin-left: 0; /* 左側の余白をリセット */
-      font-size: 0.75rem; /* スマホ用のフォントサイズ */
-    }
-    .custom-delete-top {
-      margin-top: 30px; /* 特定のボタンの下部マージンを増やす */
-    }
-    .custom-top {
-      margin-top: 10px; /* 特定のボタンの下部マージンを増やす */
-    }
-    .custom-left {
-      margin-left: 0; /* 左側の余白をリセット */
-    }
-    .custom-long-left {
-      margin-left: 0; /* 左側の余白をリセット */
-    }
-  }
-
-  @media (max-width: 411px) {
-    .button {
-      width: 103px; /* スマホ用の幅 */
-      height: 45px; /* スマホ用の高さ */
-      border-radius: 30px; /* スマホ用の丸みを調整 */
-      margin-bottom: -5px; /* ボタン間のスペース */
-      margin-left: 0; /* 左側の余白をリセット */
-      font-size: 0.75rem; /* スマホ用のフォントサイズ */
-    }
-  }
-
   .button.is-light {
     background-color: #fff;
     color: #4a4a4a; /* テキスト色を灰色に */
@@ -140,11 +104,18 @@
     background-color: #fff; /* 背景色は白 */
     color: #519bea; /* テキスト色 */
     border-color: #78ddf6; /* ボーダーの色を設定 */
-
+  
     &:hover {
       background-color: hsl(176, 88%, 57%);  /* ホバー時の背景色 */
       color: #fff; /* ホバー時のテキスト色 */
       border-color: hsl(176, 88%, 57%);  /* ホバー時のボーダー色 */
+    }
+  
+    @media (max-width: 480px) {
+      width: 95px; /* さらに小さい画面用の幅 */
+      height: 38px; /* 高さを調整 */
+      font-size: 0.7rem; /* フォントサイズをさらに小さく */
+      border-radius: 20px; /* 丸みをさらに調整 */
     }
   }
 
@@ -159,6 +130,13 @@
       background-color: hsl(176, 88%, 57%);  /* ホバー時の背景色 */
       color: #fff; /* ホバー時のテキスト色 */
       border-color: hsl(176, 88%, 57%);  /* ホバー時のボーダー色 */
+    }
+
+    @media (max-width: 480px) {
+      width: 120px; /* さらに小さい画面用の幅 */
+      height: 38px; /* 高さを調整 */
+      font-size: 0.7rem; /* フォントサイズをさらに小さく */
+      border-radius: 20px; /* 丸みをさらに調整 */
     }
   }
 

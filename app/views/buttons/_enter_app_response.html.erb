@@ -1,7 +1,7 @@
 <div id="response_area" class="container is-small mt-5" data-controller="rendering">
   <div class="notification fixed-height">
-    <strong class="is-size-5" data-rendering-target="appDescriptionTitle">アプリ説明</strong>
-    <p class="is-size-6 mt-3" data-rendering-target="appDescriptionText">
+    <strong class="custom-size-5" data-rendering-target="appDescriptionTitle">アプリ説明</strong>
+    <p class="custom-size-6 mt-3" data-rendering-target="appDescriptionText">
       相談する→相談されるの流れを繰り返して行い、<br>
       また、相談した人には相談された人に感謝の気持ちとアイテムが貰えて、<br>
       相談を出来る回数が増えていく循環・複合型相談アプリです。
@@ -40,8 +40,8 @@
 
       <div data-rendering-target="extraContent" class="is-hidden">
         <div data-rendering-target="news" class="is-hidden" data-no-hide>
-          <strong class="is-size-5">最新のお知らせ</strong>
-          <p class="is-size-6 mt-1">最新のメッセージと最新の感謝の気持ちを5件確認できます。</p>
+          <strong class="custom-size-5">最新のお知らせ</strong>
+          <p class="custom-size-6 mt-1">最新のメッセージと最新の感謝の気持ちを5件確認できます。</p>
           <div class="tooltip-container">
             <%= image_tag 'テスト.gif', alt: '最新のお知らせの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'newsImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
@@ -50,8 +50,8 @@
         </div>
 
         <div data-rendering-target="worries" class="is-hidden" data-no-hide>
-          <strong class="is-size-5">みんなの悩み</strong>
-          <p class="is-size-6 mt-1">他のユーザーが投稿した相談内容を閲覧できる場所です。</p>
+          <strong class="custom-size-5">みんなの悩み</strong>
+          <p class="custom-size-6 mt-1">他のユーザーが投稿した相談内容を閲覧できる場所です。</p>
           <div class="tooltip-container">
             <%= image_tag 'テスト.gif', alt: 'みんなの悩みの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'worriesImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
@@ -60,8 +60,8 @@
         </div>
 
         <div data-rendering-target="search" class="is-hidden">
-          <strong class="is-size-5">検索</strong>
-          <p class="is-size-6 mt-1">過去の投稿やトピックを検索できます。</p>
+          <strong class="custom-size-5">検索</strong>
+          <p class="custom-size-6 mt-1">過去の投稿やトピックを検索できます。</p>
           <div class="tooltip-container">
             <%= image_tag 'テスト.gif', alt: '検索の画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'searchImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
@@ -70,8 +70,8 @@
         </div>
 
         <div data-rendering-target="chat" class="is-hidden">
-          <strong class="is-size-5">チャット機能</strong>
-          <p class="is-size-6 mt-1">1対1の匿名チャットやグループチャットが可能です。</p>
+          <strong class="custom-size-5">チャット機能</strong>
+          <p class="custom-size-6 mt-1">1対1の匿名チャットやグループチャットが可能です。</p>
           <div class="tooltip-container">
             <%= image_tag 'テスト.gif', alt: 'チャット機能の画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'chatImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
@@ -80,8 +80,8 @@
         </div>
 
         <div data-rendering-target="thanks" class="is-hidden">
-          <strong class="is-size-5">感謝の気持ち</strong>
-          <p class="is-size-6 mt-1">相談やアドバイスに対する感謝の意を表すことができます。</p>
+          <strong class="custom-size-5">感謝の気持ち</strong>
+          <p class="custom-size-6 mt-1">相談やアドバイスに対する感謝の意を表すことができます。</p>
           <div class="tooltip-container">
             <%= image_tag 'テスト.gif', alt: '感謝の気持ちの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'thanksImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>

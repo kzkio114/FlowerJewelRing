@@ -4,7 +4,8 @@
   background-color: #fff; //枠の背景色を設定
 
   @media (max-width: 480px) { // スマホ用
-    height: 150px; // さらに小さな画面ではさらに高さを小さくする
+    height: 400px; // さらに小さな画面ではさらに高さを小さくする
+    width: 380px;   // デフォルトの幅
   }
 
   overflow-y: auto;
