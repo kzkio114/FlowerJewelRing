@@ -1,0 +1,39 @@
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* ボタン間のスペースを設定 */
+  justify-content: center; /* ボタンを中央に配置 */
+}
+
+.button-container .button.is-tone {
+  width: 110px; /* デフォルトの幅 */
+  height: 35px; /* デフォルトの高さ */
+  background-color: #fff; /* 背景色は白 */
+  color: #519bea; /* テキスト色 */
+  border-color: #78ddf6; /* ボーダーの色を設定 */
+  text-align: center;
+  border-radius: 50px; /* デフォルトの丸みを追加 */
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* トランジション効果 */
+
+  &:hover {
+    background-color: hsl(176, 88%, 57%);  /* ホバー時の背景色 */
+    color: #fff; /* ホバー時のテキスト色 */
+    border-color: hsl(176, 88%, 57%);  /* ホバー時のボーダー色 */
+  }
+}
+
+@media (max-width: 480px) {
+  .button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2列のグリッド */
+    gap: 10px; /* ボタン間のスペースを設定 */
+  }
+
+  .button-container .button.is-tone {
+    width: 95px; /* さらに小さい画面用の幅 */
+    height: 30px; /* 高さを調整 */
+    font-size: 0.7rem; /* フォントサイズをさらに小さく */
+    border-radius: 20px; /* 丸みをさらに調整 */
+    margin-bottom: 10px; /* 下に隙間を追加 */
+  }
+}
