@@ -1,0 +1,51 @@
+/* 基本のカスタムフォントサイズ */
+.custom-size-1 {
+  font-size: 3rem; /* is-size-1 相当 */
+}
+
+.custom-size-2 {
+  font-size: 2.5rem; /* is-size-2 相当 */
+}
+
+.custom-size-3 {
+  font-size: 2rem; /* is-size-3 相当 */
+}
+
+.custom-size-4 {
+  font-size: 1.5rem; /* is-size-4 相当 */
+}
+
+.custom-size-5 {
+  font-size: 1.25rem; /* is-size-5 相当 */
+}
+
+.custom-size-6 {
+  font-size: 1rem; /* is-size-6 相当 */
+}
+
+/* スマホ用のサイズ調整 */
+@media (max-width: 480px) {
+  .custom-size-1 {
+    font-size: 2.5rem; /* 1段階小さく */
+  }
+
+  .custom-size-2 {
+    font-size: 2rem; /* 1段階小さく */
+  }
+
+  .custom-size-3 {
+    font-size: 1.5rem; /* 1段階小さく */
+  }
+
+  .custom-size-4 {
+    font-size: 1.25rem; /* 1段階小さく */
+  }
+
+  .custom-size-5 {
+    font-size: 1rem; /* 1段階小さく */
+  }
+
+  .custom-size-6 {
+    font-size: 0.85rem; /* 1段階小さく */
+  }
+}

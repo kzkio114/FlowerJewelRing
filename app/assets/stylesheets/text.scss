@@ -1,0 +1,14 @@
+.custom-title {
+  font-size: 3rem; /* is-1に相当する大きなフォントサイズ */
+  color: #000; /* has-text-blackに相当する黒色 */
+  font-weight: bold; /* タイトル用に太字を設定 */
+  margin-bottom: 1rem; /* タイトル下に余白を追加 */
+
+  @media (max-width: 480px) {
+    font-size: 2rem; /* スマホ用にフォントサイズを少し小さく */
+  }
+
+  @media (max-width: 411px) {
+    font-size: 1.75rem; /* さらに小さい画面用にフォントサイズをさらに小さく */
+  }
+}

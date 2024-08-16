@@ -6,16 +6,6 @@
           <strong class="is-size-4 ml-4 info-margin">最新のお知らせ</strong>
           <p class="is-size-6 mr-6 ml-5 info-margin">
             最新の通知は、<span class="mobile-line-break"></span>5件のみ表示されています。<br>
-            <%= case @current_time.hour
-                  when 5..11
-                    "おはようございます、#{@user.name}さん"
-                  when 12..17
-                    "こんにちは、#{@user.name}さん"
-                  when 18..24
-                    "こんばんは、#{@user.name}さん"
-                  else
-                    "こんな時間に、お疲れ様です！#{@user.name}さん"
-                  end %>
           </p>
         </div>
         <div class="column mt-6 icon-margin">
