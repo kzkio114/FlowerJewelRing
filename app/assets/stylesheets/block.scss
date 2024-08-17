@@ -1,0 +1,16 @@
+/* PC用の改行は常に表示 */
+.pc-scc {
+    display: block;
+}
+
+/* スマホ用の改行はデフォルトでは非表示 */
+.sma-scc {
+    display: none;
+}
+
+/* スマホ版でのみ追加の改行を表示 */
+@media screen and (max-width: 480px) {
+    .sma-scc {
+        display: block;
+    }
+}

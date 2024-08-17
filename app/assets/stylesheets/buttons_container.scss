@@ -10,8 +10,8 @@
   height: 35px; /* デフォルトの高さ */
   background-color: #fff; /* 背景色は白 */
   color: #519bea; /* テキスト色 */
-  border-color: #78ddf6; /* ボーダーの色を設定 */
   text-align: center;
+  border: 2px solid  #78ddf6;/* ボーダーを追加 */
   border-radius: 50px; /* デフォルトの丸みを追加 */
   transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* トランジション効果 */
 

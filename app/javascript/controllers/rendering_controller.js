@@ -37,13 +37,27 @@ export default class extends Controller {
     const htmlContent = element.innerHTML; // innerHTMLを使用して改行やHTMLタグを取得
     element.innerHTML = ""; // コンテンツをクリア
     let i = 0;
-
+  
     const typing = () => {
       if (i < htmlContent.length) {
-        if (htmlContent[i] === "<" && htmlContent.slice(i).startsWith("<br>")) {
+        if (htmlContent[i] === "<" && htmlContent.slice(i).startsWith("<br")) {
           // <br>タグを検出して改行を追加
-          element.innerHTML += "<br>";
-          i += 4; // <br>タグの長さ分インデックスを進める
+          const endOfTag = htmlContent.indexOf('>', i) + 1;
+          const tagContent = htmlContent.slice(i, endOfTag);
+          
+          // <br>タグのクラスに基づいて処理を分ける
+          if (tagContent.includes('class="pc-only"')) {
+            if (window.innerWidth > 480) { // PCサイズの時だけ表示
+              element.innerHTML += "<br>";
+            }
+          } else if (tagContent.includes('class="sma"')) {
+            if (window.innerWidth <= 480) { // スマホサイズの時だけ表示
+              element.innerHTML += "<br>";
+            }
+          } else {
+            element.innerHTML += "<br>"; // 共通の改行
+          }
+          i = endOfTag;
         } else {
           // それ以外の文字を追加
           element.innerHTML += htmlContent[i];
