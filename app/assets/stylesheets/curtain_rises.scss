@@ -242,3 +242,20 @@
     transform: translate(0, 0);
   }
 }
+
+@media (max-width: 480px) {
+  .title {
+    top: 50px; /* 位置を調整 */
+  }
+
+  .title span:first-child {
+    font-size: 16px; /* フォントサイズを小さく */
+    transform: translate(0, 30px); /* トランスフォーム位置を調整 */
+  }
+
+  .title span:last-child {
+    font-size: 36px; /* フォントサイズを小さく */
+    margin-top: 12px; /* マージンを調整 */
+    transform: translate(0, 20px); /* トランスフォーム位置を調整 */
+  }
+}
