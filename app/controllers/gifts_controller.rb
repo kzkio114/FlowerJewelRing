@@ -39,6 +39,7 @@ class GiftsController < ApplicationController
   end
 
   def send_gift
+    @user = current_user
     @gift = Gift.find(params[:id])
     @gift.giver_id = current_user.id
     @gift.receiver = User.find_by(id: params[:gift][:receiver_id])
@@ -56,6 +57,7 @@ class GiftsController < ApplicationController
 
     if unread_replies_exist
       if @gift.save
+          # ギフトを無効化する
         replies_to_mark_read = Reply.joins(:consultation)
                                     .where(consultations: { user_id: @gift.giver_id })
                                     .where(user_id: @gift.receiver_id, read: false)
@@ -63,32 +65,23 @@ class GiftsController < ApplicationController
                                     .first
         replies_to_mark_read.update(read: true) if replies_to_mark_read
 
-        @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
+        @gift.update(active: false, sent_at: Time.current)
 
-        @gift.update(sent_at: Time.current, sender_message: "") # sender_messageをクリア
+        # 相手に新しいギフトを作成
+        Gift.create!(
+          gift_category: @gift.gift_category,
+          item_name: @gift.item_name,
+          description: @gift.description,
+          color: @gift.color,
+          image_url: @gift.image_url,
+          giver: @gift.receiver, # 相手がこのギフトを使用できるように設定
+          receiver: nil, # これは相手が使うので最初は空
+          gift_template: @gift.gift_template
+        )
 
+        # その他の処理を実行
         assign_random_gift_to_user(@gift.giver_id)
-
-        @my_consultations = Consultation.where(user_id: current_user.id)
-        replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
-        @reply_users = User.where(id: replier_ids)
-
-        # 全てのギフトを取得
-        @gifts = Gift.includes(:gift_category).all
-
-        # 未読のギフト数を計算
-        @unread_gifts_count = current_user.calculate_unread_gifts_count
-
-        # 現在のユーザーを設定
-        @user = current_user
-
-        # 最新の返信を設定
-        @latest_replies = current_user.consultations.joins(replies: :user).select('replies.*, users.name as user_name').order('replies.created_at DESC').limit(5)
-
-        # 最新のギフトメッセージを取得
-        @latest_gift_messages = fetch_latest_gift_messages
-
-        @current_time = Time.zone.now.in_time_zone('Asia/Tokyo')
+        update_response_data
 
         respond_to do |format|
           format.turbo_stream do
@@ -96,13 +89,13 @@ class GiftsController < ApplicationController
               turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
               turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count }),
               if params[:return_to] == "info"
-                turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { gifts: @gifts, reply_users: @reply_users, latest_gift_messages: @latest_gift_messages, current_time: @current_time})
+                turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { gifts: @gifts, reply_users: @reply_users, latest_gift_messages: @latest_gift_messages, current_time: @current_time })
               else
                 turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts, reply_users: @reply_users })
               end
             ]
+          end
         end
-      end
       else
         Rails.logger.info(@gift.errors.full_messages.join(", "))
       end
@@ -147,5 +140,25 @@ class GiftsController < ApplicationController
       gift = Gift.find(gift_id)
       { message: message, created_at: created_at, gift: gift }
     end
+  end
+
+  def update_response_data
+    @my_consultations = Consultation.where(user_id: current_user.id)
+    replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
+    @reply_users = User.where(id: replier_ids)
+
+    # 全てのギフトを取得
+    @gifts = Gift.includes(:gift_category).all
+
+    # 未読のギフト数を計算
+    @unread_gifts_count = current_user.calculate_unread_gifts_count
+
+    # 最新の返信を設定
+    @latest_replies = current_user.consultations.joins(replies: :user).select('replies.*, users.name as user_name').order('replies.created_at DESC').limit(5)
+
+    # 最新のギフトメッセージを取得
+    @latest_gift_messages = fetch_latest_gift_messages
+
+    @current_time = Time.zone.now.in_time_zone('Asia/Tokyo')
   end
 end

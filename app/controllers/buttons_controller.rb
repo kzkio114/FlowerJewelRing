@@ -9,7 +9,7 @@ class ButtonsController < ApplicationController
     @user = current_user
     @unread_gifts_count = current_user.calculate_unread_gifts_count
     @unread_replies_count = fetch_unread_replies_count
-    @gifts = Gift.includes(:gift_category).all
+    @gifts = current_user.received_gifts # 現在のユーザーが受け取ったギフトのみを取得
     @reply_users = User.joins(:replies).distinct
     @latest_gifts = Gift.order(created_at: :desc).limit(5)
     @sent_gifts = @user.sent_gifts
@@ -229,25 +229,26 @@ class ButtonsController < ApplicationController
   end
 
   def gift_all
-    @gifts = Gift.includes(:gift_category).all
+    @gift_templates = GiftTemplate.includes(:gift_category).all
     set_unread_gifts_count
     set_unread_replies_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/gift_all_response", locals: { gifts: @gifts }),
+          turbo_stream.replace("content", partial: "buttons/menu/gift_all_response", locals: { gift_templates: @gift_templates }),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
           turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
       end
     end
   end
+  
 
   def send_gift_response
     @my_consultations = Consultation.where(user_id: current_user.id)
     replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
     @reply_users = User.where(id: replier_ids)
-    @gifts = Gift.all
+    @gifts = current_user.received_gifts # 現在のユーザーが受け取ったギフトのみを取得
     set_unread_gifts_count
     set_unread_replies_count
     respond_to do |format|

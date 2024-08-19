@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_13_062445) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_19_150023) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -70,7 +70,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_062445) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "read", default: false
+    t.boolean "active", default: true, null: false
     t.index ["read"], name: "index_gift_histories_on_read"
+  end
+
+  create_table "gift_templates", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "image_url"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "gift_category_id"
   end
 
   create_table "gifts", force: :cascade do |t|
@@ -85,6 +96,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_13_062445) do
     t.string "image_url"
     t.string "color"
     t.text "sender_message"
+    t.integer "gift_template_id"
+    t.boolean "active", default: true, null: false
     t.index ["gift_category_id"], name: "index_gifts_on_gift_category_id"
     t.index ["giver_id"], name: "index_gifts_on_giver_id"
     t.index ["receiver_id"], name: "index_gifts_on_receiver_id"

@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
     @user = current_user
     @unread_gifts_count = current_user.calculate_unread_gifts_count
     @unread_replies_count = fetch_unread_replies_count
-    @gifts = Gift.includes(:gift_category).all
+    @gifts = current_user.received_gifts # 現在のユーザーが受け取ったギフトのみを取得
     @reply_users = User.joins(:replies).distinct
     @latest_gifts = Gift.order(created_at: :desc).limit(5)
     @sent_gifts = @user.sent_gifts
