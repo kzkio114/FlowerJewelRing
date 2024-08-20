@@ -1,4 +1,4 @@
 class GiftCategory < ApplicationRecord
   has_many :gifts, dependent: :destroy
-  has_many :gift_templates
+  has_many :gift_templates, dependent: :destroy
 end

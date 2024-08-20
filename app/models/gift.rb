@@ -15,15 +15,3 @@ class Gift < ApplicationRecord
     GiftHistory.create(gift_id: id, sender_message: sender_message_was)
   end
 end
-
-class GiftTemplate < ApplicationRecord
-  belongs_to :gift_category
-
-  validates :name, presence: true
-  validates :gift_category_id, presence: true
-end
-
-class GiftCategory < ApplicationRecord
-  has_many :gifts, dependent: :destroy
-  has_many :gift_templates, dependent: :destroy
-end
