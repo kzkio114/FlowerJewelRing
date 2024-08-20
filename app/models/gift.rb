@@ -3,7 +3,7 @@ class Gift < ApplicationRecord
   belongs_to :receiver, class_name: 'User', optional: true
   belongs_to :gift_category
   belongs_to :gift_template, optional: true # optional: trueを追加
-  has_many :gift_histories, dependent: dependent: :nullify
+  has_many :gift_histories, dependent: :nullify
 
   # コールバックを使用してメッセージの変更を保存
   after_update :store_sender_message_in_history, if: -> { saved_change_to_sender_message? }
