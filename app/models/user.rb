@@ -11,8 +11,8 @@ class User < ApplicationRecord
   has_many :sent_chats, class_name: 'Chat', foreign_key: 'sender_id'
   has_many :received_chats, class_name: 'Chat', foreign_key: 'receiver_id'
   has_many :consultations, dependent: :destroy
-  has_many :sent_gifts, class_name: 'Gift', foreign_key: 'giver_id', dependent: :destroy
-  has_many :received_gifts, class_name: 'Gift', foreign_key: 'receiver_id', dependent: :destroy
+  has_many :sent_gifts, class_name: 'Gift', foreign_key: 'giver_id', dependent: :nullify
+  has_many :received_gifts, class_name: 'Gift', foreign_key: 'receiver_id', dependent: :nullify
   has_many :group_chat_members, dependent: :destroy
   has_many :group_chat_messages, dependent: :destroy
   belongs_to :organization, optional: true
