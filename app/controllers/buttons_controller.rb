@@ -242,7 +242,7 @@ class ButtonsController < ApplicationController
       end
     end
   end
-  
+
 
   def send_gift_response
     @my_consultations = Consultation.where(user_id: current_user.id)

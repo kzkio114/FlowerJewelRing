@@ -78,7 +78,7 @@
                               <%= image_tag asset_path(entry[:gift].image_url), alt: "ギフトの画像", style: "width: 150px;" %>
                             <% end %>
                             <p><strong>花言葉:</strong> <%= entry[:gift].description %></p>
-                            <p><strong>送り主:</strong> <%= entry[:gift].giver.name %>さん</p>
+                            <p><strong>送り主:</strong> <%= entry[:gift].giver&.name || '不明' %>さん</p>
                             <p><strong>感謝のメッセージ</strong></p>
                             <p><%= entry[:message] %></p>
                             <p><strong>受信日時:</strong> <%= entry[:created_at].in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></p>
