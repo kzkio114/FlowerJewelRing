@@ -94,7 +94,6 @@ class GiftsController < ApplicationController
       mark_replies_as_read # 返信を既読にする
       # メッセージをリセットしてギフトを再利用可能にする
       @gift.update(sender_message: "", sent_at: Time.current)
-      # create_new_gift_for_receiver # 新しいギフトを受信者に作成
       assign_random_gift_to_user(@gift.giver_id) # 送信者にランダムなギフトを割り当て
       update_response_data # レスポンスデータを更新
       send_response # レスポンスを送信
