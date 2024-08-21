@@ -2,11 +2,10 @@ class GiftsController < ApplicationController
   before_action :set_gift, only: [:show, :edit, :update, :destroy, :send_gift]
 
   def index
-    @gifts = Gift.includes(:gift_category).where(sent_at: nil) # 未送付のギフトのみ表示
+    @gifts = Gift.includes(:gift_category).where(sent_at: nil)
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @gift = Gift.new
@@ -14,7 +13,7 @@ class GiftsController < ApplicationController
 
   def create
     @gift = Gift.new(gift_params)
-    @gift.giver = current_user # 現在ログインしているユーザーをgiverに設定
+    @gift.giver = current_user
     if @gift.save
       redirect_to @gift, notice: 'Gift was successfully created.'
     else
@@ -22,8 +21,7 @@ class GiftsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @gift.update(gift_params)
@@ -39,7 +37,7 @@ class GiftsController < ApplicationController
   end
 
   def send_gift
-    @gift = Gift.find(params[:id])
+    @user = current_user
     @gift.giver_id = current_user.id
     @gift.receiver = User.find_by(id: params[:gift][:receiver_id])
     @gift.assign_attributes(gift_params)
@@ -49,71 +47,12 @@ class GiftsController < ApplicationController
       return
     end
 
-    unread_replies_exist = Reply.joins(:consultation)
-                                .where(consultations: { user_id: @gift.giver_id })
-                                .where(user_id: @gift.receiver_id, read: false)
-                                .exists?
+    unread_replies_exist = unread_replies_exist?
 
     if unread_replies_exist
-      if @gift.save
-        replies_to_mark_read = Reply.joins(:consultation)
-                                    .where(consultations: { user_id: @gift.giver_id })
-                                    .where(user_id: @gift.receiver_id, read: false)
-                                    .order(created_at: :desc)
-                                    .first
-        replies_to_mark_read.update(read: true) if replies_to_mark_read
-
-        @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
-
-        @gift.update(sent_at: Time.current, sender_message: "") # sender_messageをクリア
-
-        assign_random_gift_to_user(@gift.giver_id)
-
-        @my_consultations = Consultation.where(user_id: current_user.id)
-        replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
-        @reply_users = User.where(id: replier_ids)
-
-        # 全てのギフトを取得
-        @gifts = Gift.includes(:gift_category).all
-
-        # 未読のギフト数を計算
-        @unread_gifts_count = current_user.calculate_unread_gifts_count
-
-        # 現在のユーザーを設定
-        @user = current_user
-
-        # 最新の返信を設定
-        @latest_replies = current_user.consultations.joins(replies: :user).select('replies.*, users.name as user_name').order('replies.created_at DESC').limit(5)
-
-        # 最新のギフトメッセージを取得
-        @latest_gift_messages = fetch_latest_gift_messages
-
-        @current_time = Time.zone.now.in_time_zone('Asia/Tokyo')
-
-        respond_to do |format|
-          format.turbo_stream do
-            render turbo_stream: [
-              turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
-              turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count }),
-              if params[:return_to] == "info"
-                turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { gifts: @gifts, reply_users: @reply_users, latest_gift_messages: @latest_gift_messages, current_time: @current_time})
-              else
-                turbo_stream.replace("content", partial: "buttons/menu/send_gift_response", locals: { gifts: @gifts, reply_users: @reply_users })
-              end
-            ]
-        end
-      end
-      else
-        Rails.logger.info(@gift.errors.full_messages.join(", "))
-      end
+      process_gift_send
     else
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: [
-            turbo_stream.replace("error-message", partial: "shared/error_message", locals: { message: "未読の返信がないため、ギフトを送信できません。" })
-          ]
-        end
-      end
+      respond_to_unread_error
     end
   end
 
@@ -129,23 +68,99 @@ class GiftsController < ApplicationController
     params.require(:gift).permit(:receiver_id, :item_name, :description, :color, :sender_message)
   end
 
-  def assign_random_gift_to_user(user_id)
-    new_gifts = Gift.order("RANDOM()").limit(1)
-    new_gifts.each do |new_gift|
-      new_gift.update!(giver_id: user_id, sent_at: nil, receiver_id: nil)
+  def unread_replies_exist?
+    Reply.joins(:consultation)
+         .where(consultations: { user_id: @gift.giver_id })
+         .where(user_id: @gift.receiver_id, read: false)
+         .exists?
+  end
+
+  def process_gift_send
+    if @gift.save
+      mark_replies_as_read
+      @gift.update(sender_message: "", sent_at: Time.current)
+      update_response_data
+      send_response
+    else
+      log_errors
     end
+  end
+
+  def mark_replies_as_read
+    replies_to_mark_read = Reply.joins(:consultation)
+                                .where(consultations: { user_id: @gift.giver_id })
+                                .where(user_id: @gift.receiver_id, read: false)
+                                .order(created_at: :desc)
+                                .first
+    replies_to_mark_read.update(read: true) if replies_to_mark_read
+  end
+
+  def send_response
+    @gifts = current_user.received_gifts
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count }),
+          turbo_stream.replace("content", partial: content_partial, locals: content_locals)
+        ]
+      end
+    end
+  end
+
+  def log_errors
+    Rails.logger.info(@gift.errors.full_messages.join(", "))
+  end
+
+  def respond_to_unread_error
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("error-message", partial: "shared/error_message", locals: { message: "未読の返信がないため、ギフトを送信できません。" })
+        ]
+      end
+    end
+  end
+
+  def update_response_data
+    @my_consultations = Consultation.where(user_id: current_user.id)
+    replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
+    @reply_users = User.where(id: replier_ids)
+    # 受け取ったすべてのギフトを取得するように変更
+    @gifts = Gift.where(receiver_id: current_user.id)
+    @unread_gifts_count = current_user.calculate_unread_gifts_count
+    @latest_replies = fetch_latest_replies
+    @latest_gift_messages = fetch_latest_gift_messages
+    @current_time = Time.zone.now.in_time_zone('Asia/Tokyo')
+  end
+
+  def fetch_latest_replies
+    current_user.consultations.joins(replies: :user)
+                .select('replies.*, users.name as user_name')
+                .order('replies.created_at DESC')
+                .limit(5)
   end
 
   def fetch_latest_gift_messages
     gift_messages = current_user.received_gifts.joins(:gift_histories).pluck('gift_histories.sender_message', 'gift_histories.created_at', 'gifts.id') +
                     current_user.received_gifts.pluck(:sender_message, :created_at, :id)
-    gift_messages = gift_messages.reject { |message, _, _| message.blank? }
-                                 .sort_by { |_, created_at, _| created_at }
-                                 .reverse
-                                 .first(5)
-    gift_messages.map do |message, created_at, gift_id|
-      gift = Gift.find(gift_id)
-      { message: message, created_at: created_at, gift: gift }
-    end
+    gift_messages.reject { |message, _, _| message.blank? }
+                 .sort_by { |_, created_at, _| created_at }
+                 .reverse
+                 .first(5)
+                 .map { |message, created_at, gift_id| { message: message, created_at: created_at, gift: Gift.find(gift_id) } }
+  end
+
+  def content_partial
+    params[:return_to] == "info" ? "buttons/menu/info_response" : "buttons/menu/send_gift_response"
+  end
+
+  def content_locals
+    {
+      gifts: @gifts,
+      reply_users: @reply_users,
+      latest_gift_messages: @latest_gift_messages,
+      current_time: @current_time
+    }
   end
 end

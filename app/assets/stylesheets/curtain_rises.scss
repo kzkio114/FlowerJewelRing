@@ -172,11 +172,11 @@
       animation: moveRightSmall 10s forwards, changeCircleColor 5s forwards; /* アニメーション時間をスマホ用に短縮 */
     }
 
-    .title span:first-child {
+    .anime-title span:first-child {
       font-size: 16px; /* スマホ用にフォントサイズを縮小 */
     }
 
-    .title span:last-child {
+    .anime-title span:last-child {
       font-size: 36px; /* スマホ用にフォントサイズを縮小 */
     }
   }
@@ -201,17 +201,17 @@
       animation: moveRightSmall 10s forwards, changeCircleColor 5s forwards; /* アニメーション時間をさらに短縮 */
     }
 
-    .title span:first-child {
+    .anime-title span:first-child {
       font-size: 14px; /* フォントサイズをさらに縮小 */
     }
 
-    .title span:last-child {
+    .anime-title span:last-child {
       font-size: 32px; /* フォントサイズをさらに縮小 */
     }
   }
 }
 
-.title {
+.anime-title {
   display: block;
   color: #fafafa;
   font-family: 'Kosugi Maru', sans-serif;
@@ -244,16 +244,16 @@
 }
 
 @media (max-width: 480px) {
-  .title {
+  .anime-title {
     top: 50px; /* 位置を調整 */
   }
 
-  .title span:first-child {
+  .anime-title span:first-child {
     font-size: 16px; /* フォントサイズを小さく */
     transform: translate(0, 30px); /* トランスフォーム位置を調整 */
   }
 
-  .title span:last-child {
+  .anime-title span:last-child {
     font-size: 36px; /* フォントサイズを小さく */
     margin-top: 12px; /* マージンを調整 */
     transform: translate(0, 20px); /* トランスフォーム位置を調整 */

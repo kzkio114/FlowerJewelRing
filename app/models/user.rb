@@ -11,10 +11,10 @@ class User < ApplicationRecord
   has_many :sent_chats, class_name: 'Chat', foreign_key: 'sender_id'
   has_many :received_chats, class_name: 'Chat', foreign_key: 'receiver_id'
   has_many :consultations, dependent: :destroy
-  has_many :sent_gifts, class_name: 'Gift', foreign_key: 'giver_id', dependent: :destroy
-  has_many :received_gifts, class_name: 'Gift', foreign_key: 'receiver_id', dependent: :destroy
-  has_many :group_chat_members
-  has_many :group_chat_messages
+  has_many :sent_gifts, class_name: 'Gift', foreign_key: 'giver_id', dependent: :nullify
+  has_many :received_gifts, class_name: 'Gift', foreign_key: 'receiver_id', dependent: :nullify
+  has_many :group_chat_members, dependent: :destroy
+  has_many :group_chat_messages, dependent: :destroy
   belongs_to :organization, optional: true
   has_one :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
@@ -22,6 +22,8 @@ class User < ApplicationRecord
   has_many :user_organizations, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
+
+  after_create :assign_initial_gifts
 
   # ユーザーが管理者かどうかを判定するメソッド
   def admin?
@@ -74,7 +76,24 @@ class User < ApplicationRecord
     end
   end
 
-  private
+  public
+
+  def assign_initial_gifts
+    gift_templates = GiftTemplate.order("RANDOM()").limit(5)
+    gift_templates.each do |template|
+      Gift.create!(
+        gift_template_id: template.id,
+        gift_category: template.gift_category,
+        item_name: template.name,
+        description: template.description,
+        image_url: template.image_url,
+        color: template.color,
+        receiver_id: self.id,
+        giver_id: nil,
+        sent_at: nil
+      )
+    end
+  end
 
   # ランダムな表示名を生成するメソッド
   def generate_random_display_name
