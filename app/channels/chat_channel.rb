@@ -8,12 +8,24 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    message = Chat.create!(sender_id: current_user.id, receiver_id: data['receiver_id'], message: data['message'])
-    render_and_broadcast_message(message)
+    message = Chat.new(sender_id: current_user.id, receiver_id: data['receiver_id'], message: data['message'])
+  
+    if message.save
+      render_and_broadcast_message(message)
+    else
+      ChatChannel.broadcast_to(current_user, {
+        action: 'error',
+        errors: message.errors.full_messages
+      })
+    end
   rescue => e
     logger.error "Failed to send message: #{e.message}"
-    # 必要に応じて、フロントエンドにエラーメッセージを送信する
+    ChatChannel.broadcast_to(current_user, {
+      action: 'error',
+      errors: ['Failed to send message due to an unexpected error.']
+    })
   end
+  
 
   def delete_message(data)
     message = Chat.find_by(id: data['chat_id'], sender_id: current_user.id)

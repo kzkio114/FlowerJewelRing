@@ -11,7 +11,11 @@
     </div>
     <% if show_delete_button %>
       <div class="media-right">
-        <%= button_to '削除', chat_path(chat), method: :delete, data: { confirm: '本当に削除しますか？' }, remote: true, class: 'button is-small is-danger' %>
+        <%= button_to '削除', chat_path(chat), 
+        method: :delete, 
+        data: { action: "click->chat#deleteMessage", chat_id: chat.id }, 
+        remote: true, 
+        class: 'button is-small is-danger' %>
       </div>
     <% end %>
   </article>
