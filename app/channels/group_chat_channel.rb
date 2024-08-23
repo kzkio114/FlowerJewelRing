@@ -9,12 +9,18 @@ class GroupChatChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    message = GroupChatMessage.create!(group_chat_id: data['group_chat_id'], user: current_user, message: data['message'])
-    render_and_broadcast_message(message)
+    logger.debug "Received data: #{data.inspect}"
+    message = GroupChatMessage.new(group_chat_id: data['group_chat_id'], user: current_user, message: data['message'])
+  
+    if message.save
+      render_and_broadcast_message(message)
+    else
+      logger.error "Failed to save message: #{message.errors.full_messages.join(', ')}"
+    end
   rescue => e
     logger.error "Failed to send message: #{e.message}"
-    # 必要に応じて、フロントエンドにエラーメッセージを送信する
   end
+  
 
   def delete_message(data)
     message = GroupChatMessage.find_by(id: data['message_id'], user_id: current_user.id)
@@ -30,7 +36,10 @@ class GroupChatChannel < ApplicationCable::Channel
   private
 
   def render_message(message)
-    ApplicationController.renderer.render(partial: 'group_chat_messages/message', locals: { message: message })
+    ApplicationController.renderer.render(
+      partial: 'group_chat_messages/message',
+      locals: { message: message, show_delete_button: message.user == current_user }
+    )
   rescue => e
     logger.error "Failed to render message: #{e.message}"
     nil
