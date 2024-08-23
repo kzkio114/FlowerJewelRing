@@ -4,17 +4,20 @@
 
 import { application } from "./application"
 
-import VisibilityController from "./visibility_controller"
-application.register("visibility", VisibilityController)
+import ChatController from "./chat_controller"
+application.register("chat", ChatController)
 
-import RenderingController from "./rendering_controller"
-application.register("rendering", RenderingController)
+import HelloController from "./hello_controller"
+application.register("hello", HelloController)
 
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
 
-//import TooltipController from "./tooltip_controller"
-//application.register("tooltip", TooltipController) // 'tooltip' で登録
+import RenderingController from "./rendering_controller"
+application.register("rendering", RenderingController)
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import TooltipController from "./tooltip_controller"
+application.register("tooltip", TooltipController)
+
+import VisibilityController from "./visibility_controller"
+application.register("visibility", VisibilityController)
