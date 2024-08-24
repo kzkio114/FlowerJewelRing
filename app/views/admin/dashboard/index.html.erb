@@ -14,7 +14,8 @@
     <% @users.each do |user| %>
       <div class="column is-full-mobile is-one-third-tablet" id="<%= dom_id(user) %>">
         <div class="box">
-          <p class="title is-4"><%= user.name %></p>
+          <p class="title is-4">ユーザー名: <%= user.name %></p>
+          <p class="title is-4">チャット名: <%= user.display_name %></p>
           <% if current_user.super_admin? || current_user.admin? %>
             <div class="are-small has-text-right">
               <%= button_to '削除', admin_user_path(user), method: :delete, data: { turbo_confirm: '本当にこのユーザーを削除しますか？' }, remote: true, form: { data: { turbo: true }, class: 'button is-danger' } %>
