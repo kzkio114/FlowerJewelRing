@@ -9,56 +9,17 @@
 <% end %>
 
 <div id="content" class="frame-fixed-height container is-small mb-3">
-  <h2 class="subtitle mt-3">ユーザー一覧</h2>
-  <div class="columns is-multiline">
-    <% @users.each do |user| %>
-      <div class="column is-full-mobile is-one-third-tablet" id="<%= dom_id(user) %>">
-        <div class="box">
-          <p class="title is-4">ユーザー名: <%= user.name %></p>
-          <p class="title is-4">チャット名: <%= user.display_name %></p>
-          <% if current_user.super_admin? || current_user.admin? %>
-            <div class="are-small has-text-right">
-              <%= button_to '削除', admin_user_path(user), method: :delete, data: { turbo_confirm: '本当にこのユーザーを削除しますか？' }, remote: true, form: { data: { turbo: true }, class: 'button is-danger' } %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <%= render "users_index", users: @users %>
 </div>
 
 <div id="content" class="frame-fixed-height container is-small mb-3">
-<h2 class="subtitle">相談一覧</h2>
-<div class="columns is-multiline">
-  <% @consultations.each do |consultation| %>
-    <div class="column is-one-third" id="<%= dom_id(consultation) %>">
-      <div class="box">
-        <p class="title is-4"><%= consultation.title %></p>
-        <% if current_user.super_admin? || current_user.admin? %>
-          <div class="are-small has-text-right">
-            <%= button_to '削除', admin_consultation_path(consultation), method: :delete, data: { turbo_confirm: '本当にこの相談を削除しますか？' }, remote: true, form: { data: { turbo: true }, class: 'button is-danger' } %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-</div>
+  <%= render "consultations_index", consultations: @consultations %>
 </div>
 
 <div id="content" class="frame-fixed-height container is-small mb-3">
-  <h2 class="subtitle">ギフト一覧</h2>
-  <div class="columns is-multiline">
-    <% @gifts.each do |gift| %>
-      <div class="column is-full-mobile is-one-third-tablet" id="<%= dom_id(gift) %>">
-        <div class="box">
-          <p class="title is-4"><%= gift.item_name %></p>
-          <% if current_user.super_admin? || current_user.admin? %>
-            <div class="are-small has-text-right">
-              <%= button_to '削除', admin_gift_path(gift), method: :delete, data: { turbo_confirm: '本当にこのギフトを削除しますか？' }, remote: true, form: { data: { turbo: true }, class: 'button is-danger' } %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <%= render "gifts_index", gifts: @gifts %>
+</div>
+
+<div id="content" class="frame-fixed-height container is-small mb-3">
+  <%= render "gift_templates_index", gift_templates: @gift_templates %>
 </div>

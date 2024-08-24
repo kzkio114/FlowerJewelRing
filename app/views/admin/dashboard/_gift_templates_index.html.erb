@@ -1,0 +1,19 @@
+<h2 class="subtitle">ギフトテンプレート一覧</h2>
+<% gift_templates.each do |template| %>
+<div id="gift_card_<%= template.id %>" class="column is-one-third">
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        カテゴリ: <%= template.gift_category.name %>
+      </p>
+    </header>
+    <div class="card-content">
+      <div class="content">
+        植物名: <%= template.name %><br>
+        <%= image_tag asset_path(template.image_url), alt: "ギフトの画像", style: "width: 200px;" %><br>
+        花言葉: <%= template.description %>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
