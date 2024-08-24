@@ -1,5 +1,5 @@
 
-    <h2 class="subtitle">相談一覧</h2>
+    <h2 class="subtitle">相談一覧: 全<%= consultations.count %>件</h2>
     <div class="columns is-multiline">
       <% consultations.each do |consultation| %>
         <div class="column is-one-third" id="<%= dom_id(consultation) %>">

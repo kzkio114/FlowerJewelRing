@@ -1,4 +1,4 @@
-<h2 class="subtitle mt-3">ユーザー一覧</h2>
+<h2 class="subtitle mt-3">ユーザー一覧: 全<%= users.count %>件</h2>
 <div class="columns is-multiline">
   <% users.each do |user| %>
     <div class="column is-full-mobile is-one-third-tablet" id="<%= dom_id(user) %>">

@@ -1,4 +1,4 @@
-<h2 class="subtitle">ギフト一覧</h2>
+<h2 class="subtitle">ギフト一覧: 全<%= gifts.count %>件</h2>
 <div class="columns is-multiline">
   <% gifts.each do |gift| %>
     <div class="column is-full-mobile is-one-third-tablet" id="<%= dom_id(gift) %>">
