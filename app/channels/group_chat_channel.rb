@@ -9,18 +9,23 @@ class GroupChatChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    logger.debug "Received data: #{data.inspect}"
     message = GroupChatMessage.new(group_chat_id: data['group_chat_id'], user: current_user, message: data['message'])
   
     if message.save
       render_and_broadcast_message(message)
     else
-      logger.error "Failed to save message: #{message.errors.full_messages.join(', ')}"
+      GroupChatChannel.broadcast_to(current_user, {
+        action: 'error',
+        errors: message.errors.full_messages
+      })
     end
   rescue => e
     logger.error "Failed to send message: #{e.message}"
+    GroupChatChannel.broadcast_to(current_user, {
+      action: 'error',
+      errors: ['Failed to send message due to an unexpected error.']
+    })
   end
-  
 
   def delete_message(data)
     message = GroupChatMessage.find_by(id: data['message_id'], user_id: current_user.id)
@@ -30,26 +35,19 @@ class GroupChatChannel < ApplicationCable::Channel
     broadcast_delete_message(message)
   rescue => e
     logger.error "Failed to delete message: #{e.message}"
-    # 必要に応じて、フロントエンドにエラーメッセージを送信する
   end
 
   private
 
-  def render_message(message)
-    show_delete_button = message.user == current_user
-    ApplicationController.renderer.render(
-      partial: 'group_chat_messages/message',
-      locals: { message: message, show_delete_button: show_delete_button },
-      assigns: { current_user: current_user } # これを追加
-    )
+  def render_message(message, show_delete_button)
+    ApplicationController.renderer.render(partial: 'group_chat_messages/message', locals: { message: message, show_delete_button: show_delete_button })
   rescue => e
     logger.error "Failed to render message: #{e.message}"
     nil
   end
-  
 
   def render_and_broadcast_message(message)
-    message_html = render_message(message)
+    message_html = render_message(message, true)
 
     if message_html
       GroupChatChannel.broadcast_to(message.group_chat, {

@@ -14,9 +14,9 @@ export default class extends Controller {
       this.groupChatChannel = consumer.subscriptions.create(
         { channel: "GroupChatChannel", group_chat_id: this.groupChatId },
         {
-          connected: () => console.log(`Connected to GroupChatChannel with ID: ${this.groupChatId}`),
-          disconnected: () => console.log(`Disconnected from GroupChatChannel with ID: ${this.groupChatId}`),
-          received: this.received.bind(this)
+          connected: this.connected.bind(this),
+          disconnected: this.disconnected.bind(this),
+          received: this.received.bind(this),
         }
       );
     } else {
@@ -24,14 +24,24 @@ export default class extends Controller {
     }
   }
 
+  connected() {
+    console.log(`Connected to GroupChatChannel with ID: ${this.groupChatId}`);
+  }
+
+  disconnected() {
+    console.log(`Disconnected from GroupChatChannel with ID: ${this.groupChatId}`);
+  }
+
   received(data) {
-    if (data.action === "create" && data.message_html) {
-      if (this.hasGroupMessagesTarget) {
-        this.groupMessagesTarget.insertAdjacentHTML("beforeend", data.message_html);
-        this.groupMessagesTarget.scrollTop = this.groupMessagesTarget.scrollHeight;
-      } else {
-        console.error("Missing target element 'groupMessages'");
+    if (data.action === 'error' && data.errors) {
+      const errorMessagesDiv = document.getElementById('error-messages');
+      if (errorMessagesDiv) {
+        errorMessagesDiv.innerHTML = data.errors.join("<br>");
+        errorMessagesDiv.style.display = 'block';
       }
+    } else if (data.action === "create" && data.message_html) {
+      this.groupMessagesTarget.insertAdjacentHTML("beforeend", data.message_html);
+      this.groupMessagesTarget.scrollTop = this.groupMessagesTarget.scrollHeight;
     } else if (data.action === "destroy" && data.message_id) {
       const messageElement = document.getElementById(`message_${data.message_id}`);
       if (messageElement) {
@@ -49,7 +59,7 @@ export default class extends Controller {
         message: message,
         group_chat_id: this.groupChatId
       });
-      this.groupInputTarget.value = "";
+      this.groupInputTarget.value = ""; // Clear input field
     }
   }
 
