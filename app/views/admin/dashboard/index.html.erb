@@ -12,15 +12,21 @@
   <% end %>
 
   <div id="content" class="frame-fixed-height container is-small mb-3">
-    <%= render "users_index", users: @users %>
+    <div class="admin-user-list">
+      <%= render "users_index", users: @users %>
+    </div>
   </div>
 
   <div id="content" class="frame-fixed-height container is-small mb-3">
-    <%= render "consultations_index", consultations: @consultations %>
+    <div class="consultation-list">
+      <%= render "consultations_index", consultations: @consultations %>
+    </div>
   </div>
 
   <div id="content" class="frame-fixed-height container is-small mb-3">
+    <div class="admin-gift-list">
     <%= render "gifts_index", gifts: @gifts %>
+    </div>
   </div>
   
   <div id="content" class="container is-small">

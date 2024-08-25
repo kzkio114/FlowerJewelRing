@@ -1,5 +1,9 @@
-.user-list-height {
-    background-color: hsl(174, 80%, 92%);
-    overflow-y: auto;
+.admin-user-list {
+    height: 200px; 
+    overflow-x: hidden;
+}
+
+.admin-gift-list {
+    height: 200px; 
     overflow-x: hidden;
 }
