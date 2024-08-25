@@ -6,6 +6,7 @@ export default class extends Controller {
 
   connect() {
     console.log("Connected to GroupChatChannel");
+    console.log("groupMessages target:", this.groupMessagesTarget);
 
     const chatElement = this.element.closest('[data-group-chat-id]');
     if (chatElement) {
@@ -40,8 +41,12 @@ export default class extends Controller {
         errorMessagesDiv.style.display = 'block';
       }
     } else if (data.action === "create" && data.message_html) {
-      this.groupMessagesTarget.insertAdjacentHTML("beforeend", data.message_html);
-      this.groupMessagesTarget.scrollTop = this.groupMessagesTarget.scrollHeight;
+      if (this.hasGroupMessagesTarget) {
+        this.groupMessagesTarget.insertAdjacentHTML("beforeend", data.message_html);
+        this.groupMessagesTarget.scrollTop = this.groupMessagesTarget.scrollHeight;
+      } else {
+        console.error("GroupMessages target not found. Cannot insert new message.");
+      }
     } else if (data.action === "destroy" && data.message_id) {
       const messageElement = document.getElementById(`message_${data.message_id}`);
       if (messageElement) {
@@ -52,8 +57,10 @@ export default class extends Controller {
 
   sendMessage(event) {
     event.preventDefault();
-
     const message = this.groupInputTarget.value.trim();
+  
+    console.log("Sending message: ", message);
+  
     if (message !== "") {
       this.groupChatChannel.perform("speak", {
         message: message,
@@ -62,6 +69,7 @@ export default class extends Controller {
       this.groupInputTarget.value = ""; // Clear input field
     }
   }
+  
 
   deleteMessage(event) {
     event.preventDefault();

@@ -5,10 +5,11 @@
       
       <!-- メッセージ表示部分 -->
       <div id="messages" class="group-chat-height" data-group-chat-target="groupMessages">
-        <% @group_chat.group_chat_messages.each do |message| %>
+          <% @group_chat.group_chat_messages.each do |message| %>
           <%= render partial: "group_chat_messages/message", locals: { message: message, show_delete_button: message.user == current_user } %>
         <% end %>
       </div>
+
       
       <!-- 新規メッセージフォーム -->
       <div id="new_group_chat_message" data-group-chat-target="groupInput">
