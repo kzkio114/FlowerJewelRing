@@ -5,35 +5,23 @@ export default class extends Controller {
   static targets = ["groupInput", "groupMessages", "groupSubmitButton"];
 
   connect() {
-    console.log("Connect method called");
-    console.log("groupMessages target exists:", this.hasGroupMessagesTarget);
+    console.log("Connected to GroupChatChannel");
 
     const chatElement = this.element.closest('[data-group-chat-id]');
     if (chatElement) {
       this.groupChatId = chatElement.dataset.groupChatId;
-      console.log("Group Chat ID:", this.groupChatId);
 
       this.groupChatChannel = consumer.subscriptions.create(
         { channel: "GroupChatChannel", group_chat_id: this.groupChatId },
         {
-          connected: this.connected.bind(this),
-          disconnected: this.disconnected.bind(this),
-          received: this.received.bind(this),
+          connected: () => console.log(`Connected to GroupChatChannel with ID: ${this.groupChatId}`),
+          disconnected: () => console.log(`Disconnected from GroupChatChannel with ID: ${this.groupChatId}`),
+          received: this.received.bind(this)
         }
       );
-
-      console.log("Group Chat Channel initialized:", this.groupChatChannel);
     } else {
       console.error("Group Chat element not found");
     }
-  }
-
-  connected() {
-    console.log(`Connected to GroupChatChannel with ID: ${this.groupChatId}`);
-  }
-
-  disconnected() {
-    console.log(`Disconnected from GroupChatChannel with ID: ${this.groupChatId}`);
   }
 
   received(data) {
@@ -59,7 +47,7 @@ export default class extends Controller {
     if (message !== "") {
       this.groupChatChannel.perform("speak", {
         message: message,
-        group_chat_id: this.groupChatId  // ここでgroup_chat_idが正しく設定されているか確認
+        group_chat_id: this.groupChatId
       });
       this.groupInputTarget.value = "";
     }
@@ -73,7 +61,6 @@ export default class extends Controller {
     }
   }
 
-  // エンターキーのハンドリング
   handleEnterKey(event) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();

@@ -36,14 +36,17 @@ class GroupChatChannel < ApplicationCable::Channel
   private
 
   def render_message(message)
+    show_delete_button = message.user == current_user
     ApplicationController.renderer.render(
       partial: 'group_chat_messages/message',
-      locals: { message: message, show_delete_button: message.user == current_user }
+      locals: { message: message, show_delete_button: show_delete_button },
+      assigns: { current_user: current_user } # これを追加
     )
   rescue => e
     logger.error "Failed to render message: #{e.message}"
     nil
   end
+  
 
   def render_and_broadcast_message(message)
     message_html = render_message(message)
