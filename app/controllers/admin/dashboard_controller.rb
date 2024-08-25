@@ -6,6 +6,7 @@ class Admin::DashboardController < Admin::ApplicationController
     @users = User.all
     @consultations = Consultation.all
     @gifts = Gift.includes(:gift_category).all
+    @gift_histories = GiftHistory.all 
     @gift_templates = GiftTemplate.includes(:gift_category).all
   end
 
