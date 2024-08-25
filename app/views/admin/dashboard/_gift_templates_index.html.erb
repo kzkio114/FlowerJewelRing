@@ -1,4 +1,10 @@
-<h2 class="subtitle">ギフトテンプレート一覧: 全<%= gift_templates.count %>件</h2>
+<div class="column is-full">
+  <div class="level">
+    <div class="level-left">
+      <h2 class="subtitle">ギフトテンプレート一覧: 全<%= gift_templates.count %>件</h2>
+    </div>
+  </div>
+</div>
 <% gift_templates.each do |template| %>
 <div id="gift_card_<%= template.id %>" class="column is-one-third">
   <div class="card">

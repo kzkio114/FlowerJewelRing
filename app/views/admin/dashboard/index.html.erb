@@ -1,25 +1,31 @@
-<% if current_user.super_admin? || current_user.admin? %>
-  <div class="is-flex mt-3">
-    <h1 class="title">管理者ダッシュボード</h1>
-    <%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info ml-2' %>
+<div class="admin-body">
+  <% if current_user.super_admin? || current_user.admin? %>
+    <div id="content" class="frame-fixed-height container is-small mb-3">
+      <div class="is-flex m-5">
+        <h1 class="title">管理者ダッシュボード</h1>
+        <%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info ml-5' %>
+      </div>
+      <div class="has-text-right m-10">
+        <%= button_to '管理者ユーザー一覧へ', admin_admin_users_path, method: :get, data: { turbo: true }, class: 'button is-primary ml-2' %>
+      </div>
+    </div>
+  <% end %>
+
+  <div id="content" class="frame-fixed-height container is-small mb-3">
+    <%= render "users_index", users: @users %>
   </div>
-  <div class="is-flex mt-3">
-    <%= button_to '管理者ユーザー一覧へ', admin_admin_users_path, method: :get, data: { turbo: true }, class: 'button is-primary ml-2' %>
+
+  <div id="content" class="frame-fixed-height container is-small mb-3">
+    <%= render "consultations_index", consultations: @consultations %>
   </div>
-<% end %>
 
-<div id="content" class="frame-fixed-height container is-small mb-3">
-  <%= render "users_index", users: @users %>
-</div>
-
-<div id="content" class="frame-fixed-height container is-small mb-3">
-  <%= render "consultations_index", consultations: @consultations %>
-</div>
-
-<div id="content" class="frame-fixed-height container is-small mb-3">
-  <%= render "gifts_index", gifts: @gifts %>
-</div>
-
-<div id="content" class="frame-fixed-height container is-small mb-3">
-  <%= render "gift_templates_index", gift_templates: @gift_templates %>
+  <div id="content" class="frame-fixed-height container is-small mb-3">
+    <%= render "gifts_index", gifts: @gifts %>
+  </div>
+  
+  <div id="content" class="container is-small">
+    <div class="columns is-multiline gift-list-height">
+      <%= render "gift_templates_index", gift_templates: @gift_templates %>
+    </div>
+  </div>
 </div>
