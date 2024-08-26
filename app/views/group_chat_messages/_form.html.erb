@@ -7,7 +7,7 @@
           data-action="keydown->group-chat#handleEnterKey"></textarea>
     </div>
     <div class="control">
-      <%= form.submit "送信", class: "button is-primary" %>
+      <%= form.submit "送信", class: "button is-primary", data: { action: "click->group-chat#sendMessage" } %>
     </div>
   </div>
 <% end %>
