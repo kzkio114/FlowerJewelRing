@@ -59,6 +59,8 @@ export default class extends Controller {
             deleteButton.style.display = 'block';
             console.log("Delete button is now visible");
           }
+          // メッセージが現在のユーザーによって送信された場合、入力フィールドをクリア
+          this.groupInputTarget.value = "";
         }
       } else {
         console.error("GroupMessages target not found. Cannot insert new message.");
@@ -70,7 +72,6 @@ export default class extends Controller {
       }
     }
   }
-
 
   sendMessage(event) {
     event.preventDefault(); // フォーム送信のデフォルト動作を防止
