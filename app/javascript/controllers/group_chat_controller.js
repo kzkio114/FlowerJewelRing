@@ -6,7 +6,6 @@ export default class extends Controller {
 
   connect() {
     console.log("Connected to GroupChatChannel");
-    console.log("groupMessages target:", this.groupMessagesTarget);
 
     const chatElement = this.element.closest('[data-group-chat-id]');
     if (chatElement) {
@@ -23,6 +22,9 @@ export default class extends Controller {
     } else {
       console.error("Group Chat element not found");
     }
+
+    // ページロード時に削除ボタンを設定
+    this.setDeleteButtonsVisibility();
   }
 
   connected() {
@@ -35,41 +37,39 @@ export default class extends Controller {
 
   received(data) {
     if (data.action === 'error' && data.errors) {
-      const errorMessagesDiv = document.getElementById('error-messages');
-      if (errorMessagesDiv) {
-        errorMessagesDiv.innerHTML = data.errors.join("<br>");
-        errorMessagesDiv.style.display = 'block';
-      }
+      this.displayErrors(data.errors);
     } else if (data.action === "create" && data.message_html) {
-      if (this.hasGroupMessagesTarget) {
-        this.groupMessagesTarget.insertAdjacentHTML("beforeend", data.message_html);
-        this.groupMessagesTarget.scrollTop = this.groupMessagesTarget.scrollHeight;
-  
-        const currentUserId = document.querySelector('[data-current-user-id]').dataset.currentUserId;
-        console.log("Current User ID:", currentUserId);
-  
-        const messageElement = this.groupMessagesTarget.lastElementChild;
-        const messageUserId = messageElement.dataset.messageUserId;
-        console.log("Message User ID:", messageUserId);
-  
-        if (currentUserId === messageUserId) {
-          const deleteButton = messageElement.querySelector('.delete-chat-button');
-          console.log("Delete Button:", deleteButton);
-          if (deleteButton) {
-            deleteButton.style.display = 'block';
-            console.log("Delete button is now visible");
-          }
-          // メッセージが現在のユーザーによって送信された場合、入力フィールドをクリア
-          this.groupInputTarget.value = "";
-        }
-      } else {
-        console.error("GroupMessages target not found. Cannot insert new message.");
-      }
+      this.addMessageToChat(data.message_html);
     } else if (data.action === "destroy" && data.message_id) {
-      const messageElement = document.getElementById(`message_${data.message_id}`);
-      if (messageElement) {
-        messageElement.remove();
+      this.removeMessageFromChat(data.message_id);
+    }
+  }
+
+  addMessageToChat(messageHtml) {
+    if (this.hasGroupMessagesTarget) {
+      this.groupMessagesTarget.insertAdjacentHTML("beforeend", messageHtml);
+      this.groupMessagesTarget.scrollTop = this.groupMessagesTarget.scrollHeight;
+  
+      const currentUserId = document.querySelector('[data-current-user-id]').dataset.currentUserId;
+      const messageElement = this.groupMessagesTarget.lastElementChild;
+      const messageUserId = messageElement.dataset.messageUserId;
+  
+      if (currentUserId === messageUserId) {
+        const deleteButton = messageElement.querySelector('.delete-chat-button');
+        if (deleteButton) {
+          deleteButton.style.display = 'block'; // 現在のユーザーが送信したメッセージの場合、削除ボタンを表示
+        }
+        this.groupInputTarget.value = ""; // メッセージ送信後に入力フィールドをクリア
       }
+    } else {
+      console.error("GroupMessages target not found. Cannot insert new message.");
+    }
+  }
+
+  removeMessageFromChat(messageId) {
+    const messageElement = document.getElementById(`message_${messageId}`);
+    if (messageElement) {
+      messageElement.remove();
     }
   }
 
@@ -81,11 +81,10 @@ export default class extends Controller {
       return;
     }
   
-    const message = this.groupInputTarget.value;
-  
-    if (typeof message === 'string' && message.trim() !== "") {
+    const message = this.groupInputTarget.value.trim();
+    if (message) {
       this.groupChatChannel.perform("speak", {
-        message: message.trim(),
+        message: message,
         group_chat_id: this.groupChatId
       });
       this.groupInputTarget.value = ""; // 入力フィールドをクリア
@@ -105,12 +104,29 @@ export default class extends Controller {
   handleEnterKey(event) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
-      console.log(this.groupInputTarget); // groupInputTargetの値を確認
-      if (!this.hasGroupInputTarget) {
-        console.error("groupInputTarget is not defined.");
-        return;
-      }
       this.sendMessage(event);
     }
+  }
+
+  displayErrors(errors) {
+    const errorMessagesDiv = document.getElementById('error-messages');
+    if (errorMessagesDiv) {
+      errorMessagesDiv.innerHTML = errors.join("<br>");
+      errorMessagesDiv.style.display = 'block';
+    }
+  }
+
+  // ページロード時に削除ボタンの表示を設定
+  setDeleteButtonsVisibility() {
+    const currentUserId = document.querySelector('[data-current-user-id]').dataset.currentUserId;
+
+    this.groupMessagesTarget.querySelectorAll('[data-message-user-id]').forEach(messageElement => {
+      const messageUserId = messageElement.dataset.messageUserId;
+      const deleteButton = messageElement.querySelector('.delete-chat-button');
+
+      if (currentUserId === messageUserId && deleteButton) {
+        deleteButton.style.display = 'block'; // 削除ボタンを表示
+      }
+    });
   }
 }

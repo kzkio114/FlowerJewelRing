@@ -2,17 +2,10 @@
   <p class="has-text-black"><strong><%= message.user.name %>:</strong> <%= message.message %></p>
   <% if show_delete_button %>
     <div class="group-buttons">
-      <%= link_to '削除', group_chat_group_chat_message_path(message.group_chat, message), 
-                  method: :delete, 
-                  data: { confirm: '本当に削除しますか？', action: "click->group-chat#deleteMessage", message_id: message.id }, 
-                  class: 'has-text-black delete-chat-button' %>
-    </div>
-  <% else %>
-    <div class="group-buttons" style="display: none;">
-      <%= link_to '削除', group_chat_group_chat_message_path(message.group_chat, message), 
-                  method: :delete, 
-                  data: { confirm: '本当に削除しますか？', action: "click->group-chat#deleteMessage", message_id: message.id }, 
-                  class: 'has-text-black delete-chat-button' %>
+      <%= button_to '削除', group_chat_group_chat_message_path(message.group_chat, message), 
+                    method: :delete, 
+                    data: { confirm: '本当に削除しますか？', action: "click->group-chat#deleteMessage", message_id: message.id }, 
+                    class: 'has-text-black delete-chat-button', style: 'display: none;' %>
     </div>
   <% end %>
 </div>
