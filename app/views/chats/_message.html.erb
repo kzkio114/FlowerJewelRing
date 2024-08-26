@@ -3,7 +3,7 @@
     <div class="media-content">
       <div class="content">
         <p class="has-text-black">
-          <strong><%= chat.sender.name.force_encoding('UTF-8') %>:</strong>
+          <strong><%= chat.sender.display_name.force_encoding('UTF-8') %>:</strong>
           <br>
           <%= chat.decrypted_message.force_encoding('UTF-8') %>
         </p>

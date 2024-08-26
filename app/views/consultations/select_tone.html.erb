@@ -1,8 +1,8 @@
-<h2>返信トーンを選択してください</h2>
+<h2>返信スタイルを選択してください</h2>
 
 <%= form_with url: response_consultation_path(@consultation), method: :get, local: true do %>
   <div>
-    <%= label_tag :selected_tone, "トーン" %>
+    <%= label_tag :selected_tone, "スタイル" %>
     <%= select_tag :selected_tone, options_for_select(Reply.tones.keys.map { |tone| [Reply.tones[tone], tone] }) %>
   </div>
   <div>
