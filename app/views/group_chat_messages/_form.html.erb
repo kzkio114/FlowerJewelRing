@@ -1,10 +1,13 @@
 <%= form_with(model: [@group_chat, group_chat_message], data: { turbo: true }, id: "new_group_chat_message") do |form| %>
   <div class="field has-addons">
     <div class="control is-expanded">
-      <%= form.text_area :message, placeholder: "メッセージを入力してください", class: "input", id: "chat_message_input" %>
+      <textarea placeholder="メッセージを入力してください" class="input" id="chat_message_input" 
+          data-group-chat-target="groupInput" 
+          name="group_chat_message[message]" 
+          data-action="keydown->group-chat#handleEnterKey"></textarea>
     </div>
     <div class="control">
-      <%= form.submit "送信", class: "button is-primary" %>
+      <%= form.submit "送信", class: "button is-primary", data: { action: "click->group-chat#sendMessage" } %>
     </div>
   </div>
 <% end %>

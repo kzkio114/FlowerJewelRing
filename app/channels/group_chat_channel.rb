@@ -1,7 +1,7 @@
 class GroupChatChannel < ApplicationCable::Channel
   def subscribed
-    group_chat = GroupChat.find(params[:group_chat_id])
-    stream_for group_chat
+    @group_chat = GroupChat.find(params[:group_chat_id])
+    stream_for @group_chat
   end
 
   def unsubscribed
@@ -9,11 +9,22 @@ class GroupChatChannel < ApplicationCable::Channel
   end
 
   def speak(data)
-    message = GroupChatMessage.create!(group_chat_id: data['group_chat_id'], user: current_user, message: data['message'])
-    render_and_broadcast_message(message)
+    message = GroupChatMessage.new(group_chat_id: data['group_chat_id'], user: current_user, message: data['message'])
+
+    if message.save
+      render_and_broadcast_message(message)
+    else
+      GroupChatChannel.broadcast_to(current_user, {
+        action: 'error',
+        errors: message.errors.full_messages
+      })
+    end
   rescue => e
     logger.error "Failed to send message: #{e.message}"
-    # 必要に応じて、フロントエンドにエラーメッセージを送信する
+    GroupChatChannel.broadcast_to(current_user, {
+      action: 'error',
+      errors: ['Failed to send message due to an unexpected error.']
+    })
   end
 
   def delete_message(data)
@@ -24,23 +35,22 @@ class GroupChatChannel < ApplicationCable::Channel
     broadcast_delete_message(message)
   rescue => e
     logger.error "Failed to delete message: #{e.message}"
-    # 必要に応じて、フロントエンドにエラーメッセージを送信する
   end
 
   private
 
-  def render_message(message)
-    ApplicationController.renderer.render(partial: 'group_chat_messages/message', locals: { message: message })
+  def render_message(message, show_delete_button)
+    ApplicationController.renderer.render(partial: 'group_chat_messages/message', locals: { message: message, show_delete_button: show_delete_button })
   rescue => e
     logger.error "Failed to render message: #{e.message}"
     nil
   end
 
   def render_and_broadcast_message(message)
-    message_html = render_message(message)
+    message_html = render_message(message, message.user == current_user)
 
     if message_html
-      GroupChatChannel.broadcast_to(message.group_chat, {
+      GroupChatChannel.broadcast_to(@group_chat, {
         action: 'create',
         message_html: message_html,
         message_id: message.id,
@@ -52,7 +62,7 @@ class GroupChatChannel < ApplicationCable::Channel
   end
 
   def broadcast_delete_message(message)
-    GroupChatChannel.broadcast_to(message.group_chat, {
+    GroupChatChannel.broadcast_to(@group_chat, {
       action: 'destroy',
       message_id: message.id
     })
