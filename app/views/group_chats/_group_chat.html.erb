@@ -1,4 +1,4 @@
-<div id="content" data-controller="group-chat" data-group-chat-id="<%= @group_chat.id %>">
+<div id="content" data-controller="group-chat" data-group-chat-id="<%= @group_chat.id %>" data-current-user-id="<%= current_user.id %>">
   <div class="group-chat-fixed-height">
     <div id="group_chat">
       <h2><%= @group_chat.title %> (ID: <%= @group_chat.id %>)</h2>

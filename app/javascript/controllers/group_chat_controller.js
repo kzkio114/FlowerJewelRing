@@ -44,6 +44,22 @@ export default class extends Controller {
       if (this.hasGroupMessagesTarget) {
         this.groupMessagesTarget.insertAdjacentHTML("beforeend", data.message_html);
         this.groupMessagesTarget.scrollTop = this.groupMessagesTarget.scrollHeight;
+  
+        const currentUserId = document.querySelector('[data-current-user-id]').dataset.currentUserId;
+        console.log("Current User ID:", currentUserId);
+  
+        const messageElement = this.groupMessagesTarget.lastElementChild;
+        const messageUserId = messageElement.dataset.messageUserId;
+        console.log("Message User ID:", messageUserId);
+  
+        if (currentUserId === messageUserId) {
+          const deleteButton = messageElement.querySelector('.delete-chat-button');
+          console.log("Delete Button:", deleteButton);
+          if (deleteButton) {
+            deleteButton.style.display = 'block';
+            console.log("Delete button is now visible");
+          }
+        }
       } else {
         console.error("GroupMessages target not found. Cannot insert new message.");
       }
@@ -55,12 +71,17 @@ export default class extends Controller {
     }
   }
 
+
   sendMessage(event) {
     event.preventDefault();
+  
+    if (!this.hasGroupInputTarget) {
+      console.error("groupInputTarget is not defined.");
+      return;
+    }
+  
     const message = this.groupInputTarget.value.trim();
-  
-    console.log("Sending message: ", message);
-  
+    console.log("Message to send:", message); // 送信するメッセージを確認
     if (message !== "") {
       this.groupChatChannel.perform("speak", {
         message: message,
@@ -70,7 +91,6 @@ export default class extends Controller {
     }
   }
   
-
   deleteMessage(event) {
     event.preventDefault();
     const messageId = event.target.dataset.messageId;
@@ -82,6 +102,10 @@ export default class extends Controller {
   handleEnterKey(event) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
+      if (!this.hasGroupInputTarget) {
+        console.error("groupInputTarget is not defined.");
+        return;
+      }
       this.sendMessage(event);
     }
   }
