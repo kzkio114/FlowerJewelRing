@@ -73,21 +73,23 @@ export default class extends Controller {
 
 
   sendMessage(event) {
-    event.preventDefault();
+    event.preventDefault(); // フォーム送信のデフォルト動作を防止
   
     if (!this.hasGroupInputTarget) {
       console.error("groupInputTarget is not defined.");
       return;
     }
   
-    const message = this.groupInputTarget.value.trim();
-    console.log("Message to send:", message); // 送信するメッセージを確認
-    if (message !== "") {
+    const message = this.groupInputTarget.value;
+  
+    if (typeof message === 'string' && message.trim() !== "") {
       this.groupChatChannel.perform("speak", {
-        message: message,
+        message: message.trim(),
         group_chat_id: this.groupChatId
       });
-      this.groupInputTarget.value = ""; // Clear input field
+      this.groupInputTarget.value = ""; // 入力フィールドをクリア
+    } else {
+      console.error("Message is empty or not a string.");
     }
   }
   
@@ -102,6 +104,7 @@ export default class extends Controller {
   handleEnterKey(event) {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
+      console.log(this.groupInputTarget); // groupInputTargetの値を確認
       if (!this.hasGroupInputTarget) {
         console.error("groupInputTarget is not defined.");
         return;
