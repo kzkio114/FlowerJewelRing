@@ -15,24 +15,32 @@
             <% replies.each do |reply| %>
               <div id="reply_<%= reply.id %>">
                 <div class="is-flex is-justify-content-space-between">
-                  <p>
-                    <strong>
-                  <% if current_user == reply.user && reply.display_choice == 'anonymous' %>
-                    匿名（<%= reply.user.name %>）
-                    <% elsif reply.display_choice == 'anonymous' %>
-                    匿名
+                  <div>
+                    <p>
+                      <strong>
+                      <% if current_user == reply.user && reply.display_choice == 'anonymous' %>
+                        匿名（<%= reply.user.name %>）
+                      <% elsif reply.display_choice == 'anonymous' %>
+                        匿名
+                      <% else %>
+                        <%= reply.user.name %>
+                      <% end %>:
+                      </strong>
+                      <%= reply.content %>
+                    </p>
+                  </div>
+                  <div class="is-flex is-flex-direction-column is-align-items-end">
+                    <p><em>トーン: <%= Reply.tones[reply.tone] %></em></p>
+                    <% if current_user == reply.user %>
+                      <div class="is-pulled-right buttons-right">
+                        <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger is-small button-wrap-text ml-2' %>
+                      </div>
                     <% else %>
-                  <%= reply.user.name %>
-                    <% end %>:
-                  </strong>
-                    <%= reply.content %>
-                  </p>
-                  <p><em>トーン: <%= Reply.tones[reply.tone] %></em></p>
-                  <% if current_user == reply.user %>
-                    <div class="is-pulled-right buttons-right">
-                      <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger is-small button-wrap-text ml-2' %>
-                    </div>
-                  <% end %>
+                      <div class="is-pulled-right buttons-right" style="visibility: hidden;">
+                        <button class="button is-small button-wrap-text ml-2"></button>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             <% end %>
