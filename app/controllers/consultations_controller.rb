@@ -62,7 +62,6 @@ class ConsultationsController < ApplicationController
 
   # DELETE /consultations/1
   def destroy
-    @consultation = Consultation.find(params[:id])
     @consultation.destroy
     @consultations = Consultation.includes(:category).all
     @new_consultation = Consultation.new
@@ -77,13 +76,12 @@ class ConsultationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_consultation
       @consultation = Consultation.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def consultation_params
-      params.require(:consultation).permit(:title, :content, :category_id, :reply_tone, :desired_reply_tone, :user_id)
+      params.require(:consultation).permit(:title, :content, :category_id, :reply_tone, :desired_reply_tone, :display_choice, :user_id)
     end
 end

@@ -63,6 +63,13 @@
                 </div>
 
                 <div class="field">
+                  <%= form.label :display_choice, "表示する名前の選択", class: "label" %>
+                  <div class="control">
+                    <%= form.select :display_choice, options_for_select([['名前', 'name'],['匿名', 'anonymous']], consultation.display_choice), {}, { class: "select" } %>
+                  </div>
+                </div>
+
+                <div class="field">
                   <%= form.label :desired_reply_tone, "望ましい返信スタイル", class: "label" %>
                   <div class="control">
                     <%= form.select :desired_reply_tone, options_for_select(Consultation.desired_reply_tones.keys.map { |tone| [Consultation.desired_reply_tones[tone], tone] }), {}, { class: "select" } %>

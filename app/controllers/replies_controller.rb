@@ -42,6 +42,6 @@ class RepliesController < ApplicationController
   end
 
   def reply_params
-    params.require(:reply).permit(:content, :tone)
+    params.require(:reply).permit(:content, :tone, :display_choice)
   end
 end
