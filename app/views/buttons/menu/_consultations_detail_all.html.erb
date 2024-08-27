@@ -17,12 +17,14 @@
                 <div class="is-flex is-justify-content-space-between">
                   <p>
                     <strong>
-                      <% if reply.display_choice == 'name' %>
-                        <%= reply.user.name %>
-                      <% else %>
-                        匿名
-                      <% end %>:
-                    </strong>
+                  <% if current_user == reply.user && reply.display_choice == 'anonymous' %>
+                    匿名（<%= reply.user.name %>）
+                    <% elsif reply.display_choice == 'anonymous' %>
+                    匿名
+                    <% else %>
+                  <%= reply.user.name %>
+                    <% end %>:
+                  </strong>
                     <%= reply.content %>
                   </p>
                   <p><em>トーン: <%= Reply.tones[reply.tone] %></em></p>
