@@ -7,15 +7,22 @@ class DashboardController < ApplicationController
     @user = current_user
     @unread_gifts_count = current_user.calculate_unread_gifts_count
     @unread_replies_count = fetch_unread_replies_count
-    @gifts = current_user.received_gifts # 現在のユーザーが受け取ったギフトのみを取得
+    @gifts = current_user.received_gifts
     @reply_users = User.joins(:replies).distinct
     @latest_gifts = Gift.order(created_at: :desc).limit(5)
     @sent_gifts = @user.sent_gifts
     @received_gifts = @user.received_gifts
     @latest_gift_messages = fetch_latest_gift_messages
-
+  
+    @replies = fetch_latest_replies.map do |reply|
+      {
+        reply: reply,
+        display_name: reply&.display_name # replyがnilでないことを確認
+      }
+    end
+  
     if params[:query].present? && params[:query].strip.present?
-      queries = params[:query].split(/[\s　]+/) # 全角スペースと半角スペースで分割
+      queries = params[:query].split(/[\s　]+/)
       @consultations = queries.flat_map do |q|
         Consultation.search(q, fields: [:title, :content, :category_name, :user_name], match: :word_middle)
       end.uniq
@@ -39,15 +46,18 @@ class DashboardController < ApplicationController
 
   def fetch_latest_replies
     current_user.consultations.joins(replies: :user)
-                .select('replies.*, users.name as user_name')
-                .order('replies.created_at DESC')
-                .limit(5)
+                  .select('replies.*, replies.id as reply_id, users.name as user_name')
+                  .order('replies.created_at DESC')
+                  .limit(5)
+                  .map { |consultation| consultation.replies.first } # Replyオブジェクトを取得
   end
 
-  def fetch_unread_replies_count
-    current_user.consultations.joins(replies: :user)
-                .where('replies.read = ?', false)
-                .count
+  def fetch_latest_replies
+    Reply.joins(:consultation, :user)
+         .where(consultations: { user_id: current_user.id })
+         .select('replies.*, users.name as user_name')
+         .order('replies.created_at DESC')
+         .limit(5)
   end
 
   def fetch_latest_gift_messages
@@ -61,6 +71,12 @@ class DashboardController < ApplicationController
       gift = Gift.find(gift_id)
       { message: message, created_at: created_at, gift: gift }
     end
+  end
+
+  def fetch_unread_replies_count
+    current_user.consultations.joins(:replies)
+                .where(replies: { read: false })
+                .count
   end
 
   def mark_gift_comments_and_messages_as_read(gifts)

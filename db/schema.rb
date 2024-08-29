@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_28_104911) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_29_221909) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -99,6 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_28_104911) do
     t.text "sender_message"
     t.integer "gift_template_id"
     t.boolean "active", default: true, null: false
+    t.boolean "anonymous"
     t.index ["gift_category_id"], name: "index_gifts_on_gift_category_id"
     t.index ["giver_id"], name: "index_gifts_on_giver_id"
     t.index ["receiver_id"], name: "index_gifts_on_receiver_id"

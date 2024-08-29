@@ -40,19 +40,27 @@ class GiftsController < ApplicationController
     @user = current_user
     @gift.giver_id = current_user.id
     @gift.receiver = User.find_by(id: params[:gift][:receiver_id])
+    @reply = Reply.find_by(id: params[:gift][:reply_id])
     @gift.assign_attributes(gift_params)
 
-    if @gift.receiver.nil?
-      Rails.logger.info("Receiver not found")
+    if @gift.receiver.nil? || @reply.nil?
+      Rails.logger.info("Receiver or Reply not found")
+      redirect_to dashboard_path, alert: "送信先のユーザーまたは返信が見つかりませんでした。"
       return
     end
 
-    unread_replies_exist = unread_replies_exist?
+    # 匿名の情報を活用してギフトを送信
+    if @reply.anonymous
+      @gift.update(anonymous: true) # ギフトも匿名として扱う
+    end
 
-    if unread_replies_exist
-      process_gift_send
+    if @gift.save
+      mark_replies_as_read
+      @gift.update(sender_message: "", sent_at: Time.current)
+      update_response_data
+      send_response
     else
-      respond_to_unread_error
+      log_errors
     end
   end
 
@@ -65,25 +73,7 @@ class GiftsController < ApplicationController
   end
 
   def gift_params
-    params.require(:gift).permit(:receiver_id, :item_name, :description, :color, :sender_message)
-  end
-
-  def unread_replies_exist?
-    Reply.joins(:consultation)
-         .where(consultations: { user_id: @gift.giver_id })
-         .where(user_id: @gift.receiver_id, read: false)
-         .exists?
-  end
-
-  def process_gift_send
-    if @gift.save
-      mark_replies_as_read
-      @gift.update(sender_message: "", sent_at: Time.current)
-      update_response_data
-      send_response
-    else
-      log_errors
-    end
+    params.require(:gift).permit(:receiver_id, :reply_id, :item_name, :description, :color, :sender_message, :anonymous)
   end
 
   def mark_replies_as_read
@@ -112,21 +102,10 @@ class GiftsController < ApplicationController
     Rails.logger.info(@gift.errors.full_messages.join(", "))
   end
 
-  def respond_to_unread_error
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("error-message", partial: "shared/error_message", locals: { message: "未読の返信がないため、ギフトを送信できません。" })
-        ]
-      end
-    end
-  end
-
   def update_response_data
     @my_consultations = Consultation.where(user_id: current_user.id)
     replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
     @reply_users = User.where(id: replier_ids)
-    # 受け取ったすべてのギフトを取得するように変更
     @gifts = Gift.where(receiver_id: current_user.id)
     @unread_gifts_count = current_user.calculate_unread_gifts_count
     @latest_replies = fetch_latest_replies
