@@ -14,12 +14,29 @@ class GiftsController < ApplicationController
   def create
     @gift = Gift.new(gift_params)
     @gift.giver = current_user
+    
+    # reply_idが送られてきた場合の処理
+    reply_id = params[:gift][:reply_id]
+    if reply_id.present?
+      @reply = Reply.find(reply_id)
+      if @reply.anonymous
+        @gift.anonymous = true # ギフトも匿名として扱う
+      end
+    end
+  
     if @gift.save
       redirect_to @gift, notice: 'Gift was successfully created.'
     else
-      render :new
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { gifts: @gifts, reply_users: @reply_users, latest_gift_messages: @latest_gift_messages, unread_gifts_count: @unread_gifts_count, unread_replies_count: @unread_replies_count })
+          ]
+        end
+      end
     end
   end
+  
 
   def edit; end
 
@@ -73,7 +90,7 @@ class GiftsController < ApplicationController
   end
 
   def gift_params
-    params.require(:gift).permit(:receiver_id, :reply_id, :item_name, :description, :color, :sender_message, :anonymous)
+    params.require(:gift).permit(:receiver_id, :item_name, :description, :color, :sender_message, :anonymous)
   end
 
   def mark_replies_as_read

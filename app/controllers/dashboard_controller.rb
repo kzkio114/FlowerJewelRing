@@ -74,10 +74,10 @@ class DashboardController < ApplicationController
   end
 
   def fetch_unread_replies_count
-    current_user.consultations.joins(:replies)
-                .where(replies: { read: false })
-                .count
-  end
+  current_user.consultations.joins(:replies)
+              .where(replies: { read: false })
+              .count
+end
 
   def mark_gift_comments_and_messages_as_read(gifts)
     gifts.each do |gift|
