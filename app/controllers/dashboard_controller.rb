@@ -13,6 +13,7 @@ class DashboardController < ApplicationController
     @sent_gifts = @user.sent_gifts
     @received_gifts = @user.received_gifts
     @latest_gift_messages = fetch_latest_gift_messages
+    @available_gift_items = current_user.received_gifts.where(sent_at: nil).distinct.pluck(:item_name)
   
     @replies = fetch_latest_replies.map do |reply|
       {
