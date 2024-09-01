@@ -14,27 +14,46 @@ class GiftsController < ApplicationController
   def create
     @gift = Gift.new(gift_params)
     @gift.giver = current_user
-    # reply_idが送られてきた場合の処理
+    @user = current_user
+  
     reply_id = params[:gift][:reply_id]
     if reply_id.present?
       @reply = Reply.find(reply_id)
-      if @reply.anonymous
-        @gift.anonymous = true # ギフトも匿名として扱う
+      @gift.reply = @reply
+      @gift.anonymous = true if @reply.anonymous
+    end
+  
+    # gift_categoryを設定する部分を追加または確認
+    gift_template = GiftTemplate.find_by(name: @gift.item_name)
+    if gift_template
+      @gift.gift_category = gift_template.gift_category
+    else
+      # gift_templateが見つからない場合はエラーメッセージを表示
+      Rails.logger.error("Gift template not found for item_name: #{@gift.item_name}")
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace("error-message", partial: "shared/error_message", locals: { message: "ギフトテンプレートが見つかりませんでした: #{@gift.item_name}" })
+          ]
+        end
       end
+      return
     end
   
     if @gift.save
       redirect_to @gift, notice: 'Gift was successfully created.'
     else
+      Rails.logger.error("Gift creation failed: #{@gift.errors.full_messages.join(", ")}")
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { gifts: @gifts, reply_users: @reply_users, latest_gift_messages: @latest_gift_messages, unread_gifts_count: @unread_gifts_count, unread_replies_count: @unread_replies_count })
+            turbo_stream.replace("error-message", partial: "shared/error_message", locals: { message: "ギフトを送信できませんでした: #{@gift.errors.full_messages.join(", ")}" })
           ]
         end
       end
     end
   end
+  
 
   def edit; end
 
@@ -53,8 +72,9 @@ class GiftsController < ApplicationController
 
   def send_gift
     @user = current_user
+    @gift = Gift.find(params[:id]) # 送信されたギフトを特定するための修正
     @gift.giver_id = current_user.id
-    @gift.receiver = User.find_by(id: params[:gift][:receiver_id])
+    @gift.receiver = User.find_by(id: params[:receiver_id]) # パラメータの取得を修正
     @gift.assign_attributes(gift_params)
 
     if @gift.receiver.nil?
@@ -88,7 +108,7 @@ class GiftsController < ApplicationController
   end
 
   def gift_params
-    params.require(:gift).permit(:receiver_id, :item_name, :description, :color, :sender_message)
+    params.require(:gift).permit(:receiver_id, :item_name, :description, :color, :sender_message, :anonymous, :reply_id)
   end
 
   def unread_replies_exist?

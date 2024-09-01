@@ -18,7 +18,7 @@ class DashboardController < ApplicationController
     @replies = fetch_latest_replies.map do |reply|
       {
         reply: reply,
-        display_name: reply&.display_name # replyがnilでないことを確認
+        display_name: reply&.display_name
       }
     end
   
@@ -46,14 +46,6 @@ class DashboardController < ApplicationController
   end
 
   def fetch_latest_replies
-    current_user.consultations.joins(replies: :user)
-                  .select('replies.*, replies.id as reply_id, users.name as user_name')
-                  .order('replies.created_at DESC')
-                  .limit(5)
-                  .map { |consultation| consultation.replies.first } # Replyオブジェクトを取得
-  end
-
-  def fetch_latest_replies
     Reply.joins(:consultation, :user)
          .where(consultations: { user_id: current_user.id })
          .select('replies.*, users.name as user_name')
@@ -75,10 +67,10 @@ class DashboardController < ApplicationController
   end
 
   def fetch_unread_replies_count
-  current_user.consultations.joins(:replies)
-              .where(replies: { read: false })
-              .count
-end
+    current_user.consultations.joins(:replies)
+                .where(replies: { read: false })
+                .count
+  end
 
   def mark_gift_comments_and_messages_as_read(gifts)
     gifts.each do |gift|
