@@ -9,16 +9,16 @@
         <div class="card">
           <div class="card-content">
             <p><%= display_name %> : <%= reply.content %></p>
-            <p>トーン: <%= reply.tone %></p>
+            <p>スタイル: <%= reply.tone %></p>
             <br>
+            <h4 class="is-size-5">ギフトを選択して<br>メッセージを送ろう</h4>
 
-            <% @gifts.each do |gift| %>
-              <div class="container is-small">
-                <div class="columns is-multiline">
+            <div class="container is-small show-fixed">
+              <div class="columns is-multiline">
+                <% @gifts.each do |gift| %>
                   <div class="column is-full">
                     <div class="card">
                       <div class="card-content">
-                        <h4 class="is-size-5">以下のギフトを送信:</h4>
                         <div class="content">
                           <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
                             <%= hidden_field_tag :return_to, 'info' %>
@@ -53,9 +53,9 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                <% end %>
               </div>
-            <% end %>
+            </div>
 
           </div>
         </div>

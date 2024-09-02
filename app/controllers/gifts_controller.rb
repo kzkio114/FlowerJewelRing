@@ -72,28 +72,34 @@ class GiftsController < ApplicationController
 
   def send_gift
     @user = current_user
-    @gift = Gift.find(params[:id]) # 送信されたギフトを特定するための修正
+    @gift = Gift.find(params[:id])
     @gift.giver_id = current_user.id
-    @gift.receiver = User.find_by(id: params[:receiver_id]) # パラメータの取得を修正
+    @gift.receiver = User.find_by(id: params[:receiver_id])
     @gift.assign_attributes(gift_params)
-
+  
     if @gift.receiver.nil?
       Rails.logger.info("Receiver not found")
       return
     end
-
+  
     unread_replies_exist = unread_replies_exist?
-
+  
     if unread_replies_exist
-      # 返信が匿名の場合、ギフトも匿名に設定する
       latest_reply = Reply.where(consultation_id: @gift.receiver.consultations.pluck(:id))
                           .order(created_at: :desc)
                           .first
       if latest_reply&.anonymous?
         @gift.anonymous = true
       end
-
-      process_gift_send
+  
+      if @gift.save
+        mark_replies_as_read
+        @gift.update(sender_message: "", sent_at: Time.current)
+        update_response_data
+        send_response  # ここで全てのビュー更新を処理
+      else
+        log_errors
+      end
     else
       respond_to_unread_error
     end
@@ -143,6 +149,7 @@ class GiftsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
+          turbo_stream.remove("reply_#{@gift.reply.id}"),  # 返信全体を削除
           turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: current_user }),
           turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count }),
           turbo_stream.replace("content", partial: content_partial, locals: content_locals)
