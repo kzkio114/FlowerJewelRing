@@ -1,13 +1,17 @@
-<%= form_with model: [@group_chat, @group_chat_member], local: true do |form| %>
-  <div class="field">
-    <%= form.label :user_id, 'ユーザー' %>
-    <%= form.collection_select :user_id, @users, :id, :name, prompt: 'ユーザーを選択' %>
-  </div>
-  <div class="field">
-    <%= form.label :role, 'ロール' %>
-    <%= form.select :role, GroupChatMember.roles.keys.map { |role| [role.titleize, role] } %>
-  </div>
-  <div class="actions group-buttons">
-    <%= form.submit '追加', class: 'button is-primary is-small' %>
-  </div>
+<%= turbo_frame_tag "new_group_chat_member" do %>
+  <%= form_with model: [@group_chat, @group_chat_member], local: true do |form| %>
+    <div class="field">
+      <%= form.label :user_id, 'ユーザー' %>
+      <%= form.collection_select :user_id, @users, :id, :name, prompt: 'ユーザーを選択' %>
+    </div>
+    <div class="field">
+      <%= form.label :role, 'ロール' %>
+      <%= form.select :role, GroupChatMember.roles.keys.map { |role| [role.titleize, role] } %>
+    </div>
+    <div class="field group-buttons">
+      <div class="control">
+        <%= form.submit '追加', class: 'button is-primary is-small' %>
+      </div>
+    </div>
+  <% end %>
 <% end %>

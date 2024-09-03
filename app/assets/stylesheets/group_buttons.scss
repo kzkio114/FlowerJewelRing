@@ -82,7 +82,7 @@
 
 .group-buttons {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* ボタンを横並びにする */
   align-items: flex-start; /* ボタンを左寄せにする */
 
   .button {

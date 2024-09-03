@@ -1,7 +1,7 @@
 <div id="content">
   <div class="group-chat-fixed-height">
     <div id="group_chat_list" class="group-chat-height">
-      <h3>グループチャット一覧</h3>
+      <h3 class="title is-size-3">グループチャット一覧</h3>
       <% group_chats.each do |group_chat| %>
         <% if group_chat.group_chat_members.exists?(user: current_user) || group_chat.free? %>
           <div id="group_chat_<%= group_chat.id %> " class="group-member-buttons">
@@ -26,7 +26,7 @@
       <div class="field">
         <div class="control">
           <%= form.label :title, "グループチャットのタイトル" %>
-          <%= form.text_field :title, class: 'input is-danger' if group_chat.errors[:title].any? %>
+          <%= form.text_field :title, class: "input #{'is-danger' if @group_chat.errors[:title].any?}" %>
         </div>
       </div>
       <div class="field">
