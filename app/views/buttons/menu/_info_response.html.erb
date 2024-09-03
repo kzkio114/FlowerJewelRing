@@ -5,33 +5,8 @@
         <div class="column is-narrow">
           <strong class="is-size-4 ml-4 info-margin">最新のお知らせ</strong>
           <p class="is-size-6 mr-6 ml-5 info-margin">
-            最新の通知は、<span class="mobile-line-break"></span>5件のみ表示されています。<br>
+            最新のメッセージは、<span class="mobile-line-break"></span>5件のみ表示されています。<br>
           </p>
-        </div>
-        <div class="column mt-6 icon-margin">
-          <div id="notification-section" class="is-flex is-justify-content-flex-end">
-            <span id="unread-replies-count" class="is-flex <%= @user.unread_replies_count > 0 ? 'has-unread' : '' %>">
-              <span class="icon mr-1 ml-8">
-                <i class="fas fa-envelope"></i>
-              </span>
-              相談の未読返信: <%= @user.unread_replies_count %>
-            </span>
-
-            <% if @unread_gifts_count.present? && @unread_gifts_count > 0 %>
-              <span id="unread-gifts-count" class="is-flex has-unread ml-1">
-                <span class="icon mr-1">
-                  <i class="fas fa-gift"></i>
-                </span>
-                確認してください！！
-              </span>
-            <% else %>
-              <span id="unread-gifts-count" class="is-flex ml-4">
-                <span class="icon mr-1">
-                  <i class="fas fa-gift"></i>
-                </span>
-              </span>
-            <% end %>
-          </div>
         </div>
       </div>
     </header>
