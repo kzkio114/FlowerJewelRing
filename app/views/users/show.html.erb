@@ -22,7 +22,7 @@
             <ul>
               <% @user.consultations.each do |consultation| %>
                 <% consultation.replies.each do |reply| %>
-                  <li>返信者: <%= reply.display_name %>, 返信内容: <%= reply.content %></li>
+                  <li>返信者: <%= reply.display_name %>さん, 返信内容: <%= reply.content %></li>
                 <% end %>
               <% end %>
             </ul>
@@ -44,7 +44,7 @@
                     <p><strong>ギフト名:</strong> <%= gift.item_name %></p>
                     <p><strong>花言葉:</strong> <%= gift.description %></p>
                     <% if gift.giver.present? %>
-                      <p>送り主: <%= gift.giver.name %></p>
+                      <p>送り主: <%= gift.giver.name %>さん</p>
                     <% end %>
                     <% if gift.image_url.present? %>
                       <figure class="image is-128x128">

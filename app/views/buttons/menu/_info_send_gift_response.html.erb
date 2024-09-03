@@ -5,11 +5,12 @@
       <div id="reply_<%= reply.id %>" class="column is-full">
         <div class="card">
           <div class="card-content p-4">
-            <p><%= reply_hash[:display_name] %> : <%= reply.content %></p>
+            <p><strong>返信者:</strong> <%= reply_hash[:display_name] %>さん</p>
+            <p><strong>返信内容:</strong> <%= reply_hash[:reply].content %></p>
             <p><em>スタイル: <%= Reply.tones[reply.tone] %></em></p>
             <p><strong>受信日時:</strong> <%= reply.created_at.in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></p>
             <br>
-            <h4 class="is-size-6">ギフトを選択して<br>メッセージを送ろう</h4>
+            <h4 class="is-size-5">ギフトを選択して<br>メッセージを送ろう</h4>
 
             <div class="show-fixed">
               <div class="container is-small">
