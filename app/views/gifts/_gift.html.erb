@@ -1,0 +1,43 @@
+
+            <div id="gifts" class="mb-2">
+              <h3>最新の感謝の気持ち</h3>
+              <div class="show-info-fixed">
+              <% if @latest_gift_messages.present? %>
+                <div class="columns is-multiline">
+                  <% @latest_gift_messages.each do |entry| %>
+                    <div class="column is-full">
+                      <div class="card mb-2">
+                        <div class="card-content">
+                          <div class="content">
+                            <p><strong>ギフト名:</strong> <%= entry[:gift].item_name %></p>
+                            <% if entry[:gift].image_url.present? %>
+                              <%= image_tag asset_path(entry[:gift].image_url), alt: "ギフトの画像", style: "width: 150px;", data: { action: "click->modal#open" } %>
+                            <% end %>
+                            <p><strong>花言葉:</strong> <%= entry[:gift].description %></p>
+                            <p><strong>送り主:</strong> <%= entry[:gift].giver&.name || '不明' %>さん</p>
+                            <p><strong>感謝のメッセージ</strong></p>
+                            <p><%= entry[:message] %></p>
+                            <p><strong>受信日時:</strong> <%= entry[:created_at].in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></p>
+                            <%
+                            app_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
+                            tweet_message = "相談のお礼に「#{ERB::Util.url_encode(entry[:gift].item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(entry[:gift].description)}」の意味が込められてます。%0Aみなさんも素敵なお礼貰いませんか？%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
+                            %>
+                            <div class="field is-grouped is-grouped-right custom-left buttons-right">
+                              <div class="twitter custom-left">
+                              <%= link_to "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-info button-wrap-text ml-2 tooltip", data: { tooltip: "ツイートを投稿" } do %>
+                              <i class="fab fa-twitter twitter-icon"></i>
+                                <% end %>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+              <% else %>
+                <p>最新のギフトメッセージはありません。</p>
+              <% end %>
+            </div>
+             </div>

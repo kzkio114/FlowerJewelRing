@@ -63,7 +63,7 @@
             </div>
           </div>
           <div class="column is-one-third">
-            <div id="latest-gifts" class="mb-2">
+            <div id="gifts" class="mb-2">
               <h3>最新の感謝の気持ち</h3>
               <div class="show-info-fixed">
               <% if @latest_gift_messages.present? %>
@@ -75,7 +75,7 @@
                           <div class="content">
                             <p><strong>ギフト名:</strong> <%= entry[:gift].item_name %></p>
                             <% if entry[:gift].image_url.present? %>
-                              <%= image_tag asset_path(entry[:gift].image_url), alt: "ギフトの画像", style: "width: 150px;" %>
+                              <%= image_tag asset_path(entry[:gift].image_url), alt: "ギフトの画像", style: "width: 150px;", data: { action: "click->modal#open" } %>
                             <% end %>
                             <p><strong>花言葉:</strong> <%= entry[:gift].description %></p>
                             <p><strong>送り主:</strong> <%= entry[:gift].giver&.name || '不明' %>さん</p>

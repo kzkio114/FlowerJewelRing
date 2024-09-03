@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_31_234947) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_02_232152) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -161,6 +161,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_31_234947) do
     t.string "tone"
     t.string "display_choice"
     t.boolean "anonymous"
+    t.integer "sent_count", default: 0
     t.index ["consultation_id"], name: "index_replies_on_consultation_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
   end

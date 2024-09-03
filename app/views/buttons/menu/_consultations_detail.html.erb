@@ -30,7 +30,7 @@
                     </p>
                   </div>
                   <div class="is-flex is-flex-direction-column is-align-items-end">
-                    <p><em>トーン: <%= Reply.tones[reply.tone] %></em></p>
+                    <p><em>スタイル: <%= Reply.tones[reply.tone] %></em></p>
                     <% if current_user == reply.user %>
                       <div class="is-pulled-right buttons-right">
                         <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger is-small button-wrap-text ml-2' %>
