@@ -19,7 +19,7 @@ class ButtonsController < ApplicationController
     @replies = fetch_latest_replies.map do |reply|
       {
         reply: reply,
-        display_name: reply&.display_name
+        display_name: reply.display_name
       }
     end
   
