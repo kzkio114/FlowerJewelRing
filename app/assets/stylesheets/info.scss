@@ -132,7 +132,7 @@
 
 .show-fixed {
   background-color: hsl(174, 42%, 95%); /* 枠の背景色を設定 */
-  height: 460px;  /* デフォルトの高さ */
+  height: 480px;  /* デフォルトの高さ */
   width: 220px;   /* デフォルトの幅 */
   overflow-y: auto; /* 枠の高さを超えた場合、スクロールバーを表示 */
   overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
@@ -185,8 +185,7 @@
 }
 
 .show-info-fixed {
-  background-color: hsl(174, 42%, 95%); /* 枠の背景色を設定 */
-  height: 540px;  /* デフォルトの高さ */
+  height: 560px;  /* デフォルトの高さ */
   width: 250px;   /* デフォルトの幅 */
   overflow-y: auto; /* 枠の高さを超えた場合、スクロールバーを表示 */
   overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
@@ -242,5 +241,58 @@
   @media (max-width: 480px) {
     text-align: center; /* テキストを中央揃え */
     margin-left: 0 !important; /* 左マージンを追加 */
+  }
+}
+
+.show-gift-fixed {
+  height: 810px;  /* デフォルトの高さ */
+  width: 270px;   /* デフォルトの幅 */
+  overflow-y: auto; /* 枠の高さを超えた場合、スクロールバーを表示 */
+  overflow-x: hidden; /* 横方向のスクロールバーを非表示 */
+}
+
+@media (max-width: 480px) {
+  .show-gift-fixed {
+    height: 430px; /* スマホ用の高さ */
+    width: 240px; /* スマホ用の幅 */
+  }
+
+  .card-content {
+    padding: 10px; /* スマホ用のパディングを減らす */
+  }
+
+  .is-size-6 {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .textarea {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .button.is-small {
+    font-size: 0.75rem; /* スマホ用のボタンフォントサイズを小さく */
+  }
+}
+
+@media (max-width: 411px) {
+  .show-gift-fixed {
+    height: 500px; /* スマホ用の高さ */
+    width: 210px; /* スマホ用の幅 */
+  }
+
+  .card-content {
+    padding: 1px; /* スマホ用のパディングを減らす */
+  }
+
+  .is-size-6 {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .textarea {
+    font-size: 0.875rem; /* スマホ用のフォントサイズを小さく */
+  }
+
+  .button.is-small {
+    font-size: 0.65rem; /* スマホ用のボタンフォントサイズを小さく */
   }
 }

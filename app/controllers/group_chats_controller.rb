@@ -76,10 +76,12 @@ class GroupChatsController < ApplicationController
   def update
     if @group_chat.update(group_chat_params)
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace('group_chat_content', partial: 'group_chats/group_chat', locals: { group_chat: @group_chat }) }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace('group_chat', partial: 'group_chats/group_chat', locals: { group_chat: @group_chat }) }
       end
     else
-      render :edit
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("edit_group_chat", partial: "group_chats/edit_group_chat", locals: { group_chat: @group_chat }) }
+      end
     end
   end
 

@@ -62,10 +62,13 @@
                     <% end %>
                     <%
                       app_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
-                      tweet_message = "相談のお礼に「#{ERB::Util.url_encode(gift.item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(gift.description)}」の意味が込められてます。%0Aみなさんも素敵なお礼貰いませんか？%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
-                    %>
-                    <%= link_to 'Xに投稿', "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-small is-info mt-2" %>
-                  </li>
+                      tweet_message = "相談のお礼に「#{ERB::Util.url_encode(gift.item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(gift.description)}」の意味が込められてます。%0A%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
+                      %>
+                      <div class="field is-grouped custom-left buttons-right mb-6">
+                      <div class="twitter custom-left">
+                      <%= link_to "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-info button-wrap-text ml-2 tooltip", data: { tooltip: "ツイートを投稿" } do %>
+                    <i class="fab fa-twitter twitter-icon"></i>
+                  <% end %>
                 <% end %>
               <% end %>
             </ul>
