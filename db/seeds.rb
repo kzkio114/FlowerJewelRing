@@ -112,7 +112,6 @@
 # end
 
 
-# 全てのユーザーを取得
 users = User.all
 
 # 植物カテゴリに関連する全てのギフトテンプレートを取得
@@ -123,12 +122,14 @@ gift_templates = GiftTemplate.where(gift_category: plant_category)
 users.each do |user|
   gift_templates.each do |gift_template|
     Gift.create!(
-      user_id: user.id,  # 修正箇所
+      giver_id: user.id,       # ここでギフトを送るユーザーID
+      receiver_id: user.id,    # ここでギフトを受け取るユーザーID
       gift_template: gift_template,
-      name: gift_template.name,
+      item_name: gift_template.name,
       description: gift_template.description,
       color: gift_template.color,
-      image_url: gift_template.image_url
+      image_url: gift_template.image_url,
+      sent_at: Time.now
     )
   end
 end
