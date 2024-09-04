@@ -59,7 +59,9 @@
 
 # admin
 # ユーザーを見つけます
+
  user = User.find_by(email: 'kzkio114@gmail.com')
+
 
 # # 既存のAdminUserレコードを見つけるか、新しいレコードを作成します
  admin_user = AdminUser.find_or_create_by(user: user, organization_id: 1)
@@ -67,7 +69,11 @@
 # # admin_roleをsuper_adminに設定します
  admin_user.update(admin_role: :super_admin)
 
-# # ギフトカテゴリを作成
+
+
+
+# ギフトカテゴリを作成
+
 # 既存のギフトカテゴリを使用
 plant_category = GiftCategory.find_or_create_by!(name: '植物') do |category|
   category.description = '美しい植物のギフト'

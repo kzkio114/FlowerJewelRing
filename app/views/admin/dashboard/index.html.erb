@@ -1,55 +1,41 @@
-<h1 class="title">管理者ダッシュボード</h1>
 <% if current_user.super_admin? || current_user.admin? %>
-  <div class="is-flex mt-3">
-    <%= button_to '管理者ユーザー一覧へ', admin_admin_users_path, method: :get, data: { turbo: true }, class: 'button is-primary ml-2' %>
-    <%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info ml-2' %>
+  <div id="content" class="frame-fixed-height container is-small mb-3">
+    <div class="is-flex m-5">
+      <h1 class="title">管理者ダッシュボード</h1>
+      <%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info ml-5' %>
+    </div>
+    <div class="has-text-right m-10">
+      <%= button_to '管理者ユーザー一覧へ', admin_admin_users_path, method: :get, data: { turbo: true }, class: 'button is-primary ml-2' %>
+    </div>
   </div>
 <% end %>
-
-<h2 class="subtitle mt-3">ユーザー一覧</h2>
-<div class="columns is-multiline">
-  <% @users.each do |user| %>
-    <div class="column is-one-third" id="<%= dom_id(user) %>">
-      <div class="box">
-        <p class="title is-4"><%= user.name %></p>
-        <% if current_user.super_admin? || current_user.admin? %>
-          <div class="are-small is-right">
-            <%= button_to '削除', admin_user_path(user), method: :delete, data: { turbo_confirm: '本当にこのユーザーを削除しますか？' }, remote: true, form: { data: { turbo: true }, class: 'button is-danger' } %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+  
+<div id="content" class="frame-fixed-height container is-small mb-3">
+  <div class="admin-user-list">
+    <%= render "users_index", users: @users %>
+  </div>
 </div>
 
-<h2 class="subtitle">相談一覧</h2>
-<div class="columns is-multiline">
-  <% @consultations.each do |consultation| %>
-    <div class="column is-one-third" id="<%= dom_id(consultation) %>">
-      <div class="box">
-        <p class="title is-4"><%= consultation.title %></p>
-        <% if current_user.super_admin? || current_user.admin? %>
-          <div class="are-small is-right">
-            <%= button_to '削除', admin_consultation_path(consultation), method: :delete, data: { turbo_confirm: '本当にこの相談を削除しますか？' }, remote: true, form: { data: { turbo: true }, class: 'button is-danger' } %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+<div id="content" class="frame-fixed-height container is-small mb-3">
+  <div class="consultation-list">
+    <%= render "consultations_index", consultations: @consultations %>
+  </div>
 </div>
 
-<h2 class="subtitle">ギフト一覧</h2>
-<div class="columns is-multiline">
-  <% @gifts.each do |gift| %>
-    <div class="column is-one-third" id="<%= dom_id(gift) %>">
-      <div class="box">
-        <p class="title is-4"><%= gift.item_name %></p>
-        <% if current_user.super_admin? || current_user.admin? %>
-          <div class="are-small is-right">
-            <%= button_to '削除', admin_gift_path(gift), method: :delete, data: { turbo_confirm: '本当にこのギフトを削除しますか？' }, remote: true, form: { data: { turbo: true }, class: 'button is-danger' } %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+<div id="content" class="frame-fixed-height container is-small mb-3">
+  <div class="admin-gift-list">
+    <%= render "sended_gifts_index", gift_histories: @gift_histories %>
+  </div>
+</div>
+
+<div id="content" class="frame-fixed-height container is-small mb-3">
+  <div class="admin-gift-list">
+    <%= render "gifts_index", gifts: @gifts %>
+  </div>
+</div>
+  
+<div id="content" class="container is-small gift-list-height">
+  <div class="admin-gift-templates-list">
+    <%= render "gift_templates_index", gift_templates: @gift_templates %>
+  </div>
 </div>
