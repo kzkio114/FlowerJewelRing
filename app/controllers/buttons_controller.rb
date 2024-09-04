@@ -16,10 +16,30 @@ class ButtonsController < ApplicationController
     @received_gifts = @user.received_gifts
     @latest_gift_messages = fetch_latest_gift_messages
 
+    @replies = fetch_latest_replies.map do |reply|
+      {
+        reply: reply,
+        display_name: reply.display_name
+      }
+    end
+  
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: { gifts: @gifts, reply_users: @reply_users, latest_gift_messages: @latest_gift_messages, unread_gifts_count: @unread_gifts_count, unread_replies_count: @unread_replies_count })
+          turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: {
+            gifts: @gifts,
+            replies: @replies,
+            reply_users: @reply_users,
+            latest_gift_messages: @latest_gift_messages,
+            unread_gifts_count: @unread_gifts_count,
+            unread_replies_count: @unread_replies_count,
+            current_time: @current_time,
+            group_chats: @group_chats,
+            user: @user,
+            latest_gifts: @latest_gifts,
+            sent_gifts: @sent_gifts,
+            received_gifts: @received_gifts
+          })
         ]
       end
     end
@@ -334,5 +354,13 @@ class ButtonsController < ApplicationController
       gift = Gift.find(gift_id)
       { message: message, created_at: created_at, gift: gift }
     end
+  end
+
+  def fetch_latest_replies
+    Reply.joins(:consultation, :user)
+         .where(consultations: { user_id: current_user.id })
+         .select('replies.*, users.name as user_name')
+         .order('replies.created_at DESC')
+         .limit(5)
   end
 end

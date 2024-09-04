@@ -9,14 +9,22 @@
       </ul>
     </div>
   <% end %>
+
   <div class="field">
     <%= form.label :content, "返信内容" %>
     <%= form.text_area :content, class: 'textarea' %>
   </div>
+
   <div class="field">
-    <%= form.label :tone, "トーン" %>
+    <%= form.label :tone, "返信スタイル" %>
     <%= form.select :tone, options_for_select(Reply.tones.keys.map { |tone| [Reply.tones[tone], tone] }, selected: 'positive'), {}, { class: "select" } %>
   </div>
+
+  <div class="field">
+    <%= form.label :display_choice, "表示する名前" %>
+    <%= form.select :display_choice, options_for_select([['名前', 'name'], ['匿名', 'anonymous']]), {}, { class: "select" } %>
+  </div>
+
   <div class="field is-pulled-right buttons-right">
     <%= form.submit "返信を送信", class: "button is-link is-small button-wrap-text" %>
   </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_19_150023) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_02_232152) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_150023) do
     t.datetime "updated_at", null: false
     t.boolean "completed"
     t.string "desired_reply_tone"
+    t.string "display_choice"
     t.index ["category_id"], name: "index_consultations_on_category_id"
     t.index ["user_id"], name: "index_consultations_on_user_id"
   end
@@ -98,9 +99,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_150023) do
     t.text "sender_message"
     t.integer "gift_template_id"
     t.boolean "active", default: true, null: false
+    t.boolean "anonymous"
+    t.bigint "reply_id"
     t.index ["gift_category_id"], name: "index_gifts_on_gift_category_id"
     t.index ["giver_id"], name: "index_gifts_on_giver_id"
     t.index ["receiver_id"], name: "index_gifts_on_receiver_id"
+    t.index ["reply_id"], name: "index_gifts_on_reply_id"
   end
 
   create_table "group_chat_members", force: :cascade do |t|
@@ -155,6 +159,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_150023) do
     t.datetime "updated_at", null: false
     t.boolean "read", default: false
     t.string "tone"
+    t.string "display_choice"
+    t.boolean "anonymous"
+    t.integer "sent_count", default: 0
     t.index ["consultation_id"], name: "index_replies_on_consultation_id"
     t.index ["user_id"], name: "index_replies_on_user_id"
   end
@@ -188,6 +195,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_150023) do
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.boolean "active", default: true
+    t.boolean "anonymous", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

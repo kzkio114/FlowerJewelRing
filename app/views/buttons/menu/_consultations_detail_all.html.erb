@@ -1,6 +1,6 @@
 <div id="content">
   <div class="consultation-message is-small ml-2 mb-1">
-    <p>みんなのの返信を行う</p>
+    <p>みんなの返信を行う</p>
   </div>
   <div class="columns consultations-show-fixed-height is-multiline">
     <div class="column is-half">
@@ -15,13 +15,32 @@
             <% replies.each do |reply| %>
               <div id="reply_<%= reply.id %>">
                 <div class="is-flex is-justify-content-space-between">
-                  <p><strong><%= reply.user.name %>:</strong> <%= reply.content %></p>
-                  <p><em>トーン: <%= Reply.tones[reply.tone] %></em></p>
-                  <% if current_user == reply.user %>
-                    <div class="is-pulled-right buttons-right">
-                      <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger is-small button-wrap-text ml-2' %>
-                    </div>
-                  <% end %>
+                  <div>
+                    <p>
+                      <strong>
+                      <% if current_user == reply.user && reply.display_choice == 'anonymous' %>
+                        匿名（<%= reply.user.name %>）
+                      <% elsif reply.display_choice == 'anonymous' %>
+                        匿名
+                      <% else %>
+                        <%= reply.user.name %>
+                      <% end %>:
+                      </strong>
+                      <%= reply.content %>
+                    </p>
+                  </div>
+                  <div class="is-flex is-flex-direction-column is-align-items-end">
+                    <p><em>スタイル: <%= Reply.tones[reply.tone] %></em></p>
+                    <% if current_user == reply.user %>
+                      <div class="is-pulled-right buttons-right">
+                        <%= button_to '返信を削除', consultation_destroy_reply_path(consultation, reply_id: reply.id), remote: true, class: 'button is-danger is-small button-wrap-text ml-2' %>
+                      </div>
+                    <% else %>
+                      <div class="is-pulled-right buttons-right" style="visibility: hidden;">
+                        <button class="button is-small button-wrap-text ml-2"></button>
+                      </div>
+                    <% end %>
+                  </div>
                 </div>
               </div>
             <% end %>
@@ -34,7 +53,14 @@
         <div class="card-content">
           <div class="content">
             <p><%= consultation.content %></p>
-            <p>投稿者: <%= consultation.user.name %></p>
+            <p>
+              投稿者: 
+              <% if consultation.display_choice == 'name' %>
+                <%= consultation.user.name %>
+              <% else %>
+                匿名
+              <% end %>
+            </p>
             <p>望ましい返信スタイル: <%= Consultation.desired_reply_tones[consultation.desired_reply_tone] %></p>
             <%= render 'replies/form', consultation: consultation, reply: consultation.replies.build %>
           </div>

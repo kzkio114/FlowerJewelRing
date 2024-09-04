@@ -6,7 +6,7 @@
           <h3 class="title is-size-3">みんなの花言葉</h3>
         </div>
         <div class="level-right buttons-right">
-          <%= button_to '伝えに行く', buttons_send_gift_response_path, method: :post, class: 'button is-primary is-small custom-long-left mt-5' , data: { turbo_frame: 'content' } %>
+          <%= button_to '現在のギフト', buttons_send_gift_response_path, method: :post, class: 'button is-primary is-small custom-long-left mt-5' , data: { turbo_frame: 'content' } %>
         </div>
       </div>
     </div>
@@ -21,7 +21,7 @@
           <div class="card-content">
             <div class="content">
               植物名: <%= template.name %><br>
-              <%= image_tag asset_path(template.image_url), alt: "ギフトの画像", style: "width: 200px;" %><br>
+              <%= image_tag asset_path(template.image_url), alt: "ギフトの画像", style: "width: 200px;" , data: { action: "click->modal#open" } %><br>
               花言葉: <%= template.description %>
             </div>
           </div>

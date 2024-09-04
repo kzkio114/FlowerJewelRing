@@ -1,3 +1,4 @@
+<div data-controller="modal">
 <div class="columns is-mobile is-centered">
   <div class="column is-2 mr-5">
     <div id="menu">
@@ -19,3 +20,14 @@
     </section>
   </div>
 </div>
+
+    
+      <div data-modal-target="modalContainer" class="modal">
+        <div class="modal-background"></div>
+          <div class="modal-content">
+            <p class="image">
+              <img data-modal-target="modalImage" src="" alt="拡大画像" class="is-clickable">
+            </p>
+          </div>
+        <button class="modal-close is-large" aria-label="close" data-action="click->modal#close"></button>
+      </div>

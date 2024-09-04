@@ -6,7 +6,16 @@
     <div class="column">
       <div id="<%= dom_id(@consultation) %>" class="card">
         <p class="title">タイトル: <%= @consultation.title %></p>
-        <p>投稿者: <%= @consultation.user.name %></p>
+        <p>投稿者: 
+        <% case @consultation.display_choice %>
+        <% when 'name' %>
+          <%= @consultation.user.name %>
+        <% when 'anonymous' %>
+        匿名
+          <% else %>
+        <%= @consultation.user.name %>
+        <% end %>
+        </p>
         <div class="card-content">
           <div class="content">
             <p><%= @consultation.content %></p>

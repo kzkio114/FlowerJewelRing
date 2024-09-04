@@ -1,10 +1,10 @@
 <div id="content" class="container is-small">
   <div id="error-message"></div>
-  <div class="columns is-multiline gift-fixed-height">
+  <div class="columns is-multiline gift-list-height">
     <div class="column is-full">
       <div class="level">
         <div class="level-left">
-          <h3 class="title is-size-3">感謝の気持ちを伝える</h3>
+          <h3 class="title is-size-3">手持ちのギフト</h3>
         </div>
         <div class="level-right buttons-right">
           <%= button_to '戻る', gift_all_path, method: :post,  class: 'button is-primary is-small custom-long-left mt-5', data: { turbo_frame: 'content' } %>
@@ -22,26 +22,10 @@
           <div class="card-content">
             <div class="content">
               植物名: <%= gift.item_name %><br>
-              <%= image_tag asset_path(gift.image_url), alt: "ギフトの画像", style: "width: 200px;" %><br>
+              <%= image_tag asset_path(gift.image_url), alt: "ギフトの画像", style: "width: 200px;" , data: { action: "click->modal#open" } %><br>
               花言葉: <%= gift.description %>
               <br>
-              <%= form_with(model: gift, url: send_gift_gift_path(gift), method: :post, data: { turbo_frame: "send_gift_frame_#{gift.id}" }, local: true) do |form| %>
-                <div class="field">
-                  <%= form.label :receiver_id, "送信先ユーザー" %>
-                  <% if @reply_users.present? %>
-                    <%= form.collection_select :receiver_id, @reply_users, :id, :name, prompt: "ユーザーを選択してください" %>
-                  <% else %>
-                    <p>選択可能なユーザーがいません。</p>
-                  <% end %>
-                </div>
-                <div class="field">
-                  <%= form.label :sender_message, "感謝のメッセージ" %>
-                  <%= form.text_area :sender_message, class: 'textarea', placeholder: "ここにメッセージを入力してください" %>
-                </div>
-                <div class="field is-pulled-right buttons-right">
-                  <%= form.submit "送る", class: "button is-primary is-small" %>
-                </div>
-              <% end %>
+              <!-- フォームを削除 -->
             </div>
           </div>
         </div>
