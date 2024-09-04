@@ -46,6 +46,7 @@
 
 
 
+
 # # puts "シードデータの作成が完了しました。"
 
 
@@ -66,7 +67,7 @@
 # # admin_roleをsuper_adminに設定します
  admin_user.update(admin_role: :super_admin)
 
-# # ギフトカテゴリを作成
+# # # ギフトカテゴリを作成
 # # 既存のギフトカテゴリを使用
 # plant_category = GiftCategory.find_or_create_by!(name: '植物') do |category|
 #   category.description = '美しい植物のギフト'
@@ -112,6 +113,13 @@
 # end
 
 
+# 既存の組織を見つけるか、なければ新しい組織を作成します
+organization = Organization.find_or_create_by!(id: 1) do |org|
+  org.name = 'Default Organization'
+  org.description = 'Default organization description.'
+end
+
+# 全てのユーザーを取得
 users = User.all
 
 # 植物カテゴリに関連する全てのギフトテンプレートを取得
@@ -121,19 +129,16 @@ gift_templates = GiftTemplate.where(gift_category: plant_category)
 # 各ユーザーに全てのギフトテンプレートからギフトを付与
 users.each do |user|
   gift_templates.each do |gift_template|
-    begin
-      Gift.create!(
-        giver_id: user.id,
-        receiver_id: user.id,
-        gift_template: gift_template,
-        item_name: gift_template.name,
-        description: gift_template.description,
-        color: gift_template.color,
-        image_url: gift_template.image_url,
-        sent_at: Time.now
-      )
-    rescue ActiveRecord::RecordInvalid => e
-      puts "エラーが発生しました: #{e.message}"
-    end
+    Gift.create!(
+      giver_id: user.id,
+      receiver_id: user.id,
+      gift_template: gift_template,
+      item_name: gift_template.name,
+      description: gift_template.description,
+      color: gift_template.color,
+      image_url: gift_template.image_url,
+      sent_at: Time.now,
+      organization_id: organization.id # ここで作成した組織IDを使用します
+    )
   end
 end
