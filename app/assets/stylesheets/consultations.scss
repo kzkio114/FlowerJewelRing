@@ -1,5 +1,5 @@
 .consultation-message {
-  height: 20px;  /* デフォルトの高さ */
+  height: 50px;  /* デフォルトの高さ */
   width: 900px;   /* デフォルトの幅 */
   overflow: hidden; /* 全体のスクロールを非表示 */
   overflow-x: hidden; // 横方向のスクロールバーを非表示
@@ -18,7 +18,7 @@
 
 .consultations-fixed-height {
   background-color: hsl(174, 80%, 92%); /* 枠の背景色を設定 */
-  height: 650px;  /* デフォルトの高さ */
+  height: 800px;  /* デフォルトの高さ */
   width: 900px;   /* デフォルトの幅 */
   overflow: hidden; /* 全体のスクロールを非表示 */
   overflow-x: hidden; // 横方向のスクロールバーを非表示

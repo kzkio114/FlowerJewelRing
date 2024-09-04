@@ -1,4 +1,5 @@
-<div class="user-show container is-small mt-3">
+<div data-controller="modal">
+  <div class="user-show container is-small mt-3">
     <div class="card">
       <header class="card-header">
         <p class="card-header-title">ユーザープロフィール</p>
@@ -22,7 +23,7 @@
             <ul>
               <% @user.consultations.each do |consultation| %>
                 <% consultation.replies.each do |reply| %>
-                  <li>返信者: <%= reply.display_name %>, 返信内容: <%= reply.content %></li>
+                  <li>返信者: <%= reply.display_name %>さん, 返信内容: <%= reply.content %></li>
                 <% end %>
               <% end %>
             </ul>
@@ -44,11 +45,11 @@
                     <p><strong>ギフト名:</strong> <%= gift.item_name %></p>
                     <p><strong>花言葉:</strong> <%= gift.description %></p>
                     <% if gift.giver.present? %>
-                      <p>送り主: <%= gift.giver.name %></p>
+                      <p>送り主: <%= gift.giver.name %>さん</p>
                     <% end %>
                     <% if gift.image_url.present? %>
                       <figure class="image is-128x128">
-                        <%= image_tag gift.image_url, alt: "ギフトの画像" %>
+                        <%= image_tag gift.image_url, alt: "ギフトの画像", data: { action: "click->modal#open" } %>
                       </figure>
                     <% end %>
                     <% if gift.gift_histories.any? %>
@@ -62,9 +63,15 @@
                     <% end %>
                     <%
                       app_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
-                      tweet_message = "相談のお礼に「#{ERB::Util.url_encode(gift.item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(gift.description)}」の意味が込められてます。%0Aみなさんも素敵なお礼貰いませんか？%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
+                      tweet_message = "相談のお礼に「#{ERB::Util.url_encode(gift.item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(gift.description)}」の意味が込められてます。%0A%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
                     %>
-                    <%= link_to 'Xに投稿', "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-small is-info mt-2" %>
+                    <div class="field is-grouped custom-left buttons-right mb-6">
+                      <div class="twitter custom-left">
+                        <%= link_to "https://twitter.com/intent/tweet?text=#{tweet_message}", target: "_blank", class: "button is-info button-wrap-text ml-2 tooltip", data: { tooltip: "ツイートを投稿" } do %>
+                          <i class="fab fa-twitter twitter-icon"></i>
+                        <% end %>
+                      </div>
+                    </div>
                   </li>
                 <% end %>
               <% end %>
@@ -74,10 +81,19 @@
       </div>
     </div>
   </div>
-</div>
   <div class="user-show-button user-buttons-right container is-small">
-  <div class="is-small is-flex is-justify-content-flex-end mt-2">
-    <%= link_to '編集', edit_user_profile_user_path(@user), class: 'button is-link is-small' %>
-    <%= link_to '戻る', dashboard_path, class: 'button is-info is-small ml-2' %>
+    <div class="is-small is-flex is-justify-content-flex-end mt-2">
+      <%= link_to '編集', edit_user_profile_user_path(@user), class: 'button is-link is-small' %>
+      <%= link_to '戻る', dashboard_path, class: 'button is-info is-small ml-2' %>
+    </div>
+  </div>
+  <div data-modal-target="modalContainer" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <p class="image">
+        <img data-modal-target="modalImage" src="" alt="拡大画像" class="is-clickable">
+      </p>
+    </div>
+    <button class="modal-close is-large" aria-label="close" data-action="click->modal#close"></button>
   </div>
 </div>

@@ -76,19 +76,29 @@ class GroupChatsController < ApplicationController
   def update
     if @group_chat.update(group_chat_params)
       respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.replace('group_chat_content', partial: 'group_chats/group_chat', locals: { group_chat: @group_chat }) }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace('group_chat', partial: 'group_chats/group_chat', locals: { group_chat: @group_chat }) }
       end
     else
-      render :edit
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("edit_group_chat", partial: "group_chats/edit_group_chat", locals: { group_chat: @group_chat }) }
+      end
     end
   end
 
   def destroy
+    @group_chat = GroupChat.find(params[:id])
     @group_chat.destroy
+    @group_chats = GroupChat.all
+    @new_group_chat = GroupChat.new # 新しいグループチャットオブジェクトを作成
+  
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove("group_chat_#{params[:id]}") }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("content", partial: "group_chats/group_chat_list", locals: { group_chats: @group_chats, group_chat: @new_group_chat })
+      end
+      format.html { redirect_to group_chats_path, notice: 'グループチャットが削除されました。' }
     end
   end
+
 
   private
 

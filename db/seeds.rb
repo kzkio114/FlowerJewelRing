@@ -46,6 +46,7 @@
 
 
 
+
 # # puts "シードデータの作成が完了しました。"
 
 
@@ -59,7 +60,8 @@
 # admin
 # ユーザーを見つけます
 
- user = User.find_by(email: 'test.kzkio@gmail.com')
+ user = User.find_by(email: 'kzkio114@gmail.com')
+
 
 # # 既存のAdminUserレコードを見つけるか、新しいレコードを作成します
  admin_user = AdminUser.find_or_create_by(user: user, organization_id: 1)
@@ -68,7 +70,10 @@
  admin_user.update(admin_role: :super_admin)
 
 
+
+
 # ギフトカテゴリを作成
+
 # 既存のギフトカテゴリを使用
 plant_category = GiftCategory.find_or_create_by!(name: '植物') do |category|
   category.description = '美しい植物のギフト'
@@ -112,3 +117,33 @@ flowers.each_with_index do |(flower, message), i|
     image_url: "#{i+10}.webp" # 画像のURLは適宜調整してください
   )
 end
+
+
+# # 既存の組織を見つけるか、なければ新しい組織を作成します
+# organization = Organization.find_or_create_by!(id: 1) do |org|
+#   org.name = 'Default Organization'
+#   org.description = 'Default organization description.'
+# end
+
+# # 全てのユーザーを取得
+# users = User.all
+
+# # 植物カテゴリに関連する全てのギフトテンプレートを取得
+# plant_category = GiftCategory.find_by(name: '植物')
+# gift_templates = GiftTemplate.where(gift_category: plant_category)
+
+# # 各ユーザーに全てのギフトテンプレートからギフトを付与
+# users.each do |user|
+#   gift_templates.each do |gift_template|
+#     Gift.create!(
+#       giver_id: user.id,
+#       receiver_id: user.id,
+#       gift_template: gift_template,
+#       item_name: gift_template.name,
+#       description: gift_template.description,
+#       color: gift_template.color,
+#       image_url: gift_template.image_url,
+#       sent_at: Time.now
+#     )
+#   end
+# end

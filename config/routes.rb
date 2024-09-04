@@ -59,7 +59,7 @@ Rails.application.routes.draw do
       post 'group_chat'
       post 'group_chat_list'
     end
-    resources :group_chat_members, only: [:new, :create, :destroy]
+    resources :group_chat_members, only: [:new, :create, :update, :destroy]
     resources :group_chat_messages, only: [:create, :destroy]
   end
 

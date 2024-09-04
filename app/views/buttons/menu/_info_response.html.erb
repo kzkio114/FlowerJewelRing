@@ -23,6 +23,7 @@
                     <li>
                       <p><strong>返信者:</strong> <%= reply_hash[:display_name] %>さん</p>
                       <p><strong>返信内容:</strong> <%= reply_hash[:reply].content %></p>
+                      <p><em>スタイル: <%= Reply.tones[reply.tone] %></em></p>
                       <p><strong>受信日時:</strong> <%= reply.created_at.in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></p>
                     </li>
                   <% end %>
@@ -33,8 +34,8 @@
             </div>
           </div>
           <div class="column is-one-third">
-            <div id="gift-section" class="mb-2">
-              <h3>感謝の気持ちを伝える</h3>
+            <h3>感謝の気持ちを伝える</h3>
+            <div id="gift-section" class="show-gift-fixed mb-2">
               <%= render partial: 'buttons/menu/info_send_gift_response', locals: { gifts: @gifts, reply_users: @reply_users } %>
             </div>
           </div>
@@ -60,7 +61,7 @@
                             <p><strong>受信日時:</strong> <%= entry[:created_at].in_time_zone('Asia/Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></p>
                             <%
                             app_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
-                            tweet_message = "相談のお礼に「#{ERB::Util.url_encode(entry[:gift].item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(entry[:gift].description)}」の意味が込められてます。%0Aみなさんも素敵なお礼貰いませんか？%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
+                            tweet_message = "相談のお礼に「#{ERB::Util.url_encode(entry[:gift].item_name)}」を受け取りました！%0A花言葉:「 #{ERB::Util.url_encode(entry[:gift].description)}」の意味が込められてます。%0A%23めぐる宝石花%0A#{ERB::Util.url_encode(app_url)}"
                             %>
                             <div class="field is-grouped is-grouped-right custom-left buttons-right">
                               <div class="twitter custom-left">

@@ -1,44 +1,45 @@
 <div id="content">
-<div class="group-chat-fixed-height">
-  <div id="group_chat_list" class="group-chat-height">
-    <h3>グループチャット一覧</h3>
-    <% group_chats.each do |group_chat| %>
-      <% if group_chat.group_chat_members.exists?(user: current_user) || group_chat.free? %>
-        <div id="group_chat_<%= group_chat.id %> " class="group-member-buttons">
-          <%= button_to group_chat.title, group_chat_group_chat_path(group_chat), method: :post, data: { turbo: true, turbo_method: :post }, class: 'button is-primary' %>
+  <div class="group-chat-fixed-height">
+    <div id="group_chat_list" class="group-chat-height">
+      <h3 class="title is-size-3">グループチャット一覧</h3>
+      <% group_chats.each do |group_chat| %>
+        <% if group_chat.group_chat_members.exists?(user: current_user) || group_chat.free? %>
+          <div id="group_chat_<%= group_chat.id %> " class="group-member-buttons">
+            <%= button_to group_chat.title, group_chat_group_chat_path(group_chat), method: :post, data: { turbo: true, turbo_method: :post }, class: 'button is-primary' %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <h3>新しいグループチャットを作成</h3>
+    <%= form_with(model: group_chat, url: group_chats_path, method: :post, data: { turbo: true }) do |form| %>
+      <% if group_chat.errors.any? %>
+        <div id="error_explanation" class="notification is-danger">
+          <h2><%= pluralize(group_chat.errors.count, "エラー") %>があります:</h2>
+          <ul>
+            <% group_chat.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
         </div>
       <% end %>
+      <div class="field">
+        <div class="control">
+          <%= form.label :title, "グループチャットのタイトル" %>
+          <%= form.text_field :title, class: "input #{'is-danger' if @group_chat.errors[:title].any?}" %>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <%= form.label :role, "グループチャットの種類" %>
+          <%= form.select :role, [['誰でも自由', 'free'], ['呼ばれた人のみ', 'admin']], {}, class: 'input' %>
+        </div>
+      </div>
+      <div class="field group-buttons">
+        <div class="control">
+          <%= form.submit "作成", class: 'button is-primary is-small mt-1' %>
+        </div>
+      </div>
     <% end %>
   </div>
-
-  <h3>新しいグループチャットを作成</h3>
-  <%= form_with(model: group_chat, url: group_chats_path, method: :post, data: { turbo: true }) do |form| %>
-    <% if group_chat.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(group_chat.errors.count, "エラー") %>があります:</h2>
-        <ul>
-          <% group_chat.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <div class="field">
-      <div class="control">
-        <%= form.label :title, "グループチャットのタイトル" %>
-        <%= form.text_field :title, class: 'input' %>
-      </div>
-    <div class="field">
-      <div class="control">
-        <%= form.label :role, "グループチャットの種類" %>
-      <%= form.select :role, [['誰でも自由', 'free'], ['呼ばれた人のみ', 'admin']], {}, class: 'input' %>
-      </div>
-    </div>
-    </div>
-    <div class="field group-buttons">
-      <div class="control">
-        <%= form.submit "作成", class: 'button is-primary is-small mt-1' %>
-      </div>
-    </div>
-  <% end %>
 </div>

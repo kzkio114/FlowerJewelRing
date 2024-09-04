@@ -1,7 +1,7 @@
 class GroupChatMembersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_group_chat
-  before_action :set_group_chat_member, only: [:destroy]
+  before_action :set_group_chat_member, only: [:destroy, :update]
 
   def new
     @group_chat_member = GroupChatMember.new
@@ -9,10 +9,17 @@ class GroupChatMembersController < ApplicationController
   end
 
   def create
+    # 同じユーザーがすでに追加されていないか確認
+    if @group_chat.group_chat_members.exists?(user_id: group_chat_member_params[:user_id])
+      redirect_to group_chat_path(@group_chat), alert: 'このユーザーは既にメンバーです。'
+      return
+    end
+  
     @group_chat_member = @group_chat.group_chat_members.build(group_chat_member_params)
     @users = User.where.not(id: @group_chat.users.pluck(:id))
-
+  
     if @group_chat_member.save
+      # 成功時の処理
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [
@@ -20,10 +27,26 @@ class GroupChatMembersController < ApplicationController
             turbo_stream.replace("new_group_chat_member", partial: "group_chat_members/form", locals: { group_chat: @group_chat, group_chat_member: GroupChatMember.new, users: @users })
           ]
         end
-        format.html { redirect_to group_chat_path(@group_chat), notice: 'メンバーが追加されました。' }
       end
     else
       render :new
+    end
+  end
+
+  def update
+    if @group_chat_member.update(group_chat_member_params)
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(@group_chat_member, partial: "group_chat_members/member", locals: { group_chat_member: @group_chat_member })
+        end
+        format.html { redirect_to group_chat_path(@group_chat), notice: 'メンバー情報が更新されました。' }
+      end
+    else
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("edit_group_chat_member", partial: "group_chat_members/edit_group_chat_member", locals: { group_chat_member: @group_chat_member })
+        end
+      end
     end
   end
 

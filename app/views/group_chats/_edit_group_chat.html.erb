@@ -1,11 +1,13 @@
 <%= turbo_frame_tag "edit_group_chat" do %>
-  <%= form_with(model: group_chat, local: true) do |form| %>
+  <%= form_with(model: @group_chat, local: false, data: { turbo_frame: "edit_group_chat" }) do |form| %>
     <div class="field">
-      <%= form.label :title %>
-      <%= form.text_field :title %>
+      <%= form.label :title, "グループチャットのタイトル" %>
+      <%= form.text_field :title, class: "input #{'is-danger' if @group_chat.errors[:title].any?}" %>
     </div>
-    <div class="actions group-buttons">
-      <%= form.submit '更新', class: 'button is-primary is-small' %>
+    <div class="field group-buttons">
+      <div class="control">
+        <%= form.submit '更新', class: 'button is-primary is-small mt-1' %>
+      </div>
     </div>
   <% end %>
 <% end %>

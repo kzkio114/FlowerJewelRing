@@ -27,9 +27,9 @@
     <div class="group-buttons">
       <% if current_user.group_chat_members.find_by(group_chat: @group_chat)&.admin? %>
         <% unless @group_chat.group_chat_members.find_by(user: current_user)&.role == 'free' %>
-          <%= link_to "メンバー追加", new_group_chat_group_chat_member_path(@group_chat), class: "button is-primary is-small", data: { turbo_frame: "new_group_chat_member" } %>
+          <%= button_to "メンバー追加", new_group_chat_group_chat_member_path(@group_chat), method: :get, class: "button is-primary is-small", data: { turbo_frame: "new_group_chat_member" } %>
         <% end %>
-        <%= link_to "グループ編集", edit_group_chat_path(@group_chat), class: "button is-info is-small", data: { turbo_frame: "edit_group_chat" } %>
+        <%= button_to "グループ編集", edit_group_chat_path(@group_chat), method: :get, class: "button is-info is-small mr-2 ml-2", data: { turbo_frame: "edit_group_chat" } %>
         <%= button_to "グループ削除", group_chat_path(@group_chat), method: :delete, data: { confirm: "本当に削除しますか？" }, class: 'button is-danger is-small' %>
       <% end %>
     </div>
