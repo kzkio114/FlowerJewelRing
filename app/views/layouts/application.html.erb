@@ -7,18 +7,16 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= display_meta_tags %> <!-- これでOGT情報が表示される -->
-
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
-    <!-- Twitter Card data -->
+     <!-- Twitter Card data -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@kzkio_0114">
-    <meta name="twitter:title" content="<%= content_for?(:twitter_title) ? yield(:twitter_title) : 'めぐる宝石花' %>">
-    <meta name="twitter:description" content="<%= content_for?(:twitter_description) ? yield(:twitter_description) : 'このアプリは相談する→相談されるの流れを繰り返して行う循環型相談アプリです。' %>">
-    <meta name="twitter:image" content="<%= content_for?(:twitter_image) ? yield(:twitter_image) : asset_url('10.webp') %>">
-  </head>
+    <meta name="twitter:title" content="<%= @twitter_title || 'めぐる宝石花' %>">
+    <meta name="twitter:description" content="<%= @twitter_description || 'このアプリは相談する→相談されるの流れを繰り返して行う循環型相談アプリです。' %>">
+    <meta name="twitter:image" content="<%= @twitter_image || asset_url('10.webp') %>">
+</head>
   <!-- Font Awesome  -->
   <script src="https://kit.fontawesome.com/6fa0d54baa.js" crossorigin="anonymous"></script>
   <body>

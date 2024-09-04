@@ -230,19 +230,8 @@ class GiftsController < ApplicationController
   end
 
   def set_og_tags
-    set_meta_tags(
-      og: {
-        title: @gift.item_name,
-        description: @gift.description,
-        image: @gift.image_url.present? ? asset_url(@gift.image_url) : asset_url('default_image.jpg'),
-        url: request.original_url
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: @gift.item_name,
-        description: @gift.description,
-        image: @gift.image_url.present? ? asset_url(@gift.image_url) : asset_url('default_image.jpg')
-      }
-    )
+    @twitter_title = @gift.item_name
+    @twitter_description = @gift.description
+    @twitter_image = @gift.image_url.present? ? asset_url(@gift.image_url) : asset_url('default_image.jpg')
   end
 end
