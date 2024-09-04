@@ -123,7 +123,7 @@ gift_templates = GiftTemplate.where(gift_category: plant_category)
 users.each do |user|
   gift_templates.each do |gift_template|
     Gift.create!(
-      user: user,
+      user_id: user.id,  # 修正箇所
       gift_template: gift_template,
       name: gift_template.name,
       description: gift_template.description,
