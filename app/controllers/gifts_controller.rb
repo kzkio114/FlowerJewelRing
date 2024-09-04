@@ -1,5 +1,6 @@
 class GiftsController < ApplicationController
   before_action :set_gift, only: [:show, :edit, :update, :destroy, :send_gift]
+  before_action :set_og_tags, only: [:show, :send_gift] # OGT設定
 
   def index
     @gifts = Gift.includes(:gift_category).where(sent_at: nil)
@@ -226,5 +227,22 @@ class GiftsController < ApplicationController
       latest_gift_messages: @latest_gift_messages,
       current_time: @current_time
     }
+  end
+
+  def set_og_tags
+    set_meta_tags(
+      og: {
+        title: @gift.item_name,
+        description: @gift.description,
+        image: @gift.image_url.present? ? asset_url(@gift.image_url) : asset_url('default_image.jpg'),
+        url: request.original_url
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: @gift.item_name,
+        description: @gift.description,
+        image: @gift.image_url.present? ? asset_url(@gift.image_url) : asset_url('default_image.jpg')
+      }
+    )
   end
 end

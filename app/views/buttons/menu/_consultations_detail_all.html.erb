@@ -1,6 +1,6 @@
 <div id="content">
   <div class="consultation-message is-small ml-2 mb-1">
-    <p>みんなの返信を行う</p>
+    <h2 class="title is-size-4">みんなの返信を行う</h2>
   </div>
   <div class="columns consultations-show-fixed-height is-multiline">
     <div class="column is-half">
@@ -66,7 +66,7 @@
           </div>
         </div>
       </div>
-      <div class="is-pulled-right buttons-right">
+      <div class="is-pulled-right buttons-right mt-1">
         <%= button_to "戻る", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-primary button-wrap-text custom-left custom-top" %>
       </div>
     </div>
