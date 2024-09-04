@@ -121,15 +121,19 @@ gift_templates = GiftTemplate.where(gift_category: plant_category)
 # 各ユーザーに全てのギフトテンプレートからギフトを付与
 users.each do |user|
   gift_templates.each do |gift_template|
-    Gift.create!(
-      giver_id: user.id,       # ここでギフトを送るユーザーID
-      receiver_id: user.id,    # ここでギフトを受け取るユーザーID
-      gift_template: gift_template,
-      item_name: gift_template.name,
-      description: gift_template.description,
-      color: gift_template.color,
-      image_url: gift_template.image_url,
-      sent_at: Time.now
-    )
+    begin
+      Gift.create!(
+        giver_id: user.id,
+        receiver_id: user.id,
+        gift_template: gift_template,
+        item_name: gift_template.name,
+        description: gift_template.description,
+        color: gift_template.color,
+        image_url: gift_template.image_url,
+        sent_at: Time.now
+      )
+    rescue ActiveRecord::RecordInvalid => e
+      puts "エラーが発生しました: #{e.message}"
+    end
   end
 end
