@@ -137,8 +137,7 @@ users.each do |user|
       description: gift_template.description,
       color: gift_template.color,
       image_url: gift_template.image_url,
-      sent_at: Time.now,
-      organization_id: organization.id # ここで作成した組織IDを使用します
+      sent_at: Time.now
     )
   end
 end
