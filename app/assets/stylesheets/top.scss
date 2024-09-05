@@ -1,0 +1,59 @@
+.flowers-container {
+    display: flex; /* 横に並べる */
+    justify-content: center; /* 中央揃え */
+}
+
+.flower {
+    position: relative;
+    width: 200px; /* 花の全体のサイズ */
+    height: 200px;
+    margin: 50px auto;
+}
+
+.diamond-shape {
+    width: 80px;
+    height: 80px;
+    background-color: #ff6347;
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%) rotate(30deg) skew(20deg, 20deg);  /* 回転と傾斜を適用 */
+    transform-origin: 0 0; /* 原点を左上に設定 */
+    border-radius: 0 0 10% 0; /* 先端だけ丸くする */
+}
+
+.petal1 {
+    transform: translate(-50%, -50%) rotate(0deg) translateX(5px) skew(20deg, 20deg);
+    background-color: #47d1ff;
+    
+}
+
+.petal2 {
+    transform: translate(-50%, -50%) rotate(60deg) translateX(5px) skew(20deg, 20deg);
+    background-color: #cb47ff;
+    
+}
+
+.petal3 {
+    transform: translate(-50%, -50%) rotate(120deg) translateX(5px) skew(20deg, 20deg);
+    background-color: #ff47fc;
+    
+}
+
+.petal4 {
+    transform: translate(-50%, -50%) rotate(180deg) translateX(5px) skew(20deg, 20deg);
+    background-color: #5c47ff;
+    
+}
+
+.petal5{
+    transform: translate(-50%, -50%) rotate(240deg) translateX(5px) skew(20deg, 20deg);
+    background-color: #ff4747;
+    
+}
+
+.petal6 {
+    transform: translate(-50%, -50%) rotate(300deg) translateX(5px) skew(20deg, 20deg);
+    background-color: #8dff47;
+    
+}

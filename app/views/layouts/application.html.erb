@@ -2,7 +2,7 @@
 <html data-theme="light">
 <head>
   <title>めぐる宝石花</title>
-  <link rel="icon" href="<%= image_path('10.webp') %>">
+  <link rel="icon" href="<%= image_path('favicon.jpg') %>">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
@@ -11,11 +11,14 @@
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
     <!-- Twitter Card data -->
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="player">
     <meta name="twitter:site" content="@kzkio_0114">
     <meta name="twitter:title" content="<%= @twitter_title || 'めぐる宝石花' %>">
     <meta name="twitter:description" content="<%= @twitter_description || 'このアプリは相談する→相談されるの流れを繰り返して行う循環型相談アプリです。' %>">
-    <meta name="twitter:image" content="<%= @twitter_image || asset_url('10.webp') %>">
+    <meta name="twitter:image" content="<%= @twitter_image || asset_url('anime.png') %>">
+    <meta name="twitter:player" content="<%= @twitter_video_url || asset_url('anime.mp4') %>">
+    <meta name="twitter:player:width" content="1280">
+    <meta name="twitter:player:height" content="720">
 </head>
   <!-- Font Awesome  -->
   <script src="https://kit.fontawesome.com/6fa0d54baa.js" crossorigin="anonymous"></script>
