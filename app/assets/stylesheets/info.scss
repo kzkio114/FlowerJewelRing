@@ -25,6 +25,10 @@
   }
 }
 
+.info-fixed-error-height {
+  width: 900px;  // デフォルトの幅
+}
+
 @media (max-width: 480px) {
   .info-fixed-height .columns {
     display: flex;
