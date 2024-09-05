@@ -1,7 +1,7 @@
 <div id="response_area" class="container is-small mt-5" data-controller="rendering">
   <div class="notification fixed-height">
     <strong class="custom-size-5" data-rendering-target="appDescriptionTitle">サービス概要</strong>
-    <p class="custom-size-6 mt-3" data-rendering-target="appDescriptionText">
+    <p class="custom-size-6 mt-3 mb-8" data-rendering-target="appDescriptionText">
       このアプリは、「相談する」→「相談される」という<br class="sma">流れを<br class="pc-only">
       繰り返しながら進行していく、循環・複合型の<br class="sma">相談アプリです。<br>
       <br>
@@ -63,7 +63,7 @@
           動作確認の詳細を知りたい場合は、以下の画像をクリックしてください。
           </p>
           <div class="tooltip-container">
-            <%= image_tag '最新.gif', alt: '最新の通知の画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'newsImage', action: 'click->modal#open' } %>
+            <%= image_tag '最新の通知.gif', alt: '最新の通知の画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'newsImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
             <div class="custom-tooltip-content">クリックで拡大表示</div>
           </div>
@@ -78,7 +78,7 @@
           動作確認の詳細を知りたい場合は、以下の画像をクリックしてください。
           </p>
           <div class="tooltip-container">
-            <%= image_tag '相談.gif', alt: 'みんなの悩みの画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'worriesImage', action: 'click->modal#open' } %>
+            <%= image_tag 'みんなの悩み.gif', alt: 'みんなの悩みの画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'worriesImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
             <div class="custom-tooltip-content">クリックで拡大表示</div>
           </div>
@@ -107,8 +107,8 @@
           動作確認の詳細を知りたい場合は、以下の画像をクリックしてください。
           </p>
           <div class="tooltip-container">
-            <%= image_tag 'チャット.gif', alt: 'チャット機能の画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'chatImage', action: 'click->modal#open' } %>
-            <%= image_tag 'グループ.gif', alt: 'チャット機能の画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'chatImage', action: 'click->modal#open' } %>
+            <%= image_tag 'プライベートチャット.gif', alt: 'チャット機能の画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'chatImage', action: 'click->modal#open' } %>
+            <%= image_tag 'グループチャット.gif', alt: 'チャット機能の画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'chatImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
             <div class="custom-tooltip-content">クリックで拡大表示</div>
           </div>
@@ -122,7 +122,7 @@
           動作確認の詳細を知りたい場合は、以下の画像をクリックしてください。
           </p>
           <div class="tooltip-container">
-            <%= image_tag 'テスト.gif', alt: '感謝の気持ちの画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'thanksImage', action: 'click->modal#open' } %>
+            <%= image_tag '感謝の気持ち.gif', alt: '感謝の気持ちの画像', class: 'small-image is-clickable ml-5', data: { rendering_target: 'thanksImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
             <div class="custom-tooltip-content">クリックで拡大表示</div>
           </div>
