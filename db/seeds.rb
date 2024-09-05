@@ -156,25 +156,41 @@
 
 # puts "宝石カテゴリとギフトが作成されました。"
 
-# 全ユーザーにランダムで10個のギフトをテンプレートからあげる
-User.find_each do |user|
-  # ランダムに10個のギフトテンプレートを取得
-  gift_templates = GiftTemplate.order("RANDOM()").limit(10)
+# # 全ユーザーにランダムで10個のギフトをテンプレートからあげる
+# User.find_each do |user|
+#   # ランダムに10個のギフトテンプレートを取得
+#   gift_templates = GiftTemplate.order("RANDOM()").limit(10)
 
-  # ギフトテンプレートからギフトを作成してユーザーに割り当てる
-  gift_templates.each do |template|
-    Gift.create!(
-      gift_template_id: template.id,
-      gift_category: template.gift_category,
-      item_name: template.name,
-      description: template.description,
-      image_url: template.image_url,
-      color: template.color,
-      receiver_id: user.id,  # ユーザーにギフトを割り当てる
-      giver_id: nil,         # 贈り主は指定しない（nil）
-      sent_at: nil           # 送られた日時も未設定
-    )
+#   # ギフトテンプレートからギフトを作成してユーザーに割り当てる
+#   gift_templates.each do |template|
+#     Gift.create!(
+#       gift_template_id: template.id,
+#       gift_category: template.gift_category,
+#       item_name: template.name,
+#       description: template.description,
+#       image_url: template.image_url,
+#       color: template.color,
+#       receiver_id: user.id,  # ユーザーにギフトを割り当てる
+#       giver_id: nil,         # 贈り主は指定しない（nil）
+#       sent_at: nil           # 送られた日時も未設定
+#     )
+#   end
+# end
+
+# puts "全ユーザーにギフトがランダムで10個ずつ割り当てられました。"
+
+
+# ランダムな表示名を生成するメソッド
+def generate_random_display_name
+  loop do
+    random_name = SecureRandom.hex(5) # 10文字のランダムな表示名
+    break random_name unless User.exists?(display_name: random_name)
   end
 end
 
-puts "全ユーザーにギフトがランダムで10個ずつ割り当てられました。"
+# display_nameを持っていないユーザーにランダムな表示名を付与
+User.where(display_name: [nil, ""]).find_each do |user|
+  user.update!(display_name: generate_random_display_name)
+end
+
+puts "表示名がないユーザーにランダムな表示名が付与されました。"
