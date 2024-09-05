@@ -1,5 +1,6 @@
 class Consultation < ApplicationRecord
   searchkick word_middle: [:title, :content, :category_name, :user_name]
+  before_create :set_default_display_choice
 
   def search_data
     {
@@ -22,5 +23,11 @@ class Consultation < ApplicationRecord
   # 匿名かどうかを判定し、匿名の場合は '匿名' を返す
   def anonymized_name
     display_choice == 'anonymous' ? '匿名' : user.name
+  end
+
+  private
+
+  def set_default_display_choice
+    self.display_choice ||= 'name'
   end
 end
