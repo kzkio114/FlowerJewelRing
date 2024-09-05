@@ -10,7 +10,7 @@
       </div>
     </div>
     <% if show_delete_button %>
-      <div class="media-right">
+      <div class="group-buttons media-right">
         <%= button_to '削除', chat_path(chat), 
         method: :delete, 
         data: { action: "click->chat#deleteMessage", chat_id: chat.id }, 

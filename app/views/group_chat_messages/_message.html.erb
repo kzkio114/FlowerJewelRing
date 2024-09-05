@@ -1,11 +1,23 @@
-<div id="message_<%= message.id %>" data-message-user-id="<%= message.user_id %>" data-turbo="true">
-  <p class="has-text-black"><strong><%= message.user.name %>:</strong> <%= message.message %></p>
-  <% if show_delete_button %>
-    <div class="group-buttons">
-      <%= button_to '削除', group_chat_group_chat_message_path(message.group_chat, message), 
-                    method: :delete, 
-                    data: { confirm: '本当に削除しますか？', action: "click->group-chat#deleteMessage", message_id: message.id }, 
-                    class: 'has-text-black delete-chat-button', style: 'display: none;' %>
+<div id="message_<%= message.id %>" data-message-user-id="<%= message.user_id %>" data-turbo="true" class="box mb-2">
+  <article class="media">
+    <div class="media-content">
+      <div class="content">
+        <p class="has-text-black">
+          <strong class="is-size-6"><%= message.user.name %>:</strong>
+          <br>
+          <span class="is-size-6"><%= message.message %></span>
+        </p>
+      </div>
     </div>
-  <% end %>
+
+    <% if show_delete_button %>
+      <div class="group-buttons media-right">
+        <%= button_to '削除', group_chat_group_chat_message_path(message.group_chat, message), 
+                      method: :delete, 
+                      data: { confirm: '本当に削除しますか？', action: "click->group-chat#deleteMessage", message_id: message.id }, 
+                      class: 'button is-small is-danger delete-chat-button', 
+                      style: 'display: none;' %>
+      </div>
+    <% end %>
+  </article>
 </div>

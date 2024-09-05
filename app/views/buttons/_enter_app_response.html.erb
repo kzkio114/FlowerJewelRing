@@ -1,16 +1,32 @@
 <div id="response_area" class="container is-small mt-5" data-controller="rendering">
   <div class="notification fixed-height">
-    <strong class="custom-size-5" data-rendering-target="appDescriptionTitle">アプリ説明</strong>
+    <strong class="custom-size-5" data-rendering-target="appDescriptionTitle">サービス概要</strong>
     <p class="custom-size-6 mt-3" data-rendering-target="appDescriptionText">
-      相談する→相談されるの流れを繰り返して行い、<br>
-      また、相談した人には相談された人に感謝の気持ちと<br class="sma">アイテムが貰えて、<br class="pc-only">
-      相談を出来る回数が増えていく<br class="sma">循環・複合型相談アプリです。
+      このアプリは、「相談する」→「相談される」という<br class="sma">流れを<br class="pc-only">
+      繰り返しながら進行していく、循環・複合型の<br class="sma">相談アプリです。<br>
+      <br>
+      ユーザーは、相談を受けた際に感謝の気持ちを相手に<br class="sma">贈ることができ、<br class="pc-only">
+      贈られたユーザーはアイテム（花や宝石）を受け取り、<br class="pc-only">
+      その後さらに多くの相談が<br class="sma">可能になります。<br>
+      <br>
+      この循環システムにより、相談者とアドバイザーが互いに<br class="pc-only">
+      感謝の気持ちを分かち合い、成長し合う体験を<br class="sma">提供します。<br>
+      <br>
+      また、ユーザーは相談に対して<br class="pc-only">
+      肯定的、普通、否定的なスタイルの返信を選べるため、<br class="pc-only">
+      自分に合った対応を選択することができます。<br>
+      <br>
+      プライバシーを保護するために、センシティブな相談は<br class="pc-only">
+      匿名で1対1のチャットを通じて行うことができ、<br class="sma">安心して相談が進められます。
     </p>
+
+    <strong class="custom-size-5">アプリ説明</strong>
+    <p class="custom-size-6 mt-3">ボタンをホバーor押して下さい。</p>
 
     <div class="fixed-buttons">
       <div class="button-container columns is-centered is-mobile mt-1">
         <div class="column is-narrow">
-          <button id="showNews" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-tone is-small button-wrap-text">最新のお知らせ</button>
+          <button id="showNews" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-tone is-small button-wrap-text">最新の通知</button>
         </div>
         <div class="column is-narrow">
           <button id="showWorries" data-action="mouseover->rendering#showContent mouseout->rendering#hideContent" class="button is-tone is-small button-wrap-text">みんなの悩み</button>
@@ -40,10 +56,14 @@
 
       <div data-rendering-target="extraContent" class="is-hidden mt-3">
         <div data-rendering-target="news" class="is-hidden" data-no-hide>
-          <strong class="custom-size-5">最新のお知らせ</strong>
-          <p class="custom-size-6 mt-1">最新のメッセージと最新の感謝の気持ちを5件確認できます。</p>
+          <strong class="custom-size-5">最新の通知</strong>
+          <p class="custom-size-6 mt-1">
+          最新のメッセージと感謝の気持ちを、5件まで確認できます。<br>
+          また、メッセージに対して感謝の気持ちを伝えることも可能です。<br>
+          動作確認の詳細を知りたい場合は、以下の画像をクリックしてください。
+          </p>
           <div class="tooltip-container">
-            <%= image_tag 'テスト.gif', alt: '最新のお知らせの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'newsImage', action: 'click->modal#open' } %>
+            <%= image_tag 'テスト.gif', alt: '最新の通知の画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'newsImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
             <div class="custom-tooltip-content">クリックで拡大表示</div>
           </div>
@@ -51,7 +71,12 @@
 
         <div data-rendering-target="worries" class="is-hidden" data-no-hide>
           <strong class="custom-size-5">みんなの悩み</strong>
-          <p class="custom-size-6 mt-1">他のユーザーが投稿した相談内容を閲覧できる場所です。</p>
+          <p class="custom-size-6 mt-1">
+          他のユーザーが投稿した相談内容を閲覧できる場所です。<br>
+          自分が投稿して、相談を受けることができ、投稿時や返信時に匿名・スタイル設定も可能です。<br>
+          投稿時には、肯定的、普通、否定的なスタイルの返信を選べるため、自分に合った対応を選択が出来ます。<br>
+          動作確認の詳細を知りたい場合は、以下の画像をクリックしてください。
+          </p>
           <div class="tooltip-container">
             <%= image_tag 'テスト.gif', alt: 'みんなの悩みの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'worriesImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
@@ -61,7 +86,11 @@
 
         <div data-rendering-target="search" class="is-hidden">
           <strong class="custom-size-5">検索</strong>
-          <p class="custom-size-6 mt-1">過去の投稿やトピックを検索できます。</p>
+          <p class="custom-size-6 mt-1">
+          相談内容・キーワード・ユーザーなどで検索できます。<br>
+          また、匿名設定を行った人は相談で匿名での表示も対応済みです。<br>
+          動作確認の詳細を知りたい場合は、以下の画像をクリックしてください。
+          </p>
           <div class="tooltip-container">
             <%= image_tag 'テスト.gif', alt: '検索の画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'searchImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
@@ -71,7 +100,12 @@
 
         <div data-rendering-target="chat" class="is-hidden">
           <strong class="custom-size-5">チャット機能</strong>
-          <p class="custom-size-6 mt-1">1対1の匿名チャットやグループチャットが可能です。</p>
+          <p class="custom-size-6 mt-1">
+          プライベート・グループチャットがリアルタイムで可能です。<br>
+          プライベートチャットでは、名前を伏せて専用IDを使用してチャットを行えます。<br>
+          グループチャットでは、招待メンバー制・自由なメンバーと選択でき、名前の表示はユーザー名です。<br>
+          動作確認の詳細を知りたい場合は、以下の画像をクリックしてください。
+          </p>
           <div class="tooltip-container">
             <%= image_tag 'テスト.gif', alt: 'チャット機能の画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'chatImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
@@ -81,7 +115,11 @@
 
         <div data-rendering-target="thanks" class="is-hidden">
           <strong class="custom-size-5">感謝の気持ち</strong>
-          <p class="custom-size-6 mt-1">相談やアドバイスに対する感謝の意を表すことができます。</p>
+          <p class="custom-size-6 mt-1">
+          相談やアドバイスに対する感謝の意を表す為の贈り物の全一覧を確認できます。<br>
+          また、自分自身が現在所有している、贈り物の一覧を確認を行うことも出来ます。<br>
+          動作確認の詳細を知りたい場合は、以下の画像をクリックしてください。
+          </p>
           <div class="tooltip-container">
             <%= image_tag 'テスト.gif', alt: '感謝の気持ちの画像', class: 'content-image small-image is-clickable ml-5', data: { rendering_target: 'thanksImage', action: 'click->modal#open' } %>
             <i class="fas fa-info-circle tooltip-trigger is-clickable"></i>
