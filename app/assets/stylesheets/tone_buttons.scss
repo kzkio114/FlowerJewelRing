@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   gap: 10px; /* ボタン間のスペース */
-  flex-wrap: wrap; /* 折り返しを許可 */
 
   .button {
     flex-grow: 1;
@@ -28,7 +27,7 @@
     border-color: #090909;/* 背景色を薄い灰色に */
     &:hover {
       background-color: #090909;/* 背景色を薄い灰色に */
-      color: #fff; /* テキスト色を灰色に */
+      color: #fff; /* テキスト色を白に */
       border-color: #090909; /* ボーダーの色を薄い灰色に */
     }
   }
@@ -120,8 +119,8 @@
       margin-top: -15px;
       margin-bottom: -15px;
       flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap; /* スマホではボタンを2段に折り返す */
+      justify-content: center;
+      flex-wrap: wrap; /* スマホではボタンを2段に折り返す */
     }
   }
 
@@ -139,10 +138,10 @@
     }
 
     @media (max-width: 480px) {
-      width: 120px; /* さらに小さい画面用の幅 */
+      width: 120px; /* スマホ用の幅 */
       height: 30px; /* 高さを調整 */
       font-size: 0.7rem; /* フォントサイズをさらに小さく */
-      border-radius: 20px; /* 丸みをさらに調整 */
+      border-radius: 20px; /* 丸みを調整 */
       margin-top: 5px;
     }
   }
@@ -161,5 +160,13 @@
       flex-wrap: wrap;
       font-size: 0.75rem;
     }
+  }
+}
+
+/* スマホ用のスタイル */
+@media (max-width: 480px) {
+  .buttons-tone {
+    flex-wrap: wrap; /* スマホではボタンを2行にする */
+    justify-content: space-around; /* ボタンを均等に配置 */
   }
 }
