@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'anime', to: 'top#show', as: 'anime' # お試しページを表示するためのルーティング
+
   # Deviseのルーティング
   devise_for :users, skip: [:sessions], controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do

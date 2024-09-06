@@ -182,12 +182,12 @@
 
   .button.is-warning {
     background-color: #fff; /* 背景色は白 */
-    color: #ffdd57; /* テキスト色 */
-    border-color: #ffdd57; /* ボーダーの色を設定 */
+    color: #ffae57; /* テキスト色 */
+    border-color: #ffae57; /* ボーダーの色を設定 */
     &:hover {
-      background-color: #ffdd57; /* Bulmaの$warning-color */
+      background-color: #ffae57; /* Bulmaの$warning-color */
       color: #fff; /* テキスト色を白に */
-      border-color: #ffdd57; /* ボーダーの色を設定 */
+      border-color: #ffae57; /* ボーダーの色を設定 */
     }
   }
 

@@ -4,7 +4,7 @@
 #   category.description = '美しい植物のギフト'
 # end
 
-# # 各日付の花と花言葉を配列に格納
+# # 各日付の花と花言葉or宝石言葉を配列に格納
 # flowers = [
 #   ["フクジュソウ", "幸せを招く"],
 #   ["ハルサザンカ", "困難に勝つ"],
@@ -32,12 +32,12 @@
 #   ["ロウバイ", "温かみ"]
 # ]
 
-# # 各日付の花と花言葉に対応するギフトを作成
+# # 各日付の花と花言葉or宝石言葉に対応するギフトを作成
 # flowers.each_with_index do |(flower, message), i|
 #   Gift.find_or_create_by!(
 #     gift_category: plant_category,
 #     item_name: flower,
-#     description: message, # 花言葉をdescriptionに保存
+#     description: message, # 花言葉or宝石言葉をdescriptionに保存
 #     color: 'green',
 #     image_url: "#{i+10}.webp", # 画像のURLは適宜調整してください
 #     sender_message: "" # sender_messageは空にしておく
@@ -57,93 +57,140 @@
 
 # puts 'カテゴリとコンサルテーションのデータが生成されました。'
 
-# admin
-# ユーザーを見つけます
+# # admin
+# # ユーザーを見つけます
 
- user = User.find_by(email: 'kzkio114@gmail.com')
-
-
-# # 既存のAdminUserレコードを見つけるか、新しいレコードを作成します
- admin_user = AdminUser.find_or_create_by(user: user, organization_id: 1)
-
-# # admin_roleをsuper_adminに設定します
- admin_user.update(admin_role: :super_admin)
+#  user = User.find_by(email: 'kzkio114@gmail.com')
 
 
+# # # 既存のAdminUserレコードを見つけるか、新しいレコードを作成します
+#  admin_user = AdminUser.find_or_create_by(user: user, organization_id: 1)
+
+# # # admin_roleをsuper_adminに設定します
+#  admin_user.update(admin_role: :super_admin)
 
 
-# ギフトカテゴリを作成
-
-# 既存のギフトカテゴリを使用
-plant_category = GiftCategory.find_or_create_by!(name: '植物') do |category|
-  category.description = '美しい植物のギフト'
-end
-
-# 各日付の花と花言葉を配列に格納
-flowers = [
-  ["フクジュソウ", "幸せを招く"],
-  ["ハルサザンカ", "困難に勝つ"],
-  ["ブルースター", "幸せな愛"],
-  ["ラッパスイセン", "再生"],
-  ["マンリョウ", "予言"],
-  ["ナワシロイチゴ", "恩恵"],
-  ["ブルーデイジー", "恵まれて"],
-  ["グズマニア", "完璧"],
-  ["スイートピー", "永遠の喜び"],
-  ["リカステ", "快活"],
-  ["オウバイ", "高貴"],
-  ["チューリップ（黄）", "正直"],
-  ["ピグミーランタン", "印象"],
-  ["キンギョソウ", "欲望"],
-  ["サクラソウ", "忠実"],
-  ["ハナシノブ", "野生美"],
-  ["クリスマスローズ", "大切な人"],
-  ["スプレーギク", "寛大"],
-  ["サクシフラガ", "自信"],
-  ["ネコヤナギ", "素直"],
-  ["ウメ（紅）", "忠実"],
-  ["バイモ", "飾らない心"],
-  ["ミズバショウ", "決心"],
-  ["ロウバイ", "温かみ"]
-]
-
-# 各日付の花と花言葉に対応するギフトテンプレートを作成
-flowers.each_with_index do |(flower, message), i|
-  GiftTemplate.find_or_create_by!(
-    gift_category: plant_category,
-    name: flower,
-    description: message, # 花言葉をdescriptionに保存
-    color: 'green',
-    image_url: "#{i+10}.webp" # 画像のURLは適宜調整してください
-  )
-end
 
 
-# # 既存の組織を見つけるか、なければ新しい組織を作成します
-# organization = Organization.find_or_create_by!(id: 1) do |org|
-#   org.name = 'Default Organization'
-#   org.description = 'Default organization description.'
+# # ギフトカテゴリを作成
+
+# # 既存のギフトカテゴリを使用
+# plant_category = GiftCategory.find_or_create_by!(name: '植物') do |category|
+#   category.description = '美しい植物のギフト'
 # end
 
-# # 全てのユーザーを取得
-# users = User.all
+# # 各日付の花と花言葉or宝石言葉を配列に格納
+# flowers = [
+#   ["フクジュソウ", "幸せを招く"],
+#   ["ハルサザンカ", "困難に勝つ"],
+#   ["ブルースター", "幸せな愛"],
+#   ["ラッパスイセン", "再生"],
+#   ["マンリョウ", "予言"],
+#   ["ナワシロイチゴ", "恩恵"],
+#   ["ブルーデイジー", "恵まれて"],
+#   ["グズマニア", "完璧"],
+#   ["スイートピー", "永遠の喜び"],
+#   ["リカステ", "快活"],
+#   ["オウバイ", "高貴"],
+#   ["チューリップ（黄）", "正直"],
+#   ["ピグミーランタン", "印象"],
+#   ["キンギョソウ", "欲望"],
+#   ["サクラソウ", "忠実"],
+#   ["ハナシノブ", "野生美"],
+#   ["クリスマスローズ", "大切な人"],
+#   ["スプレーギク", "寛大"],
+#   ["サクシフラガ", "自信"],
+#   ["ネコヤナギ", "素直"],
+#   ["ウメ（紅）", "忠実"],
+#   ["バイモ", "飾らない心"],
+#   ["ミズバショウ", "決心"],
+#   ["ロウバイ", "温かみ"]
+# ]
 
-# # 植物カテゴリに関連する全てのギフトテンプレートを取得
-# plant_category = GiftCategory.find_by(name: '植物')
-# gift_templates = GiftTemplate.where(gift_category: plant_category)
+# # 各日付の花と花言葉or宝石言葉に対応するギフトテンプレートを作成
+# flowers.each_with_index do |(flower, message), i|
+#   GiftTemplate.find_or_create_by!(
+#     gift_category: plant_category,
+#     name: flower,
+#     description: message, # 花言葉or宝石言葉をdescriptionに保存
+#     color: 'green',
+#     image_url: "#{i+10}.webp" # 画像のURLは適宜調整してください
+#   )
+# end
 
-# # 各ユーザーに全てのギフトテンプレートからギフトを付与
-# users.each do |user|
-#   gift_templates.each do |gift_template|
+# # 宝石カテゴリを作成
+# jewel_category = GiftCategory.find_or_create_by!(name: '宝石') do |category|
+#   category.description = '美しい宝石のギフト'
+# end
+
+# # 宝石の種類と説明を配列に格納
+# jewels = [
+#   ["オニキス", "夫婦の幸福 厄除け 秘密"],
+#   ["アクアマリン", "勇敢 聡明 沈着"],
+#   ["琥珀", "活性 長寿 繁栄"],
+#   ["スピネル", "愛情 幸福 ポジティブ"],
+#   ["ルビー", "純愛 仁愛 情熱的な愛"],
+#   ["エメラルド", "愛 癒し 聡明"],
+#   ["サファイア", "愛情 誠実 徳望"],
+#   ["アメジスト", "心の平和 真実の愛 誠実"],
+#   ["オパール", "純真無垢 幸運 忍耐"],
+#   ["ダイヤモンド", "純愛 純潔 清浄無垢"],
+#   ["真珠", "健康 純粋 長寿"],
+#   ["トパーズ", "成功 希望 誠実"],
+#   ["ペリドット", "太陽の象徴 夫婦和合 厄除け"],
+#   ["シトリン", "繁栄 幸運 成功"],
+#   ["タンザナイト", "神秘 冷静 誇り高い"],
+#   ["ガーネット", "真実 友愛 忠実"]
+# ]
+
+# # 各宝石に対応するギフトテンプレートを作成
+# jewels.each_with_index do |(jewel, message), i|
+#   GiftTemplate.find_or_create_by!(
+#     gift_category: jewel_category,
+#     name: jewel,
+#     description: message, # 宝石の意味をdescriptionに保存
+#     color: 'blue',
+#     image_url: "gem#{i+1}.webp" # 画像のURLは適宜調整してください
+#   )
+# end
+
+# puts "宝石カテゴリとギフトが作成されました。"
+
+# # 全ユーザーにランダムで10個のギフトをテンプレートからあげる
+# User.find_each do |user|
+#   # ランダムに10個のギフトテンプレートを取得
+#   gift_templates = GiftTemplate.order("RANDOM()").limit(10)
+
+#   # ギフトテンプレートからギフトを作成してユーザーに割り当てる
+#   gift_templates.each do |template|
 #     Gift.create!(
-#       giver_id: user.id,
-#       receiver_id: user.id,
-#       gift_template: gift_template,
-#       item_name: gift_template.name,
-#       description: gift_template.description,
-#       color: gift_template.color,
-#       image_url: gift_template.image_url,
-#       sent_at: Time.now
+#       gift_template_id: template.id,
+#       gift_category: template.gift_category,
+#       item_name: template.name,
+#       description: template.description,
+#       image_url: template.image_url,
+#       color: template.color,
+#       receiver_id: user.id,  # ユーザーにギフトを割り当てる
+#       giver_id: nil,         # 贈り主は指定しない（nil）
+#       sent_at: nil           # 送られた日時も未設定
 #     )
 #   end
 # end
+
+# puts "全ユーザーにギフトがランダムで10個ずつ割り当てられました。"
+
+
+# ランダムな表示名を生成するメソッド
+def generate_random_display_name
+  loop do
+    random_name = SecureRandom.hex(5) # 10文字のランダムな表示名
+    break random_name unless User.exists?(display_name: random_name)
+  end
+end
+
+# display_nameを持っていないユーザーにランダムな表示名を付与
+User.where(display_name: [nil, ""]).find_each do |user|
+  user.update!(display_name: generate_random_display_name)
+end
+
+puts "表示名がないユーザーにランダムな表示名が付与されました。"

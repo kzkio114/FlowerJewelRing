@@ -79,7 +79,7 @@ class User < ApplicationRecord
   public
 
   def assign_initial_gifts
-    gift_templates = GiftTemplate.order("RANDOM()").limit(5)
+    gift_templates = GiftTemplate.order("RANDOM()").limit(10)
     gift_templates.each do |template|
       Gift.create!(
         gift_template_id: template.id,

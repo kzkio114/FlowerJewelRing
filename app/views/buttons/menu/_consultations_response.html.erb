@@ -29,7 +29,7 @@
         <%= button_to '戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-primary button-wrap-text ml-2" %>
         <% if @consultation.user == current_user %>
           <%
-            fixed_url = "https://flowerjewelring-e86d8e8259b0.herokuapp.com"
+            fixed_url = "https://www.xn--z8j3e5a2787akv3apqn.com"
             message = "「#{ERB::Util.url_encode(@consultation.title)}」を投稿しました。%0A みなさんから、アドバイスをいただけると嬉しいです。%0A %23めぐる宝石花 %0A#{ERB::Util.url_encode(fixed_url)}"
           %>
           <div class="twitter">

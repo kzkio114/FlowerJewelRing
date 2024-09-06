@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
 
 html, body {
-  height: 100%;
+  min-height: 100%; /* 100%より大きい高さを設定 */
   margin: 0;
 
   font-family: 'Kosugi Maru', sans-serif;
   background-color: hsl(174, 80%, 92%);
+  overflow-y: scroll; /* 常にスクロールバーを表示 */
 }
 
 /* スマートフォン向けのスタイル */

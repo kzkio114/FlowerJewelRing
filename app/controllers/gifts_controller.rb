@@ -232,6 +232,6 @@ class GiftsController < ApplicationController
   def set_og_tags
     @twitter_title = @gift.item_name
     @twitter_description = @gift.description
-    @twitter_image = @gift.image_url.present? ? asset_url(@gift.image_url) : asset_url('default_image.jpg')
+    @twitter_image = @gift.image_url.present? ? url_for(@gift.image_url) : url_for('/assets/top.png')
   end
 end
