@@ -1,7 +1,7 @@
 <div id="content">
   <div class="group-chat-fixed-height">
     <div id="group_chat_list" class="group-chat-height">
-      <h3 class="title is-size-3">グループチャット一覧</h3>
+      <h3 class="title is-size-3">グループ<br class="sma-scc">チャット一覧</h3>
       <% group_chats.each do |group_chat| %>
         <% if group_chat.group_chat_members.exists?(user: current_user) || group_chat.free? %>
           <div id="group_chat_<%= group_chat.id %> " class="group-member-buttons">

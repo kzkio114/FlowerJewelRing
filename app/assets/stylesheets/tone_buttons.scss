@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px; /* ボタン間のスペース */
+  flex-wrap: wrap; /* 折り返しを許可 */
 
   .button {
     flex-grow: 1;
@@ -118,6 +119,9 @@
       border-radius: 20px; /* 丸みをさらに調整 */
       margin-top: -15px;
       margin-bottom: -15px;
+      flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap; /* スマホではボタンを2段に折り返す */
     }
   }
 

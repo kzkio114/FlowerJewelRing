@@ -71,7 +71,8 @@
 
   .info-margin {
     margin-right: 0 !important; /* 右マージンをリセット */
-    margin-left: 0.2rem !important;        /* 左マージンを追加 */
+    margin-left: 1.6rem !important;    /* 左マージンを追加 */
+    margin-bottom: 1rem !important;    /*  */
     text-align: center !important; /* テキストを中央揃え */
   }
 
@@ -145,7 +146,7 @@
 @media (max-width: 480px) {
   .show-fixed {
     height: 430px; /* スマホ用の高さ */
-    width: 240px; /* スマホ用の幅 */
+    width: 200px; /* スマホ用の幅 */
   }
 
   .card-content {
