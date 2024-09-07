@@ -36,6 +36,7 @@
   @media (max-width: 480px) {
     height: 475px; // スマホ用の高さ
     width: 250px; // スマホ用の幅
+    margin-left: 30px;
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
     -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
     backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */

@@ -10,31 +10,41 @@
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
 
-    <!-- Twitter Card data -->
-    <meta name="twitter:card" content="player">
-    <meta name="twitter:site" content="@kzkio_0114">
-    <meta name="twitter:title" content="<%= @twitter_title || 'めぐる宝石花' %>">
-    <meta name="twitter:description" content="<%= @twitter_description || 'このアプリは相談する→相談されるの流れを繰り返して行う循環型相談アプリです。' %>">
-    <meta name="twitter:image" content="<%= @twitter_image || asset_url('anime.png') %>">
-    <meta name="twitter:player" content="<%= @twitter_video_url || asset_url('anime.mp4') %>">
-    <meta name="twitter:player:width" content="1280">
-    <meta name="twitter:player:height" content="720">
+  <!-- Twitter Card data -->
+  <meta name="twitter:card" content="player">
+  <meta name="twitter:site" content="@kzkio_0114">
+  <meta name="twitter:title" content="<%= @twitter_title || 'めぐる宝石花' %>">
+  <meta name="twitter:description" content="<%= @twitter_description || 'このアプリは、相談する→相談されるの流れを繰り返して行う循環型相談アプリです。' %>">
+  <meta name="twitter:image" content="<%= @twitter_image || asset_url('anime.png') %>">
+  <meta name="twitter:player" content="<%= @twitter_video_url || asset_url('anime.mp4') %>">
+  <meta name="twitter:player:width" content="1280">
+  <meta name="twitter:player:height" content="720">
+
+  <!-- Open Graph (OG) data -->
+  <meta property="og:title" content="めぐる宝石花">
+  <meta property="og:description" content="このアプリは、相談する→相談されるの流れを繰り返して行う循環型相談アプリです。">
+  <meta property="og:image" content="<%= asset_url('anime.png') %>"> <!-- ここを修正 -->
+  <meta property="og:url" content="https://www.xn--z8j3e5a2787akv3apqn.com/">
+  <meta property="og:type" content="website">
 </head>
-  <!-- Font Awesome  -->
-  <script src="https://kit.fontawesome.com/6fa0d54baa.js" crossorigin="anonymous"></script>
-  <body>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE6KZH9Z54"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    </script>
+
+<!-- Font Awesome  -->
+<script src="https://kit.fontawesome.com/6fa0d54baa.js" crossorigin="anonymous"></script>
+
+<body>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HE6KZH9Z54"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
 
   <%= render 'layouts/header' %>
+  
   <div id="flash">
     <%= render 'layouts/flash' %>
-    <%# <p class="notice"><%= notice %　></p> %>
+    <%# <p class="notice"><%= notice %>
     <%= yield %>
   </div>
 

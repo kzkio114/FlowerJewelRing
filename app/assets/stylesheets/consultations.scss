@@ -6,9 +6,10 @@
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
 
   @media (max-width: 480px) {
-    height: 20px; /* スマホ用の高さ */
+    height: 30px; /* スマホ用の高さ */
     width: 250px; /* スマホ用の幅 */
-    margin-left: 15px;  /* 右側の余白 */
+    margin-left: 50px;  /* 左側の余白 */
+    margin-right: 0;  /* 右側の余白 */
     margin-top: -30px; /* 上側の余白 */
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
     -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
@@ -25,10 +26,9 @@
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.1); /* 軽いシャドウを追加 */
 
   @media (max-width: 480px) {
-    height: 500px; /* スマホ用の高さ */
+    height: 700px; /* スマホ用の高さ */
     width: 250px; /* スマホ用の幅 */
-    margin-left: 10px;  /* 右側の余白 */
-    margin-right: 10px;  /* 右側の余白 */
+    margin-left: 25px;  /* 右側の余白 */ 
     transform: translateZ(0); /* 高解像度ディスプレイ対策 */
     -webkit-backface-visibility: hidden; /* Webkitブラウザ用のアンチエイリアス対策 */
     backface-visibility: hidden; /* その他ブラウザ用のアンチエイリアス対策 */

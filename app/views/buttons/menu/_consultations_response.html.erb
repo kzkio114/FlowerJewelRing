@@ -5,7 +5,7 @@
   <div class="columns consultations-show-fixed-height">
     <div class="column">
       <div id="<%= dom_id(@consultation) %>" class="card">
-        <p class="title">タイトル: <%= @consultation.title %></p>
+        <p class="title is-size-4">タイトル: <br class="sma-scc"> <%= @consultation.title %></p>
         <p>投稿者: 
         <% case @consultation.display_choice %>
         <% when 'name' %>

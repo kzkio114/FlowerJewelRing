@@ -1,3 +1,4 @@
+/* ベーススタイル */
 .tooltip-container {
   position: relative;
   display: inline-block;
@@ -24,4 +25,16 @@
 .tooltip-container:hover .custom-tooltip-content {
   opacity: 1;
   visibility: visible;
+}
+
+/* スマホ用の縦書きスタイル */
+@media (max-width: 480px) {
+  .custom-tooltip-content {
+    top: 100%; /* アイコンの下に表示 */
+    left: 50%; /* 水平に中央揃え */
+    transform: translateX(-50%); /* アイコンの下に配置 */
+    margin-top: 5px; /* アイコンとの距離 */
+    white-space: normal; /* 自動改行 */
+    line-height: 1.5; /* 縦書き用に行間を調整 */
+  }
 }
