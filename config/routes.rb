@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  post 'top/tos', to: 'top#tos', as: :tos  # 利用規約ボタンを押した時のルーティング
+  post 'top/pp', to: 'top#pp', as: :pp  # プライバシーポリシーボタンを押した時のルーティング
+  post 'top/enter_app', to: 'top#enter_app'  # 説明を見るボタンを押した時のルーティング
+  post 'top/login', to: 'top#login', as: 'buttons_login' # ログインボタンを押した時のルーティング
+
   get 'anime', to: 'top#show', as: 'anime' # お試しページを表示するためのルーティング
 
   # Deviseのルーティング
@@ -50,8 +55,8 @@ Rails.application.routes.draw do
   resources :private_chats, only: [:index, :show, :create, :destroy]
   post 'private_chat', to: 'private_chats#private_chat', as: 'custom_private_chat'
 
-  post 'buttons/tos', to: 'buttons#tos', as: :tos  # 利用規約ボタンを押した時のルーティング
-  post 'buttons/pp', to: 'buttons#pp', as: :pp  # プライバシーポリシーボタンを押した時のルーティング
+  #post 'buttons/tos', to: 'buttons#tos', as: :tos  # 利用規約ボタンを押した時のルーティング
+ # post 'buttons/pp', to: 'buttons#pp', as: :pp  # プライバシーポリシーボタンを押した時のルーティング
 
 
   # グループチャットのルーティング
@@ -145,8 +150,8 @@ Rails.application.routes.draw do
   post 'buttons/send_gift_response', to: 'buttons#send_gift_response', as: 'buttons_send_gift_response' # ギフト送信ボタンを押した時のルーティング
   post 'buttons/user', to: 'buttons#user', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
 
-  post 'buttons/enter_app', to: 'buttons#enter_app'  # 説明を見るボタンを押した時のルーティング
-  post 'buttons/login', to: 'buttons#login', as: 'buttons_login' # ログインボタンを押した時のルーティング
+  #post 'buttons/enter_app', to: 'buttons#enter_app'  # 説明を見るボタンを押した時のルーティング
+  #post 'buttons/login', to: 'buttons#login', as: 'buttons_login' # ログインボタンを押した時のルーティング
   post 'buttons/without_login', to: 'buttons#without_login' # ログインせずに使うボタンを押した時のルーティング
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
