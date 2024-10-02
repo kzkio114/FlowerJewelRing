@@ -1,5 +1,5 @@
 class RepliesController < ApplicationController
-  before_action :set_consultation, only: [:new, :create]
+  before_action :set_consultation, only: [:new, :create, :destroy]
 
   def new
     @reply = @consultation.replies.build
@@ -32,6 +32,21 @@ class RepliesController < ApplicationController
         format.html { render :new }
         format.json { render json: @reply.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @reply = @consultation.replies.find(params[:id])
+    @reply.destroy
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.remove("reply_#{@reply.id}"),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
+        ]
+      end
+      format.html { redirect_to @consultation, notice: 'Reply was successfully deleted.' }
     end
   end
 

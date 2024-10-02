@@ -6,6 +6,49 @@ class GiftsController < ApplicationController
     @gifts = Gift.includes(:gift_category).where(sent_at: nil)
   end
 
+  def gift_list
+    @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/gift_list_response", locals: { total_sender_messages_count: @total_sender_messages_count }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
+        ]
+      end
+    end
+  end
+
+  def gift_all
+    @gift_templates = GiftTemplate.includes(:gift_category).all
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/gift_all_response", locals: { gift_templates: @gift_templates }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
+        ]
+      end
+    end
+  end
+
+
+  def send_gift_response
+    @my_consultations = Consultation.where(user_id: current_user.id)
+    replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
+    @reply_users = User.where(id: replier_ids)
+    @gifts = current_user.received_gifts # 現在のユーザーが受け取ったギフトのみを取得
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "content",
+          partial: "buttons/menu/send_gift_response",
+          locals: { gifts: @gifts, reply_users: @reply_users }
+        )
+      end
+    end
+  end
+
   def show; end
 
   def new

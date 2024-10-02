@@ -6,18 +6,73 @@ class ConsultationsController < ApplicationController
     @consultations = Consultation.all
   end
 
-  # GET /consultations/1
-  def show
-    @consultation = Consultation.includes(replies: :user).find(params[:id])
-    @consultations = Consultation.includes(:category).all
+  def worries
+    if params[:category_id]
+      @consultations = Consultation.includes(:category).where(category_id: params[:category_id])
+    else
+      @consultations = Consultation.includes(:category).all
+    end
+    @consultation = Consultation.new
+
     respond_to do |format|
-      format.html  # show.html.erb で @consultation を使用
-      format.turbo_stream { render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultations: @consultations, consultation: @consultation }) }
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @consultation }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
+        ]
+      end
+    end
+  end
+
+  def consultations_category
+    if params[:category_id]
+      @consultations = Consultation.includes(:category).where(category_id: params[:category_id], completed: true)
+    else
+      @consultations = Consultation.includes(:category).all
+    end
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/consultations_category", locals: { consultations: @consultations })
+        ]
+      end
+    end
+  end
+
+  def consultations_response
+    @consultation = Consultation.find(params[:id])
+    if @consultation.user == current_user
+      @replies = @consultation.replies
+    else
+      @replies = @consultation.replies.where(tone: @consultation.desired_reply_tone)
+    end
+    respond_to do |format|
+      format.html { redirect_to @consultation }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/consultations_response', locals: { consultation: @consultation, replies: @replies })
+      end
     end
   rescue ActiveRecord::RecordNotFound
+    redirect_to consultations_path, alert: "指定された相談が見つかりません。"
+  end
+
+  def consultations_detail
+    @consultation = Consultation.includes(replies: :user).find(params[:id])
+    @consultations = Consultation.includes(:category).all
+    if @consultation.user == current_user
+      @filter_tone = params[:filter_tone] || @consultation.desired_reply_tone
+    else
+      @filter_tone = params[:filter_tone].presence
+    end
     respond_to do |format|
-      format.html { redirect_to root_path, alert: "指定された相談が見つかりません。" }
-      format.turbo_stream { render turbo_stream: turbo_stream.replace("content", partial: "shared/not_found") }
+      format.turbo_stream do
+        if @consultation.user == current_user
+          render turbo_stream: turbo_stream.replace("content", partial: "buttons/menu/consultations_detail", locals: { consultation: @consultation, filter_tone: @filter_tone })
+        else
+          render turbo_stream: turbo_stream.replace("content", partial: "buttons/menu/consultations_detail_all", locals: { consultation: @consultation, filter_tone: @filter_tone })
+        end
+      end
     end
   end
 
@@ -62,6 +117,7 @@ class ConsultationsController < ApplicationController
 
   # DELETE /consultations/1
   def destroy
+    @consultation = Consultation.find(params[:id])
     @consultation.destroy
     @consultations = Consultation.includes(:category).all
     @new_consultation = Consultation.new

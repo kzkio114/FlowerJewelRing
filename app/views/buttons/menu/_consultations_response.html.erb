@@ -37,7 +37,7 @@
               <i class="fab fa-twitter twitter-icon"></i>
             <% end %>
           </div>
-          <%= button_to '削除', consultations_destroy_path(@consultation), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }, class: "button is-danger button-wrap-text ml-5 custom-delete-top" %>
+            <%= button_to '削除', consultation_path(@consultation), method: :delete, remote: true, data: { confirm: '本当に削除しますか？' }, class: "button is-danger button-wrap-text ml-5 custom-delete-top" %>
         <% end %>
       </div>
     </div>

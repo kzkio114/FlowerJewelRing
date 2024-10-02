@@ -14,14 +14,67 @@ class DashboardController < ApplicationController
     @received_gifts = @user.received_gifts
     @latest_gift_messages = fetch_latest_gift_messages
     @available_gift_items = current_user.received_gifts.where(sent_at: nil).distinct.pluck(:item_name)
-  
+    
     @replies = fetch_latest_replies.map do |reply|
       {
         reply: reply,
         display_name: reply.display_name
       }
     end
+  end
+
+  def info
+    @current_time = Time.zone.now  # こちらでも@current_timeを設定
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: {
+            gifts: @gifts,
+            replies: @replies,
+            reply_users: @reply_users,
+            latest_gift_messages: @latest_gift_messages,
+            unread_gifts_count: @unread_gifts_count,
+            unread_replies_count: @unread_replies_count,
+            current_time: @current_time,  # infoでも@current_timeを使用
+            group_chats: @group_chats,
+            user: @user,
+            latest_gifts: @latest_gifts,
+            sent_gifts: @sent_gifts,
+            received_gifts: @received_gifts
+          })
+        ]
+      end
+    end
+  end
+
+  def menu
+    @group_chats = GroupChat.all
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons"),
+          turbo_stream.replace("content", partial: "buttons/response"),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
+        ]
+      end
+    end
+  end
   
+  def close_menu
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("menu", partial: "buttons/menu/closed_menu"),
+          turbo_stream.replace("content", partial: "buttons/response"),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
+        ]
+      end
+    end
+  end
+
+  def search
     if params[:query].present? && params[:query].strip.present?
       queries = params[:query].split(/[\s　]+/)
       @consultations = queries.flat_map do |q|
