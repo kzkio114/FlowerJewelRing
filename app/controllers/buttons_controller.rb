@@ -1,34 +1,6 @@
 class ButtonsController < ApplicationController
   before_action :set_latest_replies_and_notifications, only: [:info, :menu, :close_menu, :worries, :gift_list, :gift_all, :user]
 
-  def user
-    @users = User.all
-    set_unread_gifts_count
-    set_unread_replies_count
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/user_response"),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
-          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
-        ]
-      end
-    end
-  end
-
-  def user_show
-    @user = User.find(params[:id])
-    set_unread_gifts_count
-    set_unread_replies_count
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/user_show_response")
-        ]
-      end
-    end
-  end
-
   private
 
   def set_unread_gifts_count

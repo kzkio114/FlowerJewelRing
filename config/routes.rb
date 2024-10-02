@@ -11,9 +11,9 @@ Rails.application.routes.draw do
   ###
   post 'gifts/gift_list', to: 'gifts#gift_list', as: 'buttons_gift_list'  # ギフト一覧ボタンを押した時のルーティング
   ###
-  post 'buttons/chat', to: 'buttons#chat', as: 'buttons_chat'  # チャットボタンを押した時のルーティング
+  #post 'buttons/chat', to: 'buttons#chat', as: 'buttons_chat'  # チャットボタンを押した時のルーティング
   post 'gifts/send_gift_response', to: 'gifts#send_gift_response', as: 'buttons_send_gift_response' # ギフト送信ボタンを押した時のルーティング
-  post 'buttons/user', to: 'buttons#user', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
+  post 'users/user_list', to: 'users#user_list', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
   ###
   post 'consultations/worries', to: 'consultations#worries', as: 'buttons_worries'  # 悩み相談ボタンを押した時のルーティング
   post 'consultations_detail', to: 'consultations#consultations_detail', as: 'consultations_detail'  # 悩み相談ボタンを押した時のルーティング
@@ -114,7 +114,7 @@ Rails.application.routes.draw do
     end
   end
 
-  post 'buttons/user_show', to: 'buttons#user_show', as: 'buttons_user_show'  # ユーザーボタンを押した時のルーティング
+  post 'users/user_list_show', to: 'users#user_list_show', as: 'buttons_user_show'  # ユーザーボタンを押した時のルーティング
 
   # config/routes.rb
   resources :consultations do
