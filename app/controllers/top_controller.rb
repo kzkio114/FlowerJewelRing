@@ -9,8 +9,8 @@ class TopController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("response_area", partial: "buttons/login_response"),
-          turbo_stream.replace("login_button", partial: "buttons/without_login_button"),
+          turbo_stream.replace("response_area", partial: "login_response"),
+          turbo_stream.replace("login_button", partial: "without_login_button"),
           turbo_stream.replace("content", partial: "buttons/menu/trial_login_response")
         ]
       end
@@ -21,7 +21,7 @@ class TopController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("response_area", partial: "buttons/enter_app_response")
+          turbo_stream.replace("response_area", partial: "enter_app_response")
         ]
       end
     end
@@ -31,7 +31,7 @@ class TopController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("response_area", partial: "buttons/tos_response")
+          turbo_stream.replace("response_area", partial: "tos_response")
         ]
       end
     end
@@ -41,7 +41,7 @@ class TopController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("response_area", partial: "buttons/pp_response")
+          turbo_stream.replace("response_area", partial: "pp_response")
         ]
       end
     end

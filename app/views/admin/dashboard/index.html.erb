@@ -1,0 +1,41 @@
+<% if current_user.super_admin? || current_user.admin? %>
+  <div id="content" class="frame-fixed-height container is-small mb-3">
+    <div class="is-flex m-5">
+      <h1 class="title">管理者ダッシュボード</h1>
+      <%= link_to 'ダッシュボードに戻る', dashboard_path, class: 'button is-info ml-5' %>
+    </div>
+    <div class="has-text-right m-10">
+      <%= button_to '管理者ユーザー一覧へ', admin_admin_users_path, method: :get, data: { turbo: true }, class: 'button is-primary ml-2' %>
+    </div>
+  </div>
+<% end %>
+  
+<div id="content" class="frame-fixed-height container is-small mb-3">
+  <div class="admin-user-list">
+    <%= render "users_index", users: @users %>
+  </div>
+</div>
+
+<div id="content" class="frame-fixed-height container is-small mb-3">
+  <div class="consultation-list">
+    <%= render "consultations_index", consultations: @consultations %>
+  </div>
+</div>
+
+<div id="content" class="frame-fixed-height container is-small mb-3">
+  <div class="admin-gift-list">
+    <%= render "sended_gifts_index", gift_histories: @gift_histories %>
+  </div>
+</div>
+
+<div id="content" class="frame-fixed-height container is-small mb-3">
+  <div class="admin-gift-list">
+    <%= render "gifts_index", gifts: @gifts %>
+  </div>
+</div>
+  
+<div id="content" class="container is-small gift-list-height">
+  <div class="admin-gift-templates-list">
+    <%= render "gift_templates_index", gift_templates: @gift_templates %>
+  </div>
+</div>
