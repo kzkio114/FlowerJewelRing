@@ -16,7 +16,7 @@ class ConsultationsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @consultation }),
+          turbo_stream.replace("content", partial: "worries_response", locals: { consultations: @consultations, consultation: @consultation }),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
           turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
@@ -33,7 +33,7 @@ class ConsultationsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/consultations_category", locals: { consultations: @consultations })
+          turbo_stream.replace("content", partial: "consultations_category", locals: { consultations: @consultations })
         ]
       end
     end
@@ -49,7 +49,7 @@ class ConsultationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @consultation }
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/consultations_response', locals: { consultation: @consultation, replies: @replies })
+        render turbo_stream: turbo_stream.replace('content', partial: 'consultations_response', locals: { consultation: @consultation, replies: @replies })
       end
     end
   rescue ActiveRecord::RecordNotFound
@@ -67,9 +67,9 @@ class ConsultationsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         if @consultation.user == current_user
-          render turbo_stream: turbo_stream.replace("content", partial: "buttons/menu/consultations_detail", locals: { consultation: @consultation, filter_tone: @filter_tone })
+          render turbo_stream: turbo_stream.replace("content", partial: "consultations_detail", locals: { consultation: @consultation, filter_tone: @filter_tone })
         else
-          render turbo_stream: turbo_stream.replace("content", partial: "buttons/menu/consultations_detail_all", locals: { consultation: @consultation, filter_tone: @filter_tone })
+          render turbo_stream: turbo_stream.replace("content", partial: "consultations_detail_all", locals: { consultation: @consultation, filter_tone: @filter_tone })
         end
       end
     end
@@ -93,13 +93,13 @@ class ConsultationsController < ApplicationController
         format.html { redirect_to @consultation, notice: 'コンサルテーションが正常に作成されました。' }
         format.turbo_stream do
           @consultations = Consultation.includes(:category).all
-          render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultations: @consultations, consultation: Consultation.new })
+          render turbo_stream: turbo_stream.replace('content', partial: 'worries_response', locals: { consultations: @consultations, consultation: Consultation.new })
         end
       else
         format.html { render :new }
         format.turbo_stream do
           @consultations = Consultation.includes(:category).all
-          render turbo_stream: turbo_stream.replace('content', partial: 'buttons/menu/worries_response', locals: { consultations: @consultations, consultation: @consultation })
+          render turbo_stream: turbo_stream.replace('content', partial: 'worries_response', locals: { consultations: @consultations, consultation: @consultation })
         end
       end
     end
@@ -123,7 +123,7 @@ class ConsultationsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/worries_response", locals: { consultations: @consultations, consultation: @new_consultation })
+          turbo_stream.replace("content", partial: "worries_response", locals: { consultations: @consultations, consultation: @new_consultation })
         ]
       end
     end

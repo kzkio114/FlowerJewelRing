@@ -11,7 +11,7 @@ class GiftsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/gift_list_response", locals: { total_sender_messages_count: @total_sender_messages_count }),
+          turbo_stream.replace("content", partial: " gift_list_response", locals: { total_sender_messages_count: @total_sender_messages_count }),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
           turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
@@ -24,7 +24,7 @@ class GiftsController < ApplicationController
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/gift_all_response", locals: { gift_templates: @gift_templates }),
+          turbo_stream.replace("content", partial: " gift_all_response", locals: { gift_templates: @gift_templates }),
           turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
           turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
         ]
@@ -42,7 +42,7 @@ class GiftsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "content",
-          partial: "buttons/menu/send_gift_response",
+          partial: " send_gift_response",
           locals: { gifts: @gifts, reply_users: @reply_users }
         )
       end
@@ -254,7 +254,7 @@ class GiftsController < ApplicationController
   end
 
   def content_partial
-    params[:return_to] == "info" ? "buttons/menu/info_response" : "buttons/menu/send_gift_response"
+    params[:return_to] == "info" ? "dashboards/info_response" : "send_gift_response"
   end
 
   def content_locals

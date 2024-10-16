@@ -6,7 +6,7 @@ class DashboardsController < ApplicationController
 
   def info
     @current_time = Time.zone.now
-    render_turbo_response("content", "buttons/menu/info_response", {
+    render_turbo_response("content", "info_response", {
       gifts: @gifts,
       replies: @replies,
       reply_users: @reply_users,

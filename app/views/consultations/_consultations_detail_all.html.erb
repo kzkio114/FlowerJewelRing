@@ -9,7 +9,7 @@
           <div class="content">
             <div class="buttons-tone">
               <%= button_to "すべて", consultations_detail_path(id: consultation.id, filter_tone: ""), method: :post, data: { turbo_frame: "content" }, class: "button is-light is-small button-wrap-text" %>
-              <%= render "buttons/menu/tone_button", consultation: consultation %>
+              <%= render "replies/tone_button", consultation: consultation %>
             </div>
             <% replies = filter_tone.present? ? consultation.replies.where(tone: filter_tone) : consultation.replies %>
             <% replies.each do |reply| %>
@@ -30,7 +30,7 @@
                     </p>
                   </div>
                   <div class="is-flex is-flex-direction-column is-align-items-end">
-                    <p><em>スタイル: <br class="sma-scc"> <%= reply.tone.present? ? Reply.tones[reply.tone] : "未設定" %></em></p>
+                    <p><em>スタイル:<br class="sma-scc"><%= reply.tone.present? ? Reply.tones[reply.tone] : "未設定" %></em></p>
                     <% if current_user == reply.user %>
                       <div class="is-pulled-right buttons-right">
                         <%= button_to '返信を削除', consultation_reply_path(consultation, reply), method: :delete, remote: true, class: 'button is-danger is-small button-wrap-text ml-2' %>
@@ -54,14 +54,12 @@
           <div class="content">
             <p><%= consultation.content %></p>
             <p>
-            投稿者:
-            <% if consultation.display_choice == 'name' %>
-              <%= consultation.user.name %>
-            <% elsif consultation.display_choice == 'anonymous' %>
-              匿名（<%= consultation.user.name %>）
-            <% else %>
-              匿名
-            <% end %>
+              投稿者:
+              <% if consultation.display_choice == 'name' %>
+                <%= consultation.user.name %>
+              <% else %>
+                匿名
+              <% end %>
             </p>
             <p>望ましい返信スタイル: <%= Consultation.desired_reply_tones[consultation.desired_reply_tone] %></p>
             <%= render 'replies/form', consultation: consultation, reply: consultation.replies.build %>
