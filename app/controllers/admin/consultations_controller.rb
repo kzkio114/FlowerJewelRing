@@ -9,7 +9,7 @@ module Admin
       @consultation.destroy
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(@consultation)) }
-        format.html { redirect_to admin_dashboard_path, notice: '相談を削除しました。' }
+        format.html { redirect_to admin_dashboards_path, notice: '相談を削除しました。' }
       end
     end
 

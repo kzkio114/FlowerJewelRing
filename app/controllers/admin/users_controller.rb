@@ -13,11 +13,11 @@ module Admin
       end
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(@user)) }
-        format.html { redirect_to admin_dashboard_path, notice: 'ユーザーを削除しました。' }
+        format.html { redirect_to admin_dashboards_path, notice: 'ユーザーを削除しました。' }
       end
     rescue ActiveRecord::RecordNotDestroyed => e
       respond_to do |format|
-        format.html { redirect_to admin_dashboard_path, alert: 'ユーザーの削除に失敗しました。' }
+        format.html { redirect_to admin_dashboards_path, alert: 'ユーザーの削除に失敗しました。' }
       end
     end
 

@@ -6,7 +6,7 @@ class Admin::DashboardsController < Admin::ApplicationController
     @users = User.all
     @consultations = Consultation.all
     @gifts = Gift.includes(:gift_category).all
-    @gift_histories = GiftHistory.all 
+    @gift_histories = GiftHistory.all
     @gift_templates = GiftTemplate.includes(:gift_category).all
   end
 
@@ -15,7 +15,7 @@ class Admin::DashboardsController < Admin::ApplicationController
     user.destroy
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(user)) }
-      format.html { redirect_to admin_dashboard_index_path, notice: 'ユーザーを削除しました。' }
+      format.html { redirect_to admin_dashboards_index_path, notice: 'ユーザーを削除しました。' }
     end
   end
 
@@ -24,7 +24,7 @@ class Admin::DashboardsController < Admin::ApplicationController
     consultation.destroy
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(consultation)) }
-      format.html { redirect_to admin_dashboard_index_path, notice: '相談を削除しました。' }
+      format.html { redirect_to admin_dashboards_index_path, notice: '相談を削除しました。' }
     end
   end
 
@@ -33,7 +33,7 @@ class Admin::DashboardsController < Admin::ApplicationController
     gift.destroy
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(gift)) }
-      format.html { redirect_to admin_dashboard_index_path, notice: 'ギフトを削除しました。' }
+      format.html { redirect_to admin_dashboards_index_path, notice: 'ギフトを削除しました。' }
     end
   end
 
