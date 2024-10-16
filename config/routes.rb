@@ -5,18 +5,19 @@ Rails.application.routes.draw do
   post 'top/enter_app', to: 'top#enter_app'  # 説明を見るボタンを押した時のルーティング
   post 'top/login', to: 'top#login', as: 'buttons_login' # ログインボタンを押した時のルーティング
 
-  post 'menu', to: 'dashboards#menu', as: 'menu' # メニューボタンを押した時のルーティング
-  post 'close_menu', to: 'dashboards#close_menu', as: 'close_menu' # メニューを閉じるボタンを押した時のルーティング
-  post 'dashboards/info', to: 'dashboards#info', as: 'info_buttons' # インフォボタンを押した時のルーティング
-  ###
+  post 'menu', to: 'dashboards#menu', as: 'menu'  # メニューボタンを押した時のルーティング
+  post 'close_menu', to: 'dashboards#close_menu', as: 'close_menu'  # メニューを閉じるボタンを押した時のルーティング
+  post 'dashboards/info', to: 'dashboards#info', as: 'info_buttons'  # インフォボタンを押した時のルーティング
+
   post 'gifts/gift_list', to: 'gifts#gift_list', as: 'buttons_gift_list'  # ギフト一覧ボタンを押した時のルーティング
-  ###
-  #post 'buttons/chat', to: 'buttons#chat', as: 'buttons_chat'  # チャットボタンを押した時のルーティング
+
+  # post 'buttons/chat', to: 'buttons#chat', as: 'buttons_chat' # チャットボタンを押した時のルーティング
   post 'gifts/send_gift_response', to: 'gifts#send_gift_response', as: 'buttons_send_gift_response' # ギフト送信ボタンを押した時のルーティング
   post 'users/user_list', to: 'users#user_list', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
-  ###
+
   post 'consultations/worries', to: 'consultations#worries', as: 'buttons_worries'  # 悩み相談ボタンを押した時のルーティング
   post 'consultations_detail', to: 'consultations#consultations_detail', as: 'consultations_detail'  # 悩み相談ボタンを押した時のルーティング
+
   # カテゴリー
   post 'consultations_category/:category_id', to: 'consultations#consultations_category', as: 'consultations_category'
 
@@ -35,11 +36,12 @@ Rails.application.routes.draw do
       resources :users, only: [:destroy]
       resources :consultations, only: [:destroy]
       resources :gifts, only: [:destroy]
-      get 'dashboard', to: 'dashboard#index'
-      post 'dashboard', to: 'dashboard#redirect_to_dashboard'
+      get 'dashboards', to: 'dashboards#index'
+      post 'dashboards', to: 'dashboards#redirect_to_dashboard'
       resources :admin_users, only: [:index, :edit, :update, :destroy]
     end
   end
+
   # 検索のルーティング
   post 'search_response', to: 'search#search_response'
   post 'search', to: 'search#search'
@@ -53,14 +55,14 @@ Rails.application.routes.draw do
 
   # ログインしている場合のみアクセスできるページ
   authenticate :user do
-    get 'dashboard', to: 'dashboard#index', as: 'dashboard'
+    get 'dashboards', to: 'dashboards#index', as: 'dashboard'
   end
 
   # 暫定　ソーシャルログインだけの場合
   get '/users/sign_in', to: redirect('/')
 
   # ダッシュボードのルーティング
-  post 'reset_gift_notifications', to: 'dashboard#reset_gift_notifications', as: 'reset_gift_notifications'
+  post 'reset_gift_notifications', to: 'dashboards#reset_gift_notifications', as: 'reset_gift_notifications'
   # チャットのルーティング
   resources :chats, only: [:index, :show, :create, :destroy]  # showを追加
   post 'chat', to: 'chats#chat', as: 'custom_chat'

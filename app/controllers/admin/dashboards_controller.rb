@@ -1,4 +1,4 @@
-class Admin::DashboardController < Admin::ApplicationController
+class Admin::DashboardsController < Admin::ApplicationController
   def index
     @admin_users = AdminUser.includes(:user, :organization).all
     @current_time = Time.zone.now.in_time_zone('Asia/Tokyo')

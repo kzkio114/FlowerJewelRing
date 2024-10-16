@@ -60,6 +60,9 @@ puts 'カテゴリとコンサルテーションのデータが生成されま�
 # admin
 # ユーザーを見つけます
 
+Organization.create(name: "Default Organization", description: "This is the default organization.")
+
+
  user = User.find_by(email: 'kzkio114@gmail.com')
 
 

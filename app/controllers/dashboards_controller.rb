@@ -1,59 +1,33 @@
-class DashboardController < ApplicationController
-  before_action :set_latest_replies_and_notifications, only: [:index]
-  before_action :set_common_variables, only: [:index, :info]
+class DashboardsController < ApplicationController
+  before_action :set_common_variables, only: [:index, :info, :menu, ]
+  before_action :set_latest_replies_and_notifications, only: [:index, :info]
 
-
-  def index;end
+  def index; end
 
   def info
     @current_time = Time.zone.now
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("content", partial: "buttons/menu/info_response", locals: {
-            gifts: @gifts,
-            replies: @replies,
-            reply_users: @reply_users,
-            latest_gift_messages: @latest_gift_messages,
-            unread_gifts_count: @unread_gifts_count,
-            unread_replies_count: @unread_replies_count,
-            current_time: @current_time,
-            group_chats: @group_chats,
-            user: @user,
-            latest_gifts: @latest_gifts,
-            sent_gifts: @sent_gifts,
-            received_gifts: @received_gifts
-          })
-        ]
-      end
-    end
+    render_turbo_response("content", "buttons/menu/info_response", {
+      gifts: @gifts,
+      replies: @replies,
+      reply_users: @reply_users,
+      latest_gift_messages: @latest_gift_messages,
+      unread_gifts_count: @unread_gifts_count,
+      unread_replies_count: @unread_replies_count,
+      current_time: @current_time,
+      group_chats: @group_chats,
+      user: @user,
+      latest_gifts: @latest_gifts,
+      sent_gifts: @sent_gifts,
+      received_gifts: @received_gifts
+    })
   end
 
   def menu
-    @group_chats = GroupChat.all
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("menu", partial: "buttons/menu/menu_buttons"),
-          turbo_stream.replace("content", partial: "buttons/response"),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
-          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
-        ]
-      end
-    end
+    render_turbo_stream_for_menu("buttons/menu/menu_buttons")
   end
-  
+
   def close_menu
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.replace("menu", partial: "buttons/menu/closed_menu"),
-          turbo_stream.replace("content", partial: "buttons/response"),
-          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
-          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
-        ]
-      end
-    end
+    render_turbo_stream_for_menu("buttons/menu/closed_menu")
   end
 
   def search
@@ -77,8 +51,6 @@ class DashboardController < ApplicationController
   private
 
   def set_common_variables
-    @admin_users = AdminUser.includes(:user, :organization).all
-    @group_chats = GroupChat.all
     @user = current_user
     @unread_gifts_count = @user.calculate_unread_gifts_count
     @unread_replies_count = fetch_unread_replies_count
@@ -88,6 +60,7 @@ class DashboardController < ApplicationController
     @sent_gifts = @user.sent_gifts
     @received_gifts = @user.received_gifts
     @latest_gift_messages = fetch_latest_gift_messages
+    @group_chats = GroupChat.all
     @available_gift_items = @user.received_gifts.where(sent_at: nil).distinct.pluck(:item_name)
     
     @replies = fetch_latest_replies.map do |reply|
@@ -119,20 +92,39 @@ class DashboardController < ApplicationController
                  .first(5)
                  .map do |message, created_at, gift_id|
                    gift = Gift.find(gift_id)
-                   { message: message, created_at: created_at, gift: gift }
+                   { message: message, created_at: created_at, gift: Gift.find(gift_id) }
                  end
   end
 
   def fetch_unread_replies_count
-    current_user.consultations.joins(:replies)
-                .where(replies: { read: false })
-                .count
+    current_user.consultations.joins(:replies).where(replies: { read: false }).count || 0
   end
 
   def mark_gift_comments_and_messages_as_read(gifts)
     gifts.each do |gift|
       gift.gift_histories.where(read: false).update_all(read: true)
       gift.update(sender_message: nil) if gift.sender_message.present?
+    end
+  end
+
+  def render_turbo_response(target, partial, locals = {})
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(target, partial: partial, locals: locals)
+      end
+    end
+  end
+
+  def render_turbo_stream_for_menu(menu_partial)
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("menu", partial: menu_partial),
+          turbo_stream.replace("content", partial: "buttons/response"),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
+        ]
+      end
     end
   end
 end
