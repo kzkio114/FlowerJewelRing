@@ -32,7 +32,6 @@ class UsersController < ApplicationController
     replier_ids = @user.consultations.joins(:replies).pluck('replies.user_id').uniq
     @received_gifts_from_repliers = @user.received_gifts.where(giver_id: replier_ids)
 
-    # 未読のギフトのコメントおよびsender_messageを既読にする
     mark_gift_comments_and_messages_as_read(@received_gifts_from_repliers)
   end
 

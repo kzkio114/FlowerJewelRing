@@ -4,7 +4,6 @@ class ChatChannel < ApplicationCable::Channel
   end
 
   def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
   end
 
   def speak(data)
@@ -35,7 +34,6 @@ class ChatChannel < ApplicationCable::Channel
     broadcast_delete_message(message)
   rescue => e
     logger.error "Failed to delete message: #{e.message}"
-    # 必要に応じて、フロントエンドにエラーメッセージを送信する
   end
 
   private
@@ -54,14 +52,14 @@ class ChatChannel < ApplicationCable::Channel
     if receiver_message_html && sender_message_html
       ChatChannel.broadcast_to(message.receiver, {
         action: 'create',
-        message: receiver_message_html, # 受信者には削除ボタンを表示しない
+        message: receiver_message_html,
         chat_id: message.id,
         success: message.persisted?
       })
 
       ChatChannel.broadcast_to(message.sender, {
         action: 'create',
-        message: sender_message_html, # 送信者には削除ボタンを表示
+        message: sender_message_html,
         chat_id: message.id,
         success: message.persisted?
       })

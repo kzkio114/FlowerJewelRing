@@ -1,7 +1,6 @@
 class ConsultationsController < ApplicationController
   before_action :set_consultation, only: [:show, :edit, :update, :destroy]
 
-  # GET /consultations
   def index
     @consultations = Consultation.all
   end
@@ -76,16 +75,16 @@ class ConsultationsController < ApplicationController
     end
   end
 
-  # GET /consultations/new
+
   def new
     @consultation = Consultation.new
   end
 
-  # GET /consultations/1/edit
+
   def edit
   end
 
-  # POST /consultations
+
   def create
     @consultation = Consultation.new(consultation_params)
 
@@ -106,7 +105,7 @@ class ConsultationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /consultations/1
+
   def update
     if @consultation.update(consultation_params)
       redirect_to @consultation, notice: 'コンサルテーションが正常に更新されました。'
@@ -115,7 +114,6 @@ class ConsultationsController < ApplicationController
     end
   end
 
-  # DELETE /consultations/1
   def destroy
     @consultation = Consultation.find(params[:id])
     @consultation.destroy

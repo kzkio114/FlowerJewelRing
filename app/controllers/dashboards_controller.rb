@@ -1,5 +1,5 @@
 class DashboardsController < ApplicationController
-  before_action :set_common_variables, only: [:index, :info, :menu, ]
+  before_action :set_common_variables, only: [:index, :info, :menu, :close_menu]
   before_action :set_latest_replies_and_notifications, only: [:index, :info]
 
   def index; end

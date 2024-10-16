@@ -37,7 +37,7 @@ class GiftsController < ApplicationController
     @my_consultations = Consultation.where(user_id: current_user.id)
     replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
     @reply_users = User.where(id: replier_ids)
-    @gifts = current_user.received_gifts # 現在のユーザーが受け取ったギフトのみを取得
+    @gifts = current_user.received_gifts
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
@@ -67,12 +67,10 @@ class GiftsController < ApplicationController
       @gift.anonymous = true if @reply.anonymous
     end
   
-    # gift_categoryを設定する部分を追加または確認
     gift_template = GiftTemplate.find_by(name: @gift.item_name)
     if gift_template
       @gift.gift_category = gift_template.gift_category
     else
-      # gift_templateが見つからない場合はエラーメッセージを表示
       Rails.logger.error("Gift template not found for item_name: #{@gift.item_name}")
       respond_to do |format|
         format.turbo_stream do
@@ -115,7 +113,7 @@ class GiftsController < ApplicationController
   end
 
   def send_gift
-    @user = current_user  # @userを正しく設定
+    @user = current_user
     @gift = Gift.find(params[:id])
     @gift.giver_id = current_user.id
     @gift.receiver = User.find_by(id: params[:receiver_id])
@@ -137,7 +135,6 @@ class GiftsController < ApplicationController
       end
   
       if @gift.save
-        # ここでsent_countをインクリメント
         if @gift.reply.present?
           @gift.reply.increment!(:sent_count)
         end
@@ -145,7 +142,7 @@ class GiftsController < ApplicationController
         mark_replies_as_read
         @gift.update(sender_message: "", sent_at: Time.current)
         update_response_data
-        send_response  # ここで全てのビュー更新を処理
+        send_response
       else
         log_errors
       end
@@ -195,23 +192,20 @@ class GiftsController < ApplicationController
   end
 
   def send_response
-    @user ||= current_user # @userがnilならcurrent_userを設定
+    @user ||= current_user
     @gifts = @user.received_gifts
   
-    # 返信のIDを取得して削除
     reply_id = @gift.reply.id if @gift.reply.present?
     
-    # 最新の返信リストを取得
     @replies = @user.consultations.joins(:replies).select('replies.*, consultations.id as consultation_id').order('replies.created_at DESC')
     @unread_gifts_count = current_user.calculate_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.remove("reply_#{reply_id}"),  # 返信全体を削除
+          turbo_stream.remove("reply_#{reply_id}"),
           turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: @user }),
           turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count }),
-          turbo_stream.replace("gifts", partial: "gifts/gift", locals: content_locals) # ここを修正
-          #turbo_stream.replace("content", partial: content_partial, locals: content_locals)
+          turbo_stream.replace("gifts", partial: "gifts/gift", locals: content_locals)
         ]
       end
     end
