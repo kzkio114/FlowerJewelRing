@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
-  post 'top/tos', to: 'top#tos', as: :tos  # 利用規約ボタンを押した時のルーティング
-  post 'top/pp', to: 'top#pp', as: :pp  # プライバシーポリシーボタンを押した時のルーティング
-  post 'top/enter_app', to: 'top#enter_app'  # 説明を見るボタンを押した時のルーティング
-  post 'top/login', to: 'top#login', as: 'buttons_login' # ログインボタンを押した時のルーティング
+  post 'tops/tos', to: 'tops#tos', as: :tos  # 利用規約ボタンを押した時のルーティング
+  post 'tops/pp', to: 'tops#pp', as: :pp  # プライバシーポリシーボタンを押した時のルーティング
+  post 'tops/enter_app', to: 'tops#enter_app'  # 説明を見るボタンを押した時のルーティング
+  post 'tops/login', to: 'tops#login', as: 'buttons_login' # ログインボタンを押した時のルーティング
 
   post 'menu', to: 'dashboards#menu', as: 'menu'  # メニューボタンを押した時のルーティング
   post 'close_menu', to: 'dashboards#close_menu', as: 'close_menu'  # メニューを閉じるボタンを押した時のルーティング
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   # カテゴリー
   post 'consultations_category/:category_id', to: 'consultations#consultations_category', as: 'consultations_category'
 
-  get 'anime', to: 'top#show', as: 'anime' # お試しページを表示するためのルーティング
+  get 'anime', to: 'tops#show', as: 'anime' # お試しページを表示するためのルーティング
 
   # Deviseのルーティング
   devise_for :users, skip: [:sessions], controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
@@ -129,11 +129,7 @@ Rails.application.routes.draw do
     end
   end
 
-
-  # ボタン内のメニュールーティング（悩み相談）
-  post 'consultations_post', to: 'buttons#consultations_post', as: 'consultations_post'
-
-  root 'top#index' # トップページを表示するためのルーティング
+  root 'tops#index' # トップページを表示するためのルーティング
 
   get 'trial', to: 'trials#index', as: 'trial' # お試しページを表示するためのルーティング
 
