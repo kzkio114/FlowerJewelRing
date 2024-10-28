@@ -45,7 +45,7 @@ class DashboardsController < ApplicationController
     replier_ids = current_user.consultations.joins(:replies).pluck('replies.user_id').uniq
     @received_gifts_from_repliers = current_user.received_gifts.where(giver_id: replier_ids)
     mark_gift_comments_and_messages_as_read(@received_gifts_from_repliers)
-    redirect_to dashboard_path, notice: '通知がリセットされました。'
+    redirect_to dashboards_path, notice: '通知がリセットされました。'
   end
 
   private

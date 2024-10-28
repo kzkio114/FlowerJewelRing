@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
 
-  # tospageのルーティング 5-11
+  # ルートのルーティング
   root 'tops#index'
 
   get 'anime', to: 'tops#show', as: 'anime' # アニメーションのルーティング
 
+  # topのルーティング
   scope :tops, controller: :tops do
     post :tos, as: :tops_tos
     post :pp, as: :tops_pp
@@ -19,14 +20,16 @@ Rails.application.routes.draw do
     delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  # ログインしている場合のみアクセスできるページ
+  # dashboardのルーティング
   authenticate :user do
-    get 'dashboards', to: 'dashboards#index', as: 'dashboard'
+    resources :dashboards, only: [:index] do
+      collection do
+        post :menu
+        post :close_menu
+        post :info
+      end
+    end
   end
-
-  post 'menu', to: 'dashboards#menu', as: 'menu'  # メニューボタンを押した時のルーティング
-  post 'close_menu', to: 'dashboards#close_menu', as: 'close_menu'  # メニューを閉じるボタンを押した時のルーティング
-  post 'dashboards/info', to: 'dashboards#info', as: 'info_buttons'  # インフォボタンを押した時のルーティング
 
   post 'gifts/gift_list', to: 'gifts#gift_list', as: 'buttons_gift_list'  # ギフト一覧ボタンを押した時のルーティング
   post 'gifts/send_gift_response', to: 'gifts#send_gift_response', as: 'buttons_send_gift_response' # ギフト送信ボタンを押した時のルーティング
