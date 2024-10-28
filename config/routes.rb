@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   get 'anime', to: 'tops#show', as: 'anime' # アニメーションのルーティング
 
+  get 'trial', to: 'trials#index', as: 'trial' # お試しページを表示するためのルーティング
+
   # top(トップ)のルーティング
   scope :tops, controller: :tops do
     post :tos, as: :tops_tos
@@ -53,13 +55,29 @@ Rails.application.routes.draw do
     resources :replies, only: [:new, :create, :destroy]
   end
 
-  # ギフトのルーティング
-
-  post 'gifts/gift_list', to: 'gifts#gift_list', as: 'buttons_gift_list'  # ギフト一覧ボタンを押した時のルーティング
-  post 'gifts/send_gift_response', to: 'gifts#send_gift_response', as: 'buttons_send_gift_response' # ギフト送信ボタンを押した時のルーティング
+  # gift(ギフト)のルーティング
+  resources :gifts do
+    collection do
+      post 'all', to: 'gifts#gift_all'
+      post 'list', to: 'gifts#gift_list'
+      post 'send_gift_response', to: 'gifts#send_gift_response'
+    end
+  
+    member do
+      patch :mark_as_read
+      post 'send_gift', to: 'gifts#send_gift'
+    end
+  end
+  
+  resources :menus1, only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+    collection do
+      get :gift_list
+    end
+  end
+  
   post 'users/user_list', to: 'users#user_list', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
 
-  # 管理者ユーザー編集用のルート
+  # admin(管理画面)のルート
   authenticate :user, ->(u) { u.super_admin? } do
     namespace :admin do
       resources :users, only: [:destroy]
@@ -101,12 +119,6 @@ Rails.application.routes.draw do
   # ActionCableのサーバー接続エンドポイント
   mount ActionCable.server => '/cable'
 
-  # ボタン内のメニュールーティング（ギフトリスト）
-  resources :menus1 do
-    collection do
-      get :gift_list
-    end
-  end
 
   #ユーザーのルーティング
   # config/routes.rb
@@ -116,19 +128,7 @@ Rails.application.routes.draw do
     end
   end
 
-# ギフトのルーティング
-  post 'gift_all', to: 'gifts#gift_all'
-
-  resources :gifts do
-    member do
-      patch :mark_as_read
-      post 'send_gift', to: 'gifts#send_gift'
-    end
-  end
-
   post 'users/user_list_show', to: 'users#user_list_show', as: 'buttons_user_show'  # ユーザーボタンを押した時のルーティング
-
-  get 'trial', to: 'trials#index', as: 'trial' # お試しページを表示するためのルーティング
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

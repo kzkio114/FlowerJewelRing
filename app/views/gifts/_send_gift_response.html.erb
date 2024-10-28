@@ -7,7 +7,7 @@
           <h3 class="title is-size-3">手持ちのギフト</h3>
         </div>
         <div class="level-right buttons-right">
-          <%= button_to '戻る', gift_all_path, method: :post,  class: 'button is-primary is-small custom-long-left mt-5', data: { turbo_frame: 'content' } %>
+          <%= button_to '戻る', all_gifts_path, method: :post,  class: 'button is-primary is-small custom-long-left mt-5', data: { turbo_frame: 'content' } %>
         </div>
       </div>
     </div>
@@ -25,7 +25,6 @@
               <%= image_tag asset_path(gift.image_url), alt: "ギフトの画像", style: "width: 250px;" , data: { action: "click->modal#open" } %><br>
               花言葉or宝石言葉: <br> <%= gift.description %>
               <br>
-              <!-- フォームを削除 -->
             </div>
           </div>
         </div>

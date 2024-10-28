@@ -42,7 +42,7 @@ class GiftsController < ApplicationController
       format.turbo_stream do
         render turbo_stream: turbo_stream.replace(
           "content",
-          partial: " send_gift_response",
+          partial: "send_gift_response",
           locals: { gifts: @gifts, reply_users: @reply_users }
         )
       end
