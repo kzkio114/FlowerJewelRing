@@ -3,9 +3,9 @@
     <%= render 'enter_app_button' %>
   </div>
   <div class="column is-narrow">
-    <%= button_to '利用規約', tos_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation-bottom is-small' %>
+    <%= button_to '利用規約', tops_tos_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation-bottom is-small' %>
   </div>
   <div class="column is-narrow">
-    <%= button_to 'プライバシーポリシー', pp_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation-bottom is-small' %>
+    <%= button_to 'プライバシーポリシー', tops_pp_path, method: :post, data: { turbo_frame: "response_area" }, class: 'button is-explanation-bottom is-small' %>
   </div>
 </div>

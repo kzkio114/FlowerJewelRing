@@ -1,17 +1,34 @@
 Rails.application.routes.draw do
 
-  post 'tops/tos', to: 'tops#tos', as: :tos  # 利用規約ボタンを押した時のルーティング
-  post 'tops/pp', to: 'tops#pp', as: :pp  # プライバシーポリシーボタンを押した時のルーティング
-  post 'tops/enter_app', to: 'tops#enter_app'  # 説明を見るボタンを押した時のルーティング
-  post 'tops/login', to: 'tops#login', as: 'buttons_login' # ログインボタンを押した時のルーティング
+  # tospageのルーティング 5-11
+  root 'tops#index'
+
+  get 'anime', to: 'tops#show', as: 'anime' # アニメーションのルーティング
+
+  scope :tops, controller: :tops do
+    post :tos, as: :tops_tos
+    post :pp, as: :tops_pp
+    post :enter_app, as: :tops_enter_app
+    post :login, as: :tops_login
+  end
+
+  # Deviseのルーティング
+  devise_for :users, skip: [:sessions], controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_scope :user do
+    post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+    delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
+  end
+
+  # ログインしている場合のみアクセスできるページ
+  authenticate :user do
+    get 'dashboards', to: 'dashboards#index', as: 'dashboard'
+  end
 
   post 'menu', to: 'dashboards#menu', as: 'menu'  # メニューボタンを押した時のルーティング
   post 'close_menu', to: 'dashboards#close_menu', as: 'close_menu'  # メニューを閉じるボタンを押した時のルーティング
   post 'dashboards/info', to: 'dashboards#info', as: 'info_buttons'  # インフォボタンを押した時のルーティング
 
   post 'gifts/gift_list', to: 'gifts#gift_list', as: 'buttons_gift_list'  # ギフト一覧ボタンを押した時のルーティング
-
-  # post 'buttons/chat', to: 'buttons#chat', as: 'buttons_chat' # チャットボタンを押した時のルーティング
   post 'gifts/send_gift_response', to: 'gifts#send_gift_response', as: 'buttons_send_gift_response' # ギフト送信ボタンを押した時のルーティング
   post 'users/user_list', to: 'users#user_list', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
 
@@ -20,15 +37,6 @@ Rails.application.routes.draw do
 
   # カテゴリー
   post 'consultations_category/:category_id', to: 'consultations#consultations_category', as: 'consultations_category'
-
-  get 'anime', to: 'tops#show', as: 'anime' # お試しページを表示するためのルーティング
-
-  # Deviseのルーティング
-  devise_for :users, skip: [:sessions], controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  devise_scope :user do
-  post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
-  delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
-  end
 
   # 管理者ユーザー編集用のルート
   authenticate :user, ->(u) { u.super_admin? } do
@@ -53,10 +61,10 @@ Rails.application.routes.draw do
     resources :replies, only: [:new, :create, :destroy]
   end
 
-  # ログインしている場合のみアクセスできるページ
-  authenticate :user do
-    get 'dashboards', to: 'dashboards#index', as: 'dashboard'
-  end
+  # # ログインしている場合のみアクセスできるページ
+  # authenticate :user do
+  #   get 'dashboards', to: 'dashboards#index', as: 'dashboard'
+  # end
 
   # 暫定　ソーシャルログインだけの場合
   get '/users/sign_in', to: redirect('/')
@@ -117,19 +125,6 @@ Rails.application.routes.draw do
   end
 
   post 'users/user_list_show', to: 'users#user_list_show', as: 'buttons_user_show'  # ユーザーボタンを押した時のルーティング
-
-  # config/routes.rb
-  resources :consultations do
-    post 'response', on: :member, to: 'buttons#consultations_response', as: :consultations_response
-  end
-
-  resources :buttons do
-    collection do
-      post :worries_response
-    end
-  end
-
-  root 'tops#index' # トップページを表示するためのルーティング
 
   get 'trial', to: 'trials#index', as: 'trial' # お試しページを表示するためのルーティング
 
