@@ -8,7 +8,7 @@
         <div class="card-content">
           <div class="content">
             <div class="buttons-tone">
-              <%= button_to "すべて", consultations_detail_path(id: consultation.id, filter_tone: ""), method: :post, data: { turbo_frame: "content" }, class: "button is-light is-small button-wrap-text" %>
+              <%= button_to "すべて", detail_consultations_path(id: consultation.id, filter_tone: ""), method: :post, data: { turbo_frame: "content" }, class: "button is-light is-small button-wrap-text" %>
               <%= render "replies/tone_button", consultation: consultation %>
             </div>
             <% replies = filter_tone.present? ? consultation.replies.where(tone: filter_tone) : consultation.replies %>
@@ -69,7 +69,7 @@
         </div>
       </div>
       <div class="is-pulled-right buttons-right mt-1">
-        <%= button_to "戻る", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-primary button-wrap-text custom-left custom-top" %>
+        <%= button_to "戻る", response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-primary button-wrap-text custom-left custom-top" %>
       </div>
     </div>
   </div>

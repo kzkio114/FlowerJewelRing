@@ -24,9 +24,9 @@
       </div>
       <div class="is-flex is-justify-content-flex-end is-align-items-flex-end mt-1 buttons-right">
         <% if user_signed_in? %>
-          <%= button_to '返信', consultations_detail_path(id: @consultation.id), method: :post, data: { turbo_frame: "content" }, class: "button is-link button-wrap-text custom-top" %>
+          <%= button_to '返信', detail_consultations_path(id: @consultation.id), method: :post, data: { turbo_frame: "content" }, class: "button is-link button-wrap-text custom-top" %>
         <% end %>
-        <%= button_to '戻る', buttons_worries_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-primary button-wrap-text ml-2" %>
+        <%= button_to '戻る', worries_consultations_path, method: :post, data: { turbo_frame: 'content' }, class: "button is-primary button-wrap-text ml-2" %>
         <% if @consultation.user == current_user %>
           <%
             fixed_url = "https://www.xn--z8j3e5a2787akv3apqn.com"

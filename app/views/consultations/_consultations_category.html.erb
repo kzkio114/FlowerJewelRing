@@ -5,7 +5,7 @@
       <% @consultations.each do |consultation| %>
         <div class="column is-full-mobile is-one-third-tablet">
           <div id="<%= dom_id(consultation) %>">
-            <%= button_to "#{consultation.title} (#{consultation.category.name})", consultations_response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" %>
+            <%= button_to "#{consultation.title} (#{consultation.category.name})", response_consultation_path(consultation), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" %>
           </div>
         </div>
       <% end %>

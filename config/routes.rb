@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   get 'anime', to: 'tops#show', as: 'anime' # アニメーションのルーティング
 
-  # topのルーティング
+  # top(トップ)のルーティング
   scope :tops, controller: :tops do
     post :tos, as: :tops_tos
     post :pp, as: :tops_pp
@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
 
-  # dashboardのルーティング
+  # dashboard(ダッシュボード)のルーティング
   authenticate :user do
     resources :dashboards, only: [:index] do
       collection do
@@ -31,15 +31,33 @@ Rails.application.routes.draw do
     end
   end
 
+  # search(検索)のルーティング
+  scope :search, controller: :search do
+    post :search_response
+    post :search
+  end
+
+  # consultation(コンサルテーション)のルーティング
+  resources :consultations, only: [:show, :edit, :update, :create, :destroy] do
+    member do
+      post 'response', to: 'consultations#consultations_response', as: :response
+      get 'select_tone', to: 'consultations#select_tone'
+    end
+  
+    collection do
+      post 'worries', to: 'consultations#worries'
+      post 'detail', to: 'consultations#consultations_detail'
+      post 'consultations_category/:category_id', to: 'consultations#consultations_category'
+    end
+  
+    resources :replies, only: [:new, :create, :destroy]
+  end
+
+  # ギフトのルーティング
+
   post 'gifts/gift_list', to: 'gifts#gift_list', as: 'buttons_gift_list'  # ギフト一覧ボタンを押した時のルーティング
   post 'gifts/send_gift_response', to: 'gifts#send_gift_response', as: 'buttons_send_gift_response' # ギフト送信ボタンを押した時のルーティング
   post 'users/user_list', to: 'users#user_list', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
-
-  post 'consultations/worries', to: 'consultations#worries', as: 'buttons_worries'  # 悩み相談ボタンを押した時のルーティング
-  post 'consultations_detail', to: 'consultations#consultations_detail', as: 'consultations_detail'  # 悩み相談ボタンを押した時のルーティング
-
-  # カテゴリー
-  post 'consultations_category/:category_id', to: 'consultations#consultations_category', as: 'consultations_category'
 
   # 管理者ユーザー編集用のルート
   authenticate :user, ->(u) { u.super_admin? } do
@@ -53,21 +71,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # 検索のルーティング
-  post 'search_response', to: 'search#search_response'
-  post 'search', to: 'search#search'
-
-  # 相談のトーン選択ページのルーティング
-  resources :consultations, only: [:show, :edit, :update, :destroy]  do
-    post 'response', on: :member, to: 'consultations#consultations_response', as: :response
-    get 'select_tone', on: :member, to: 'consultations#select_tone'
-    resources :replies, only: [:new, :create, :destroy]
-  end
-
-  # # ログインしている場合のみアクセスできるページ
-  # authenticate :user do
-  #   get 'dashboards', to: 'dashboards#index', as: 'dashboard'
-  # end
 
   # 暫定　ソーシャルログインだけの場合
   get '/users/sign_in', to: redirect('/')
@@ -97,10 +100,6 @@ Rails.application.routes.draw do
 
   # ActionCableのサーバー接続エンドポイント
   mount ActionCable.server => '/cable'
-
-  # メニューのルーティング
-  get 'gift_list', to: 'buttons#gift_list'
-  # ギフトのルーティング
 
   # ボタン内のメニュールーティング（ギフトリスト）
   resources :menus1 do

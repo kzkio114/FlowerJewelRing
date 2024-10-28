@@ -12,7 +12,7 @@
             <% consultations.each do |consultation_item| %>
               <div class="column is-one-third">
                 <div id="<%= dom_id(consultation_item) %>">
-                  <%= button_to consultations_response_consultation_path(consultation_item), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" do %>
+                  <%= button_to response_consultation_path(consultation_item), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" do %>
                     <%= truncate(consultation_item.title, length: 19) %><br>
                     (<%= truncate(consultation_item.category.name, length: 19) %>)
                   <% end %>
