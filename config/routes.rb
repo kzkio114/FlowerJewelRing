@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   root 'tops#index'
 
   get 'anime', to: 'tops#show', as: 'anime' # アニメーションのルーティング
-
   get 'trial', to: 'trials#index', as: 'trial' # お試しページを表示するためのルーティング
 
   # top(トップ)のルーティング
@@ -74,7 +73,7 @@ Rails.application.routes.draw do
       get :gift_list
     end
   end
-  
+  #以下修正箇所
   post 'users/user_list', to: 'users#user_list', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
 
   # admin(管理画面)のルート
@@ -89,7 +88,6 @@ Rails.application.routes.draw do
     end
   end
 
-
   # 暫定　ソーシャルログインだけの場合
   get '/users/sign_in', to: redirect('/')
 
@@ -99,11 +97,6 @@ Rails.application.routes.draw do
   resources :chats, only: [:index, :show, :create, :destroy]  # showを追加
   post 'chat', to: 'chats#chat', as: 'custom_chat'
   # その他のルート
-
-  #プライベートチャットのルーティング
-  resources :private_chats, only: [:index, :show, :create, :destroy]
-  post 'private_chat', to: 'private_chats#private_chat', as: 'custom_private_chat'
-
 
   # グループチャットのルーティング
   resources :group_chats, only: [:new, :index, :edit, :create, :update, :destroy] do
@@ -134,7 +127,7 @@ Rails.application.routes.draw do
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  #get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
   # root "posts#index"
