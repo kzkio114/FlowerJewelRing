@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   # dashboard(ダッシュボード)のルーティング
+  post 'reset_gift_notifications', to: 'dashboards#reset_gift_notifications', as: 'reset_gift_notifications'
   authenticate :user do
     resources :dashboards, only: [:index] do
       collection do
@@ -73,8 +74,42 @@ Rails.application.routes.draw do
       get :gift_list
     end
   end
-  #以下修正箇所
+
+  # (chat)チャットのルーティング
+  resources :chats, only: [:index, :show, :create, :destroy]  do
+    collection do
+      post 'chat', to: 'chats#chat'
+    end
+  end
+
+  # (groupchat)グループチャットのルーティング
+  resources :group_chats, only: [:new, :index, :edit, :create, :update, :destroy] do
+    member do
+      post 'add_member', to: 'group_chats#add_member'
+      post 'group_chat', to: 'group_chats#group_chat'
+      post 'group_chat_list' , to: 'group_chats#group_chat_list'
+    end
+    # グループチャットのメンバーのルーティング
+    resources :group_chat_members, only: [:new, :create, :update, :destroy]
+    # グループチャットのメッセージのルーティング
+    resources :group_chat_messages, only: [:create, :destroy]
+  end
+
+  #以下修正箇所##########################################
   post 'users/user_list', to: 'users#user_list', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
+  # 暫定　ソーシャルログインだけの場合
+  get '/users/sign_in', to: redirect('/')
+
+  #ユーザーのルーティング
+  # config/routes.rb
+  resources :users, only: [:show, :update, :destroy] do
+    member do
+      get 'edit', to: 'users#edit', as: 'edit_user_profile'
+    end
+  end
+
+  post 'users/user_list_show', to: 'users#user_list_show', as: 'buttons_user_show'  # ユーザーボタンを押した時のルーティング
+
 
   # admin(管理画面)のルート
   authenticate :user, ->(u) { u.super_admin? } do
@@ -88,40 +123,9 @@ Rails.application.routes.draw do
     end
   end
 
-  # 暫定　ソーシャルログインだけの場合
-  get '/users/sign_in', to: redirect('/')
-
-  # ダッシュボードのルーティング
-  post 'reset_gift_notifications', to: 'dashboards#reset_gift_notifications', as: 'reset_gift_notifications'
-  # チャットのルーティング
-  resources :chats, only: [:index, :show, :create, :destroy]  # showを追加
-  post 'chat', to: 'chats#chat', as: 'custom_chat'
-  # その他のルート
-
-  # グループチャットのルーティング
-  resources :group_chats, only: [:new, :index, :edit, :create, :update, :destroy] do
-    member do
-      post 'add_member'
-      post 'group_chat'
-      post 'group_chat_list'
-    end
-    resources :group_chat_members, only: [:new, :create, :update, :destroy]
-    resources :group_chat_messages, only: [:create, :destroy]
-  end
 
   # ActionCableのサーバー接続エンドポイント
   mount ActionCable.server => '/cable'
-
-
-  #ユーザーのルーティング
-  # config/routes.rb
-  resources :users, only: [:show, :update, :destroy] do
-    member do
-      get 'edit', to: 'users#edit', as: 'edit_user_profile'
-    end
-  end
-
-  post 'users/user_list_show', to: 'users#user_list_show', as: 'buttons_user_show'  # ユーザーボタンを押した時のルーティング
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

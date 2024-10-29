@@ -23,7 +23,7 @@
         </div>
       <% end %>
     </div>
-    <%= form_with url: custom_chat_path, method: :post do |f| %>
+    <%= form_with url: chat_chats_path, method: :post do |f| %>
       <%= f.collection_select :receiver_id, User.where.not(id: current_user.id), :id, :display_name %>
       <%= f.submit "相手を選択してください！！" %>
     <% end %>
