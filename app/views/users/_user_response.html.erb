@@ -9,7 +9,7 @@
           <footer class="card-footer">
             <div class="card-footer-item">
               <div class="is-pulled-right buttons-right">
-                <%= button_to '詳細を見る', buttons_user_show_path(id: user.id), method: :post, class: 'button is-primary is-small' %>
+                <%= button_to '詳細を見る', user_list_show_users_path(id: user.id), method: :post, class: 'button is-primary is-small' %>
               </div>
             </div>
           </footer>

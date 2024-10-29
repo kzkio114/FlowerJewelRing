@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   devise_for :users, skip: [:sessions], controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do
     post 'users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+    get '/users/sign_in', to: redirect('/')  # 暫定　ソーシャルログインだけの場合
     delete 'logout', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
 
@@ -95,21 +96,16 @@ Rails.application.routes.draw do
     resources :group_chat_messages, only: [:create, :destroy]
   end
 
-  #以下修正箇所##########################################
-  post 'users/user_list', to: 'users#user_list', as: 'buttons_user'  # ユーザーボタンを押した時のルーティング
-  # 暫定　ソーシャルログインだけの場合
-  get '/users/sign_in', to: redirect('/')
-
-  #ユーザーのルーティング
-  # config/routes.rb
+  #User(ユーザー)のルーティング
   resources :users, only: [:show, :update, :destroy] do
+    collection do
+      post 'user_list', to: 'users#user_list'
+      post 'user_list_show', to: 'users#user_list_show'
+    end
     member do
       get 'edit', to: 'users#edit', as: 'edit_user_profile'
     end
   end
-
-  post 'users/user_list_show', to: 'users#user_list_show', as: 'buttons_user_show'  # ユーザーボタンを押した時のルーティング
-
 
   # admin(管理画面)のルート
   authenticate :user, ->(u) { u.super_admin? } do
@@ -122,10 +118,6 @@ Rails.application.routes.draw do
       resources :admin_users, only: [:index, :edit, :update, :destroy]
     end
   end
-
-
-  # ActionCableのサーバー接続エンドポイント
-  mount ActionCable.server => '/cable'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

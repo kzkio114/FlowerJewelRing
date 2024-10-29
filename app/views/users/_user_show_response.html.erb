@@ -6,7 +6,7 @@
           <p class="title is-size-4-mobile">
             名前: <%= @user.name %>
           </p>
-          <%= button_to '戻る', buttons_user_path, method: :post, class: 'button is-primary' %>
+          <%= button_to '戻る', user_list_users_path, method: :post, class: 'button is-primary' %>
         </div>
         <p class="subtitle is-size-5-mobile m-3">組織: <%= @user.organization&.name || '未登録' %></p>
         <p class="subtitle is-size-5-mobile m-3">自己紹介: <%= @user.profile&.introduction || '未登録' %></p>
