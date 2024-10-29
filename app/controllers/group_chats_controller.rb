@@ -20,7 +20,7 @@ class GroupChatsController < ApplicationController
     @group_chat_message = GroupChatMessage.new
     @group_chat_members = @group_chat.group_chat_members
 
-    # Public グループチャットの場合、ユーザーを自動的にメンバーとして追加
+
     if @group_chat.group_chat_members.exists?(role: 'free') && !@group_chat.member?(current_user)
       @group_chat.group_chat_members.create(user: current_user, role: :free)
     end
@@ -89,7 +89,7 @@ class GroupChatsController < ApplicationController
     @group_chat = GroupChat.find(params[:id])
     @group_chat.destroy
     @group_chats = GroupChat.all
-    @new_group_chat = GroupChat.new # 新しいグループチャットオブジェクトを作成
+    @new_group_chat = GroupChat.new 
   
     respond_to do |format|
       format.turbo_stream do

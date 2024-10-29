@@ -6,6 +6,49 @@ class GiftsController < ApplicationController
     @gifts = Gift.includes(:gift_category).where(sent_at: nil)
   end
 
+  def gift_list
+    @total_sender_messages_count = GiftHistory.where.not(sender_message: [nil, ""]).count
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "gift_list_response", locals: { total_sender_messages_count: @total_sender_messages_count }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
+        ]
+      end
+    end
+  end
+
+  def gift_all
+    @gift_templates = GiftTemplate.includes(:gift_category).all
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.replace("content", partial: "gift_all_response", locals: { gift_templates: @gift_templates }),
+          turbo_stream.replace('unread-replies-count', partial: 'layouts/unread_replies_count', locals: { user: current_user }),
+          turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count })
+        ]
+      end
+    end
+  end
+
+
+  def send_gift_response
+    @my_consultations = Consultation.where(user_id: current_user.id)
+    replier_ids = @my_consultations.joins(:replies).pluck('replies.user_id').uniq
+    @reply_users = User.where(id: replier_ids)
+    @gifts = current_user.received_gifts
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "content",
+          partial: "send_gift_response",
+          locals: { gifts: @gifts, reply_users: @reply_users }
+        )
+      end
+    end
+  end
+
   def show; end
 
   def new
@@ -24,12 +67,10 @@ class GiftsController < ApplicationController
       @gift.anonymous = true if @reply.anonymous
     end
   
-    # gift_categoryを設定する部分を追加または確認
     gift_template = GiftTemplate.find_by(name: @gift.item_name)
     if gift_template
       @gift.gift_category = gift_template.gift_category
     else
-      # gift_templateが見つからない場合はエラーメッセージを表示
       Rails.logger.error("Gift template not found for item_name: #{@gift.item_name}")
       respond_to do |format|
         format.turbo_stream do
@@ -72,7 +113,7 @@ class GiftsController < ApplicationController
   end
 
   def send_gift
-    @user = current_user  # @userを正しく設定
+    @user = current_user
     @gift = Gift.find(params[:id])
     @gift.giver_id = current_user.id
     @gift.receiver = User.find_by(id: params[:receiver_id])
@@ -94,7 +135,6 @@ class GiftsController < ApplicationController
       end
   
       if @gift.save
-        # ここでsent_countをインクリメント
         if @gift.reply.present?
           @gift.reply.increment!(:sent_count)
         end
@@ -102,7 +142,7 @@ class GiftsController < ApplicationController
         mark_replies_as_read
         @gift.update(sender_message: "", sent_at: Time.current)
         update_response_data
-        send_response  # ここで全てのビュー更新を処理
+        send_response
       else
         log_errors
       end
@@ -152,23 +192,20 @@ class GiftsController < ApplicationController
   end
 
   def send_response
-    @user ||= current_user # @userがnilならcurrent_userを設定
+    @user ||= current_user
     @gifts = @user.received_gifts
   
-    # 返信のIDを取得して削除
     reply_id = @gift.reply.id if @gift.reply.present?
     
-    # 最新の返信リストを取得
     @replies = @user.consultations.joins(:replies).select('replies.*, consultations.id as consultation_id').order('replies.created_at DESC')
     @unread_gifts_count = current_user.calculate_unread_gifts_count
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: [
-          turbo_stream.remove("reply_#{reply_id}"),  # 返信全体を削除
+          turbo_stream.remove("reply_#{reply_id}"),
           turbo_stream.replace("unread-replies-count", partial: "layouts/unread_replies_count", locals: { user: @user }),
           turbo_stream.replace("unread-gifts-count", partial: "layouts/unread_gifts_count", locals: { unread_gifts_count: @unread_gifts_count }),
-          turbo_stream.replace("gifts", partial: "gifts/gift", locals: content_locals) # ここを修正
-          #turbo_stream.replace("content", partial: content_partial, locals: content_locals)
+          turbo_stream.replace("gifts", partial: "gifts/gift", locals: content_locals)
         ]
       end
     end
@@ -217,7 +254,7 @@ class GiftsController < ApplicationController
   end
 
   def content_partial
-    params[:return_to] == "info" ? "buttons/menu/info_response" : "buttons/menu/send_gift_response"
+    params[:return_to] == "info" ? "dashboards/info_response" : "send_gift_response"
   end
 
   def content_locals

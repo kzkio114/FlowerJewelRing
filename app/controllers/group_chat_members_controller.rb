@@ -9,7 +9,7 @@ class GroupChatMembersController < ApplicationController
   end
 
   def create
-    # 同じユーザーがすでに追加されていないか確認
+
     if @group_chat.group_chat_members.exists?(user_id: group_chat_member_params[:user_id])
       redirect_to group_chat_path(@group_chat), alert: 'このユーザーは既にメンバーです。'
       return
@@ -19,7 +19,7 @@ class GroupChatMembersController < ApplicationController
     @users = User.where.not(id: @group_chat.users.pluck(:id))
   
     if @group_chat_member.save
-      # 成功時の処理
+
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: [

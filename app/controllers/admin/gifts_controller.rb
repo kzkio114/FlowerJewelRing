@@ -9,7 +9,7 @@ module Admin
       @gift.destroy
       respond_to do |format|
         format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(@gift)) }
-        format.html { redirect_to admin_dashboard_path, notice: 'ギフトを削除しました。' }
+        format.html { redirect_to admin_dashboards_path, notice: 'ギフトを削除しました。' }
       end
     end
 

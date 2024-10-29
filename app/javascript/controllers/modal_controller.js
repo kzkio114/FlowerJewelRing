@@ -14,7 +14,6 @@ export default class extends Controller {
     this.modalContainerTarget.classList.remove("is-active");
     this.modalImageTarget.src = "";
 
-    // イベントリスナーを削除してクリーンアップ
     this.modalImageTarget.removeEventListener("click", this.close.bind(this));
   }
 }

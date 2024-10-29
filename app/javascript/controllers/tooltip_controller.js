@@ -14,15 +14,15 @@ export default class extends Controller {
     const targetImage = document.querySelector(`[data-rendering-target="${targetImageName}"]`);
 
     if (tooltipText && targetImage) {
-      // 既存のツールチップを削除
+
       this.hide();
 
-      // 新しいツールチップ要素を作成
+
       this.tooltipElement = document.createElement('div');
       this.tooltipElement.className = 'custom-tooltip-content';
       this.tooltipElement.textContent = tooltipText;
 
-      // 画像の位置を基準にツールチップの位置を設定
+
       const rect = targetImage.getBoundingClientRect();
       this.tooltipElement.style.position = 'absolute';
       this.tooltipElement.style.top = `${rect.bottom + window.scrollY}px`;
@@ -35,7 +35,6 @@ export default class extends Controller {
       this.tooltipElement.style.fontSize = '0.875rem';
       this.tooltipElement.style.zIndex = '1000';
 
-      // ツールチップをDOMに追加
       document.body.appendChild(this.tooltipElement);
     }
   }

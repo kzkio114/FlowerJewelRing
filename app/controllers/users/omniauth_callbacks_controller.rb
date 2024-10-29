@@ -27,7 +27,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to new_user_registration_url
     elsif @user.persisted?
       if @user.previous_changes[:id].present?
-        # 新規ユーザーの場合
+
         @user.update!(display_name: @user.generate_random_display_name) if @user.display_name.blank?
         @user.assign_initial_gifts
 
@@ -35,7 +35,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         sign_in(@user)
         redirect_to edit_user_profile_user_path(@user)
       else
-        # 既存のユーザーの場合
         flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: kind)
         sign_in_and_redirect @user, event: :authentication
       end

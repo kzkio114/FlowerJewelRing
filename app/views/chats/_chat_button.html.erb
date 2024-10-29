@@ -1,0 +1,2 @@
+<%= button_to '１人に相談', chat_chats_path, method: :post, class: 'button is-primary is-small column is-full mt-5 button-wrap-text', data: { turbo: true, turbo_method: :post } %>
+<%= button_to '複数に相談', group_chat_list_group_chat_path(@group_chats), method: :post, class: 'button is-primary is-small column is-full mt-5 button-wrap-text', data: { turbo: true } %>
