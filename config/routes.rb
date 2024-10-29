@@ -23,13 +23,13 @@ Rails.application.routes.draw do
   end
 
   # dashboard(ダッシュボード)のルーティング
-  post 'reset_gift_notifications', to: 'dashboards#reset_gift_notifications', as: 'reset_gift_notifications'
   authenticate :user do
     resources :dashboards, only: [:index] do
       collection do
-        post :menu
-        post :close_menu
-        post :info
+        post :menu, to: 'dashboards#menu'
+        post :close_menu, to: 'dashboards#close_menu'
+        post :info, to: 'dashboards#info'
+        post :reset_gift, to: 'dashboards#reset_gift_notifications'
       end
     end
   end
