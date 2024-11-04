@@ -1,0 +1,8 @@
+<% button_class = 'button is-small column is-full mt-5 button-wrap-text' %>
+<% if @unread_gifts_count > 0 || @unread_replies_count > 0 %>
+  <% button_class += ' is-warning' %>
+<% else %>
+  <% button_class += ' is-primary' %>
+<% end %>
+
+<%= button_to "最新の通知", info_dashboards_path, remote: true, method: :post, class: button_class %>

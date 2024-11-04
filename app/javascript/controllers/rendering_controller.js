@@ -25,41 +25,37 @@ export default class extends Controller {
       showThanks: this.thanksImageTarget
     };
 
-    this.currentHoverElement = null; // 現在ホバー中の要素を追跡
+    this.currentHoverElement = null;
 
-    // 初期ロード時にタイトルと説明文を一文字ずつ表示する
     this.displayTextSlowly(this.appDescriptionTitleTarget, 50);
     this.displayTextSlowly(this.appDescriptionTextTarget, 50);
   }
 
   displayTextSlowly(element, speed) {
     if (!element) return;
-    const htmlContent = element.innerHTML; // innerHTMLを使用して改行やHTMLタグを取得
-    element.innerHTML = ""; // コンテンツをクリア
+    const htmlContent = element.innerHTML;
+    element.innerHTML = "";
     let i = 0;
   
     const typing = () => {
       if (i < htmlContent.length) {
         if (htmlContent[i] === "<" && htmlContent.slice(i).startsWith("<br")) {
-          // <br>タグを検出して改行を追加
           const endOfTag = htmlContent.indexOf('>', i) + 1;
           const tagContent = htmlContent.slice(i, endOfTag);
           
-          // <br>タグのクラスに基づいて処理を分ける
           if (tagContent.includes('class="pc-only"')) {
-            if (window.innerWidth > 480) { // PCサイズの時だけ表示
+            if (window.innerWidth > 480) {
               element.innerHTML += "<br>";
             }
           } else if (tagContent.includes('class="sma"')) {
-            if (window.innerWidth <= 480) { // スマホサイズの時だけ表示
+            if (window.innerWidth <= 480) {
               element.innerHTML += "<br>";
             }
           } else {
-            element.innerHTML += "<br>"; // 共通の改行
+            element.innerHTML += "<br>";
           }
           i = endOfTag;
         } else {
-          // それ以外の文字を追加
           element.innerHTML += htmlContent[i];
           i++;
         }
@@ -75,10 +71,10 @@ export default class extends Controller {
     const targetImage = this.imageMapping[targetId];
 
     if (targetElement && targetImage) {
-      // ホバー状態を設定
+
       this.currentHoverElement = { targetElement, targetImage };
 
-      // すべての要素を一旦非表示にしてから表示したい要素を表示
+
       this.hideAllExceptCurrent();
 
       targetElement.classList.remove("is-hidden");
@@ -88,11 +84,11 @@ export default class extends Controller {
   }
 
   hideContent(event) {
-    // ホバーが外れた時の処理は不要
+
   }
 
   hideAll() {
-    // すべてのセクションと画像を非表示にする
+
     Object.values(this.buttonMapping).forEach(section => {
       section.classList.add("is-hidden");
     });
@@ -105,7 +101,7 @@ export default class extends Controller {
   }
 
   hideAllExceptCurrent() {
-    // 現在ホバー中の要素以外を非表示にする
+
     Object.values(this.buttonMapping).forEach(section => {
       if (!this.currentHoverElement || section !== this.currentHoverElement.targetElement) {
         section.classList.add("is-hidden");

@@ -1,0 +1,20 @@
+<div id="content" class="container is-small ml-5">
+  <div class="columns is-multiline user-fixed-height">
+    <% @users.each do |user| %>
+      <div class="column is-one-third">
+        <div class="card">
+          <div class="card-content has-text-white">
+            <p class="title is-5">名前: <%= user.name %></p>
+          </div>
+          <footer class="card-footer">
+            <div class="card-footer-item">
+              <div class="is-pulled-right buttons-right">
+                <%= button_to '詳細を見る', user_list_show_users_path(id: user.id), method: :post, class: 'button is-primary is-small' %>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div id="content">
+  <div class="consultation-message is-small ml-2 mb-1">
+    <h2 class="title is-size-4">みんなの悩み</h2>
+  </div>
+  <div class="consultations-fixed-height is-small">
+    <div class="consultation-list">
+      <div class="has-text-white">
+        <% if consultations.nil? || consultations.empty? %>
+          <p>現在、コンサルテーションはありません。</p>
+        <% else %>
+          <div class="columns is-multiline">
+            <% consultations.each do |consultation_item| %>
+              <div class="column is-one-third">
+                <div id="<%= dom_id(consultation_item) %>">
+                  <%= button_to response_consultation_path(consultation_item), method: :post, data: { turbo_frame: "content" }, class: "button is-fullwidth" do %>
+                    <%= truncate(consultation_item.title, length: 19) %><br>
+                    (<%= truncate(consultation_item.category.name, length: 19) %>)
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <% if user_signed_in? %>
+      <div class="consultation-form">
+        <div class="container is-small">
+          <div class="columns">
+            <div class="column is-offset-3 is-6 mt-1">
+              <%= form_with(model: consultation, url: consultations_path, local: true, id: "new_consultation_form") do |form| %>
+                <% if consultation.errors.any? %>
+                  <div id="error_explanation" class="notification is-danger">
+                    <h2><%= pluralize(consultation.errors.count, "エラー") %>が発生しました:</h2>
+                    <ul>
+                      <% consultation.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+
+                <div class="field">
+                  <%= form.label :title, class: "label" %>
+                  <div class="control">
+                    <%= form.text_field :title, class: "input" %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <%= form.label :content, class: "label" %>
+                  <div class="control">
+                    <%= form.text_area :content, class: "textarea" %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <%= form.label :category_id, class: "label" %>
+                  <div class="control">
+                    <%= form.collection_select :category_id, Category.all, :id, :name, {}, {class: "select"} %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <%= form.label :display_choice, "表示する名前の選択", class: "label" %>
+                  <div class="control">
+                    <%= form.select :display_choice, options_for_select([['名前', 'name'],['匿名', 'anonymous']], consultation.display_choice), {}, { class: "select" } %>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <%= form.label :desired_reply_tone, "望ましい返信スタイル", class: "label" %>
+                  <div class="control">
+                    <%= form.select :desired_reply_tone, options_for_select(Consultation.desired_reply_tones.keys.map { |tone| [Consultation.desired_reply_tones[tone], tone] }), {}, { class: "select" } %>
+                  </div>
+                </div>
+
+                <%= form.hidden_field :user_id, value: current_user.id %>
+
+                <div class="field is-grouped is-grouped-right">
+                  <div class="control buttons-right">
+                    <%= form.submit "投稿", class: "button is-link button-wrap-text custom-top" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

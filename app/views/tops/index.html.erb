@@ -1,0 +1,38 @@
+<div data-controller="visibility" data-visibility-target="bg" class="bg">
+  <div class="bird"></div>
+  <div class="bird -type_2"></div>
+  <div class="bird -type_3"></div>
+  <div class="circle"></div> <!-- 赤い丸を追加 -->
+  <div class="cloud-mini cloud1"></div>
+  <div class="cloud-mini cloud2"></div>
+  <div class="cloud-mini cloud3"></div>
+  <div class="cloud-mini cloud4"></div>
+  <div class="cloud-mini cloud5"></div>
+  <div class="cloud-mini cloud6"></div>
+
+  <section class="section is-fullheight">
+    <div class="container is-flex is-flex-direction-column is-justify-content-space-between">
+      <div class="content">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+              <div class="anime-title">
+              <span>ようこそ！！</span>
+              <span>めぐる宝石花</span>
+              </div>
+            <%= render 'title' %>
+            <%= render 'login_response' %>
+            <turbo-frame id="response_area">
+              <%= render 'enter_app_response' %>
+              <div class="bird"></div>
+              <div class="bird -type_2"></div>
+              <div class="bird -type_3"></div>
+            </turbo-frame>
+          </div>
+        </div>
+        <div class="columns is-centered mt-1">
+          <%= render 'buttons' %>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

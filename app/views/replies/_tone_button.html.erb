@@ -1,0 +1,3 @@
+<%= button_to "肯定", detail_consultations_path(id: consultation.id, filter_tone: "positive"), method: :post, data: { turbo_frame: "content" }, class: "button is-primary is-small button-wrap-text" %>
+<%= button_to "普通", detail_consultations_path(id: consultation.id, filter_tone: "neutral"), method: :post, data: { turbo_frame: "content" }, class: "button is-info is-small button-wrap-text" %>
+<%= button_to "否定", detail_consultations_path(id: consultation.id, filter_tone: "negative"), method: :post, data: { turbo_frame: "content" }, class: "button is-danger is-small button-wrap-text" %>
